@@ -20,11 +20,6 @@
   "engines": {
     "node": ">=14.0.0"
   },
-  "dependencies": {
-    "@chakra-ui/react": "^2.3.6",
-    "@emotion/react": "^11",
-    "@emotion/styled": "^11",
-    "framer-motion": "^6"
-  },
+  "dependencies": {},
   "packageManager": "yarn@1.22.17"
 }
