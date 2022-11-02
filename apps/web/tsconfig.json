@@ -12,7 +12,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/components/*": ["components/*"],
+      "@/components/*": ["../../packages/ui/components/*"],
       "@/pages/*": ["pages/*"]
     }
   }
