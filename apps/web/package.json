@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3001",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "cypress": "cypress open"
   },
   "dependencies": {
     "next": "13.0.0",
@@ -22,6 +23,7 @@
     "@types/node": "18.11.7",
     "@types/react": "18.0.24",
     "@types/react-dom": "18.0.8",
+    "cypress": "^10.11.0",
     "eslint": "^7.23.0",
     "eslint-config-custom": "*",
     "jest": "^29.2.2",
