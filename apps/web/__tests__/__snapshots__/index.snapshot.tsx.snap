@@ -34,6 +34,17 @@ exports[`renders homepage unchanged 1`] = `
       >
         <a
           class="card"
+          href="/about"
+        >
+          <h2>
+            About Page →
+          </h2>
+          <p>
+            Cypress will test if this link is working.
+          </p>
+        </a>
+        <a
+          class="card"
           href="https://nextjs.org/docs"
         >
           <h2>
