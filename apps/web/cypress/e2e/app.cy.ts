@@ -3,6 +3,9 @@ describe('Navigation', () => {
     // Start from the index page
     cy.visit('http://localhost:3001/')
 
+    // The page should contain an h1 with "Welcome to Next.js!"
+    cy.get('h1').contains('Welcome to Next.js!')
+
     // Find a link with an href attribute containing "about" and click it
     cy.get('a[href*="about"]').click()
 

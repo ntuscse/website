@@ -13,6 +13,7 @@
     "test": "turbo run test",
     "test:watch": "turbo run test:watch",
     "cypress": "turbo run cypress",
+    "cypress:headless": "turbo run cypress:headless",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
