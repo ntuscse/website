@@ -1,14 +1,4 @@
 {
-  "dependencies": {
-    "@strapi/plugin-graphql": "^4.0.5",
-    "fs-extra": "^10.0.0",
-    "lodash.set": "^4.3.2",
-    "mime-types": "^2.1.27",
-    "@strapi/strapi": "4.4.5",
-    "@strapi/plugin-users-permissions": "4.4.5",
-    "@strapi/plugin-i18n": "4.4.5",
-    "better-sqlite3": "7.4.6"
-  },
   "name": "cms",
   "private": true,
   "version": "0.1.0",
@@ -20,12 +10,17 @@
     "strapi": "strapi"
   },
   "devDependencies": {},
+  "dependencies": {
+    "@strapi/strapi": "4.4.6",
+    "@strapi/plugin-users-permissions": "4.4.6",
+    "@strapi/plugin-i18n": "4.4.6",
+    "pg": "8.6.0"
+  },
   "author": {
     "name": "A Strapi developer"
   },
   "strapi": {
-    "uuid": "55b1c190-b48f-4878-81bb-7a9d70241d23",
-    "template": "blog"
+    "uuid": "733e9e94-56b3-45e1-8d5a-599bcf9f76e8"
   },
   "engines": {
     "node": ">=14.19.1 <=18.x.x",
