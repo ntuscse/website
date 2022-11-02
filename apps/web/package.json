@@ -3,10 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3001",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "next start -p 3001",
+    "lint": "next lint",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "cypress": "cypress open",
+    "cypress:headless": "cypress run",
+    "cypress:start-headless": "start-server-and-test start http://localhost:3001 cypress:headless"
   },
   "dependencies": {
     "next": "13.0.0",
@@ -15,11 +20,17 @@
     "ui": "*"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
     "@types/node": "18.11.7",
     "@types/react": "18.0.24",
     "@types/react-dom": "18.0.8",
-    "eslint": "8.26.0",
+    "cypress": "^10.11.0",
+    "eslint": "^7.23.0",
     "eslint-config-custom": "*",
+    "jest": "^29.2.2",
+    "jest-environment-jsdom": "^29.2.2",
+    "start-server-and-test": "^1.14.0",
     "tsconfig": "*",
     "typescript": "4.8.4"
   }
