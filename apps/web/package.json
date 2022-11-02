@@ -5,12 +5,13 @@
   "scripts": {
     "dev": "next dev -p 3001",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3001",
     "lint": "next lint",
     "test": "jest",
     "test:watch": "jest --watch",
     "cypress": "cypress open",
-    "cypress:headless": "cypress run"
+    "cypress:headless": "cypress run",
+    "cypress:start-headless": "start-server-and-test start http://localhost:3001 cypress:headless"
   },
   "dependencies": {
     "next": "13.0.0",
@@ -29,6 +30,7 @@
     "eslint-config-custom": "*",
     "jest": "^29.2.2",
     "jest-environment-jsdom": "^29.2.2",
+    "start-server-and-test": "^1.14.0",
     "tsconfig": "*",
     "typescript": "4.8.4"
   }

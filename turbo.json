@@ -12,6 +12,9 @@
       "dependsOn": ["^build"],
       "outputs": ["storybook-static"]
     },
+    "start": {
+      "dependsOn": ["build"]
+    },
     "lint": {
       "outputs": []
     },
@@ -25,6 +28,11 @@
       "outputs": []
     },
     "cypress:headless": {
+      "dependsOn": ["build"],
+      "outputs": []
+    },
+    "cypress:start-headless": {
+      "dependsOn": ["build"],
       "outputs": []
     }
   }

@@ -8,12 +8,14 @@
   ],
   "scripts": {
     "dev": "turbo run dev --parallel",
+    "start": "turbo run start",
     "lint": "turbo run lint",
     "build": "turbo run build",
     "test": "turbo run test",
     "test:watch": "turbo run test:watch",
     "cypress": "turbo run cypress",
     "cypress:headless": "turbo run cypress:headless",
+    "cypress:start-headless": "turbo run cypress:start-headless",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
