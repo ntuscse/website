@@ -24,7 +24,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          file: ./apps/cms/DockerFile
+          file: ./apps/cms/Dockerfile
           push: true
           tags: |
             ghcr.io/${{ github.repository_owner }}/strapi:${{ github.sha }}
