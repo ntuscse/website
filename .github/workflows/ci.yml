@@ -39,5 +39,5 @@ jobs:
       - name: Unit Tests
         run: yarn test
 
-      - name: E2E Tests
-        run: yarn cypress:start-headless
+#      - name: E2E Tests
+#        run: yarn cypress:start-headless
