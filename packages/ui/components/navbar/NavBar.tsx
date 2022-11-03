@@ -7,7 +7,7 @@ import NavDrawer from "./NavDrawer";
 import { useDisclosure } from "@chakra-ui/react";
 
 
-const NavBar = () => {
+export const NavBar = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     return (
@@ -21,5 +21,3 @@ const NavBar = () => {
         </NavBarContainer>
     )
 }
-
-export default NavBar

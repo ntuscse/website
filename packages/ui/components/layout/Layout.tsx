@@ -1,11 +1,11 @@
-import NavBar from '../navbar'
+import { NavBar } from '../navbar'
 import React from "react";
 
 interface LayoutProps {
     children: React.ReactNode,
 }
 
-const Layout = ({ children }: LayoutProps) => {
+export const Layout = ({ children }: LayoutProps) => {
     return (
         <>
             <header>
@@ -18,5 +18,3 @@ const Layout = ({ children }: LayoutProps) => {
         </>
     )
 }
-
-export default Layout
