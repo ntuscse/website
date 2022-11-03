@@ -16,7 +16,7 @@ describe('Navigation', () => {
     cy.get('h1').contains('About Page')
 
     // Find a link with an href attribute containing "/" and click it
-    cy.get('a[href*="/"]').click()
+    cy.get('a[href*="/"]').first().click()
 
     // The new page should contain an h1 with "Welcome to Next.js!"
     cy.get('h1').contains('Welcome to Next.js!')
