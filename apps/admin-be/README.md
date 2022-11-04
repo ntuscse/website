@@ -1,14 +1,4 @@
-# Node - Koa - Typescript admin backend server
-
-## Features
-
-- Nodemon - server auto-restarts when code changes
-- Koa v2
-
-## Included middleware:
-
-- @koa/router
-- koa-bodyparser
+# Node - Express - Typescript admin backend server
 
 ## Getting Started
 
@@ -28,7 +18,7 @@ yarn install
 - Run the project directly in TS
 
 ```
-yarn watch-server
+yarn devStart
 ```
 
 - Build and run the project in JS
@@ -38,30 +28,11 @@ yarn build
 yarn start
 ```
 
-<!-- - Run integration or load tests
+- Run tests
 
 ```
-npm run test:integration:local (newman needed)
-npm run test:load (locust needed)
+yarn test
 ```
-
-- Run unit tests
-
-```
-npm run test
-```
-
-- Run unit tests with coverage
-
-```
-npm run test:coverage
-```
-
-- Run unit tests on Jest watch mode
-
-```
-npm run test:watch
-``` -->
 
 ## Running ESLint
 
@@ -75,13 +46,9 @@ yarn lint    // runs ESLint check + fix
 ### Project File Structure
 
 - The project is written in Typescript. After Typescript compiles, all subsequently built javascript files are in `/dist`
-- The entry point for the server is `src/server.ts`
-- Program flow: `server` --> `routes` --> `controllers` --> etc
+- The entry point for the server is `src/index.ts`
+- Program flow: `index` --> `routes` --> `controllers` --> `services` --> `entities`
 - Custom Middlewares are in the `src/middleware` folder
 - Custom types for Typescript Types are in `src/types`
-- Tests are in the `test` folder
-
-## References
-
-- [RESTful Typescript Koa](https://github.com/emmanuelnk/RESTful-Typescript-Koa/blob/master/src/services/user.ts)
-- [Node Typescript koa rest](https://github.com/javieraviles/node-typescript-koa-rest)
+- Modeling and schemas are in `src/models`
+- Tests are in the `tests` folder
