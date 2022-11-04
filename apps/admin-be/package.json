@@ -1,0 +1,34 @@
+{
+  "name": "admin-be",
+  "version": "1.0.0",
+  "description": "backend for admin panel",
+  "main": "dist/server.js",
+  "license": "MIT",
+  "scripts": {
+    "watch-server": "nodemon --ignore tests/ --watch src -e ts,tsx --exec ts-node src/server.ts",
+    "build-ts": "tsc",
+    "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
+    "serve": "node dist/server.js",
+    "build": "yarn run lint && yarn run build-ts",
+    "start": "yarn run serve"
+  },
+  "dependencies": {
+    "@koa/router": "^12.0.0",
+    "dotenv": "^16.0.3",
+    "koa": "^2.13.4",
+    "koa-bodyparser": "^4.3.0",
+    "koa-swagger-decorator": "^1.8.6"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.13.5",
+    "@types/koa-bodyparser": "^4.3.9",
+    "@types/koa__router": "^12.0.0",
+    "@types/node": "^18.11.9",
+    "eslint": "^7.23.0",
+    "eslint-config-custom": "*",
+    "nodemon": "^2.0.20",
+    "ts-node": "^10.9.1",
+    "tsconfig": "*",
+    "typescript": "4.8.4"
+  }
+}
