@@ -2,7 +2,13 @@ import React from "react"
 import {Box, Text, Stack, Link} from "@chakra-ui/react"
 import Image from "next/image";
 
-const Logo = () => {
+export interface LogoProps {
+    src: string
+    alt: string
+    text?: string
+}
+
+export const Logo = ({ src, alt, text } : LogoProps) => {
     return (
         <Link href="/" _hover={{textDecoration: "none"}}>
             <Stack
@@ -16,8 +22,8 @@ const Logo = () => {
                     transitionDuration="200ms"
                 >
                     <Image
-                        src="/scse-logo.png"
-                        alt="SCSE Logo"
+                        src={src}
+                        alt={alt}
                         width={125}
                         height={125}
                     />
@@ -27,12 +33,9 @@ const Logo = () => {
                     fontWeight="bold"
                     transitionDuration="200ms"
                 >
-                    NTU School of Computer Science & Engineering Club
+                    {text}
                 </Text>
             </Stack>
         </Link>
-
     )
 }
-
-export default Logo

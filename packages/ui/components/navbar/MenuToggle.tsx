@@ -7,7 +7,7 @@ interface MenuToggleProps {
     isOpen: boolean
 }
 
-const MenuToggle = ({ toggle, isOpen } : MenuToggleProps) => {
+export const MenuToggle = ({ toggle, isOpen } : MenuToggleProps) => {
     return (
         <Box
             display={{ base: "block", xl: "none"}}
@@ -20,5 +20,3 @@ const MenuToggle = ({ toggle, isOpen } : MenuToggleProps) => {
         </Box>
     )
 }
-
-export default MenuToggle

@@ -1,23 +1,28 @@
 import React from "react";
-import NavBarContainer from "./NavBarContainer";
-import Logo from "./Logo";
-import MenuToggle from "./MenuToggle";
-import MenuItem from "./MenuItem";
-import NavDrawer from "./NavDrawer";
+import { NavBarContainer } from "./NavBarContainer";
+import { Logo, LogoProps } from "./Logo";
+import { MenuToggle } from "./MenuToggle";
+import { MenuItem } from "./MenuItem";
+import { NavDrawer } from "./NavDrawer";
 import { useDisclosure } from "@chakra-ui/react";
+import { MenuLinkProps } from "./MenuLink";
 
+export interface NavBarProps {
+    links: Array<MenuLinkProps>
+    logoProps: LogoProps
+}
 
-export const NavBar = () => {
+export const NavBar = ({ links, logoProps }: NavBarProps) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     return (
         <NavBarContainer>
-            <Logo />
-            <MenuItem />
+            <Logo src={logoProps.src} alt={logoProps.alt} text={logoProps.text} />
+            <MenuItem links={links} />
 
             {/* For small screen sizes */}
             <MenuToggle toggle={onOpen} isOpen={isOpen} />
-            <NavDrawer isOpen={isOpen} onClose={onClose} />
+            <NavDrawer isOpen={isOpen} onClose={onClose} links={links} />
         </NavBarContainer>
     )
 }

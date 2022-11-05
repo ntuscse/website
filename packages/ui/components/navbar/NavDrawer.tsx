@@ -6,14 +6,16 @@ import {
     DrawerContent,
     DrawerCloseButton,
 } from '@chakra-ui/react'
-import MenuItem from "./MenuItem";
+import { MenuItem } from "./MenuItem";
+import {MenuLinkProps} from "./MenuLink";
 
 interface NavDrawerProps {
     isOpen: boolean
     onClose: () => void
+    links: Array<MenuLinkProps>
 }
 
-const NavDrawer = ({ isOpen, onClose }: NavDrawerProps) => {
+export const NavDrawer = ({ isOpen, onClose, links }: NavDrawerProps) => {
     return (
         <>
             <Drawer
@@ -28,9 +30,7 @@ const NavDrawer = ({ isOpen, onClose }: NavDrawerProps) => {
                     <DrawerBody marginTop={100}>
                         <MenuItem
                             isOpen={isOpen}
-                            direction="column"
-                            align="left"
-                            fontSize={22}
+                            links={links}
                         />
                     </DrawerBody>
                 </DrawerContent>
@@ -38,5 +38,3 @@ const NavDrawer = ({ isOpen, onClose }: NavDrawerProps) => {
         </>
     )
 }
-
-export default NavDrawer
