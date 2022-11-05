@@ -30,14 +30,6 @@ jobs:
       - name: Install dependencies
         run: yarn install --prefer-offline --frozen-lockfile
 
-      - name: Lint
-        run: yarn lint
-
-      - name: Build
-        run: yarn build
-
-      - name: Unit Tests
-        run: yarn test
-
-#      - name: E2E Tests
-#        run: yarn cypress:start-headless
+      - name: Lint + Build + Unit Test
+        run: turbo run lint build --filter=!cms test
+        # run: turbo run lint build --filter=!cms test cypress:start-headless
