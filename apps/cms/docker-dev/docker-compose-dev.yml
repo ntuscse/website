@@ -1,7 +1,9 @@
 services:
   strapi:
     container_name: strapi
-    image: ghcr.io/ntuscse/strapi:latest
+    build:
+      context: ../../..
+      dockerfile: ./apps/cms/Dockerfile
     restart: unless-stopped
     env_file: .env
     environment:
@@ -16,12 +18,12 @@ services:
       APP_KEYS: ${APP_KEYS}
       NODE_ENV: ${NODE_ENV}
     volumes:
-      - ./config:/opt/app/config
-      - ./src:/opt/app/src
-      - ./package.json:/opt/package.json
-      - ../../yarn.lock:/opt/yarn.lock
-      - ./.env:/opt/app/.env
-      - ./public/uploads:/opt/app/public/uploads
+      - ../config:/opt/app/config
+      - ../src:/opt/app/src
+      - ../package.json:/opt/package.json
+      - ../../../yarn.lock:/opt/yarn.lock
+      - .env:/opt/app/.env
+      - ../public/uploads:/opt/app/public/uploads
     ports:
       - '1337:1337'
     networks:
