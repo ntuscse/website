@@ -29,7 +29,7 @@ export const Logo = ({ src, alt, text } : LogoProps) => {
                     />
                 </Box>
                 <Text
-                    fontSize={[12, 12, 32, 32]}
+                    fontSize={[12, 12, 30, 30]}
                     fontWeight="bold"
                     transitionDuration="200ms"
                 >
