@@ -7,11 +7,12 @@ interface MenuItemProps {
     links: Array<MenuLinkProps>
 }
 
-export const MenuItem = ({ isOpen=false, links }: MenuItemProps) => {
+export const MenuItems = ({ isOpen=false, links }: MenuItemProps) => {
     return (
         <Box
             display={{ base: isOpen ? "block" : "none", xl: "block"}}
-            flexBasis={{ base: "100%", md: "auto" }}>
+            flexBasis={{ base: "100%", md: "auto" }}
+            marginLeft={10}>
             <Stack
                 spacing={8}
                 align={{base: "left", xl: "center"}}
