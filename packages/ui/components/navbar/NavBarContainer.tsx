@@ -5,7 +5,7 @@ interface NavBarContainerProps extends StackProps {
     children: React.ReactNode,
 }
 
-const NavBarContainer = ({ children, ...props }: NavBarContainerProps) => {
+export const NavBarContainer = ({ children, ...props }: NavBarContainerProps) => {
     return (
         <Flex
             as="nav"
@@ -20,10 +20,10 @@ const NavBarContainer = ({ children, ...props }: NavBarContainerProps) => {
             color="black"
             borderBottom="1px"
             borderColor="gray.200"
+            fontFamily={"Verdana Light"}
             {...props}
         >
             { children }
         </Flex>
     )
 }
-export default NavBarContainer

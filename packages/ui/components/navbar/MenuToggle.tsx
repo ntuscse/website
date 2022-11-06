@@ -7,12 +7,13 @@ interface MenuToggleProps {
     isOpen: boolean
 }
 
-const MenuToggle = ({ toggle, isOpen } : MenuToggleProps) => {
+export const MenuToggle = ({ toggle, isOpen } : MenuToggleProps) => {
     return (
         <Box
             display={{ base: "block", xl: "none"}}
             onClick={toggle}
             _hover={{color: "blue.600", cursor: "pointer"}}
+            marginLeft={{base: 5, md: 10}}
         >
             {isOpen ?
                 <CloseIcon boxSize={{ base: 5, md: 8 }} /> :
@@ -20,5 +21,3 @@ const MenuToggle = ({ toggle, isOpen } : MenuToggleProps) => {
         </Box>
     )
 }
-
-export default MenuToggle

@@ -1,11 +1,13 @@
 import { NavBar } from '../navbar'
 import React from "react";
+import { NavBarProps } from "../navbar/NavBar";
 
 interface LayoutProps {
-    children: React.ReactNode,
+    navbarProps: NavBarProps
+    children: React.ReactNode
 }
 
-export const Layout = ({ children }: LayoutProps) => {
+export const Layout = ({ navbarProps, children }: LayoutProps) => {
     return (
         <>
             <header>
@@ -13,7 +15,7 @@ export const Layout = ({ children }: LayoutProps) => {
                 <link rel="icon" href='/'></link>
             </header>
 
-            <NavBar />
+            <NavBar links={navbarProps.links} logoProps={navbarProps.logoProps} />
             <main>{children}</main>
         </>
     )
