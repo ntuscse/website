@@ -1,8 +1,7 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import { ChakraProvider } from "@chakra-ui/react";
-import { Layout } from 'ui'
-import { NavBarProps } from "ui/components/navbar/NavBar";
+import { Layout, NavBarProps } from 'ui'
 
 export default function App({ Component, pageProps }: AppProps) {
     const navbarProps: NavBarProps = {
@@ -12,6 +11,7 @@ export default function App({ Component, pageProps }: AppProps) {
             {label: "Events", href: "/events"},
             {label: "Sponsors", href: "/sponsors"},
             {label: "Contact", href: "/contact"},
+            {label: "blog", href: "/blog"},
         ],
         logoProps: {
             src: '/scse-logo.png',
