@@ -23,11 +23,13 @@ services:
       - .env:/opt/app/.env
       - ../public/uploads:/opt/app/public/uploads
     ports:
-      - '1337:1337'
+      - '1336:1337'
     networks:
       - strapi
     depends_on:
       - strapiDB
+    links:
+      - "strapiDB"
 
   strapiDB:
     container_name: strapiDB
@@ -44,7 +46,7 @@ services:
       #- ./data:/var/lib/postgresql/data/ # if you want to use a bind folder
 
     ports:
-      - '5432:5432'
+      - '5432:5433'
     networks:
       - strapi
 
