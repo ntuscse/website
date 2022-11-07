@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "lint": "TIMING=1 eslint \"**/*.ts*\"",
+    "lint:fix": "TIMING=1 eslint --fix \"**/*.ts*\"",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
