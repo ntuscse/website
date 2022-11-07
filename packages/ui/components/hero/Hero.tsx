@@ -13,7 +13,7 @@ export const Hero = ({ backgroundImage, buttons, text, textProps, ...flexProps }
         // Background Image
         <Flex
             w='full'
-            h='500px'
+            h={{ base: '400px', md: '500px' }}
             backgroundImage={ backgroundImage }
             backgroundSize='cover'
             backgroundPosition='center center'
@@ -31,16 +31,15 @@ export const Hero = ({ backgroundImage, buttons, text, textProps, ...flexProps }
                        spacing={ 6 }
                        width={{ base: '75%', lg: '50%' }}
                        height={{ base: '75%', lg: '50%' }}
-                       overflowY='hidden'
                        // White translucent box
-                       _before={{ content: '""',
+                       _before={ text || buttons ? { content: '""',
                            bgColor:'white',
                            opacity:'0.4',
                            width: { base: '75%', lg: '50%' },
                            height: { base: '75%', lg: '50%' },
                            position: 'absolute',
                            top: { base: '12.5%', lg: '25%' },
-                           right: { base: '12.5%', lg: '25%' }}}>
+                           right: { base: '12.5%', lg: '25%' }} : { content: '""' }}>
                     {/* Text */}
                     <Text
                         color='black'
