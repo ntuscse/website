@@ -1,5 +1,5 @@
 {
-  "extends": "tsconfig/react-library.json",
+  "extends": "tsconfig/base.json",
   "include": [
     "**/*.js",
     "**/*.jsx",
@@ -10,7 +10,6 @@
     "dist",
     "build",
     "node_modules",
-    "storybook-static",
     ".turbo"
   ]
 }
