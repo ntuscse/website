@@ -7,6 +7,9 @@ module.exports = {
       '../../packages/*/tsconfig.json'
     ],
   },
+  env: {
+    es2021: true
+  },
   ignorePatterns: [
     "**/dist/*",
     "**/build/*",
@@ -45,7 +48,12 @@ module.exports = {
     "cypress/no-async-tests": "error",
     "cypress/no-pause": "error"
   },
-  env: {
-    es2021: true
-  }
+  overrides: [
+    {
+      files: ["**/*.stories.*", "**/*.story.*"],
+      rules: {
+        "@typescript-eslint/await-thenable": ["off", "never"], // enable stepping back in storybook debugger
+      }
+    }
+  ]
 };
