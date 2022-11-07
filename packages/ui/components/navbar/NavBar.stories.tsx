@@ -15,11 +15,11 @@ const Template: ComponentStory<typeof NavBar> = (args) => <NavBar {...args} />;
 export const Default = Template.bind({});
 Default.args = {
     links: [
-        {label: "Home", href: "/"},
-        {label: "Academics", href: "/academics"},
-        {label: "Events", href: "/events"},
-        {label: "Sponsors", href: "/sponsors"},
-        {label: "Contact", href: "/contact"},
+        { label: "Home", href: "/" },
+        { label: "Academics", href: "/academics" },
+        { label: "Events", href: "/events" },
+        { label: "Sponsors", href: "/sponsors" },
+        { label: "Contact", href: "/contact" },
     ],
     logoProps: {
         src: "/scse-logo.png",
