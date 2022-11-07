@@ -1,6 +1,8 @@
 module.exports = {
-  extends: ["next/core-web-vitals", "turbo", "prettier"],
+  parser: "@typescript-eslint/parser",
+  extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended", "next/core-web-vitals", "turbo", "prettier"],
   plugins: [
+    "@typescript-eslint",
     "cypress"
   ],
   rules: {
@@ -16,4 +18,7 @@ module.exports = {
     "cypress/no-async-tests": "error",
     "cypress/no-pause": "error"
   },
+  env: {
+    es2021: true
+  }
 };
