@@ -1,9 +1,11 @@
 import { Flex, AspectRatio } from "@chakra-ui/react";
 
-export interface LocationProps {}
+export interface LocationProps {
+        src: string
+        title: string
+}
 
-export const Location = (_props: LocationProps) => {
-    //const LocationData = []
+export const Location = ( { src, title } : LocationProps) => {
 
     return ( <Flex
         bgGradient='linear(to-t,#e6e3e3 48%,#121212 45%)'
@@ -17,7 +19,7 @@ export const Location = (_props: LocationProps) => {
         border='none'
     >
         <AspectRatio h='400px' w='100%'>
-            <iframe src='https://maps.google.com/maps?q=Nanyang%20Technological%20University&amp;t=m&amp;z=12&amp;output=embed&amp;iwloc=near' title='Nanyang Technological University' aria-label='Nanyang Technological University'/>
+            <iframe sandbox='' src={src} title={title} aria-label={title} />
         </AspectRatio>
     </Flex>
     )
