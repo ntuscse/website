@@ -39,7 +39,7 @@ export const Hero = ({ backgroundImage, buttons, text, textProps, ...flexProps }
                            height: { base: '75%', lg: '50%' },
                            position: 'absolute',
                            top: { base: '12.5%', lg: '25%' },
-                           right: { base: '12.5%', lg: '25%' }} : { content: '""' }}>
+                           right: { base: '12.5%', lg: '25%' } } : { content: '""' }}>
                     {/* Text */}
                     <Text
                         color='black'
