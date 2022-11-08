@@ -7,7 +7,7 @@ import {
     DrawerCloseButton,
 } from '@chakra-ui/react'
 import { MenuItems } from "./MenuItems";
-import {MenuLinkProps} from "./MenuLink";
+import { MenuLinkProps } from "./MenuLink";
 
 interface NavDrawerProps {
     isOpen: boolean

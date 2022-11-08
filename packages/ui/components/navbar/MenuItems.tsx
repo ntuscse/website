@@ -10,16 +10,16 @@ interface MenuItemProps {
 export const MenuItems = ({ isOpen=false, links }: MenuItemProps) => {
     return (
         <Box
-            display={{ base: isOpen ? "block" : "none", xl: "block"}}
+            display={{ base: isOpen ? "block" : "none", xl: "block" }}
             flexBasis={{ base: "100%", md: "auto" }}
             marginLeft={10}>
             <Stack
                 spacing={8}
-                align={{base: "left", xl: "center"}}
+                align={{ base: "left", xl: "center" }}
                 justify={"flex-end"}
-                direction={{base: "column", xl: "row"}}
+                direction={{ base: "column", xl: "row" }}
                 pt={0}
-                fontSize={{base: 22, xl: 18}}
+                fontSize={{ base: 22, xl: 18 }}
                 fontWeight="bold"
             >
                 {links.map(link => {

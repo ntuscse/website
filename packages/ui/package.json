@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "lint": "TIMING=1 eslint \"**/*.ts*\"",
+    "lint:fix": "TIMING=1 eslint --fix \"**/*.ts*\"",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
@@ -21,6 +22,7 @@
     "@storybook/addon-links": "^6.5.13",
     "@storybook/addons": "^6.5.13",
     "@storybook/builder-webpack5": "^6.5.13",
+    "@storybook/jest": "^0.0.10",
     "@storybook/manager-webpack5": "^6.5.13",
     "@storybook/react": "^6.5.13",
     "@storybook/testing-library": "^0.0.13",

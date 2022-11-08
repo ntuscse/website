@@ -1,16 +1,14 @@
-import {Grid, GridItem, Text} from "@chakra-ui/react";
+import { Grid, GridItem, Text } from "@chakra-ui/react";
 
-export interface FooterProps {
+export interface FooterProps {}
 
-}
-
-export const Footer = ({}: FooterProps) => {
+export const Footer = (_props: FooterProps) => {
   const footerData = [
-    {label: 'Home', href: '/'},
-    {label: 'Academics', href: '/'},
-    {label: 'Events', href: '/'},
-    {label: 'Sponsors', href: '/'},
-    {label: 'Contact', href: '/'},
+    { label: 'Home', href: '/' },
+    { label: 'Academics', href: '/' },
+    { label: 'Events', href: '/' },
+    { label: 'Sponsors', href: '/' },
+    { label: 'Contact', href: '/' },
   ]
 
   return <Grid bg="black" templateColumns='repeat(5, 1fr)' gap={6}>
