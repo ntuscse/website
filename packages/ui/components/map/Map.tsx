@@ -5,14 +5,12 @@ export interface MapProps {
 }
 
 export const Map = ({ title } : MapProps) => {
-
     return <NtuMap title={title}/>
-
 }
 
 const NtuMap = ({ title } : MapProps) => {
-
-    return ( <Flex
+    return (
+        <Flex
             bgGradient='linear(to-t,#e6e3e3 48%,#121212 45%)'
             filter='brightness( 100% ) contrast( 100% ) saturate( 0% ) blur( 0px ) hue-rotate( 0deg )'
             w='100%'
