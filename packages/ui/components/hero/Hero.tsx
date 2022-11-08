@@ -57,6 +57,7 @@ export const Hero = ({ backgroundImage, buttons, text, textProps, ...flexProps }
                             const { label, href, buttonType, ...buttonProps } = button;
                             return (
                                 <Button
+                                    key={ label }
                                     label={ label }
                                     href={ href }
                                     buttonType={ buttonType }
