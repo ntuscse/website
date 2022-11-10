@@ -49,8 +49,8 @@ FooterContentButton.args = {
     },
     contentButtonProps: {
         href: '#',
-        ctaTitle: "Want to work together or need help?",
-        btnText: "Contact us",
+        title: "Want to work together or need help?",
+        label: "Contact us",
     },
 };
 
@@ -106,8 +106,8 @@ FooterContentBoth.args = {
     },
     contentButtonProps: {
         href: '#',
-        ctaTitle: "Want to work together or need help?",
-        btnText: "Contact us",
+        title: "Want to work together or need help?",
+        label: "Contact us",
     },
     contentTextProps: {
         alerts:[

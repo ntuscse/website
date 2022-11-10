@@ -4,11 +4,11 @@ import { Button } from 'ui';
 
 export interface ContentButtonProps {
     href: string
-    ctaTitle: string
-    btnText: string
+    title?: string
+    label: string
 }
 
-export const ContentButton = ( { href, ctaTitle, btnText } : ContentButtonProps) => {
+export const ContentButton = ( { href, title, label } : ContentButtonProps) => {
     return (
         <VStack py='30px' >
             <Heading
@@ -20,16 +20,12 @@ export const ContentButton = ( { href, ctaTitle, btnText } : ContentButtonProps)
                 fontFamily='Roboto, Sans-serif'
                 color='white'
             >
-                {ctaTitle}
+                { title }
             </Heading>
             <Button
-                bg='blue.500'
-                borderColor='#ccd0d5'
-                color='white'
                 textTransform='uppercase'
-                _hover={{ bg: 'white', color: 'black' }}
-                label={btnText}
-                href={href}
+                label={ label }
+                href={ href }
             />
         </VStack>
     )

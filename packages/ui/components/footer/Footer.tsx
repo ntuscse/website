@@ -17,25 +17,30 @@ export interface FooterProps {
 
 export const Footer = ({ links, vercelpoweredProps, contentButtonProps, contentTextProps }: FooterProps) => {
   return (
-      <VStack bg='black' py={ { base:'10px', md:'5px' } } px={ { base:'5px', md:'30px' } }>
-        {(contentTextProps) ? <ContentText {...contentTextProps} /> : "" }
-        {(contentButtonProps) ? <ContentButton {...contentButtonProps} /> : "" }
+      <VStack bg='black' py={{ base:'10px', md:'5px' }} px={{ base:'5px', md:'30px' }}>
+        {/* Footer Content */}
+        { contentTextProps && <ContentText { ...contentTextProps } /> }
+        { contentButtonProps && <ContentButton {...contentButtonProps} /> }
 
-        <Grid w='100%' py='10px' templateColumns={ { base: 'repeat(1, 1fr)', md: 'repeat(14, 1fr)' } } gap={4}>
+        {/* Main Footer */}
+        <Grid w='100%' py='10px' templateColumns={ { base: 'repeat(1, 1fr)', md: 'repeat(14, 1fr)' } } gap={ 4 }>
+          {/* Vercel Tag */}
           <GridItem colSpan={ { base:1, md: 5 } }>
-            <Flex justifyContent={ { base:'center', md:'flex-start' } } alignItems='center'>
+            <Flex justifyContent={{ base:'center', md:'flex-start' }} alignItems='center'>
               <VercelPowered
-                  href={vercelpoweredProps.href}
-                  src={vercelpoweredProps.src}
-                  alt={vercelpoweredProps.alt}
-                  width={vercelpoweredProps.width}
-                  height={vercelpoweredProps.height}
+                  href={ vercelpoweredProps.href }
+                  src={ vercelpoweredProps.src }
+                  alt={ vercelpoweredProps.alt }
+                  width={ vercelpoweredProps.width }
+                  height={ vercelpoweredProps.height }
               />
             </Flex>
           </GridItem>
+
+          {/* Footer Links */}
           { links.map(link => (
-              <GridItem key={link.label} textAlign="center" colStart={ { base:1, md:link.position } }>
-                <FooterLink href={link.href} label={link.label} />
+              <GridItem key={ link.label } textAlign="center" colStart={{ base:1, md:link.position }}>
+                <FooterLink href={ link.href } label={ link.label } />
               </GridItem>
           ))}
         </Grid>
