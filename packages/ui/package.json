@@ -38,5 +38,8 @@
     "tsconfig": "*",
     "typescript": "^4.5.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@fontsource/inder": "^4.5.11",
+    "@fontsource/inter": "^4.5.14"
+  }
 }
