@@ -2373,6 +2373,16 @@
   dependencies:
     "@floating-ui/dom" "^1.0.0"
 
+"@fontsource/inder@^4.5.11":
+  version "4.5.11"
+  resolved "https://registry.yarnpkg.com/@fontsource/inder/-/inder-4.5.11.tgz#9198f1a339acb2a44af8ad2f29b0c7c57631d287"
+  integrity sha512-TtfYxEU1wNEUfQkNSPS5s6M8ljOaJpWU/YKWsZnP/tKvjgZnADd+CCk2r71URyr1yb9OB6wWmhfZRNR4mDv8Kw==
+
+"@fontsource/inter@^4.5.14":
+  version "4.5.14"
+  resolved "https://registry.yarnpkg.com/@fontsource/inter/-/inter-4.5.14.tgz#3944b809aa7bf27dacd20bdc04a49fb738959724"
+  integrity sha512-JDC9AocdPLuGsASkvWw9hS5gtHE7K9dOwL98XLrk5yjYqxy4uVnScG58NUvFMJDVJRl/7c8Wnap6PEs+7Zvj1Q==
+
 "@formatjs/ecma402-abstract@1.11.4":
   version "1.11.4"
   resolved "https://registry.npmjs.org/@formatjs/ecma402-abstract/-/ecma402-abstract-1.11.4.tgz"
