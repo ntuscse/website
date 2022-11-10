@@ -1,6 +1,8 @@
+import Faq from "../../../packages/ui/components/FAQ/Faq";
+
 function Contact() {
     return (
-        <div>Contact</div>
+        <Faq/>
     )
 }
 
