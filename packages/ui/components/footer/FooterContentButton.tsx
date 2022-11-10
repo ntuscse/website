@@ -10,7 +10,7 @@ export interface FooterContentButtonProps {
 
 export const FooterContentButton = ( { href, title, label } : FooterContentButtonProps) => {
     return (
-        <VStack py='30px' >
+        <VStack bg='black' py='30px' >
             <Heading
                 textAlign="center"
                 as='h2'

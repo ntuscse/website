@@ -1,8 +1,8 @@
 import { NavBar } from '../navbar'
 import { Footer } from "../footer";
 import React from "react";
-import { NavBarProps } from "../navbar/NavBar";
-import { FooterProps } from "../footer/Footer";
+import { NavBarProps, FooterProps } from "ui";
+import { Box } from "@chakra-ui/react";
 
 interface LayoutProps {
     navbarProps: NavBarProps
@@ -12,7 +12,7 @@ interface LayoutProps {
 
 export const Layout = ({ navbarProps, footerProps, children }: LayoutProps) => {
     return (
-        <>
+        <Box h="100vh" w="100vw" mx="0px" p="0px">
             <header>
                 <title>NTU School of Computer Science & Engineering</title>
                 <link rel="icon" href='/'></link>
@@ -21,6 +21,6 @@ export const Layout = ({ navbarProps, footerProps, children }: LayoutProps) => {
             <NavBar links={navbarProps.links} logoProps={navbarProps.logoProps} />
             <main>{children}</main>
             <Footer links={footerProps.links} vercelpoweredProps={footerProps.vercelpoweredProps}/>
-        </>
+        </Box>
     )
 }

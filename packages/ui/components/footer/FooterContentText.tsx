@@ -8,7 +8,7 @@ export interface FooterContentTextProps {
 
 export const FooterContentText = ( { alerts } : FooterContentTextProps) => {
     return (
-        <Box alignSelf='flex-start' px='20px' pb='30px'>
+        <Box bg='black' alignSelf='flex-start' px='20px' pb='30px'>
             { alerts.map(alert => (
                 <Announcement key={alert.title} title={alert.title} description={alert.description} />
             ))}
