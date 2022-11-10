@@ -1,6 +1,6 @@
 import { Flex, Grid, GridItem, VStack } from "@chakra-ui/react";
 import { FooterLink } from "./FooterLink";
-import { VercelPowered, VercelPoweredProps } from "./VercelPowered";
+import { VercelPowered } from 'ui';
 import { FooterContentButton, FooterContentButtonProps } from "./FooterContentButton";
 import { FooterContentText, FooterContentTextProps } from "./FooterContentText";
 
@@ -10,7 +10,13 @@ export interface FooterProps {
     href: string;
     position: number;
   }>;
-  vercelpoweredProps: VercelPoweredProps;
+  vercelpoweredProps: {
+    href: string
+    src: string
+    alt: string
+    width: number
+    height: number
+  };
   footerContentButtonProps?: FooterContentButtonProps;
   footerContentTextProps?: FooterContentTextProps;
 }
