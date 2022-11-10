@@ -9,16 +9,12 @@ export interface ButtonProps extends HTMLChakraProps<"button">, ButtonOptions, T
 }
 
 export const Button = ({ buttonType='primary.blue', ...props }: ButtonProps) => {
-    let button;
     switch (buttonType) {
         case 'primary.black':
-            button = <PrimaryBlackButton {...props} />
-            break
+            return <PrimaryBlackButton {...props} />
         default:
-            button = <PrimaryBlueButton {...props} />
+            return <PrimaryBlueButton {...props} />
   }
-
-  return button
 }
 
 // Different Button Styles
