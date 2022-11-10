@@ -1,7 +1,7 @@
 import { Flex, Grid, GridItem, VStack } from "@chakra-ui/react";
 import { FooterLink } from "./FooterLink";
 import { VercelPowered, VercelPoweredProps } from "./VercelPowered";
-import { FooterContent, FooterContentProps } from "./FooterContent";
+import { ContentButtonProps, ContentTextProps, FooterContent, FooterContentProps } from "./FooterContent";
 
 export interface FooterProps {
   links: Array<{
@@ -10,19 +10,26 @@ export interface FooterProps {
     position: number;
   }>
   vercelpoweredProps: VercelPoweredProps;
-  footercontentProps: FooterContentProps;
+  // footercontentProps?: FooterContentProps;
+  contentButtonProps?: ContentButtonProps;
+  contentTextProps?: ContentTextProps;
 }
 
-export const Footer = ({ links, vercelpoweredProps, footercontentProps }: FooterProps) => {
+export const Footer = ({ links, vercelpoweredProps, contentButtonProps, contentTextProps }: FooterProps) => {
   return (
       <VStack bg='black' py={ { base:'10px', md:'5px' } } px={ { base:'5px', md:'30px' } }>
-        <FooterContent
-            contentType={footercontentProps.contentType}
-            href={footercontentProps.href}
-            ctaTitle={footercontentProps.ctaTitle}
-            btnText={footercontentProps.btnText}
-            alerts={footercontentProps.alerts}
-        />
+          {/*{footercontentProps ?*/}
+          {/*    <FooterContent*/}
+          {/*        contentType={footercontentProps.contentType}*/}
+          {/*        href={footercontentProps.href}*/}
+          {/*        ctaTitle={footercontentProps.ctaTitle}*/}
+          {/*        btnText={footercontentProps.btnText}*/}
+          {/*        alerts={footercontentProps.alerts}*/}
+          {/*    /> : ""*/}
+          {/*}*/}
+        {(contentTextProps) ? <FooterContent href={} ctaTitle={} btnText={} alerts={} /> : "" }
+        {(contentButtonProps) ? <FooterContent href={} ctaTitle={} btnText={} alerts={} /> : "" }
+
         <Grid w='100%' py='10px' templateColumns={ { base: 'repeat(1, 1fr)', md: 'repeat(14, 1fr)' } } gap={4}>
           <GridItem colSpan={ { base:1, md: 5 } }>
             <Flex justifyContent={ { base:'center', md:'flex-start' } } alignItems='center'>
