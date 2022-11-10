@@ -1,12 +1,12 @@
 import { Heading, Flex, Text } from "@chakra-ui/react";
 import React from "react";
 
-export interface UpdateProps {
+export interface AnnouncementProps {
     title: string
     description: string
 }
 
-export const Update = ({ title, description } : UpdateProps) => {
+export const Announcement = ({ title, description } : AnnouncementProps) => {
 
     return (
         <Flex flexDir='column' px={{ base: '0px', md:'100px' }} py='20px'>

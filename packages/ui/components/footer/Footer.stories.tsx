@@ -47,7 +47,7 @@ FooterContentButton.args = {
         width: 155,
         height: 155
     },
-    contentButtonProps: {
+    footerContentButtonProps: {
         href: '#',
         title: "Want to work together or need help?",
         label: "Contact us",
@@ -71,7 +71,7 @@ FooterContentText.args = {
         width: 155,
         height: 155
     },
-    contentTextProps: {
+    footerContentTextProps: {
         alerts:[
             { title: "Update 16/12/2019: What we are doing",
                 description: "Our committee aims to improve the quality of PYP and " +
@@ -104,12 +104,12 @@ FooterContentBoth.args = {
         width: 155,
         height: 155
     },
-    contentButtonProps: {
+    footerContentButtonProps: {
         href: '#',
         title: "Want to work together or need help?",
         label: "Contact us",
     },
-    contentTextProps: {
+    footerContentTextProps: {
         alerts:[
             { title: "Update 16/12/2019: What we are doing",
                 description: "Our committee aims to improve the quality of PYP and " +

@@ -2,13 +2,13 @@ import React from 'react'
 import { VStack, Heading } from '@chakra-ui/react';
 import { Button } from 'ui';
 
-export interface ContentButtonProps {
+export interface FooterContentButtonProps {
     href: string
     title?: string
     label: string
 }
 
-export const ContentButton = ( { href, title, label } : ContentButtonProps) => {
+export const FooterContentButton = ( { href, title, label } : FooterContentButtonProps) => {
     return (
         <VStack py='30px' >
             <Heading
