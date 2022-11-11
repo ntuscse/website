@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import Image, { ImageProps } from "next/image";
 import { Box, Link } from "@chakra-ui/react";
-import { LinkContext } from "./Card";
+import { LinkContext } from "./BlogCard";
 
-export interface CardImageProps extends ImageProps {}
+export interface BlogCardImageProps extends ImageProps {}
 
-export const CardImage = ({ alt, src, ...props }: CardImageProps) => {
+export const BlogCardImage = ({ alt, src, ...props }: BlogCardImageProps) => {
     return (
         <Box
             h={ 280 }

@@ -1,14 +1,14 @@
 import { Heading, Link, Stack, Text } from "@chakra-ui/react";
 import React, { useContext } from "react";
-import { LinkContext } from "./Card";
+import { LinkContext } from "./BlogCard";
 
-export interface CardContentProps {
+export interface BlogCardContentProps {
     title: string
     body: string
     date: string
 }
 
-export const CardContent = ({ title, body, date }: CardContentProps) => {
+export const BlogCardContent = ({ title, body, date }: BlogCardContentProps) => {
     return (
         <Stack pb={ 12 } fontFamily='Verdana'>
             {/* Title */}

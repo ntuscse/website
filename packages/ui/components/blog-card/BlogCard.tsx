@@ -1,17 +1,17 @@
 import React from 'react'
 import { Box, Center } from '@chakra-ui/react'
-import { CardImage, CardImageProps } from "./CardImage";
-import { CardContent, CardContentProps } from "./CardContent";
+import { BlogCardImage, BlogCardImageProps } from "./BlogCardImage";
+import { BlogCardContent, BlogCardContentProps } from "./BlogCardContent";
 
-export interface CardProps {
+export interface BlogCardProps {
     link: string;
-    cardImageProps: CardImageProps;
-    cardContentProps: CardContentProps;
+    blogCardImageProps: BlogCardImageProps;
+    blogCardContentProps: BlogCardContentProps;
 }
 
 export const LinkContext = React.createContext("/");
 
-export const Card = ({ link, cardImageProps, cardContentProps }: CardProps) => {
+export const BlogCard = ({ link, blogCardImageProps, blogCardContentProps }: BlogCardProps) => {
 
     return (
         <LinkContext.Provider value={ link }>
@@ -30,10 +30,10 @@ export const Card = ({ link, cardImageProps, cardContentProps }: CardProps) => {
                     transition='transform 0.25s ease'
                 >
                     {/* Image */}
-                    <CardImage { ...cardImageProps } />
+                    <BlogCardImage { ...blogCardImageProps } />
 
                     {/* Content */}
-                    <CardContent { ...cardContentProps } />
+                    <BlogCardContent { ...blogCardContentProps } />
                 </Box>
             </Center>
         </LinkContext.Provider>
