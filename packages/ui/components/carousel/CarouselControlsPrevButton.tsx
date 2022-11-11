@@ -1,8 +1,7 @@
-import {Box, IconButton, Flex} from "@chakra-ui/react";
-import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
+import { Box, IconButton } from "@chakra-ui/react";
+import { ArrowLeftIcon } from "@chakra-ui/icons";
 
-export default function CarouselControlsPrev(){
-
+export const CarouselControlsPrevButton = () => {
     return (
         <Box>
             <IconButton
@@ -18,8 +17,6 @@ export default function CarouselControlsPrev(){
                 opacity={'0.8'}
                 icon={<ArrowLeftIcon/>}>
                 Prev</IconButton>
-
         </Box>
     )
-
 }

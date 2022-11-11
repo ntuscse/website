@@ -1,7 +1,11 @@
-import Qna from './Qna';
-import {Flex, Center, Heading} from "@chakra-ui/react";
+import Qna, { QnaProps } from './Qna';
+import  { Flex, Center, Heading } from "@chakra-ui/react";
 
-function Faq(){
+export interface FaqProps{
+    qnaProps: QnaProps
+}
+
+export function Faq({ qnaProps }: FaqProps){
     return (
         <Center
             paddingLeft={'20px'}
@@ -9,16 +13,13 @@ function Faq(){
             paddingTop={'80px'}
             paddingBottom={'80px'}>
             <Flex
-                // borderWidth={'1px'}
-                borderColor={'red'}
+                borderColor='red'
                 flexDirection={'column'}
-                padding={'20px'}
-                marginLeft={'10%'}
-                marginRight={'10%'}
-                // marginRight={'171.5px'}
+                padding={{ base: '10px', lg: '20px' }}
+                marginLeft={{ base: '6%', lg: '10%' }}
+                marginRight={{ base: '6%', lg: '10%' }}
             >
                 <Heading
-                    // borderWidth={'1px'}
                     textAlign={'center'}
                     padding={'20px'}
                     marginBottom={'20px'}
@@ -32,14 +33,9 @@ function Faq(){
                     flexGrow={'wrap'}
                     flexFlow={'row wrap'}
                 >
-                    <Qna/>
-                    <Qna/>
-                    <Qna/>
-                    <Qna/>
+                    <Qna items={qnaProps.items}/>
                 </Flex>
             </Flex>
         </Center>
     )
 }
-
-export default Faq;

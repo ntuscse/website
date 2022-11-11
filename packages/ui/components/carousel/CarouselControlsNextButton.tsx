@@ -1,13 +1,7 @@
+import { Box, IconButton } from "@chakra-ui/react";
+import { ArrowRightIcon } from "@chakra-ui/icons";
 
-
-
-
-
-import {Box, IconButton, Flex} from "@chakra-ui/react";
-import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
-
-export default function CarouselControlsNext(){
-
+export const CarouselControlsNextButton = () => {
     return (
         <Box>
             <IconButton
@@ -21,11 +15,8 @@ export default function CarouselControlsNext(){
                 right={'2'}
                 rounded={20}
                 top={'45%'}
-                // top={'${calc(50%-25px)}'}
                 icon={<ArrowRightIcon/>}
             >Next</IconButton>
-
         </Box>
     )
-
 }

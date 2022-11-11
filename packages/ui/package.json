@@ -35,8 +35,11 @@
     "framer-motion": "^6",
     "react": "^18.2.0",
     "react-dom": "18.2.0",
+    "storybook-addon-next": "^1.6.10",
     "tsconfig": "*",
     "typescript": "^4.5.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "storybook-addon-next": "^1.6.10"
+  }
 }
