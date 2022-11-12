@@ -14,7 +14,7 @@ export const Hero = ({ backgroundImage, backgroundGradient = '', buttons, text, 
         // Background Image
         <Flex
             w='full'
-            h={{ base: '400px', md: '625px' }}
+            h={{ base: '400px', md: '500px' }}
             backgroundImage={ backgroundImage }
             backgroundSize='cover'
             backgroundPosition='center center'

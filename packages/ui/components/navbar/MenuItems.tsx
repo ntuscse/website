@@ -19,7 +19,7 @@ export const MenuItems = ({ isOpen=false, links }: MenuItemProps) => {
                 justify={"flex-end"}
                 direction={{ base: "column", xl: "row" }}
                 pt={0}
-                fontSize={{ base: 22, xl: 18 }}
+                fontSize={{ base: 22, xl: 15 }}
                 fontWeight="bold"
             >
                 {links.map(link => {
