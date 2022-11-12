@@ -1,7 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true
+  swcMinify: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'clubs.ntu.edu.sg',
+        port: '',
+        pathname: '/csec/wp-content/uploads/**'
+      }
+    ]
+  }
 }
 
 const withTM = require("next-transpile-modules")(["ui"]);
