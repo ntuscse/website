@@ -1,4 +1,4 @@
-import { CarouselSpace, Faq } from "ui"
+import { CarouselSpace, FooterContentButton } from "ui"
 
 function Sponsors() {
     return (
@@ -78,14 +78,8 @@ function Sponsors() {
                         alt: 'Chip Guan Heng' },
                 ]
             }}/>
-            <Faq qnaProps={{
-                items: [
-            { question: '', answer: '' },
-            { question: '', answer: '' },
-            { question: '', answer: '' },
-            { question: '', answer: '' }
-                ]
-            }}/>
+
+            <FooterContentButton href="./contact" label="Contact Us" title="Wanna Sponsor us or work on a event together!"/>
 
         </>
     )
