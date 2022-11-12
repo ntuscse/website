@@ -1,23 +1,26 @@
-import Qna, { QnaProps } from './Qna';
-import  { Flex, Center, Heading } from "@chakra-ui/react";
+import Qna, { QnaProps } from "./Qna"
+import { Grid, Center, Heading, Flex } from '@chakra-ui/react'
 
 export interface FaqProps{
     qnaProps: QnaProps
 }
 
-export function Faq({ qnaProps }: FaqProps){
+export const Faq = ({ qnaProps }: FaqProps) => {
+
     return (
         <Center
-            paddingLeft={'20px'}
-            paddingRight={'20px'}
-            paddingTop={'80px'}
-            paddingBottom={'80px'}>
+            paddingLeft={['5px', '20px']}
+            paddingRight={['5px', '20px']}
+            paddingTop={['20px', '80px']}
+            paddingBottom={['20px', '80px']}>
             <Flex
                 borderColor='red'
                 flexDirection={'column'}
-                padding={{ base: '10px', lg: '20px' }}
-                marginLeft={{ base: '6%', lg: '10%' }}
-                marginRight={{ base: '6%', lg: '10%' }}
+                padding={{ base: '5px', lg: '10px' }}
+                marginLeft={['0%', '5%']}
+                marginRight={['0%', '5%']}
+                // marginLeft={{ base: '6%', lg: '10%' }}
+                // marginRight={{ base: '6%', lg: '10%' }}
             >
                 <Heading
                     textAlign={'center'}
@@ -27,14 +30,13 @@ export function Faq({ qnaProps }: FaqProps){
                     as={'b'}>
                     Frequently Asked Questions
                 </Heading>
-                <Flex
-                    flexDirection={'row'}
-                    justifyContent={'center'}
-                    flexGrow={'wrap'}
-                    flexFlow={'row wrap'}
+                <Grid
+                    justifyItems={'center'}
+                    templateColumns={['repeat(1, 1fr)', 'repeat(2, 1fr)']}
+
                 >
                     <Qna items={qnaProps.items}/>
-                </Flex>
+                </Grid>
             </Flex>
         </Center>
     )

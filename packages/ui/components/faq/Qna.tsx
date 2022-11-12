@@ -17,9 +17,8 @@ function qna({ items }: QnaProps){
                         borderColor={'blue'}
                         justifyContent={'center'}
                         flexDirection={'column'}
-                        maxWidth={'50%'}
                         marginBottom={'30px'}
-                        padding={'20px'}
+                        padding={['5px', '15px']}
                     >
                         <Heading textAlign={'left'} fontSize={'2xl'} as={'b'}
                                  marginBottom={'10px'}>{item.question ? item.question : defaultQuestion}</Heading>
