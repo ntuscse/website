@@ -27,7 +27,7 @@ export const Footer = ({ links, vercelpoweredProps }: FooterProps) => {
             alignItems="center"
         >
           {/* Vercel Tag */}
-          <Box pt={ { base:"10px" } } pb={ { base:"30px" } }>
+          <Box pt={ { base:"10px", md:"0px" } } pb={ { base:"30px", md:"0px" } } alignSelf={ { md:"center" } }>
             <Flex justifyContent={{ base:'center', md:'flex-start' }} alignItems='center'>
               <VercelPowered {...vercelpoweredProps} />
             </Flex>

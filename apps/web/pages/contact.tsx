@@ -1,14 +1,13 @@
 import { Map, MapProps } from "ui";
 import { Heading, Box, Text, Link, Grid, GridItem } from '@chakra-ui/react';
 
-function Contact() {
+const Contact = () => {
     const mapProps: MapProps = {
         title: "Nanyang Technological University"
     }
-
     return (
         <div>
-            <Box px="20px" pb={ { base:'10px', md:'50px' } } pt={ { base:'50px' , md:'100px' } }textAlign="center">
+            <Box px="20px" pb={ { base:'10px', md:'50px' } } pt={ { base:'50px' , md:'100px' } } textAlign="center">
                 <Heading
                     as="h1"
                     size='xl'
@@ -19,7 +18,7 @@ function Contact() {
                     Contact Us
                 </Heading>
             </Box>
-            <Map title={mapProps.title}></Map>
+            <Map title={ mapProps.title }></Map>
             <Box w="100%" px='20px' py={ { base:'40px', md:'80px' } } bg="black">
                 <Grid templateColumns={ { base: 'repeat(1, 1fr)', md: 'repeat(3, 1fr)' } } maxW="1140px" mx='auto'>
                     <GridItem p='20px' pb={ { base:'30px', md:'20px' } } textAlign={ { base:'center', md:'left' } }>
