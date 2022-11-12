@@ -19,6 +19,7 @@ export const BlogCardImage = ({ alt, src, ...props }: BlogCardImageProps) => {
                     src={ src }
                     alt={ alt }
                     fill={ true }
+                    style={{ objectFit: 'cover' }}
                     { ...props }/>
             </Link>
         </Box>

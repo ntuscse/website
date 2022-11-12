@@ -10,7 +10,7 @@ export interface BlogCardContentProps {
 
 export const BlogCardContent = ({ title, body, date }: BlogCardContentProps) => {
     return (
-        <Stack pb={ 12 } fontFamily='Verdana'>
+        <Stack fontFamily='Verdana'>
             {/* Title */}
             <Heading
                 color='gray.700'

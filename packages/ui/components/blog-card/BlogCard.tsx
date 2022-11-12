@@ -19,6 +19,7 @@ export const BlogCard = ({ link, blogCardImageProps, blogCardContentProps }: Blo
                 <Box
                     maxW='445px'
                     w='full'
+                    minH='600px'
                     bg='white'
                     boxShadow='2xl'
                     rounded='2xl'
