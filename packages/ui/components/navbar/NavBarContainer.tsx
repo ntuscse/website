@@ -12,7 +12,6 @@ export const NavBarContainer = ({ children, ...props }: NavBarContainerProps) =>
             align="center"
             justify="space-between"
             w="100%"
-            mb={8}
             p={[3, 3, 6, 6]}
             pl={[4, 4, 5, 5]}
             pr={8}
