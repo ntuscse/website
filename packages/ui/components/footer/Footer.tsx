@@ -1,8 +1,6 @@
 import { Flex, Grid, GridItem, VStack } from "@chakra-ui/react";
 import { FooterLink } from "./FooterLink";
 import { VercelPowered, VercelPoweredProps } from 'ui';
-// import { FooterContentButton, FooterContentButtonProps } from "./FooterContentButton";
-// import { FooterContentText, FooterContentTextProps } from "./FooterContentText";
 
 export interface FooterProps {
   links: Array<{
@@ -11,16 +9,11 @@ export interface FooterProps {
     position: number;
   }>;
   vercelpoweredProps: VercelPoweredProps;
-  // footerContentButtonProps?: FooterContentButtonProps;
-  // footerContentTextProps?: FooterContentTextProps;
 }
 
 export const Footer = ({ links, vercelpoweredProps }: FooterProps) => {
   return (
       <VStack bg='black' py={{ base:'10px', md:'5px' }} px={{ base:'5px', md:'30px' }}>
-        {/* Footer Content */}
-        {/*{ footerContentTextProps && <FooterContentText { ...footerContentTextProps } /> }*/}
-        {/*{ footerContentButtonProps && <FooterContentButton {...footerContentButtonProps} /> }*/}
 
         {/* Main Footer */}
         <Grid w='100%' py='10px' templateColumns={ { base: 'repeat(1, 1fr)', md: 'repeat(14, 1fr)' } } gap={ 4 }>

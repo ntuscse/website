@@ -21,11 +21,11 @@ export default function App({ Component, pageProps }: AppProps) {
     }
     const footerProps: FooterProps = {
         links: [
-            { label: "home", href: "/" , position: 12 },
-            { label: "acads", href: "/acads", position: 13 },
-            { label: "events", href: "/events", position: 14 },
-            { label: "sponsors", href: "/sponsors", position: 15 },
-            { label: "contact us", href: "/contact-us", position: 16 },
+            { label: "Home", href: "/" , position: 12 },
+            { label: "Academics", href: "/academics", position: 13 },
+            { label: "Events", href: "/events", position: 14 },
+            { label: "Sponsors", href: "/sponsors", position: 15 },
+            { label: "Contact", href: "/contact", position: 16 },
         ],
         vercelpoweredProps: {
             href: 'https://vercel.com/?utm_source=cse-it&&utm_campaign=oss',
