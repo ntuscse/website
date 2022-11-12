@@ -13,7 +13,7 @@ export interface FooterProps {
 
 export const Footer = ({ links, vercelpoweredProps }: FooterProps) => {
   return (
-      <VStack bg='black' py={{ base:'10px', md:'5px' }} px={{ base:'5px', md:'30px' }}>
+      <VStack bg='black' py={{ base:'10px', md:'5px' }} px={{ base:'5px', lg:'70px' }}>
 
         {/* Main Footer */}
         <Grid w='100%' py='10px' templateColumns={ { base: 'repeat(1, 1fr)', md: 'repeat(14, 1fr)' } } gap={ 4 }>

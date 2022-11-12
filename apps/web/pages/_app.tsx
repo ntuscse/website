@@ -11,7 +11,7 @@ export default function App({ Component, pageProps }: AppProps) {
             { label: "Events", href: "/events" },
             { label: "Sponsors", href: "/sponsors" },
             { label: "Contact", href: "/contact" },
-            { label: "blog", href: "/blog" },
+            { label: "Blog", href: "/blog" },
         ],
         logoProps: {
             src: '/scse-logo.png',
