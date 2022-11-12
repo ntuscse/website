@@ -3,12 +3,13 @@ import { Button, ButtonProps } from "ui"
 
 export interface HeroProps extends FlexProps {
     backgroundImage: string
+    backgroundGradient?: string
     buttons?: Array<ButtonProps>
     text?: string
     textProps?: TextProps
 }
 
-export const Hero = ({ backgroundImage, buttons, text, textProps, ...flexProps }: HeroProps) => {
+export const Hero = ({ backgroundImage, backgroundGradient = '', buttons, text, textProps, ...flexProps }: HeroProps) => {
     return (
         // Background Image
         <Flex
@@ -22,7 +23,7 @@ export const Hero = ({ backgroundImage, buttons, text, textProps, ...flexProps }
                 w='full'
                 justify='center'
                 px={{ base: 4, md: 8 }}
-                bgGradient={ 'linear(to-r, blackAlpha.600, transparent)' }>
+                bgGradient={ backgroundGradient }>
 
                 {/* Content */}
                 <Stack align='center'
