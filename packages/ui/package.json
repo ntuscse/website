@@ -38,8 +38,5 @@
     "storybook-addon-next": "^1.6.10",
     "tsconfig": "*",
     "typescript": "^4.5.2"
-  },
-  "dependencies": {
-    "storybook-addon-next": "^1.6.10"
   }
 }
