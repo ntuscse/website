@@ -11,7 +11,7 @@ const App = ({ Component, pageProps }: AppProps) => {
             { label: "Events", href: "/events" },
             { label: "Sponsors", href: "/sponsors" },
             { label: "Contact", href: "/contact" },
-            { label: "Blog", href: "/blog" },
+            { label: "BLOG", href: "/blog", menuLinkStyle: "button.golden" },
         ],
         logoProps: {
             src: '/scse-logo.png',
