@@ -15,7 +15,7 @@ const Events = () => {
                     gap={ 12 }
                     pb={ 32 }>
                     { blogsData.map(blogCardProps => (
-                        <GridItem >
+                        <GridItem key={ blogCardProps.blogCardContentProps.title }>
                             <BlogCard { ...blogCardProps } />
                         </GridItem>))}
                 </Grid>

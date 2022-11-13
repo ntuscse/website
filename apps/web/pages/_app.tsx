@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app'
 import { ChakraProvider } from "@chakra-ui/react";
 import { Layout, NavBarProps, FooterProps } from 'ui'
 
-export default function App({ Component, pageProps }: AppProps) {
+const App = ({ Component, pageProps }: AppProps) => {
     const navbarProps: NavBarProps = {
         links: [
             { label: "Home", href: "/" },
@@ -44,3 +44,5 @@ export default function App({ Component, pageProps }: AppProps) {
         </ChakraProvider>
     )
 }
+
+export default App

@@ -68,7 +68,7 @@ const Academics = () => {
                     <GridItem maxWidth={ 530 }>
                         <Text mb={ 30 }>To provide you with better support in the midst of the Covid-19 situation, we will be providing the PYP solutions online. Moreover, we would like your support for the following modules:</Text>
                         { modules.map(module => (
-                            <Text mb={ 30 }>– {module}</Text>
+                            <Text key={ module } mb={ 30 }>– { module }</Text>
                         )) }
                         <Text mb={ 30 }>
                             Currently we are not able to provide the complete softcopy version for those modules.
