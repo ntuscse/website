@@ -18,6 +18,7 @@ export const CarouselSpace = ({ heading, carouselItems }: CarouselProps) => {
             paddingLeft={0}
             paddingRight={0}
             flexDirection={'column'}
+            width={{ base: '90vw', md: '80vw', lg: '80vw' }}
         >
             { heading && <Heading fontSize={'4xl'} as={'b'} lineHeight={'1.1em'} textAlign={'center'}>{ heading }</Heading> }
             { heading && <Divider width={'50%'} marginTop={'15px'} marginBottom={'15px'} borderTop={'1px'} borderBottom={'0px'} borderColor={'black'}></Divider> }
