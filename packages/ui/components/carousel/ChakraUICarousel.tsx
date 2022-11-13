@@ -37,14 +37,14 @@ export const ChakraUICarousel = ({ carouselItems }: ChakraUICarouselProps) => {
                 interval={ 2000 }
             >
                 { carouselItems.map((item) =>
-                    (<Carousel.Item key={ item.alt }>
-                        <Center height='200px' width={{ base: '280px', md: '500px', lg: '900px' }}>
-                            <Link href={ item.href } style={{ justifyContent: 'center', justifyItems: 'center', height : "100%", maxWidth: "50%" }}>
+                    (<Carousel.Item key={ item.alt } >
+                        <Center height='200px' width={{ base: '90vw', md: '80vw', lg: '80vw' }}>
+                            <Link href={ item.href } style={{ justifyContent: 'center', alignItems: 'center', height : "100%", maxWidth: "50%", display:"flex" }}>
                                 <Image
                                     className="d-block"
                                     height = { 100 }
                                     width = { 350 }
-                                    style={{ height : "100%", width: "100%" }}
+                                    style={{ height : "auto", width: "100%", maxHeight:"100%" }}
                                     src={ item.src }
                                     alt={ item.alt }
                                 />
