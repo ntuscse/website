@@ -1,7 +1,7 @@
 import styles from '../styles/Home.module.css'
 import Link from 'next/link'
 
-export default function About() {
+const About = () => {
   return (
       <div className={styles.container}>
         <main className={styles.main}>
@@ -13,3 +13,5 @@ export default function About() {
       </div>
   )
 }
+
+export default About
