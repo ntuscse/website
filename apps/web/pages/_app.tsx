@@ -11,7 +11,7 @@ const App = ({ Component, pageProps }: AppProps) => {
             { label: "Events", href: "/events" },
             { label: "Sponsors", href: "/sponsors" },
             { label: "Contact", href: "/contact" },
-            { label: "BLOG", href: "/blog", menuLinkStyle: "button.golden" },
+            { label: "BLOG", href: "https://clubs.ntu.edu.sg/csec/blog/", menuLinkStyle: "button.golden" },
         ],
         logoProps: {
             src: '/scse-logo.png',
