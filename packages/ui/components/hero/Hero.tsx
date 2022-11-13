@@ -30,25 +30,19 @@ export const Hero = ({ backgroundImage, backgroundGradient = '', buttons, text, 
                        justify='center'
                        textAlign='center'
                        spacing={ 6 }
-                       width={{ base: '75%', lg: '50%' }}
-                       height={{ base: '75%', lg: '50%' }}
-                       // White translucent box
-                       _before={ text || buttons ? { content: '""',
-                           bgColor:'white',
-                           opacity:'0.4',
-                           width: { base: '75%', lg: '50%' },
-                           height: { base: '75%', lg: '50%' },
-                           position: 'absolute',
-                           top: { base: '12.5%', lg: '25%' },
-                           right: { base: '12.5%', lg: '25%' } } : { content: '""' }}>
+                       width={{ base: '75%', md: '70%', lg: '65%' }}
+                       height={{ base: '75%', md: '70%', lg: '50%' }}
+                       padding={{ base: 5, md: 10, lg: 20 }}
+                       bgColor={ text || buttons ? 'rgba(255,255,255,0.4)' : 'transparent' }
+                       transitionDuration="200ms">
                     {/* Text */}
                     <Text
+                        role='heading'
                         color='black'
                         fontWeight={ 700 }
                         fontFamily='Verdana'
                         lineHeight={ 1.2 }
                         fontSize={{ base: '32px', md: '48px' }}
-                        zIndex={ 1 }
                         { ...textProps }>
                         { text }
                     </Text>

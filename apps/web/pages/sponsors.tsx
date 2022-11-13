@@ -2,7 +2,7 @@ import { CarouselSpace, FooterContentButton } from "ui"
 import { sponsorsImageData } from "@/pages/api/sponsors";
 import { Divider, Heading, VStack } from "@chakra-ui/react";
 
-function Sponsors() {
+const Sponsors = () => {
     return (
         <>
             <VStack pt={{ base: 5, lg: 10 }} minH='60vh'>

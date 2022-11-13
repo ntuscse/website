@@ -23,7 +23,13 @@ export const MenuItems = ({ isOpen=false, links }: MenuItemProps) => {
                 fontWeight="bold"
             >
                 {links.map(link => {
-                    return (<MenuLink key={link.label} label={link.label} href={link.href} />)
+                    return (
+                        <MenuLink
+                            key={ link.label }
+                            label={ link.label }
+                            href={ link.href }
+                            menuLinkStyle={ link.menuLinkStyle }
+                        />)
                 })}
             </Stack>
         </Box>
