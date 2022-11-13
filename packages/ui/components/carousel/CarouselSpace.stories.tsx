@@ -13,6 +13,7 @@ const Template: ComponentStory<typeof CarouselSpace> = (args) => <CarouselSpace 
 
 export const Primary = Template.bind({});
 Primary.args = {
+    heading: 'OUR SPONSORS',
     chakraUICarouselProps: {
         items: [
             {   src:'https://clubs.ntu.edu.sg/csec/wp-content/uploads/2022/01/xorex-logo.jpg',

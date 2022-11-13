@@ -1,41 +1,43 @@
-import Qna, { QnaProps } from "./Qna"
-import { Grid, Center, Heading, Flex } from '@chakra-ui/react'
+import { Qna, QnaProps } from "./Qna"
+import { Grid, Center, Heading, Flex, GridItem } from '@chakra-ui/react'
 
 export interface FaqProps{
-    qnaProps: QnaProps
+    heading: string
+    qnaList: Array<QnaProps>
 }
 
-export const Faq = ({ qnaProps }: FaqProps) => {
+export const Faq = ({ heading, qnaList }: FaqProps) => {
 
     return (
         <Center
-            paddingLeft={['5px', '20px']}
-            paddingRight={['5px', '20px']}
-            paddingTop={['20px', '80px']}
-            paddingBottom={['20px', '80px']}>
+            paddingLeft={{ base: '5px', lg: '20px' }}
+            paddingRight={{ base: '5px', lg: '20px' }}
+            paddingTop={{ base: '20px', lg: '80px' }}
+            paddingBottom={{ base: '20px', md: '80px' }}>
             <Flex
                 borderColor='red'
-                flexDirection={'column'}
+                flexDirection='column'
                 padding={{ base: '5px', lg: '10px' }}
-                marginLeft={['0%', '5%']}
-                marginRight={['0%', '5%']}
-                // marginLeft={{ base: '6%', lg: '10%' }}
-                // marginRight={{ base: '6%', lg: '10%' }}
+                marginLeft={{ base: '0%', md: '5%' }}
+                marginRight={{ base: '0%', md: '5%' }}
             >
                 <Heading
-                    textAlign={'center'}
-                    padding={'20px'}
-                    marginBottom={'20px'}
-                    fontSize={'3xl'}
-                    as={'b'}>
-                    Frequently Asked Questions
+                    textAlign='center'
+                    padding='20px'
+                    marginBottom='20px'
+                    fontSize='3xl'
+                    as='b'>
+                    { heading }
                 </Heading>
                 <Grid
-                    justifyItems={'center'}
-                    templateColumns={['repeat(1, 1fr)', 'repeat(2, 1fr)']}
-
+                    justifyItems='flex-start'
+                    templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }}
                 >
-                    <Qna items={qnaProps.items}/>
+                    { qnaList.map(qna => (
+                        <GridItem>
+                            <Qna question={ qna.question} answer={ qna.answer }/>
+                        </GridItem>
+                    )) }
                 </Grid>
             </Flex>
         </Center>

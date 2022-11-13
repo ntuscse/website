@@ -21,12 +21,14 @@ export const ChakraUICarousel = ({ items }: ChakraUICarouselProps) => {
 
     return (
         <>
-            <link
-                rel="stylesheet"
-                href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
-                integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
-                crossOrigin="anonymous"
-            />
+            <header>
+                <link
+                    rel="stylesheet"
+                    href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+                    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+                    crossOrigin="anonymous"
+                />
+            </header>
             <Carousel
                 activeIndex={ index }
                 onSelect={ handleSelect }
@@ -35,7 +37,7 @@ export const ChakraUICarousel = ({ items }: ChakraUICarouselProps) => {
                 interval={ 2000 }
             >
                 { items.map((item) =>
-                    (<Carousel.Item>
+                    (<Carousel.Item key={ item.alt }>
                         <Center height='200px' width={{ base: '280px', md: '500px', lg: '900px' }}>
                             <Link href={ item.href } style={{ justifyContent: 'center', justifyItems: 'center', height : "100%", maxWidth: "50%" }}>
                                 <Image

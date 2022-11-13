@@ -3,10 +3,11 @@ import { ChakraUICarousel } from "./ChakraUICarousel";
 import { ChakraUICarouselProps } from "./ChakraUICarousel"
 
 export interface CarouselProps {
+    heading?: string;
     chakraUICarouselProps: ChakraUICarouselProps;
 }
 
-export const CarouselSpace = ({ chakraUICarouselProps }: CarouselProps) => {
+export const CarouselSpace = ({ heading, chakraUICarouselProps }: CarouselProps) => {
     return (
         <Flex
             bg={'#e6e3e3'}
@@ -19,8 +20,8 @@ export const CarouselSpace = ({ chakraUICarouselProps }: CarouselProps) => {
             paddingRight={0}
             flexDirection={'column'}
         >
-            <Heading fontSize={'4xl'} as={'b'} lineHeight={'1.1em'} textAlign={'center'}>OUR SPONSORS</Heading>
-            <Divider width={'50%'} marginTop={'15px'} marginBottom={'15px'} borderTop={'1px'} borderBottom={'0px'} borderColor={'black'}></Divider>
+            { heading && <Heading fontSize={'4xl'} as={'b'} lineHeight={'1.1em'} textAlign={'center'}>{ heading }</Heading> }
+            { heading && <Divider width={'50%'} marginTop={'15px'} marginBottom={'15px'} borderTop={'1px'} borderBottom={'0px'} borderColor={'black'}></Divider> }
 
             <Flex paddingLeft={'10%'}
                   paddingRight={'10%'}
