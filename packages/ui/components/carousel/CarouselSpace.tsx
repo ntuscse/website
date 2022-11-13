@@ -2,12 +2,11 @@ import { Flex, Heading, Divider } from "@chakra-ui/react";
 import { ChakraUICarousel } from "./ChakraUICarousel";
 import { ChakraUICarouselProps } from "./ChakraUICarousel"
 
-export interface CarouselProps {
+export interface CarouselProps extends ChakraUICarouselProps {
     heading?: string;
-    chakraUICarouselProps: ChakraUICarouselProps;
 }
 
-export const CarouselSpace = ({ heading, chakraUICarouselProps }: CarouselProps) => {
+export const CarouselSpace = ({ heading, carouselItems }: CarouselProps) => {
     return (
         <Flex
             bg={'#e6e3e3'}
@@ -26,7 +25,7 @@ export const CarouselSpace = ({ heading, chakraUICarouselProps }: CarouselProps)
             <Flex paddingLeft={'10%'}
                   paddingRight={'10%'}
                 >
-                <ChakraUICarousel items={ chakraUICarouselProps.items } />
+                <ChakraUICarousel carouselItems={ carouselItems } />
             </Flex>
         </Flex>
     )

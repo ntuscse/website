@@ -1,7 +1,7 @@
 import { ChakraUICarouselProps } from "ui/components/carousel/ChakraUICarousel";
 
 export const sponsorsImageData: ChakraUICarouselProps = {
-    items: [
+    carouselItems: [
         {
             src: 'https://clubs.ntu.edu.sg/csec/wp-content/uploads/2022/01/xorex-logo.jpg',
             href: 'http://xp.com.sg/',

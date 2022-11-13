@@ -6,13 +6,13 @@ import { CarouselControlsNextButton } from "./CarouselControlsNextButton";
 import { CarouselControlsPrevButton } from "./CarouselControlsPrevButton";
 
 export interface ChakraUICarouselProps {
-    items: Array<{
+    carouselItems: Array<{
         href: string
         src: string
         alt: string}>
 }
 
-export const ChakraUICarousel = ({ items }: ChakraUICarouselProps) => {
+export const ChakraUICarousel = ({ carouselItems }: ChakraUICarouselProps) => {
     const [index, setIndex] = useState(0);
 
     const handleSelect = (selectedIndex: number) => {
@@ -36,7 +36,7 @@ export const ChakraUICarousel = ({ items }: ChakraUICarouselProps) => {
                 prevIcon={ <CarouselControlsPrevButton/> }
                 interval={ 2000 }
             >
-                { items.map((item) =>
+                { carouselItems.map((item) =>
                     (<Carousel.Item key={ item.alt }>
                         <Center height='200px' width={{ base: '280px', md: '500px', lg: '900px' }}>
                             <Link href={ item.href } style={{ justifyContent: 'center', justifyItems: 'center', height : "100%", maxWidth: "50%" }}>

@@ -8,7 +8,7 @@ function Sponsors() {
             <VStack pt={{ base: 5, lg: 10 }} minH='60vh'>
                 <Heading>OUR SPONSORS</Heading>
                 <Divider width='50%' marginTop='15px' marginBottom='15px' borderTop='1px' borderBottom='0px' borderColor='black'></Divider>
-                <CarouselSpace chakraUICarouselProps={ sponsorsImageData }/>
+                <CarouselSpace carouselItems={ sponsorsImageData.carouselItems }/>
             </VStack>
             <FooterContentButton href="./contact" label="Contact Us" title="Wanna Sponsor us or work on a event together!"/>
         </>
