@@ -33,6 +33,7 @@ const Contact = () => {
         <div>
             <Box px="20px" pb={ { base:'10px', md:'50px' } } pt={ { base:'50px' , md:'100px' } } textAlign="center">
                 <Heading
+                    role="heading"
                     as="h1"
                     size='xl'
                     textTransform="uppercase"

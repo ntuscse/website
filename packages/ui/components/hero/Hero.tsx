@@ -37,6 +37,7 @@ export const Hero = ({ backgroundImage, backgroundGradient = '', buttons, text, 
                        transitionDuration="200ms">
                     {/* Text */}
                     <Text
+                        role='heading'
                         color='black'
                         fontWeight={ 700 }
                         fontFamily='Verdana'
