@@ -1,12 +1,5 @@
 module.exports = {
   parser: "@typescript-eslint/parser",
-  parserOptions: {
-    tsconfigRootDir: __dirname,
-    project: [
-      '../../apps/*/tsconfig.json',
-      '../../packages/*/tsconfig.json'
-    ],
-  },
   env: {
     es2021: true
   },
@@ -19,8 +12,6 @@ module.exports = {
   ],
   extends: [
     "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "next/core-web-vitals",
     "turbo",
     "prettier",
@@ -33,9 +24,6 @@ module.exports = {
   rules: {
     // common
     "object-curly-spacing": ["error", "always"],
-    // typescript
-    "@typescript-eslint/no-empty-interface": ["off", "never"],
-    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
     //  next
     "@next/next/no-html-link-for-pages": "off",
     // react
@@ -49,6 +37,27 @@ module.exports = {
     "cypress/no-pause": "error"
   },
   overrides: [
+    // typescript
+    {
+      files: ['*.ts', '*.tsx'],
+      extends: [
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+      ],
+      rules: {
+        "@typescript-eslint/no-empty-interface": ["off", "never"],
+        "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+      },
+      parserOptions: {
+        tsconfigRootDir: __dirname,
+        project: [
+          "../../packages/**/tsconfig.json",
+          "../../apps/**/tsconfig.json"
+        ]
+      }
+    },
+
+    //storybook
     {
       files: ["**/*.stories.*", "**/*.story.*"],
       rules: {
