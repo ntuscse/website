@@ -17,19 +17,19 @@ export const Logo = ({ src, alt, text } : LogoProps) => {
                 direction={"row"}
             >
                 <Box
-                    minWidth={{ base: 75, md: 125 }}
-                    maxWidth={{ base: 75, md: 125 }}
+                    minWidth={{ base: 75, md: 100 }}
+                    maxWidth={{ base: 75, md: 100 }}
                     transitionDuration="200ms"
                 >
                     <Image
                         src={src}
                         alt={alt}
-                        width={125}
-                        height={125}
+                        width={100}
+                        height={100}
                     />
                 </Box>
                 <Text
-                    fontSize={[12, 12, 30, 30]}
+                    fontSize={[12, 12, 24, 24]}
                     fontWeight="bold"
                     transitionDuration="200ms"
                 >
