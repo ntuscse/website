@@ -1,4 +1,4 @@
-import { Flex, Grid, GridItem, VStack } from "@chakra-ui/react";
+import { Flex, VStack, Box } from "@chakra-ui/react";
 import { FooterLink } from "./FooterLink";
 import { VercelPowered, VercelPoweredProps } from 'ui';
 
@@ -13,24 +13,42 @@ export interface FooterProps {
 
 export const Footer = ({ links, vercelpoweredProps }: FooterProps) => {
   return (
-      <VStack bg='black' py={{ base:'10px', md:'5px' }} px={{ base:'5px', lg:'70px' }}>
-
+      <VStack
+          bg='black'
+          py={{ base:'50px', md:'5px' }}
+          px={{ base:'5px', md:'70px' }}
+      >
         {/* Main Footer */}
-        <Grid w='100%' py='10px' templateColumns={ { base: 'repeat(1, 1fr)', md: 'repeat(14, 1fr)' } } gap={ 4 }>
+        <Flex
+            w='100%'
+            py='10px'
+            flexDir={{ base:"column", md:"row" }}
+            justifyContent="space-between"
+            alignItems="center"
+        >
           {/* Vercel Tag */}
-          <GridItem colSpan={ { base:1, md: 5 } }>
+          <Box pt={ { base:"10px", md:"0px" } } pb={ { base:"30px", md:"0px" } } alignSelf={ { md:"center" } }>
             <Flex justifyContent={{ base:'center', md:'flex-start' }} alignItems='center'>
               <VercelPowered {...vercelpoweredProps} />
             </Flex>
-          </GridItem>
-
-          {/* Footer Links */}
-          { links.map(link => (
-              <GridItem key={ link.label } textAlign="center" colStart={{ base:1, md:link.position }}>
-                <FooterLink href={ link.href } label={ link.label } />
-              </GridItem>
-          ))}
-        </Grid>
+          </Box>
+          {/* Footer Links Container */}
+          <Flex alignSelf={ { md:"center" } }
+                justifySelf={ { md:"flex-end" } }
+                flexDir={ { base:'column', md:'row' } }
+          >
+            {/* Footer Links */}
+            { links.map(link => (
+                <Box key={ link.label }
+                     textAlign="center"
+                     pl={ { base:"0px", md:"40px" } }
+                     py={ { base:"10px" } }
+                >
+                  <FooterLink href={ link.href } label={ link.label } />
+                </Box>
+            ))}
+          </Flex>
+        </Flex>
       </VStack>
   )
 }
