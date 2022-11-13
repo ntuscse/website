@@ -1,9 +1,33 @@
-import { Map, MapProps } from "ui";
+import { Map, MapProps, Faq, FaqProps } from "ui";
 import { Heading, Box, Text, Link, Grid, GridItem } from '@chakra-ui/react';
 
 const Contact = () => {
     const mapProps: MapProps = {
         title: "Nanyang Technological University"
+    }
+    const faqProps: FaqProps = {
+        heading: 'Frequently Asked Questions',
+        qnaList: [
+            {
+                question: 'What is the level required?',
+                answer: 'Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. ' +
+                    'The passage is attributed to an unknown typesetter in the 15th century who is thought to have.'
+            },
+            {
+                question: 'Level required?',
+                answer: 'Lorem ipsum.'
+            },
+            {
+                question: 'What is the level required?',
+                answer: 'Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. ' +
+                    'The passage is attributed to an unknown typesetter in the 15th century who is thought to have.'
+            },
+            {
+                question: 'What is the level required?',
+                answer: 'Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. ' +
+                    'The passage is attributed to an unknown typesetter in the 15th century who is thought to have.'
+            }
+        ]
     }
     return (
         <div>
@@ -36,15 +60,7 @@ const Contact = () => {
                 </Grid>
             </Box>
             <Box py={ { base:'40px', md:'80px' } } textAlign="center" px='20px'>
-                <Heading
-                    as="h2"
-                    size={ { base:'md', md:'lg' } }
-                    textTransform="uppercase"
-                    fontWeight="900"
-                    fontFamily="Roboto, Sans-serif"
-                >
-                    Frequently Asked Questions
-                </Heading>
+                <Faq heading={faqProps.heading} qnaList={faqProps.qnaList}/>
             </Box>
         </div>
     )
