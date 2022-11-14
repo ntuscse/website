@@ -19,7 +19,7 @@ export const NavBarContainer = ({ children, ...props }: NavBarContainerProps) =>
             color="black"
             borderBottom="1px"
             borderColor="gray.200"
-            fontFamily={"Verdana Light"}
+            // fontFamily={"Verdana Light"}
             {...props}
         >
             { children }

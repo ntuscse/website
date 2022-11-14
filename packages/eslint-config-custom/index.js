@@ -18,7 +18,6 @@ module.exports = {
     "plugin:storybook/recommended",
   ],
   plugins: [
-    "@typescript-eslint",
     "cypress"
   ],
   rules: {
@@ -43,6 +42,9 @@ module.exports = {
       extends: [
         "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
+      ],
+      plugins: [
+        "@typescript-eslint",
       ],
       rules: {
         "@typescript-eslint/no-empty-interface": ["off", "never"],

@@ -2,6 +2,11 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import { ChakraProvider } from "@chakra-ui/react";
 import { Layout, NavBarProps, FooterProps } from 'ui'
+import { theme } from "ui/theme";
+import '@fontsource/roboto/400.css'
+import '@fontsource/roboto/700.css'
+import '@fontsource/roboto-slab/400.css'
+import '@fontsource/poppins/400.css'
 
 const App = ({ Component, pageProps }: AppProps) => {
     const navbarProps: NavBarProps = {
@@ -37,7 +42,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     }
 
     return (
-        <ChakraProvider>
+        <ChakraProvider theme={theme}>
             <Layout navbarProps={navbarProps} footerProps={footerProps}>
                 <Component {...pageProps} />
             </Layout>

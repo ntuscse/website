@@ -38,5 +38,10 @@
     "storybook-addon-next": "^1.6.10",
     "tsconfig": "*",
     "typescript": "^4.5.2"
+  },
+  "dependencies": {
+    "@fontsource/poppins": "^4.5.10",
+    "@fontsource/roboto": "^4.5.8",
+    "@fontsource/roboto-slab": "^4.5.9"
   }
 }

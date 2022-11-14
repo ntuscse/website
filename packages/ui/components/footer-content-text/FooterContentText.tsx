@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import { Announcement, AnnouncementProps } from './Announcement';
 
 export interface FooterContentTextProps {
@@ -8,10 +8,10 @@ export interface FooterContentTextProps {
 
 export const FooterContentText = ( { announcements } : FooterContentTextProps) => {
     return (
-        <Box bg='black' alignSelf='flex-start' px='20px' pb='30px'>
+        <Flex bg='black' alignSelf='flex-start' alignItems="center" px='20px' pb='30px' flexDirection="column">
             { announcements.map(announcement => (
                 <Announcement key={announcement.title} title={announcement.title} description={announcement.description} />
             ))}
-        </Box>
+        </Flex>
     )
 }
