@@ -20,5 +20,8 @@ module.exports = {
   "features": {
     "emotionAlias": false,
   },
+  "typescript": {
+    "reactDocgen": 'react-docgen'
+  },
   "staticDirs": ['../assets'],
 }

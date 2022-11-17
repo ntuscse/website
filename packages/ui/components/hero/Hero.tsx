@@ -40,7 +40,6 @@ export const Hero = ({ backgroundImage, backgroundGradient = '', buttons, text, 
                         role='heading'
                         color='black'
                         fontWeight="bold"
-                        // fontFamily='Verdana'
                         lineHeight={ 1.2 }
                         fontSize={{ base: '32px', md: '48px' }}
                         { ...textProps }>
