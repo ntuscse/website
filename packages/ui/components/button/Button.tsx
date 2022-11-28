@@ -27,7 +27,6 @@ const PrimaryBlueButton = ({ label, href, ...props }: ButtonProps) => {
           bg='blue.600'
           color='white'
           _hover={{ bg: 'white', color: 'black' }}
-          fontFamily="Verdana Light"
           px={ 12 }
           py={ 8 }
           { ...props }>
@@ -46,7 +45,6 @@ const PrimaryBlackButton = ({ label, href, ...props }: ButtonProps) => {
           bg='black'
           color='white'
           _hover={{ bg: 'white', color: 'black' }}
-          fontFamily="Verdana Light"
           px={ 12 }
           py={ 8 }
           { ...props } >

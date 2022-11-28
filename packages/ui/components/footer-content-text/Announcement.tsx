@@ -9,7 +9,7 @@ export interface AnnouncementProps {
 export const Announcement = ({ title, description } : AnnouncementProps) => {
 
     return (
-        <Flex flexDir='column' px={{ base: '0px', md:'100px' }} py='20px'>
+        <Flex flexDir='column' px={{ base: '0px', md:'100px' }} py='20px' maxWidth="1400px">
             <Heading
                 as='h2'
                 size='lg'

@@ -26,7 +26,7 @@ const DefaultMenuLink = ({ label, href }: MenuLinkProps) => {
             _hover={{ color: "blue.600" }}
             _focus={{ color: "blue.600" }}
         >
-            <Text display="block">
+            <Text display="block" fontFamily="Poppins">
                 {label}
             </Text>
         </Link>

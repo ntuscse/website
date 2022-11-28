@@ -12,7 +12,7 @@ exports[`renders homepage unchanged 1`] = `
         class="chakra-stack css-1dgewg3"
       >
         <p
-          class="chakra-text css-17o9swi"
+          class="chakra-text css-17en64"
           role="heading"
         >
           WELCOME TO SCSE CLUB
@@ -21,7 +21,7 @@ exports[`renders homepage unchanged 1`] = `
           class="chakra-stack css-md5zo3"
         >
           <button
-            class="chakra-button css-15tw0ge"
+            class="chakra-button css-1cwf3eu"
             type="button"
           >
             <a
@@ -36,7 +36,7 @@ exports[`renders homepage unchanged 1`] = `
             </a>
           </button>
           <button
-            class="chakra-button css-yvvedi"
+            class="chakra-button css-1bittrd"
             type="button"
           >
             <a
@@ -401,7 +401,7 @@ exports[`renders homepage unchanged 1`] = `
       Let’s work together or Need Help
     </h2>
     <button
-      class="chakra-button css-38psts"
+      class="chakra-button css-1godlkh"
       type="button"
     >
       <a
