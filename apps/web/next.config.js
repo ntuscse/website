@@ -8,6 +8,11 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'clubs.ntu.edu.sg',
         pathname: '/csec/wp-content/uploads/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'clubs.ntu.edu.sg',
+        pathname: '/csec/**'
       }
     ]
   }
