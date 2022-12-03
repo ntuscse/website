@@ -1,4 +1,4 @@
-import { GetBlogPostsResponse, GetBlogPostResponse } from "../types/wordpress";
+import { GetAllBlogPostsResponse, GetAllBlogPostsSlugsResponse, GetBlogPostResponse } from "../types/wordpress";
 
 const API_URL = process.env.WORDPRESS_API_URL ?? ""
 
@@ -30,7 +30,7 @@ async function fetchAPI(query = '', { variables }: Record<string, unknown> = {})
 
 export async function getAllBlogPosts() {
   const data = await fetchAPI(`
-    {
+    query AllBlogPosts {
       posts(first: 1000) {
         edges {
           node {
@@ -54,7 +54,23 @@ export async function getAllBlogPosts() {
         }
       }
     }
-  `) as GetBlogPostsResponse
+  `) as GetAllBlogPostsSlugsResponse
+  return data?.posts
+}
+
+export async function getAllBlogPostsSlugs() {
+  const data = await fetchAPI(`
+    query AllBlogPostsSlugs {
+      posts(first: 1000) {
+        edges {
+          node {
+            id
+            slug
+          }
+        }
+      }
+    }
+  `) as GetAllBlogPostsResponse
   return data?.posts
 }
 

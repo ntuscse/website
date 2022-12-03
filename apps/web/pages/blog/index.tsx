@@ -1,12 +1,12 @@
 import { HStack, Text, VStack } from "@chakra-ui/react";
 import { GetStaticProps, GetStaticPropsResult } from "next";
 import { getAllBlogPosts } from "../../lib/api/wordpress";
-import { GetBlogPostsResponse } from "../../lib/types/wordpress";
+import { GetAllBlogPostsResponse } from "../../lib/types/wordpress";
 import Image from "next/image";
 import Link from "next/link";
 
 interface BlogProps {
-  posts: GetBlogPostsResponse["posts"]["edges"]
+  posts: GetAllBlogPostsResponse["posts"]["edges"]
 }
 
 const Blog = ({ posts }: BlogProps) => {
@@ -19,7 +19,7 @@ const Blog = ({ posts }: BlogProps) => {
               {post.node.featuredImage && <Image width={200} height={150} src={post.node.featuredImage.node.link}  alt=""/>}
               <VStack>
                 <Text>{post.node.title}</Text>
-                <Text>by {post.node.author.node.name} / {post.node.date}</Text>
+                <Text>by {post.node.author?.node?.name} / {post.node.date}</Text>
               </VStack>
             </HStack>
           </Link>

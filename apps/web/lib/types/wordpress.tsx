@@ -1,4 +1,4 @@
-  export interface GetBlogPostsResponse {
+export interface GetAllBlogPostsResponse {
   posts: {
     edges: Array<{
       node: {
@@ -18,6 +18,17 @@
             link: string;
           }
         }
+      }
+    }>
+  }
+}
+
+export interface GetAllBlogPostsSlugsResponse {
+  posts: {
+    edges: Array<{
+      node: {
+        id: string;
+        slug: string;
       }
     }>
   }

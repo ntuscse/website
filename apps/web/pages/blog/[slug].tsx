@@ -5,7 +5,7 @@ import {
   GetStaticPropsContext,
   GetStaticPropsResult,
 } from "next";
-import { getAllBlogPosts, getBlogPost } from "../../lib/api/wordpress";
+import { getAllBlogPostsSlugs, getBlogPost } from "../../lib/api/wordpress";
 import { GetBlogPostResponse } from "../../lib/types/wordpress";
 import { Box, Text } from "@chakra-ui/react";
 import Image from "next/image";
@@ -15,9 +15,8 @@ type BlogPostProps = GetBlogPostResponse["post"]
 const BlogPost = (props: BlogPostProps) => {
   return <>
     <Text>{props.title}</Text>
-    <Text><>{props.author.node.name} / {props.date}</></Text>
+    <Text><>{props.author?.node?.name} / {props.date}</></Text>
     {props.featuredImage && <Image width={200} height={150} src={props.featuredImage.node.link}  alt=""/>}
-    {/*<Text>{props.content}</Text>*/}
     <Box margin="auto" maxWidth="720px" dangerouslySetInnerHTML={{ __html: props.content }} />
   </>
 }
@@ -36,7 +35,7 @@ export const getStaticProps: GetStaticProps = async ({ params }: GetStaticPropsC
 
 // this function gets called at build time
 export const getStaticPaths: GetStaticPaths = async () => {
-  const data = await getAllBlogPosts()
+  const data = await getAllBlogPostsSlugs()
 
   return {
     paths: data.edges.map(edge => `/blog/${edge.node.slug}`),
