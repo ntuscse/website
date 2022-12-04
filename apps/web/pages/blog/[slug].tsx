@@ -7,18 +7,27 @@ import {
 } from "next";
 import { getAllBlogPostsSlugs, getBlogPost } from "../../lib/api/wordpress";
 import { GetBlogPostResponse } from "../../lib/types/wordpress";
-import { Box, Text } from "@chakra-ui/react";
-import Image from "next/image";
+import { Box, Heading, Text } from "@chakra-ui/react";
+import { getDisplayDate } from "../../lib/helpers/getDisplayDate";
+import Image from 'next/image'
 
 type BlogPostProps = GetBlogPostResponse["post"]
 
 const BlogPost = (props: BlogPostProps) => {
-  return <>
-    <Text>{props.title}</Text>
-    <Text><>{props.author?.node?.name} / {props.date}</></Text>
-    {props.featuredImage && <Image width={200} height={150} src={props.featuredImage.node.link}  alt=""/>}
-    <Box margin="auto" maxWidth="720px" dangerouslySetInnerHTML={{ __html: props.content }} />
-  </>
+  return (
+    <Box display="flex" flexDirection="column" alignItems="center" p="50px">
+      <Box textAlign="left" w="100%" maxW="720px" mb="50px">
+        <Heading size={{ base: "md", md: "lg" }} mb="8px">{props.title}</Heading>
+        <Text fontWeight="light" fontSize="13px">by {props.author?.node?.name} / {getDisplayDate(new Date(props.date))}</Text>
+        {props.featuredImage &&
+          <Box w="100%" position="relative" style={{ aspectRatio: 1.5 }} mt="50px">
+            <Image fill={true} src={props.featuredImage.node.link}  alt={props.featuredImage.node.link}/>
+          </Box>}
+      </Box>
+
+      <Box margin="auto" maxWidth="720px" dangerouslySetInnerHTML={{ __html: props.content }} />
+    </Box>
+  )
 }
 
 export default BlogPost;
