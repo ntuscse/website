@@ -14,6 +14,7 @@ jobs:
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }} # remote caching
       TURBO_TEAM: ${{ secrets.TURBO_TEAM }} # remote caching
+      WORDPRESS_API_URL: ${{ secrets.WORDPRESS_API_URL }} # for web
 
     steps:
       - name: Check out code
