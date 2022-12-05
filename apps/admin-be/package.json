@@ -3,13 +3,11 @@
   "version": "1.0.0",
   "description": "backend for admin panel",
   "main": "dist/index.js",
-  "license": "MIT",
   "scripts": {
-    "devStart": "nodemon --ignore tests/ --watch src -e ts,tsx --exec ts-node src/index.ts",
-    "build-ts": "tsc",
+    "dev": "nodemon --ignore tests/ --watch src -e ts,tsx --exec ts-node src/index.ts",
     "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
     "serve": "node dist/index.js",
-    "build": "yarn run lint && yarn run build-ts",
+    "build": "yarn run lint",
     "start": "yarn run serve",
     "test": "jest"
   },
@@ -30,6 +28,7 @@
     "ts-jest": "^29.0.3",
     "ts-node": "^10.9.1",
     "tsconfig": "*",
+    "types": "*",
     "typescript": "4.8.4"
   }
 }

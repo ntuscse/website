@@ -5,9 +5,11 @@ const app = express();
 
 app.use(express.json());
 
+// Example path
 app.get("/", (req: Request, res: Response) => {
-  res.sendStatus(201);
+  res.json("GET /");
 });
+
 // Configure routes
 app.use("/auth", AuthRouter);
 
