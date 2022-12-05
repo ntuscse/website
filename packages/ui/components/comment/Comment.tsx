@@ -9,7 +9,7 @@ import {
     Alert,
     Textarea,
     Box,
-    Button,
+    Button
 } from "@chakra-ui/react";
 import { useState } from "react";
 import "@fontsource/inter";
@@ -31,13 +31,14 @@ export const Comment = (_props: CommentProps) => {
         e.preventDefault();
         setCommentData({ name: '', email: '', comment: '' });
         setShowAlert(true);
-        setTimeout(() => {
-            setShowAlert(false);
-        }, 3000);
     }
 
     return (
         <Box w='801px' h='457px'>
+            {showAlert ? (<Alert status='success'>
+                <AlertIcon />
+                <AlertDescription>The comment has been posted!</AlertDescription>
+            </Alert>) : <Box></Box>}
             <Heading fontSize='48px' fontWeight={'400px'} fontFamily={"Inder"}>Leave a comment</Heading>
             <Heading mt='29px' fontSize='24px' fontWeight={'400px'} fontFamily={"Inder"}>Your email address will not be published. Required fields are marked *</Heading>
             <Box fontFamily={"Inter"}>
@@ -59,10 +60,6 @@ export const Comment = (_props: CommentProps) => {
                     <Button type='submit' mt={'29'} h={'48px'} w={'177px'}><Box fontWeight={'600px'}>Post Comment</Box> </Button>
                 </form>
             </Box>
-            {showAlert ? (<Alert status='success' justifyContent={'center'} mt={'20px;'} w={'694px'}>
-                <AlertIcon />
-                <AlertDescription>The comment has been posted!</AlertDescription>
-            </Alert>) : <Box></Box>}
         </Box>
 
 
