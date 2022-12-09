@@ -1,5 +1,5 @@
-import { Heading, Link, Stack, Text } from "@chakra-ui/react";
-import React, { useContext } from "react";
+import { Heading, Stack, Text } from "@chakra-ui/react";
+import React from "react";
 
 export interface BlogCardContentProps {
   title: string;
