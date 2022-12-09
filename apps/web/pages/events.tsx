@@ -11,7 +11,7 @@ const Events = ({ posts }: EventsProps) => {
   return (
     <>
       <Hero
-        backgroundImage="/banners/events-banner.png"
+        backgroundImage="/heroes/events-banner.png"
         backgroundGradient="linear(to-r, whiteAlpha.500, whiteAlpha.500)"
       />
       <VStack mx={{ base: 5, lg: 10 }}>
