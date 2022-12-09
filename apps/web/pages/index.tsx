@@ -52,7 +52,7 @@ const Home = ({ posts }: HomeProps) => {
                   }}
                   blogCardContentProps={{
                     title: post.node.title,
-                    body: post.node.excerpt,
+                    body: post.node.excerpt + "...",
                     date: getDisplayDate(new Date(post.node.date)),
                   }}
                 />
@@ -86,7 +86,7 @@ export const getStaticProps: GetStaticProps<any> = async (_context) => {
             .replace(/<[^>]+>/g, "")
             .replace(/\n/g, " ")
             .replace(/;&nbsp;/g, '"')
-            .substring(0, 120),
+            .substring(0, 200),
         },
       })),
     },

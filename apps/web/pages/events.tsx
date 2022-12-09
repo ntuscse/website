@@ -34,7 +34,7 @@ const Events = ({ posts }: EventsProps) => {
                 }}
                 blogCardContentProps={{
                   title: post.node.title,
-                  body: post.node.excerpt,
+                  body: post.node.excerpt + "...",
                   date: getDisplayDate(new Date(post.node.date)),
                 }}
               />
