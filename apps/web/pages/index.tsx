@@ -42,7 +42,7 @@ const Home = ({ posts }: HomeProps) => {
           pt={12}
           pb={32}
         >
-          {posts.slice(0, 6).map((post) => (
+          {posts?.slice(0, 6).map((post) => (
             <GridItem key={post.node.slug}>
               <Link href={`blog/${post.node.slug}`}>
                 <BlogCard
