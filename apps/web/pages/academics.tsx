@@ -24,7 +24,7 @@ const Academics = () => {
 
     return (
         <>
-            <Hero backgroundImage='/banners/academics-banner.png' backgroundGradient='linear(to-r, whiteAlpha.500, whiteAlpha.500)' />
+            <Hero backgroundImage='/heroes/academics-banner.png' backgroundGradient='linear(to-r, whiteAlpha.500, whiteAlpha.500)' />
             <VStack
                 mx={{ base: 5, lg: 10 }}
                 mb={ 12 }

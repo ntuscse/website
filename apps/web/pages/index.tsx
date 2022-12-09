@@ -9,7 +9,7 @@ type HomeProps = BlogProps;
 
 const Home = ({ posts }: HomeProps) => {
   const heroProps: HeroProps = {
-    backgroundImage: "/banners/scse-club-banner.png",
+    backgroundImage: "/heroes/scse-club-banner.png",
     backgroundGradient: "linear(to-r, whiteAlpha.500, whiteAlpha.500)",
     text: "WELCOME TO SCSE CLUB",
     buttons: [
