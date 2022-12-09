@@ -12,7 +12,7 @@ export interface AnimatedCarouselProps extends FlexProps {
 const CarouselSlides = ({ items }: AnimatedCarouselProps) => {
   return <>
     {items.map(({ imageSrc, altText }) => (
-      <Box width="250px" height="100px" mx={4}> {/* slide */}
+      <Box key={altText} width="250px" height="100px" mx={4}> {/* slide */}
         <Image height={100} width={250} src={imageSrc} alt={altText} style={{
           objectFit: "contain",
           height: "100px",
@@ -46,7 +46,7 @@ export const AnimatedCarousel = ({ items, ...props }: AnimatedCarouselProps) => 
   const scrollAnimation = `${scroll} 40s linear infinite`
 
   return (<Flex
-      maxWidth="1920px"
+      maxWidth="100vw"
       height="100px"
       margin="auto"
       position="relative"
