@@ -7,20 +7,21 @@ export interface GetAllBlogPostsResponse {
         date: string;
         uri: string;
         slug: string;
+        excerpt: string;
         author: {
           node: {
             id: string;
             name: string;
-          }
-        }
+          };
+        };
         featuredImage: {
           node: {
             link: string;
-          }
-        }
-      }
-    }>
-  }
+          };
+        };
+      };
+    }>;
+  };
 }
 
 export interface GetAllBlogPostsSlugsResponse {
@@ -29,9 +30,9 @@ export interface GetAllBlogPostsSlugsResponse {
       node: {
         id: string;
         slug: string;
-      }
-    }>
-  }
+      };
+    }>;
+  };
 }
 
 export interface GetBlogPostResponse {
@@ -46,13 +47,13 @@ export interface GetBlogPostResponse {
       node: {
         id: string;
         name: string;
-      }
-    }
+      };
+    };
     featuredImage: {
       node: {
         link: string;
-      }
-    }
+      };
+    };
     content: string;
-  }
+  };
 }

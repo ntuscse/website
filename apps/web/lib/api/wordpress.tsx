@@ -1,9 +1,16 @@
-import { GetAllBlogPostsResponse, GetAllBlogPostsSlugsResponse, GetBlogPostResponse } from "../types/wordpress";
+import {
+  GetAllBlogPostsResponse,
+  GetAllBlogPostsSlugsResponse,
+  GetBlogPostResponse,
+} from "../types/wordpress";
 
-const API_URL = process.env.WORDPRESS_API_URL ?? ""
+const API_URL = process.env.WORDPRESS_API_URL ?? "";
 
-async function fetchAPI(query = '', { variables }: Record<string, unknown> = {}) {
-  const headers: Record<string, any> = { 'Content-Type': 'application/json' }
+async function fetchAPI(
+  query = "",
+  { variables }: Record<string, unknown> = {}
+) {
+  const headers: Record<string, any> = { "Content-Type": "application/json" };
 
   // if (process.env.WORDPRESS_AUTH_REFRESH_TOKEN) {
   //   headers[
@@ -13,23 +20,23 @@ async function fetchAPI(query = '', { variables }: Record<string, unknown> = {})
 
   const res = await fetch(API_URL, {
     headers,
-    method: 'POST',
+    method: "POST",
     body: JSON.stringify({
       query,
       variables,
     }),
-  })
+  });
 
-  const json = await res.json() as Record<string, any>
+  const json = (await res.json()) as Record<string, any>;
   if (json.errors) {
-    console.error(json.errors)
-    throw new Error(`Failed to fetch API\n${JSON.stringify(json.errors)}`)
+    console.error(json.errors);
+    throw new Error(`Failed to fetch API\n${JSON.stringify(json.errors)}`);
   }
-  return json.data as Record<string, any>
+  return json.data as Record<string, any>;
 }
 
 export async function getAllBlogPosts() {
-  const data = await fetchAPI(`
+  const data = (await fetchAPI(`
     query AllBlogPosts {
       posts(first: 1000) {
         edges {
@@ -39,6 +46,7 @@ export async function getAllBlogPosts() {
             date
             uri
             slug
+            excerpt
             author {
               node {
                 id
@@ -54,12 +62,12 @@ export async function getAllBlogPosts() {
         }
       }
     }
-  `) as GetAllBlogPostsSlugsResponse
-  return data?.posts
+  `)) as GetAllBlogPostsResponse;
+  return data?.posts;
 }
 
 export async function getAllBlogPostsSlugs() {
-  const data = await fetchAPI(`
+  const data = (await fetchAPI(`
     query AllBlogPostsSlugs {
       posts(first: 1000) {
         edges {
@@ -70,12 +78,13 @@ export async function getAllBlogPostsSlugs() {
         }
       }
     }
-  `) as GetAllBlogPostsResponse
-  return data?.posts
+  `)) as GetAllBlogPostsResponse;
+  return data?.posts;
 }
 
 export async function getBlogPost(postSlug: string) {
-  const data = await fetchAPI(`
+  const data = (await fetchAPI(
+    `
     query BlogPost($postSlug: ID!)
       {
         post(id: $postSlug, idType: SLUG) {
@@ -100,8 +109,11 @@ export async function getBlogPost(postSlug: string) {
       }
     }
   `,
-    { variables: {
-    postSlug
-    } }) as GetBlogPostResponse
-  return data?.post
+    {
+      variables: {
+        postSlug,
+      },
+    }
+  )) as GetBlogPostResponse;
+  return data?.post;
 }
