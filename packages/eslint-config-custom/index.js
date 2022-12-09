@@ -49,6 +49,10 @@ module.exports = {
       rules: {
         "@typescript-eslint/no-empty-interface": ["off", "never"],
         "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+        "@typescript-eslint/naming-convention": ["warn", {
+          selector: "function",
+          format: ["camelCase", "PascalCase"],
+        }],
       },
       parserOptions: {
         tsconfigRootDir: __dirname,
