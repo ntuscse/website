@@ -15,6 +15,7 @@ NTU SCSE's main public facing website, built with Next.js.
 ## Requirements
 
 - Yarn v1
+- Completed development environment setup by following the [SCSE official docs](https://docs.ntuscse.com/docs).
 
 <br />
 
@@ -44,6 +45,7 @@ yarn dev
 2. Open [http://localhost:3001](http://localhost:3001) with your browser to see the result.
 
 Learn how to contribute to this project [here](#how-to-contribute).
+
 <br />
 
 ## Storybook
