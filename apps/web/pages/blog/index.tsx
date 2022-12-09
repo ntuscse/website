@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getDisplayDate } from "../../lib/helpers/getDisplayDate";
 
-interface BlogProps {
+export interface BlogProps {
   posts: GetAllBlogPostsResponse["posts"]["edges"];
 }
 
