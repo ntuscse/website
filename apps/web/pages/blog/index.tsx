@@ -60,7 +60,7 @@ const Blog = ({ posts }: BlogProps) => {
                   )} `}
                 </Text>
                 <Text noOfLines={2} mt={2} alignSelf="start" fontSize="14px">
-                  {post.node.excerpt}
+                  {post.node.excerpt + "..."}
                 </Text>
               </GridItem>
             </>

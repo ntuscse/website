@@ -5,7 +5,6 @@ import { getAllBlogPosts } from "lib/api/wordpress";
 import { BlogProps } from "./blog";
 import { getDisplayDate } from "lib/helpers/getDisplayDate";
 import Link from "next/link";
-// import { blogsData } from "@/pages/api/blogs";
 
 type HomeProps = BlogProps;
 

@@ -9,6 +9,7 @@ import { getAllBlogPostsSlugs, getBlogPost } from "../../lib/api/wordpress";
 import { GetBlogPostResponse } from "../../lib/types/wordpress";
 import { Box, Heading, Text } from "@chakra-ui/react";
 import { getDisplayDate } from "../../lib/helpers/getDisplayDate";
+import Image from "next/image";
 
 type BlogPostProps = GetBlogPostResponse["post"];
 
@@ -22,10 +23,11 @@ const BlogPost = (props: BlogPostProps) => {
         <Text fontWeight="light" fontSize="13px">
           by {props.author?.node?.name} / {getDisplayDate(new Date(props.date))}
         </Text>
-        {/* {props.featuredImage &&
+        {/* Image needed as it is the primary image of the blog (it is also used as the thumbnail) */}
+        {props.featuredImage &&
           <Box w="100%" position="relative" style={{ aspectRatio: 1.5 }} mt="50px">
             <Image fill={true} src={props.featuredImage.node.link}  alt={props.featuredImage.node.link}/>
-          </Box>} */}
+          </Box>}
       </Box>
 
       <Box
