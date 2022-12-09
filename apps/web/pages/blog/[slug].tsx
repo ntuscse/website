@@ -9,7 +9,6 @@ import { getAllBlogPostsSlugs, getBlogPost } from "../../lib/api/wordpress";
 import { GetBlogPostResponse } from "../../lib/types/wordpress";
 import { Box, Heading, Text } from "@chakra-ui/react";
 import { getDisplayDate } from "../../lib/helpers/getDisplayDate";
-import Image from "next/image";
 
 type BlogPostProps = GetBlogPostResponse["post"];
 

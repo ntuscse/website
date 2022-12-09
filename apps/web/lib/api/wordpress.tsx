@@ -1,6 +1,5 @@
 import {
   GetAllBlogPostsResponse,
-  GetAllBlogPostsSlugsResponse,
   GetBlogPostResponse,
 } from "../types/wordpress";
 
