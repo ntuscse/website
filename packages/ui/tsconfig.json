@@ -1,5 +1,16 @@
 {
   "extends": "tsconfig/react-library.json",
-  "include": ["."],
-  "exclude": ["dist", "build", "node_modules"]
+  "include": [
+    "**/*.js",
+    "**/*.jsx",
+    "**/*.ts",
+    "**/*.tsx",
+  ],
+  "exclude": [
+    "dist",
+    "build",
+    "node_modules",
+    "storybook-static",
+    ".turbo"
+  ]
 }

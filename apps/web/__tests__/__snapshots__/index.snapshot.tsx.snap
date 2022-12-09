@@ -1,0 +1,194 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders homepage unchanged 1`] = `
+<div>
+  <div
+    class="css-lfb7ta"
+  >
+    <div
+      class="chakra-stack css-nqtk8r"
+    >
+      <div
+        class="chakra-stack css-1dgewg3"
+      >
+        <p
+          class="chakra-text css-17en64"
+          role="heading"
+        >
+          WELCOME TO SCSE CLUB
+        </p>
+        <div
+          class="chakra-stack css-md5zo3"
+        >
+          <button
+            class="chakra-button css-1cwf3eu"
+            type="button"
+          >
+            <a
+              class="chakra-link css-13jvj27"
+              href="/events"
+            >
+              <p
+                class="chakra-text css-0"
+              >
+                LEARN MORE
+              </p>
+            </a>
+          </button>
+          <button
+            class="chakra-button css-1bittrd"
+            type="button"
+          >
+            <a
+              class="chakra-link css-13jvj27"
+              href="/contact"
+            >
+              <p
+                class="chakra-text css-0"
+              >
+                CONTACT US
+              </p>
+            </a>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="chakra-stack css-1ma03zl"
+  >
+    <div
+      class="css-1by7d6v"
+    >
+      <div
+        class="css-0"
+      >
+        <div
+          class="css-1vz34qo"
+        >
+          <a
+            class="chakra-link css-13jvj27"
+            href="blog/techterview-101-navigating-the-internship-world"
+          >
+            <div
+              class="css-1ivaz1t"
+            >
+              <div
+                class="css-1m6ql1p"
+              >
+                <img
+                  alt=""
+                  data-nimg="fill"
+                  decoding="async"
+                  loading="lazy"
+                  sizes="100vw"
+                  src="/_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Ftechterview-101-navigating-the-internship-world%2Fcover-photo%2F&w=3840&q=75"
+                  srcset="/_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Ftechterview-101-navigating-the-internship-world%2Fcover-photo%2F&w=640&q=75 640w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Ftechterview-101-navigating-the-internship-world%2Fcover-photo%2F&w=750&q=75 750w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Ftechterview-101-navigating-the-internship-world%2Fcover-photo%2F&w=828&q=75 828w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Ftechterview-101-navigating-the-internship-world%2Fcover-photo%2F&w=1080&q=75 1080w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Ftechterview-101-navigating-the-internship-world%2Fcover-photo%2F&w=1200&q=75 1200w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Ftechterview-101-navigating-the-internship-world%2Fcover-photo%2F&w=1920&q=75 1920w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Ftechterview-101-navigating-the-internship-world%2Fcover-photo%2F&w=2048&q=75 2048w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Ftechterview-101-navigating-the-internship-world%2Fcover-photo%2F&w=3840&q=75 3840w"
+                  style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent; object-fit: cover;"
+                />
+              </div>
+              <div
+                class="chakra-stack css-lha1ht"
+              >
+                <h2
+                  class="chakra-heading css-1fgxt6g"
+                >
+                  Techterview 101: Navigating the Internship World
+                </h2>
+                <p
+                  class="chakra-text css-7wvmeg"
+                >
+                  February 22, 2022
+                </p>
+                <p
+                  class="chakra-text css-q9k0mw"
+                >
+                  Techterview 101: Navigating the Internship World, a senior sharing event for the SCSE students took place on the 24th of...
+                </p>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div
+        class="css-0"
+      >
+        <div
+          class="css-1vz34qo"
+        >
+          <a
+            class="chakra-link css-13jvj27"
+            href="blog/21st-main-committee"
+          >
+            <div
+              class="css-1ivaz1t"
+            >
+              <div
+                class="css-1m6ql1p"
+              >
+                <img
+                  alt=""
+                  data-nimg="fill"
+                  decoding="async"
+                  loading="lazy"
+                  sizes="100vw"
+                  src="/_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Funtitled%2F&w=3840&q=75"
+                  srcset="/_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Funtitled%2F&w=640&q=75 640w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Funtitled%2F&w=750&q=75 750w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Funtitled%2F&w=828&q=75 828w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Funtitled%2F&w=1080&q=75 1080w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Funtitled%2F&w=1200&q=75 1200w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Funtitled%2F&w=1920&q=75 1920w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Funtitled%2F&w=2048&q=75 2048w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Funtitled%2F&w=3840&q=75 3840w"
+                  style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent; object-fit: cover;"
+                />
+              </div>
+              <div
+                class="chakra-stack css-lha1ht"
+              >
+                <h2
+                  class="chakra-heading css-1fgxt6g"
+                >
+                  21st Main Committee
+                </h2>
+                <p
+                  class="chakra-text css-7wvmeg"
+                >
+                  March 31, 2021
+                </p>
+                <p
+                  class="chakra-text css-q9k0mw"
+                >
+                  Introducing the 21st Main Committee Mission of 21st Main Committee School of Computer Science and Engineering Club (CSEC...
+                </p>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="chakra-stack css-78e2i"
+  >
+    <h2
+      class="chakra-heading css-df8nxq"
+    >
+      Let’s work together
+    </h2>
+    <button
+      class="chakra-button css-1godlkh"
+      type="button"
+    >
+      <a
+        class="chakra-link css-13jvj27"
+        href="./contact"
+      >
+        <p
+          class="chakra-text css-0"
+        >
+          Contact Us
+        </p>
+      </a>
+    </button>
+  </div>
+  <span
+    hidden=""
+    id="__chakra_env"
+  />
+</div>
+`;

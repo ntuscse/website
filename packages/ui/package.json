@@ -5,15 +5,43 @@
   "types": "./index.tsx",
   "license": "MIT",
   "scripts": {
-    "lint": "TIMING=1 eslint \"**/*.ts*\""
+    "lint": "TIMING=1 eslint \"**/*.ts*\"",
+    "lint:fix": "TIMING=1 eslint --fix \"**/*.ts*\"",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "devDependencies": {
-    "@types/react": "^17.0.37",
-    "@types/react-dom": "^17.0.11",
+    "@babel/core": "^7.19.6",
+    "@chakra-ui/react": "^2.3.6",
+    "@chakra-ui/storybook-addon": "^4.0.12",
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
+    "@storybook/addon-actions": "^6.5.13",
+    "@storybook/addon-essentials": "^6.5.13",
+    "@storybook/addon-interactions": "^6.5.13",
+    "@storybook/addon-links": "^6.5.13",
+    "@storybook/addons": "^6.5.13",
+    "@storybook/builder-webpack5": "^6.5.13",
+    "@storybook/jest": "^0.0.10",
+    "@storybook/manager-webpack5": "^6.5.13",
+    "@storybook/react": "^6.5.13",
+    "@storybook/testing-library": "^0.0.13",
+    "@storybook/theming": "^6.5.13",
+    "@types/react": "18.0.24",
+    "@types/react-dom": "18.0.8",
+    "babel-loader": "^8.2.5",
     "eslint": "^7.32.0",
     "eslint-config-custom": "*",
+    "framer-motion": "^6",
     "react": "^18.2.0",
+    "react-dom": "18.2.0",
+    "storybook-addon-next": "^1.6.10",
     "tsconfig": "*",
     "typescript": "^4.5.2"
+  },
+  "dependencies": {
+    "@fontsource/poppins": "^4.5.10",
+    "@fontsource/roboto": "^4.5.8",
+    "@fontsource/roboto-slab": "^4.5.9"
   }
 }

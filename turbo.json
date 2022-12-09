@@ -1,15 +1,48 @@
 {
   "$schema": "https://turborepo.org/schema.json",
   "pipeline": {
+    "dev": {
+      "cache": false
+    },
+    "web#dev": {
+      "env": ["WORDPRESS_API_URL"]
+    },
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
     },
+    "web#build": {
+      "env": ["WORDPRESS_API_URL"]
+    },
+    "build-storybook": {
+      "dependsOn": ["^build"],
+      "outputs": ["storybook-static"]
+    },
+    "start": {
+      "dependsOn": ["build"]
+    },
     "lint": {
       "outputs": []
     },
-    "dev": {
+    "lint:fix": {
+      "outputs": []
+    },
+    "test": {
+      "outputs": []
+    },
+    "test:watch": {
       "cache": false
+    },
+    "cypress": {
+      "outputs": []
+    },
+    "cypress:headless": {
+      "dependsOn": ["build"],
+      "outputs": []
+    },
+    "cypress:start-headless": {
+      "dependsOn": ["build"],
+      "outputs": []
     }
   }
 }

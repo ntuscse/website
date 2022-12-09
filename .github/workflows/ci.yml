@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  build:
+    name: Lint, Build and Test
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }} # remote caching
+      TURBO_TEAM: ${{ secrets.TURBO_TEAM }} # remote caching
+      WORDPRESS_API_URL: ${{ secrets.WORDPRESS_API_URL }} # for web
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --prefer-offline --frozen-lockfile
+
+      - name: Lint + Build + Unit Test
+        run: yarn turbo run lint build --parallel --filter=!cms test
+        # run: turbo run lint build --filter=!cms test cypress:start-headless
