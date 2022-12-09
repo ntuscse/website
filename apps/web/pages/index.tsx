@@ -4,7 +4,6 @@ import { GetStaticProps, GetStaticPropsResult } from "next";
 import { getAllBlogPosts } from "lib/api/wordpress";
 import { BlogProps } from "./blog";
 import { getDisplayDate } from "lib/helpers/getDisplayDate";
-import Link from "next/link";
 
 type HomeProps = BlogProps;
 
@@ -43,19 +42,18 @@ const Home = ({ posts }: HomeProps) => {
         >
           {posts?.slice(0, 6).map((post) => (
             <GridItem key={post.node.slug}>
-              <Link href={`blog/${post.node.slug}`}>
-                <BlogCard
-                  blogCardImageProps={{
-                    src: post.node.featuredImage?.node?.link ?? "",
-                    alt: "",
-                  }}
-                  blogCardContentProps={{
-                    title: post.node.title,
-                    body: post.node.excerpt + "...",
-                    date: getDisplayDate(new Date(post.node.date)),
-                  }}
-                />
-              </Link>
+              <BlogCard
+                href={`blog/${post.node.slug}`}
+                blogCardImageProps={{
+                  src: post.node.featuredImage?.node?.link ?? "",
+                  alt: "",
+                }}
+                blogCardContentProps={{
+                  title: post.node.title,
+                  body: post.node.excerpt + "...",
+                  date: getDisplayDate(new Date(post.node.date)),
+                }}
+              />
             </GridItem>
           ))}
         </Grid>

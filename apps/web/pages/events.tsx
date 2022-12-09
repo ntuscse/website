@@ -28,6 +28,7 @@ const Events = ({ posts }: EventsProps) => {
           {posts.map((post) => (
             <GridItem key={post.node.slug}>
               <BlogCard
+                href={`blog/${post.node.slug}`}
                 blogCardImageProps={{
                   src: post.node.featuredImage?.node?.link ?? "",
                   alt: "",

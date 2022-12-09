@@ -63,11 +63,12 @@ exports[`renders homepage unchanged 1`] = `
       <div
         class="css-0"
       >
-        <a
-          href="/blog/techterview-101-navigating-the-internship-world"
+        <div
+          class="css-1vz34qo"
         >
-          <div
-            class="css-1vz34qo"
+          <a
+            class="chakra-link css-13jvj27"
+            href="blog/techterview-101-navigating-the-internship-world"
           >
             <div
               class="css-1ivaz1t"
@@ -106,17 +107,18 @@ exports[`renders homepage unchanged 1`] = `
                 </p>
               </div>
             </div>
-          </div>
-        </a>
+          </a>
+        </div>
       </div>
       <div
         class="css-0"
       >
-        <a
-          href="/blog/21st-main-committee"
+        <div
+          class="css-1vz34qo"
         >
-          <div
-            class="css-1vz34qo"
+          <a
+            class="chakra-link css-13jvj27"
+            href="blog/21st-main-committee"
           >
             <div
               class="css-1ivaz1t"
@@ -155,8 +157,8 @@ exports[`renders homepage unchanged 1`] = `
                 </p>
               </div>
             </div>
-          </div>
-        </a>
+          </a>
+        </div>
       </div>
     </div>
   </div>
