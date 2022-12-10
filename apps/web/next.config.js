@@ -13,6 +13,11 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'clubs.ntu.edu.sg',
         pathname: '/csec/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'via.placeholder.com',
+        pathname: '/**'
       }
     ]
   }

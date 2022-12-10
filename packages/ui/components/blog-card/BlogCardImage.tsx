@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Image, { ImageProps } from "next/image";
 import { Box } from "@chakra-ui/react";
 
 export interface BlogCardImageProps extends ImageProps {}
 
 export const BlogCardImage = ({ alt, src, ...props }: BlogCardImageProps) => {
+    const [imageError, setImageError] = useState(false);
   return (
     <Box
       h={280}
@@ -15,10 +16,11 @@ export const BlogCardImage = ({ alt, src, ...props }: BlogCardImageProps) => {
       _hover={{ cursor: "pointer" }}
     >
       <Image
-        src={src}
+        src={imageError ? `https://via.placeholder.com/445x280?text=${alt}` : src}
         alt={alt}
         fill={true}
-        style={{ objectFit: "cover" }}
+        style={{ objectFit: "fill" }}
+        onError={() => setImageError(true)}
         {...props}
       />
     </Box>
