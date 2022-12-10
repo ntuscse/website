@@ -4,6 +4,7 @@ import { GetStaticProps, GetStaticPropsResult } from "next";
 import { getAllBlogPosts } from "lib/api/wordpress";
 import { BlogProps } from "./blog";
 import { getDisplayDate } from "lib/helpers/getDisplayDate";
+import { removeTextImgTag } from "../lib/helpers/removeTextImgTag";
 
 type HomeProps = BlogProps;
 
@@ -50,7 +51,7 @@ const Home = ({ posts }: HomeProps) => {
                 }}
                 blogCardContentProps={{
                   title: post.node.title,
-                  body: post.node.excerpt + "...",
+                  body: removeTextImgTag(post.node.excerpt) + "...",
                   date: getDisplayDate(new Date(post.node.date)),
                 }}
               />
