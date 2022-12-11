@@ -80,7 +80,8 @@ yarn storybook
 4. Next, run `git pull origin main --rebase` to fetch new changes in the main branch (if any). Fix merge conflicts if any.
 5. Push your branch to GitHub by running `git push` or `git push --set-upstream origin [branch-name]` (if this branch does not exist on GitHub)
 6. Go to this GitHub repo and make a pull request from your branch to `main` branch. Name the PR starting with `[SCSE-branch_number]` (e.g.: [SCSE-125] Add web docs).
-7. Request 1 person to review your pull request, and you are done!
+7. Ensure that all automated checks passes. Fix any errors that occurs.
+8. Request 1 person to review your pull request, and you are done!
 
 ### Naming Conventions:
 
@@ -94,7 +95,7 @@ yarn storybook
         <li>refactor: A code change that neither fixes a bug nor adds a feature</li>
         <li>perf: A code change that improves performance</li>
         <li>test: Adding missing or correcting existing tests</li>
-        <li>chore: Changes to the build process or auxilliary tools and libraries such as documnetation generation</li>
+        <li>chore: Changes to the build process or auxiliary tools and libraries such as documnetation generation</li>
         <li>revert: A revert to a previous commit</li>
     </ul>
 </details>
@@ -105,7 +106,7 @@ yarn storybook
 
 **1. Jest Unit Tests**
 
-All Jest unit tests are written in the `_tests_` directory with `.tsx` directory.
+All Jest unit tests are written in the `_tests_` directory with `test.tsx` and `snapshot.tsx` extension.
 
 To run jest unit tests, run:
 
