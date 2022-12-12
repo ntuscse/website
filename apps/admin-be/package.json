@@ -2,16 +2,16 @@
   "name": "admin-be",
   "version": "1.0.0",
   "description": "backend for admin panel",
-  "main": "dist/index.js",
+  "main": "dist/server.js",
   "scripts": {
-    "dev": "nodemon --ignore tests/ --watch src -e ts,tsx --exec ts-node src/index.ts",
+    "dev": "nodemon server.js",
     "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
-    "serve": "node dist/index.js",
+    "start": "ts-node dist/server",
     "build": "yarn run lint",
-    "start": "yarn run serve",
     "test": "jest"
   },
   "dependencies": {
+    "body-parser": "^1.20.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.2"
   },

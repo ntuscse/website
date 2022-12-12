@@ -4,8 +4,8 @@ import request from "supertest";
 // example tests
 describe("register", () => {
   it("return status code 201", async () => {
-    const res = await request(app)
-      .post("/auth/login")
+    await request(app)
+      .post("/auth/singin")
       .send({ firstName: "Ivan" })
       .expect(201);
   });

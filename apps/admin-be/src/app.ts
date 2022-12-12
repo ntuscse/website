@@ -1,16 +1,36 @@
-import express, { Request, Response } from "express";
-import { AuthRouter } from "./routes/authRouter";
+import express from "express";
+import { Application } from "express";
 
-const app = express();
+class App {
+  public app: Application;
+  public port: number;
 
-app.use(express.json());
+  constructor(appInit: { port: number; middlewares: any; controllers: any }) {
+    this.app = express();
+    this.port = appInit.port;
+    this.routes(appInit.controllers);
+    this.middlewares(appInit.middlewares);
+  }
 
-// Example path
-app.get("/", (req: Request, res: Response) => {
-  res.json("GET /");
-});
+  public listen() {
+    this.app.listen(this.port, () => {
+      console.log(`App has started on port ${this.port}`);
+    });
+  }
 
-// Configure routes
-app.use("/auth", AuthRouter);
+  /* eslint-disable */
+  private routes(controllers: any) {
+    controllers.forEach((controller: any) => {
+      this.app.use(controller.path, controller.router);
+    });
+  }
 
-export { app as default };
+  private middlewares(middlewares: any) {
+    middlewares.forEach((middleware: any) => {
+      this.app.use(middleware);
+    });
+  }
+  /* eslint-enable */
+}
+
+export default App;
