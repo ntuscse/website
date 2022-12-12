@@ -8,15 +8,15 @@
   ],
   "scripts": {
     "dev": "turbo run dev --parallel",
-    "start": "turbo run start",
-    "lint": "turbo run lint",
-    "build": "turbo run build",
-    "test": "turbo run test",
+    "start": "turbo run start --parallel",
+    "lint": "turbo run lint --parallel",
+    "lint:fix": "turbo run lint:fix --parallel",
+    "build": "turbo run build --parallel",
+    "test": "turbo run test --parallel",
     "test:watch": "turbo run test:watch",
     "cypress": "turbo run cypress",
     "cypress:headless": "turbo run cypress:headless",
-    "cypress:start-headless": "turbo run cypress:start-headless",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "cypress:start-headless": "turbo run cypress:start-headless"
   },
   "devDependencies": {
     "eslint-config-custom": "*",
@@ -24,7 +24,10 @@
     "turbo": "latest"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=14.0.0",
+    "npm": "please-use-yarn",
+    "yarn": ">= 1.22.17",
+    "pnpm": "please-use-yarn"
   },
   "dependencies": {},
   "packageManager": "yarn@1.22.17"

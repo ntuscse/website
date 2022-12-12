@@ -11,6 +11,7 @@ module.exports = {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
+      "storybook-addon-next",
   ],
   "framework": "@storybook/react",
   "core": {
@@ -18,5 +19,9 @@ module.exports = {
   },
   "features": {
     "emotionAlias": false,
-  }
+  },
+  "typescript": {
+    "reactDocgen": 'react-docgen'
+  },
+  "staticDirs": ['../assets'],
 }

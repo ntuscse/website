@@ -3,23 +3,26 @@ describe('Navigation', () => {
     // Start from the index page
     cy.visit('http://localhost:3001/')
 
-    // The page should contain an h1 with "Welcome to Next.js!"
-    cy.get('h1').contains('Welcome to Next.js!')
+    // The page should contain a heading with "WELCOME TO SCSE CLUB"
+    cy.get('[role="heading"]').contains('WELCOME TO SCSE CLUB')
 
-    // Find a link with an href attribute containing "about" and click it
-    cy.get('a[href*="about"]').click()
+    // Find a button with a href attribute containing "contact" and click it
+    cy.get('button a[href*="contact"]').first().click()
 
-    // The new url should include "/about"
-    cy.url().should('include', '/about')
+    // The new url should include "/contact"
+    cy.url().should('include', '/contact')
 
-    // The new page should contain an h1 with "About page"
-    cy.get('h1').contains('About Page')
+    // The new page should contain a heading with "Contact Us"
+    cy.get('[role="heading"]').contains('Contact Us')
 
     // Find the first link with an href attribute containing "/" and click it
     cy.get('a[href*="/"]').first().click()
 
-    // The new page should contain an h1 with "Welcome to Next.js!"
-    cy.get('h1').contains('Welcome to Next.js!')
+    // The new url should include "/"
+    cy.url().should('include', '/')
+
+    // The new page should contain a heading with "WELCOME TO SCSE CLUB"
+    cy.get('[role="heading"]').contains('WELCOME TO SCSE CLUB')
   })
 })
 

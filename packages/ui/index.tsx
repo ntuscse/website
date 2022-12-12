@@ -1,6 +1,12 @@
-import * as React from "react";
-
-export * from "./components/footer"
 export * from "./components/button"
 export * from "./components/layout"
 export * from "./components/navbar"
+export * from "./components/map"
+export * from "./components/hero"
+export * from "./components/blog-card"
+export * from "./components/vercelpowered"
+export * from "./components/footer"
+export * from "./components/footer-content-button"
+export * from "./components/footer-content-text"
+export * from "./components/carousel"
+export * from "./components/faq"

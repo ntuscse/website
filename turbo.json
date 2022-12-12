@@ -4,9 +4,15 @@
     "dev": {
       "cache": false
     },
+    "web#dev": {
+      "env": ["WORDPRESS_API_URL"]
+    },
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
+    },
+    "web#build": {
+      "env": ["WORDPRESS_API_URL"]
     },
     "build-storybook": {
       "dependsOn": ["^build"],
@@ -16,6 +22,9 @@
       "dependsOn": ["build"]
     },
     "lint": {
+      "outputs": []
+    },
+    "lint:fix": {
       "outputs": []
     },
     "test": {
