@@ -1,27 +1,45 @@
 {
-  "name": "admin",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev -p 3002",
-    "build": "next build",
-    "start": "next start -p 3002",
-    "lint": "next lint",
-    "lint:fix": "next lint --fix"
-  },
-  "dependencies": {
-    "next": "13.0.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "ui": "*"
-  },
-  "devDependencies": {
-    "@types/node": "18.11.7",
-    "@types/react": "18.0.24",
-    "@types/react-dom": "18.0.8",
-    "eslint": "^7.23.0",
-    "eslint-config-custom": "*",
-    "tsconfig": "*",
-    "typescript": "4.8.4"
-  }
+	"name": "admin",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev -p 3002",
+		"build": "next build",
+		"start": "next start -p 3002",
+		"lint": "next lint",
+		"lint:fix": "next lint --fix",
+		"test": "jest",
+		"test:watch": "jest --watch",
+		"cypress": "cypress open",
+		"cypress:headless": "cypress run",
+		"cypress:start-headless": "start-server-and-test start http://localhost:3002 cypress:headless"
+	},
+	"dependencies": {
+		"@chakra-ui/icons": "^2.0.11",
+		"@chakra-ui/react": "^2.3.7",
+		"@chakra-ui/system": "^2.3.1",
+		"@emotion/react": "^11.10.5",
+		"@emotion/styled": "^11.10.5",
+		"framer-motion": "^7.6.4",
+		"next": "13.0.0",
+		"next-transpile-modules": "^10.0.0",
+		"react": "18.2.0",
+		"react-dom": "18.2.0",
+		"ui": "*"
+	},
+	"devDependencies": {
+		"@testing-library/jest-dom": "^5.16.5",
+		"@testing-library/react": "^13.4.0",
+		"@types/node": "18.11.7",
+		"@types/react": "18.0.24",
+		"@types/react-dom": "18.0.8",
+		"cypress": "^10.11.0",
+		"eslint": "^7.23.0",
+		"eslint-config-custom": "*",
+		"jest": "^29.2.2",
+		"jest-environment-jsdom": "^29.2.2",
+		"start-server-and-test": "^1.14.0",
+		"tsconfig": "*",
+		"typescript": "4.8.4"
+	}
 }
