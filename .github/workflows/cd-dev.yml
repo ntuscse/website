@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-image:
+  cms-build:
     runs-on: ubuntu-22.04
     steps:
       - name: checkout repo
@@ -19,11 +19,11 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push
-        uses: docker/build-push-action@v2
-        with:
-          file: ./apps/cms/Dockerfile
-          push: true
-          tags: |
-            ghcr.io/${{ github.repository_owner }}/strapi:${{ github.sha }}
-            ghcr.io/${{ github.repository_owner }}/strapi:latest
+#      - name: Build and push
+#        uses: docker/build-push-action@v2
+#        with:
+#          file: ./apps/cms/Dockerfile
+#          push: true
+#          tags: |
+#            ghcr.io/${{ github.repository_owner }}/strapi:${{ github.sha }}
+#            ghcr.io/${{ github.repository_owner }}/strapi:latest
