@@ -12,7 +12,9 @@
       "outputs": ["dist/**", ".next/**"]
     },
     "web#build": {
-      "env": ["WORDPRESS_API_URL"]
+      "dependsOn": ["^build"],
+      "env": ["WORDPRESS_API_URL"],
+      "outputs": [".next/**"]
     },
     "build-storybook": {
       "dependsOn": ["^build"],
