@@ -5,9 +5,17 @@ import Posts from './collections/Posts';
 import Tags from './collections/Tags';
 import Users from './collections/Users';
 
+
+
 export default buildConfig({
   serverURL: 'http://localhost:3000',
   admin: {
+    components: {
+      // graphics: {
+      //   Logo: ScseIcon,
+      //   Icon: ScseIcon
+      // }
+    },
     user: Users.slug,
   },
   collections: [
