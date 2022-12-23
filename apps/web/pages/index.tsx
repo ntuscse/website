@@ -4,12 +4,13 @@ import { GetStaticProps, GetStaticPropsResult } from "next";
 import { getAllBlogPosts } from "lib/api/wordpress";
 import { BlogProps } from "./blog";
 import { getDisplayDate } from "lib/helpers/getDisplayDate";
+import { removeTextImgTag } from "../lib/helpers/removeTextImgTag";
 
 type HomeProps = BlogProps;
 
 const Home = ({ posts }: HomeProps) => {
   const heroProps: HeroProps = {
-    backgroundImage: "/banners/scse-club-banner.png",
+    backgroundImage: "/heroes/scse-club-banner.png",
     backgroundGradient: "linear(to-r, whiteAlpha.500, whiteAlpha.500)",
     text: "WELCOME TO SCSE CLUB",
     buttons: [
@@ -46,11 +47,11 @@ const Home = ({ posts }: HomeProps) => {
                 href={`blog/${post.node.slug}`}
                 blogCardImageProps={{
                   src: post.node.featuredImage?.node?.link ?? "",
-                  alt: "",
+                  alt: post.node.title,
                 }}
                 blogCardContentProps={{
                   title: post.node.title,
-                  body: post.node.excerpt + "...",
+                  body: removeTextImgTag(post.node.excerpt) + "...",
                   date: getDisplayDate(new Date(post.node.date)),
                 }}
               />

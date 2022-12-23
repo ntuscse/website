@@ -1,6 +1,7 @@
 import { VStack, Heading, Grid, GridItem } from "@chakra-ui/react";
 import { getAllBlogPosts } from "lib/api/wordpress";
 import { getDisplayDate } from "lib/helpers/getDisplayDate";
+import { removeTextImgTag } from "lib/helpers/removeTextImgTag";
 import { GetStaticProps, GetStaticPropsResult } from "next";
 import { BlogCard, FooterContentButton, Hero } from "ui";
 import { BlogProps } from "./blog";
@@ -11,7 +12,7 @@ const Events = ({ posts }: EventsProps) => {
   return (
     <>
       <Hero
-        backgroundImage="/banners/events-banner.png"
+        backgroundImage="/heroes/events-banner.png"
         backgroundGradient="linear(to-r, whiteAlpha.500, whiteAlpha.500)"
       />
       <VStack mx={{ base: 5, lg: 10 }}>
@@ -31,11 +32,11 @@ const Events = ({ posts }: EventsProps) => {
                 href={`blog/${post.node.slug}`}
                 blogCardImageProps={{
                   src: post.node.featuredImage?.node?.link ?? "",
-                  alt: "",
+                  alt: post.node.title,
                 }}
                 blogCardContentProps={{
                   title: post.node.title,
-                  body: post.node.excerpt + "...",
+                  body: removeTextImgTag(post.node.excerpt) + "...",
                   date: getDisplayDate(new Date(post.node.date)),
                 }}
               />

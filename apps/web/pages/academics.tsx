@@ -24,19 +24,19 @@ const Academics = () => {
 
     return (
         <>
-            <Hero backgroundImage='/banners/academics-banner.png' backgroundGradient='linear(to-r, whiteAlpha.500, whiteAlpha.500)' />
+            <Hero backgroundImage='/heroes/academics-banner.png' backgroundGradient='linear(to-r, whiteAlpha.500, whiteAlpha.500)' />
             <VStack
                 mx={{ base: 5, lg: 10 }}
                 mb={ 12 }
                 p={ 5 }
-                spacing={ 12 }>
+                spacing={ 5 }>
                 <Heading p={ 5 }>
                     LINKS TO PYPs
                 </Heading>
 
                 <Grid
                     templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }}
-                    gap={ 6 }
+                    gap={ 5 }
                     width={{ base: '100%', md: 'auto' }}>
                     <GridItem>
                         <Button
@@ -54,7 +54,7 @@ const Academics = () => {
                 </Grid>
                 <Grid
                     templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }}
-                    gap={ 6 }
+                    gap={ 5 }
                     width={{ base: '100%', md: 'auto' }}>
                     <GridItem justifySelf={{ base: 'center', md: 'flex-end' }}>
                         <Box>
