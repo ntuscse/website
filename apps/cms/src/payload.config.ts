@@ -6,8 +6,11 @@ import Posts from './collections/Posts';
 import Tags from './collections/Tags';
 import Users from './collections/Users';
 
-import MerchSales from "./admin/views/MerchSales";
 import AfterNavLinks from "./admin/components/AfterNavLinks";
+
+import MerchSales from "./admin/views/MerchSales";
+import MerchOverview from "./admin/views/MerchOverview";
+import MerchProducts from "./admin/views/MerchProducts";
 
 export default buildConfig({
   serverURL: 'http://localhost:3000',
@@ -18,8 +21,15 @@ export default buildConfig({
       //   Icon: ScseIcon
       // }
       routes: [
-        { path: '/merch/sales',
+        {
+          path: '/merch/overview',
+          Component: MerchOverview
+        },{
+          path: '/merch/sales',
           Component: MerchSales
+        },{
+          path: '/merch/products',
+          Component: MerchProducts
         },
       ],
       afterNavLinks: AfterNavLinks

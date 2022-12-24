@@ -1,8 +1,9 @@
 import React from "react"
 import { Chevron } from 'payload/components'
 import { NavLink } from 'react-router-dom'
+import NavGroup from "payload/dist/admin/components/elements/NavGroup";
 
-const baseClass = 'after-nav-links';
+const baseClass = 'nav-group-after-nav-links';
 
 const merchRoutes = [
   {
@@ -24,17 +25,18 @@ const merchRoutes = [
 
 const MerchLinks: React.FC = () => {
   return (
-    <div className={baseClass}>
-      <span className="nav__label">Merch</span>
-      <nav>
+    <>
+      <NavGroup label="Merch">
+
         {merchRoutes.map((route, index) => (
           <NavLink key={index} className="nav__link" activeClassName="active" to={route.href}>
             <Chevron />
             {route.label}
           </NavLink>
         ))}
-      </nav>
-    </div>
+
+      </NavGroup>
+    </>
   )
 }
 

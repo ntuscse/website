@@ -9,8 +9,6 @@ import { useStepNav } from 'payload/components/hooks';
 import { Meta } from 'payload/components/utilities';
 
 type ViewTemplateProps = React.ComponentProps<AdminView> & {
-  /** snake_case slug of view */
-  label: string
   description: string
   keywords: string
   /** Page Title */
@@ -18,7 +16,7 @@ type ViewTemplateProps = React.ComponentProps<AdminView> & {
   children: React.ReactNode
 }
 
-const ViewTemplate = ({ user, canAccessAdmin, label, description, keywords, title, children }: ViewTemplateProps) => {
+const ViewTemplate = ({ user, canAccessAdmin, description, keywords, title, children }: ViewTemplateProps) => {
   const { routes: { admin: adminRoute } } = useConfig();
   const { setStepNav } = useStepNav();
 
@@ -28,7 +26,7 @@ const ViewTemplate = ({ user, canAccessAdmin, label, description, keywords, titl
   useEffect(() => {
     setStepNav([
       {
-        label: label,
+        label: title,
       },
     ]);
   }, [setStepNav]);
@@ -44,7 +42,7 @@ const ViewTemplate = ({ user, canAccessAdmin, label, description, keywords, titl
   return (
     <DefaultTemplate>
       <Meta
-        title={label}
+        title={title}
         description={description}
         keywords={keywords}
       />
