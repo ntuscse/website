@@ -27,14 +27,12 @@ const MerchLinks: React.FC = () => {
   return (
     <>
       <NavGroup label="Merch">
-
         {merchRoutes.map((route, index) => (
           <NavLink key={index} className="nav__link" activeClassName="active" to={route.href}>
             <Chevron />
             {route.label}
           </NavLink>
         ))}
-
       </NavGroup>
     </>
   )

@@ -11,15 +11,17 @@ import AfterNavLinks from "./admin/components/AfterNavLinks";
 import MerchSales from "./admin/views/MerchSales";
 import MerchOverview from "./admin/views/MerchOverview";
 import MerchProducts from "./admin/views/MerchProducts";
+import { SCSEIcon, SCSELogo } from "./admin/graphics/Logos";
+import BeforeNavLinks from "./admin/components/BeforeNavLinks";
 
 export default buildConfig({
   serverURL: 'http://localhost:3000',
   admin: {
     components: {
-      // graphics: {
-      //   Logo: ScseIcon,
-      //   Icon: ScseIcon
-      // }
+      graphics: {
+        Logo: SCSELogo,
+        Icon: SCSEIcon,
+      },
       routes: [
         {
           path: '/merch/overview',
@@ -32,9 +34,11 @@ export default buildConfig({
           Component: MerchProducts
         },
       ],
+      beforeNavLinks: BeforeNavLinks,
       afterNavLinks: AfterNavLinks
     },
     user: Users.slug,
+    css: path.resolve(__dirname, 'admin', 'styles.scss'),
   },
   collections: [
     Categories,
