@@ -63,6 +63,14 @@ module.exports = {
       }
     },
 
+    // react (non-next)
+    {
+      files: ["apps/cms/**/*.tsx"],
+      rules: {
+        "@next/next/no-img-element": ["off", "never"]
+      }
+    },
+
     //storybook
     {
       files: ["**/*.stories.*", "**/*.story.*"],
