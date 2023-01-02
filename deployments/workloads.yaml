@@ -1,0 +1,92 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: merch
+spec:
+  selector:
+    matchLabels:
+      app: merch
+  replicas: 1
+  template: # template for the pods
+    metadata:
+      labels:
+	app: merch
+    spec:
+      containers:
+      - name: merch
+        image: nginx
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin
+spec:
+  selector:
+    matchLabels:
+      app: admin
+  replicas: 1
+  template: # template for the pods
+    metadata:
+      labels:
+	app: admin
+    spec:
+      containers:
+      - name: admin
+	image: nginx
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: leetcode
+spec:
+  selector:
+    matchLabels:
+      app: leetcode
+  replicas: 1
+  template: # template for the pods
+    metadata:
+      labels:
+	app: leetcode
+    spec:
+	containers:
+        - name: leetcode
+          image: nginx
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway
+spec:
+  selector:
+    matchLabels:
+      app: api-gateway
+  replicas: 1
+  template: # template for the pods
+    metadata:
+      labels:
+        app: api-gateway
+    spec:
+      containers:
+      - name: api-gateway
+        image: nginx
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp
+spec:
+  selector:
+    matchLabels:
+      app: webapp
+  replicas: 1
+  template: # template for the pods
+    metadata:
+	labels:
+        app: webapp
+    spec:
+      containers:
+      - name: webapp
+        image: nginx
+
