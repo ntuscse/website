@@ -3,6 +3,7 @@
   "description": "Payload project created from ts-blog template",
   "version": "0.0.1",
   "main": "dist/server.js",
+  "license": "Apache-2.0",
   "scripts": {
     "dev": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts nodemon",
     "build:payload": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload build",
