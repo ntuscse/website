@@ -39,12 +39,8 @@ USER expressjs
 
 COPY --from=installer /app .
 
+WORKDIR /app/apps/cms
+
 EXPOSE 3000
-
-CMD node /app/apps/cms/dist/server.js
-
-
-#RUN #apk add --no-cache tree
-#CMD tree -L 4 -I node_modules
-#CMD more /app/apps/cms/src/payload.config.ts
+CMD ["node", "dist/server.js"]
 

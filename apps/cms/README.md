@@ -21,10 +21,23 @@ yarn dev
 1. `cd` into `docker/development`
 2. Run `docker compose up -d`
 
-[//]: # (### Build and run in a docker container locally)
+### Build and run in a docker container locally
 
-[//]: # ()
-[//]: # (1. `cd` into `docker/staging`)
+Build the image by running from the project's root directory:
+```shell
+ docker build . -f ./apps/cms/docker/staging/Dockerfile \
+ -t website_cms_staging_test    
+```
+
+Run the image with:
+```shell
+docker run -e "PAYLOAD_SECRET=some_secret" \
+-e "MONGODB_URI=some_uri" \
+-e "PAYLOAD_CONFIG_PATH=src/payload.config.ts" \
+-p 3000:3000 website_cms_staging
+```
+
+Remember to change the secret var and the mongo URI.
 
 [//]: # (2. run `docker compose up -d`)
 
