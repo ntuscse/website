@@ -34,3 +34,27 @@ jobs:
       - name: Lint + Build + Unit Test
         run: yarn turbo run lint build --parallel --filter=!cms test
         # run: turbo run lint build --filter=!cms test cypress:start-headless
+
+  build-cms-test:
+    name: Build CMS Docker Image (Test)
+    runs-on: ubuntu-22.04
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v3
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          file: ./apps/cms/docker/staging/Dockerfile
+          context: .
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/website/cms:${{ github.sha }}
+            ghcr.io/${{ github.repository_owner }}/website/cms:latest
