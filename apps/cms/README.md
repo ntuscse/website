@@ -4,22 +4,20 @@ This project was created using create-payload-app using the ts-blog template.
 
 ## How to Run
 
+Run the following commands from the `apps/cms` directory
+
 ### Run in development mode locally
 
 Start the database service with:
 ```shell
-cd docker/developments
+cd docker/development
 docker compose up -d mongo
 ```
 Start up your application by running:
 ```shell
+yarn install
 yarn dev
 ```
-
-### Run in development mode in a docker container locally
-
-1. `cd` into `docker/development`
-2. Run `docker compose up -d`
 
 ### Build and run in a docker container locally
 

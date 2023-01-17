@@ -1,3 +1,6 @@
+### Docker ###
+docker/**/data
+
 ### Node ###
 # Logs
 logs
