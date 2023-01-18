@@ -1,0 +1,22 @@
+
+services:
+  cms:
+    image: ghcr.io/ntuscse/website/cms
+    ports:
+      - 80:3000
+    env_file:
+      - cms.env
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    command:
+      - --storageEngine=wiredTiger
+    volumes:
+      - ./data:/data/db
+    logging:
+      driver: none
+
+volumes:
+  data:
