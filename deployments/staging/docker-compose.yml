@@ -13,8 +13,6 @@ services:
 
   mongo:
     image: mongo:latest
-    networks:
-      - cms-network
     ports:
       - "27017:27017"
     command:
