@@ -38,7 +38,7 @@ jobs:
     steps:
       - name: Deploy and run docker images
         env:
-          PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY  }}
+          PRIVATE_KEY: ${{ secrets.STAGING_EC2_PRIVATE_KEY  }}
           HOSTNAME : ${{ secrets.STAGING_EC2_HOSTNAME  }}
           USER_NAME : ${{ secrets.STAGING_EC2_USERNAME  }}
 
