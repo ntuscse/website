@@ -1,4 +1,3 @@
-
 services:
   cms:
     image: ghcr.io/ntuscse/website/cms
@@ -6,17 +5,21 @@ services:
       - 80:3000
     env_file:
       - cms.env
+    restart: always
+    depends_on:
+      - mongo
 
   mongo:
-    image: mongo:latest
+    image: mongo
     ports:
       - "27017:27017"
     command:
       - --storageEngine=wiredTiger
     volumes:
       - ./data:/data/db
-    logging:
-      driver: none
+    # logging:
+    #  driver: none
+    restart: always
 
 volumes:
   data:
