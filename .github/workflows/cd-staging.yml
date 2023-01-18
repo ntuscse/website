@@ -41,12 +41,12 @@ jobs:
           PRIVATE_KEY: ${{ secrets.STAGING_EC2_PRIVATE_KEY  }}
           HOSTNAME : ${{ secrets.STAGING_EC2_HOSTNAME  }}
           USER_NAME : ${{ secrets.STAGING_EC2_USERNAME  }}
-
         run: |
-          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          echo "$PRIVATE_KEY" > private_key && chmod 770 private_key
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
             cd /home/github_actions_cd/containers &&
-            docker compose pull
+            wget -q https://raw.githubusercontent.com/ntuscse/website/main/deployments/staging/docker-compose.yml -O docker-compose.yml &&
+            docker compose pull &&
             docker compose up -d
           '
 
