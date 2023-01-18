@@ -10,7 +10,7 @@ jobs:
     name: Build CMS Docker Image
     runs-on: ubuntu-22.04
     steps:
-      - name: checkout repo
+      - name: Checkout repo
         uses: actions/checkout@v3
 
       - name: Login to GitHub Container Registry
@@ -30,11 +30,36 @@ jobs:
             ghcr.io/${{ github.repository_owner }}/website/cms:${{ github.sha }}
             ghcr.io/${{ github.repository_owner }}/website/cms:latest
 
+  build-nginx-staging:
+    name: Build nginx Staging Image
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          file: ./deployments/staging/nginx/Dockerfile
+          context: ./deployments/staging/nginx
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/website/nginx-staging:${{ github.sha }}
+            ghcr.io/${{ github.repository_owner }}/website/nginx-staging:latest
 
   deploy-to-staging:
     name: Deploy To Staging
     runs-on: ubuntu-22.04
-    needs: build-cms
+    needs:
+      - build-cms
+      - build-nginx-staging
     steps:
       - name: Deploy and run docker images
         env:

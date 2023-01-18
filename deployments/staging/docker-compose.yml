@@ -19,7 +19,14 @@ services:
       - ./data:/data/db
     restart: always
 
-
+  nginx:
+    # image: ghcr.io/ntuscse/website/nginx-staging
+    build: ./nginx
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - cms
 
 volumes:
   data:
