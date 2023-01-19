@@ -8,6 +8,7 @@ WORKDIR /app
 RUN yarn global add turbo
 COPY . .
 RUN rm -rf **/node_modules **/build **/dist **/out .turbo
+RUN rm -rf **/.env
 RUN turbo prune --scope=cms --docker
 
 FROM node:16-alpine AS installer

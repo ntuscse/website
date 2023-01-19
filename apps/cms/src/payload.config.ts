@@ -20,7 +20,7 @@ dotenv.config() //{
 // });
 
 export default buildConfig({
-  serverURL: "http://example.com", // process.env.PAYLOAD_PUBLIC_SERVER_URL,
+  serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL,
   admin: {
     components: {
       graphics: {
