@@ -24,8 +24,8 @@ services:
     restart: always
 
   nginx:
-    # image: ghcr.io/ntuscse/website/nginx-staging
-    build: ./nginx
+    image: ghcr.io/ntuscse/website/nginx-staging
+#    build: ./nginx
     networks:
       - cms-network
     ports:
