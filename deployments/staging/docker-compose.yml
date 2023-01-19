@@ -4,7 +4,7 @@ services:
     networks:
       - cms-network
     ports:
-      - "7001:3000"
+      - "7001:80"
     env_file:
       - cms.env
     restart: always
@@ -29,8 +29,8 @@ services:
     networks:
       - cms-network
     ports:
-      - 80:80
-      - 443:443
+      - "80:80"
+      - "443:443"
     depends_on:
       - cms
 
