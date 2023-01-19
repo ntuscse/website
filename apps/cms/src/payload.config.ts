@@ -1,6 +1,6 @@
 import { buildConfig } from 'payload/config';
 import path from 'path';
-import dotenv from 'dotenv';
+import * as dotenv from 'dotenv'
 
 import Categories from './collections/Categories';
 import Posts from './collections/Posts';
@@ -15,12 +15,12 @@ import MerchProducts from "./admin/views/MerchProducts";
 import { SCSEIcon, SCSELogo } from "./admin/graphics/Logos";
 import BeforeNavLinks from "./admin/components/BeforeNavLinks";
 
-dotenv.config({
-  path: path.resolve(__dirname, '../.env'),
-});
+dotenv.config() //{
+//   path: path.resolve(__dirname, '../.env'),
+// });
 
 export default buildConfig({
-  serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL,
+  serverURL: "http://example.com", // process.env.PAYLOAD_PUBLIC_SERVER_URL,
   admin: {
     components: {
       graphics: {

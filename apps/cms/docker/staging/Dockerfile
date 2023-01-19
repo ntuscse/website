@@ -41,6 +41,6 @@ COPY --from=installer /app .
 
 WORKDIR /app/apps/cms
 
-EXPOSE 3000
+EXPOSE 80
 CMD ["node", "dist/server.js"]
 
