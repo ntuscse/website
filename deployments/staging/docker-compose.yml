@@ -1,6 +1,9 @@
 services:
   cms:
     image: ghcr.io/ntuscse/website/cms
+#    build:
+#      context: ../../
+#      dockerfile: ./apps/cms/docker/staging/Dockerfile
     networks:
       - cms-network
     ports:
@@ -24,8 +27,8 @@ services:
     restart: always
 
   nginx:
-    # image: ghcr.io/ntuscse/website/nginx-staging
-    build: ./nginx
+    image: ghcr.io/ntuscse/website/nginx-staging
+#    build: ./nginx
     networks:
       - cms-network
     ports:
