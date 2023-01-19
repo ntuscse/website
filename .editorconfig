@@ -15,3 +15,7 @@ indent_size = 2
 # for markdown files
 [*.md]
 trim_trailing_whitespace = false
+
+# for nginx.conf
+[nginx.conf]
+indent_size = 4

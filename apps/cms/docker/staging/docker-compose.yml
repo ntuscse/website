@@ -7,5 +7,5 @@ services:
       context: ../../../../
       dockerfile: ./apps/cms/docker/staging/Dockerfile
     ports:
-      - "3000:3000"
+      - "80:80"
 

@@ -1,22 +1,42 @@
-
 services:
   cms:
     image: ghcr.io/ntuscse/website/cms
+    networks:
+      - cms-network
     ports:
-      - 80:3000
+      - "7001:80"
     env_file:
       - cms.env
+    restart: always
+    depends_on:
+      - mongo
 
   mongo:
     image: mongo:latest
+    networks:
+      - cms-network
     ports:
       - "27017:27017"
     command:
       - --storageEngine=wiredTiger
     volumes:
       - ./data:/data/db
-    logging:
-      driver: none
+    restart: always
+
+  nginx:
+    # image: ghcr.io/ntuscse/website/nginx-staging
+    build: ./nginx
+    networks:
+      - cms-network
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - cms
+
+networks:
+  cms-network:
+    driver: bridge
 
 volumes:
   data:
