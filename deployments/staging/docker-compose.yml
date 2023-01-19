@@ -1,6 +1,8 @@
 services:
   cms:
     image: ghcr.io/ntuscse/website/cms
+    networks:
+      - cms-network
     ports:
       - "7001:3000"
     env_file:
@@ -11,6 +13,8 @@ services:
 
   mongo:
     image: mongo:latest
+    networks:
+      - cms-network
     ports:
       - "27017:27017"
     command:
@@ -22,11 +26,17 @@ services:
   nginx:
     # image: ghcr.io/ntuscse/website/nginx-staging
     build: ./nginx
+    networks:
+      - cms-network
     ports:
       - 80:80
       - 443:443
     depends_on:
       - cms
+
+networks:
+  cms-network:
+    driver: bridge
 
 volumes:
   data:

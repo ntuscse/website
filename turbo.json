@@ -3,11 +3,11 @@
   "pipeline": {
     "dev": {
       "cache": false,
-      "env": ["PAYLOAD_SECRET", "MONGODB_URI", "WORDPRESS_API_URL"]
+      "env": ["PAYLOAD_SECRET", "MONGODB_URI", "WORDPRESS_API_URL", "PAYLOAD_PUBLIC_SERVER_URL"]
     },
     "build": {
       "dependsOn": ["^build"],
-      "env": ["PAYLOAD_SECRET", "MONGODB_URI", "WORDPRESS_API_URL"],
+      "env": ["PAYLOAD_SECRET", "MONGODB_URI", "WORDPRESS_API_URL", "PAYLOAD_PUBLIC_SERVER_URL"],
       "outputs": ["dist/**", ".next/**"]
     },
     "build-storybook": {
@@ -15,7 +15,8 @@
       "outputs": ["storybook-static"]
     },
     "start": {
-      "dependsOn": ["build"]
+      "dependsOn": ["build"],
+      "env": ["PAYLOAD_SECRET", "MONGODB_URI", "WORDPRESS_API_URL", "PAYLOAD_PUBLIC_SERVER_URL"]
     },
     "lint": {
       "outputs": []
