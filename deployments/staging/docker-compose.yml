@@ -6,13 +6,15 @@ services:
       dockerfile: ./apps/cms/docker/staging/Dockerfile
     networks:
       - cms-network
-    ports:
-      - "80:80"
+#    ports:
+#      - "80:80"
     env_file:
       - cms.env
     restart: always
     depends_on:
       - mongo
+    labels:
+      - "traefik.http.routers.cms.rule=Host(`localhost`)"
 
   mongo:
     image: mongo:latest
@@ -25,6 +27,18 @@ services:
     volumes:
       - ./data:/data/db
     restart: always
+
+  traefik:
+    image: traefik:v2.9
+    # Enables the web UI and tells Traefik to listen to docker
+    command: --api.insecure=true --providers.docker
+    ports:
+      - "80:80"
+      - "8080:8080" # The Web UI (enabled by --api.insecure=true)
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - cms-network
 
 #  nginx:
 #    image: ghcr.io/ntuscse/website/nginx-staging
