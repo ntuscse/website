@@ -1,13 +1,13 @@
 services:
   cms:
-    image: ghcr.io/ntuscse/website/cms
-#    build:
-#      context: ../../
-#      dockerfile: ./apps/cms/docker/staging/Dockerfile
+#    image: ghcr.io/ntuscse/website/cms
+    build:
+      context: ../../
+      dockerfile: ./apps/cms/docker/staging/Dockerfile
     networks:
       - cms-network
     ports:
-      - "7001:80"
+      - "80:80"
     env_file:
       - cms.env
     restart: always
@@ -26,16 +26,16 @@ services:
       - ./data:/data/db
     restart: always
 
-  nginx:
-    image: ghcr.io/ntuscse/website/nginx-staging
-#    build: ./nginx
-    networks:
-      - cms-network
-    ports:
-      - "80:80"
-      - "443:443"
-    depends_on:
-      - cms
+#  nginx:
+#    image: ghcr.io/ntuscse/website/nginx-staging
+##    build: ./nginx
+#    networks:
+#      - cms-network
+#    ports:
+#      - "80:80"
+#      - "443:443"
+#    depends_on:
+#      - cms
 
 networks:
   cms-network:

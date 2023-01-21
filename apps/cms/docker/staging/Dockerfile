@@ -47,7 +47,7 @@ ENV PAYLOAD_CONFIG_PATH=dist/payload.config.js
 ENV BABEL_DISABLE_CACHE=1
 
 EXPOSE 80
-EXPOSE 9726
+#EXPOSE 7001
 
 CMD ["node", "dist/server.js"]
 
