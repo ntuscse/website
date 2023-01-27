@@ -1,20 +1,23 @@
 services:
   cms:
+    container_name: cms
 #    image: ghcr.io/ntuscse/website/cms
     build:
       context: ../../
       dockerfile: ./apps/cms/docker/staging/Dockerfile
     networks:
       - cms-network
-#    ports:
-#      - "80:80"
     env_file:
       - cms.env
     restart: always
     depends_on:
       - mongo
     labels:
-      - "traefik.http.routers.cms.rule=Host(`localhost`)"
+      - "traefik.http.routers.cms.rule=Host(`cms.localhost`, `cms.staging.ntuscse.com`)"
+      - "traefik.http.routers.cms.entrypoints=web"
+#      - "traefik.http.routers.cms.tls.certresolver=myresolver"
+#      - "traefik.http.middlewares.cms.redirectscheme.scheme=https"
+#      - "traefik.http.middlewares.cms.redirectscheme.permanent=true"
 
   mongo:
     image: mongo:latest
@@ -29,27 +32,34 @@ services:
     restart: always
 
   traefik:
+    container_name: traefik
     image: traefik:v2.9
-    # Enables the web UI and tells Traefik to listen to docker
-    command: --api.insecure=true --providers.docker
+    command:
+      - "--api.dashboard=true"
+#      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+#      - "--entrypoints.traefikdash.address=:8080"
+#      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+#      - "--log.level=DEBUG"
+#      - "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+#      - "--certificatesresolvers.myresolver.acme.email=postmaster@ntuscse.com"
+#      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     ports:
       - "80:80"
+      - "443:443"
       - "8080:8080" # The Web UI (enabled by --api.insecure=true)
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+#      - "./letsencrypt:/letsencrypt"
+      - "/var/run/docker.sock:/var/run/docker.sock"
     networks:
       - cms-network
-
-#  nginx:
-#    image: ghcr.io/ntuscse/website/nginx-staging
-##    build: ./nginx
-#    networks:
-#      - cms-network
-#    ports:
-#      - "80:80"
-#      - "443:443"
-#    depends_on:
-#      - cms
+    labels:
+      - "traefik.http.routers.traefik.rule=Host(`traefik.localhost`)"
+      - "traefik.http.routers.traefik.entrypoints=web"
+      - 'traefik.http.routers.traefik.middlewares=traefik-auth'
+      - "traefik.http.middlewares.traefik-auth.basicauth.users=user:$$2y$$05$$PkpVykxvAMBleIp3cHuG6.I.2aLTA5xFuOmQQEKdIXFCU/6hQ.rw."
 
 networks:
   cms-network:
