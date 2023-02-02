@@ -1,4 +1,4 @@
-import {theme} from "../theme.ts"
+import { theme } from "../theme"
 import * as NextImage from "next/image";
 
 export const parameters = {

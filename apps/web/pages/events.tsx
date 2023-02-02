@@ -32,7 +32,7 @@ const Events = ({ posts }: EventsProps) => {
                 href={`blog/${post.node.slug}`}
                 blogCardImageProps={{
                   src: post.node.featuredImage?.node?.link ?? "",
-                  alt: "",
+                  alt: post.node.title,
                 }}
                 blogCardContentProps={{
                   title: post.node.title,

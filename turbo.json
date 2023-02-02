@@ -2,24 +2,21 @@
   "$schema": "https://turborepo.org/schema.json",
   "pipeline": {
     "dev": {
-      "cache": false
-    },
-    "web#dev": {
-      "env": ["WORDPRESS_API_URL"]
+      "cache": false,
+      "env": ["PAYLOAD_SECRET", "MONGODB_URI", "WORDPRESS_API_URL", "PAYLOAD_PUBLIC_SERVER_URL"]
     },
     "build": {
       "dependsOn": ["^build"],
+      "env": ["PAYLOAD_SECRET", "MONGODB_URI", "WORDPRESS_API_URL", "PAYLOAD_PUBLIC_SERVER_URL"],
       "outputs": ["dist/**", ".next/**"]
-    },
-    "web#build": {
-      "env": ["WORDPRESS_API_URL"]
     },
     "build-storybook": {
       "dependsOn": ["^build"],
       "outputs": ["storybook-static"]
     },
     "start": {
-      "dependsOn": ["build"]
+      "dependsOn": ["build"],
+      "env": ["PAYLOAD_SECRET", "MONGODB_URI", "WORDPRESS_API_URL", "PAYLOAD_PUBLIC_SERVER_URL"]
     },
     "lint": {
       "outputs": []

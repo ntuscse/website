@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  payload:
+    container_name: payload
+    build:
+      context: ../../../../
+      dockerfile: ./apps/cms/docker/staging/Dockerfile
+    ports:
+      - "80:80"
+
