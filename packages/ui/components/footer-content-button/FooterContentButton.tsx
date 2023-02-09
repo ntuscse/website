@@ -1,6 +1,6 @@
 import React from 'react'
 import { VStack, Heading } from '@chakra-ui/react';
-import { Button } from 'ui';
+import { ButtonLink } from 'ui';
 
 export interface FooterContentButtonProps {
     href: string
@@ -22,7 +22,7 @@ export const FooterContentButton = ( { href, title, label } : FooterContentButto
             >
                 { title }
             </Heading>
-            <Button
+            <ButtonLink
                 textTransform='uppercase'
                 label={ label }
                 href={ href }
