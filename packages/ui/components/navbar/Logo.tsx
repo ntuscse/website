@@ -1,6 +1,6 @@
 import React from "react"
 import { Box, Text, Stack, Link } from "@chakra-ui/react"
-import Image from "next/image";
+import { Image } from '../image';
 
 export interface LogoProps {
     src: string

@@ -1,5 +1,5 @@
 import { Box, Flex, FlexProps, keyframes, SystemStyleObject } from "@chakra-ui/react";
-import Image from "next/image";
+import { Image } from '../image';
 
 export interface AnimatedCarouselProps extends FlexProps {
   items: Array<{

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import Image, { ImageProps } from "next/image";
+import { ImageProps } from "next/image";
 import { Box, Text } from "@chakra-ui/react";
+import { Image } from '../image';
 
 export interface BlogCardImageProps extends ImageProps {}
 
