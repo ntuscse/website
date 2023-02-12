@@ -46,6 +46,9 @@ export default buildConfig({
     Tags,
     Users,
   ],
+  csrf: [ // whitelist of domains to allow cookie auth from
+    process.env.PAYLOAD_PUBLIC_SERVER_URL
+  ],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts')
   },
