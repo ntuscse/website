@@ -1,69 +1,70 @@
+
+---
+
 services:
+  traefik:
+    container_name: traefik
+    image: traefik:v2.9
+    command:
+      #- "--log.level=DEBUG"
+      - "--api.insecure=true"
+      #- "--api.dashboard=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.email=postmaster@ntuscse.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    networks:
+      cms_network:
+        ipv4_address: 10.5.0.99
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./letsencrypt:/letsencrypt"
+        #labels:
+        #- "traefik.enable=true"
+        #- "traefik.http.routers.traefik.rule=Host(`traefik.staging.ntuscse.com`)"
+      #- "traefik.http.routers.traefik.entrypoints=web"
+
   cms:
     container_name: cms
-    #    image: ghcr.io/ntuscse/website/cms
-    build:
-      context: ../../
-      dockerfile: ./apps/cms/docker/staging/Dockerfile
+    image: ghcr.io/ntuscse/website/cms:latest
     networks:
-      - cms-network
+      cms_network:
+        ipv4_address: 10.5.0.2
     env_file:
       - cms.env
     restart: always
     depends_on:
       - mongo
     labels:
-      - "traefik.http.routers.cms.rule=Host(`cms.localhost`, `cms.staging.ntuscse.com`)"
-      - "traefik.http.routers.cms.entrypoints=web"
-  #      - "traefik.http.routers.cms.tls.certresolver=myresolver"
-  #      - "traefik.http.middlewares.cms.redirectscheme.scheme=https"
-  #      - "traefik.http.middlewares.cms.redirectscheme.permanent=true"
+      - "traefik.enable=true"
+      - "traefik.http.routers.cms.rule=Host(`cms.staging.ntuscse.com`, `13.213.116.60`, `localhost`)"
+      - "traefik.http.routers.cms.entrypoints=websecure"
+      - "traefik.http.routers.cms.tls.certresolver=myresolver"
 
   mongo:
+    container_name: mongo
     image: mongo:latest
     networks:
-      - cms-network
-    ports:
-      - "27017:27017"
-    command:
-      - --storageEngine=wiredTiger
+      cms_network:
+        ipv4_address: 10.5.0.3
     volumes:
-      - ./data:/data/db
+      - ./db_data:/data/db
     restart: always
 
-  traefik:
-    container_name: traefik
-    image: traefik:v2.9
-    command:
-      - "--api.dashboard=true"
-      #      - "--api.insecure=true"
-      - "--providers.docker=true"
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
-    #      - "--entrypoints.traefikdash.address=:8080"
-    #      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
-    #      - "--log.level=DEBUG"
-    #      - "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
-    #      - "--certificatesresolvers.myresolver.acme.email=postmaster@ntuscse.com"
-    #      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
-    ports:
-      - "80:80"
-      - "443:443"
-      - "8080:8080" # The Web UI (enabled by --api.insecure=true)
-    volumes:
-      #      - "./letsencrypt:/letsencrypt"
-      - "/var/run/docker.sock:/var/run/docker.sock"
-    networks:
-      - cms-network
-    labels:
-      - "traefik.http.routers.traefik.rule=Host(`traefik.localhost`)"
-      - "traefik.http.routers.traefik.entrypoints=web"
-      - "traefik.http.routers.traefik.middlewares=traefik-auth"
-      - "traefik.http.middlewares.traefik-auth.basicauth.users=user:$$2y$$05$$PkpVykxvAMBleIp3cHuG6.I.2aLTA5xFuOmQQEKdIXFCU/6hQ.rw."
-
 networks:
-  cms-network:
+  cms_network:
     driver: bridge
-
-volumes:
-  data:
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1

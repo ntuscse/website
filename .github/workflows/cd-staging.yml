@@ -44,7 +44,7 @@ jobs:
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
-            cd /home/github_actions_cd/containers &&
+            cd /home/ubuntu/deployment &&
             wget -q https://raw.githubusercontent.com/ntuscse/website/main/deployments/staging/docker-compose.yml -O docker-compose.yml &&
             docker compose pull &&
             docker compose up -d
