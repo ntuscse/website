@@ -7,7 +7,7 @@ RUN apk update
 WORKDIR /app
 RUN yarn global add turbo
 COPY . .
-RUN rm -rf **/node_modules **/build **/dist **/out .turbo
+RUN rm -rf **/node_modules **/build **/dist **/out **/.turbo
 RUN rm -rf **/.env
 RUN turbo prune --scope=cms --docker
 
@@ -29,19 +29,25 @@ COPY turbo.json turbo.json
 RUN yarn turbo run build --filter=cms...
 
 FROM node:16-alpine AS runner
-ENV NODE_ENV=production
 
 WORKDIR /app
 
 # Don't run production as root
-RUN addgroup --system --gid 1001 expressjs
-RUN adduser --system --uid 1001 expressjs
-USER expressjs
+#RUN addgroup --system --gid 1001 expressjs
+#RUN adduser --system --uid 1001 expressjs
+#USER expressjs
 
 COPY --from=installer /app .
+RUN rm -rf /app/apps/cms/src
 
 WORKDIR /app/apps/cms
 
+ENV NODE_ENV=production
+ENV PAYLOAD_CONFIG_PATH=dist/payload.config.js
+ENV BABEL_DISABLE_CACHE=1
+
 EXPOSE 80
+#EXPOSE 7001
+
 CMD ["node", "dist/server.js"]
 
