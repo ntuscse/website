@@ -1,6 +1,5 @@
 import { buildConfig } from 'payload/config';
 import path from 'path';
-// import * as dotenv from 'dotenv'
 
 import Categories from './collections/Categories';
 import Posts from './collections/Posts';
