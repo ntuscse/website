@@ -1,6 +1,7 @@
 import { Button as BaseButton, Link, Text } from "@chakra-ui/react";
 import { HTMLChakraProps, ThemingProps } from "@chakra-ui/system";
 import { ButtonOptions } from "@chakra-ui/button";
+import colors from "../../theme/foundations/colors";
 
 export interface ButtonProps extends HTMLChakraProps<"button">, ButtonOptions, ThemingProps<"Button"> {
     label: string
@@ -24,7 +25,7 @@ const PrimaryBlueButton = ({ label, href, ...props }: ButtonProps) => {
           key={ label }
           size='lg'
           rounded='none'
-          bg='blue.600'
+          bg='brand.blue'
           color='white'
           _hover={{ bg: 'white', color: 'black' }}
           px={ 12 }

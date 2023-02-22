@@ -16,11 +16,11 @@ export const Announcement = ({ title, description } : AnnouncementProps) => {
                 py='10px'
                 fontWeight='600'
                 fontFamily='Roboto, Sans-serif'
-                color='white'
+                color='brand.white'
             >
                 {title}
             </Heading>
-            <Text color='white' textAlign={{ base: 'justify', md:'left' }}> {description} </Text>
+            <Text color='brand.white' textAlign={{ base: 'justify', md:'left' }}> {description} </Text>
         </Flex>
     )
 }

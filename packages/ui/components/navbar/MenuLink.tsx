@@ -22,9 +22,9 @@ const DefaultMenuLink = ({ label, href }: MenuLinkProps) => {
     return (
         <Link
             href={href}
-            color={router?.pathname === href ? "blue.600" : "black"}
-            _hover={{ color: "blue.600" }}
-            _focus={{ color: "blue.600" }}
+            color={router?.pathname === href ? "brand.blue" : "brand.black"}
+            _hover={{ color: "brand.blue" }}
+            _focus={{ color: "brand.blue" }}
         >
             <Text display="block" fontFamily="Poppins">
                 {label}
@@ -39,9 +39,9 @@ const ButtonMenuLinkGolden = ({ label, href }: MenuLinkProps) => {
             href={ href }
             _hover={{
                 bgColor: 'transparent',
-                color: 'orange.400'
+                color: 'brand.orange.mid'
             }}
-            bgColor='orange.300'
+            bgColor='brand.orange.light'
             px={ 4 }
             py={ 2 }
             borderRadius='5px'

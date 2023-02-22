@@ -19,13 +19,13 @@ export const BlogCardContent = ({
         color="gray.700"
         fontSize="2xl"
         fontFamily="body"
-        _hover={{ cursor: "pointer", color: "blue.600" }}
+        _hover={{ cursor: "pointer", color: "brand.blue" }}
       >
         {title}
       </Heading>
 
       {/* Date */}
-      <Text color="gray.400" _before={{ content: '"🕓 "' }}>
+      <Text color="brand.gray.mid" _before={{ content: '"🕓 "' }}>
         {date}
       </Text>
 

@@ -8,7 +8,7 @@ export interface QnaProps{
 export const Qna = ({ question, answer }: QnaProps) => {
     return (
         <Flex
-            borderColor='blue'
+            borderColor='brand.blue'
             justifyContent='center'
             flexDirection='column'
             marginBottom='30px'

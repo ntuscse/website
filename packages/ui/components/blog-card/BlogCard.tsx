@@ -21,13 +21,13 @@ export const BlogCard = ({
           maxW="445px"
           w="full"
           minH="600px"
-          bg="white"
+          bg="brand.white"
           boxShadow="2xl"
           rounded="2xl"
           p={6}
           overflow="hidden"
           _hover={{
-            bg: "gray.50",
+            bg: "brand.gray",
           }}
           transition="transform 0.25s ease"
         >
