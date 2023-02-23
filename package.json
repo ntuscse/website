@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "turbo run dev --parallel",
     "start": "turbo run start --parallel",
-    "lint": "turbo run lint --parallel",
+    "lint": "turbo run lint --parallel --continue",
     "lint:fix": "turbo run lint:fix --parallel",
     "format": "prettier --write .",
     "build": "turbo run build --parallel",

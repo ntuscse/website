@@ -3,8 +3,6 @@ import { Chevron } from "payload/components";
 import { NavLink } from "react-router-dom";
 import NavGroup from "payload/dist/admin/components/elements/NavGroup";
 
-const baseClass = "nav-group-after-nav-links";
-
 const merchRoutes = [
   {
     id: "merch_overview",
