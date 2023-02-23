@@ -1,4 +1,9 @@
 {
   "ext": "ts",
-  "exec": "ts-node src/server.ts"
+  "exec": "ts-node src/server.ts",
+  "events": {
+    "restart": "yarn generate:types"
+  },
+  "watch": ["src"],
+  "ignore": ["src/payload-types.ts"]
 }

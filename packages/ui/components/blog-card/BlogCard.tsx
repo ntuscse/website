@@ -16,7 +16,7 @@ export const BlogCard = ({
 }: BlogCardProps) => {
   return (
     <Center py={6}>
-      <Link href={href}  _hover={{ textDecoration: "none" }}>
+      <Link href={href} _hover={{ textDecoration: "none" }}>
         <Box
           maxW="445px"
           w="full"

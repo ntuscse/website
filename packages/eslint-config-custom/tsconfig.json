@@ -1,15 +1,5 @@
 {
   "extends": "tsconfig/base.json",
-  "include": [
-    "**/*.js",
-    "**/*.jsx",
-    "**/*.ts",
-    "**/*.tsx",
-  ],
-  "exclude": [
-    "dist",
-    "build",
-    "node_modules",
-    ".turbo"
-  ]
+  "include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"],
+  "exclude": ["dist", "build", "node_modules", ".turbo"]
 }

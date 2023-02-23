@@ -5,18 +5,18 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'clubs.ntu.edu.sg',
-        pathname: '/csec/wp-content/uploads/**'
+        protocol: "https",
+        hostname: "clubs.ntu.edu.sg",
+        pathname: "/csec/wp-content/uploads/**",
       },
       {
-        protocol: 'https',
-        hostname: 'clubs.ntu.edu.sg',
-        pathname: '/csec/**'
-      }
-    ]
-  }
-}
+        protocol: "https",
+        hostname: "clubs.ntu.edu.sg",
+        pathname: "/csec/**",
+      },
+    ],
+  },
+};
 
 const withTM = require("next-transpile-modules")(["ui"]);
 

@@ -1,4 +1,4 @@
-import { theme } from "../theme"
+import { theme } from "../theme";
 import * as NextImage from "next/image";
 
 export const parameters = {
@@ -12,7 +12,7 @@ export const parameters = {
   chakra: {
     theme,
   },
-}
+};
 
 // Use the unoptimized prop for Next.js Images in Storybook
 const OriginalNextImage = NextImage.default;

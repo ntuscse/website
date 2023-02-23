@@ -1,2 +1,2 @@
-export { FooterContentButton } from './FooterContentButton'
-export type { FooterContentButtonProps } from './FooterContentButton'
+export { FooterContentButton } from "./FooterContentButton";
+export type { FooterContentButtonProps } from "./FooterContentButton";
