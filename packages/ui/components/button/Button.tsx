@@ -24,7 +24,7 @@ const PrimaryBlueButton = ({ label, href, ...props }: ButtonProps) => {
           key={ label }
           size='lg'
           rounded='none'
-          bg='blue.600'
+          bg='brand.blue'
           color='white'
           _hover={{ bg: 'white', color: 'black' }}
           px={ 12 }

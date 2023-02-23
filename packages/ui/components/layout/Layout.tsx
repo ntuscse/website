@@ -19,7 +19,7 @@ export const Layout = ({ navbarProps, footerProps, children }: LayoutProps) => {
             </header>
 
             <NavBar links={navbarProps.links} logoProps={navbarProps.logoProps} />
-            <main><Box bg="blackAlpha.50">{children}</Box></main>
+            <main><Box bg="brand.blackAlpha.light">{children}</Box></main>
             <Footer links={footerProps.links} vercelpoweredProps={footerProps.vercelpoweredProps}/>
         </>
     )

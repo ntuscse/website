@@ -15,10 +15,10 @@ export const NavBarContainer = ({ children, ...props }: NavBarContainerProps) =>
             p={[3, 3, 5, 5]}
             pl={4}
             pr={8}
-            bg="white"
-            color="black"
+            bg="brand.white"
+            color="brand.black"
             borderBottom="1px"
-            borderColor="gray.200"
+            borderColor="brand.gray.midlight"
             {...props}
         >
             { children }

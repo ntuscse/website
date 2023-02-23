@@ -24,7 +24,7 @@ export const NavDrawer = ({ isOpen, onClose, links }: NavDrawerProps) => {
                 onClose={onClose}
             >
                 <DrawerOverlay />
-                <DrawerContent bgColor="gray.50">
+                <DrawerContent bgColor="brand.gray.light">
                     <DrawerCloseButton />
 
                     <DrawerBody marginTop={100}>
