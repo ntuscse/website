@@ -1,4 +1,4 @@
-import { extendTheme, ThemeConfig } from '@chakra-ui/react';
+import { extendTheme, ThemeConfig } from "@chakra-ui/react";
 
 const config: ThemeConfig = {
   // If dark mode is enabled
@@ -7,14 +7,14 @@ const config: ThemeConfig = {
 };
 
 // Global style overrides
-import styles from './styles';
+import styles from "./styles";
 
 // Foundational style overrides
-import fonts from './foundations/fonts';
-import colors from './foundations/colors';
+import fonts from "./foundations/fonts";
+import colors from "./foundations/colors";
 
 // Component style overrides
-import components from './components';
+import components from "./components";
 
 const overrides = {
   config,

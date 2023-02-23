@@ -1,2 +1,2 @@
-export { VercelPowered } from "./VercelPowered"
-export type { VercelPoweredProps } from './VercelPowered'
+export { VercelPowered } from "./VercelPowered";
+export type { VercelPoweredProps } from "./VercelPowered";

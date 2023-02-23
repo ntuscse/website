@@ -1,10 +1,10 @@
-import { buildConfig } from 'payload/config';
-import path from 'path';
+import { buildConfig } from "payload/config";
+import path from "path";
 
-import Categories from './collections/Categories';
-import Posts from './collections/Posts';
-import Tags from './collections/Tags';
-import Users from './collections/Users';
+import Categories from "./collections/Categories";
+import Posts from "./collections/Posts";
+import Tags from "./collections/Tags";
+import Users from "./collections/Users";
 
 import AfterNavLinks from "./admin/components/AfterNavLinks";
 
@@ -24,35 +24,33 @@ export default buildConfig({
       },
       routes: [
         {
-          path: '/merch/overview',
-          Component: MerchOverview
-        },{
-          path: '/merch/sales',
-          Component: MerchSales
-        },{
-          path: '/merch/products',
-          Component: MerchProducts
+          path: "/merch/overview",
+          Component: MerchOverview,
+        },
+        {
+          path: "/merch/sales",
+          Component: MerchSales,
+        },
+        {
+          path: "/merch/products",
+          Component: MerchProducts,
         },
       ],
       beforeNavLinks: BeforeNavLinks,
-      afterNavLinks: AfterNavLinks
+      afterNavLinks: AfterNavLinks,
     },
     user: Users.slug,
-    css: path.resolve(__dirname, 'admin', 'styles.scss'),
+    css: path.resolve(__dirname, "admin", "styles.scss"),
   },
-  collections: [
-    Categories,
-    Posts,
-    Tags,
-    Users,
-  ],
-  csrf: [ // whitelist of domains to allow cookie auth from
-    process.env.PAYLOAD_PUBLIC_SERVER_URL
+  collections: [Categories, Posts, Tags, Users],
+  csrf: [
+    // whitelist of domains to allow cookie auth from
+    process.env.PAYLOAD_PUBLIC_SERVER_URL,
   ],
   typescript: {
-    outputFile: path.resolve(__dirname, 'payload-types.ts')
+    outputFile: path.resolve(__dirname, "payload-types.ts"),
   },
   graphQL: {
-    schemaOutputFile: path.resolve(__dirname, 'generated-schema.graphql'),
+    schemaOutputFile: path.resolve(__dirname, "generated-schema.graphql"),
   },
 });

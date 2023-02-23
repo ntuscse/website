@@ -1,23 +1,32 @@
 import React, { useEffect } from "react";
-import { Redirect } from 'react-router-dom';
+import { Redirect } from "react-router-dom";
 import { useConfig } from "payload/dist/admin/components/utilities/Config";
 
-import { DefaultTemplate } from 'payload/components/templates';
-import { Eyebrow } from 'payload/components/elements';
-import { AdminView } from 'payload/config';
-import { useStepNav } from 'payload/components/hooks';
-import { Meta } from 'payload/components/utilities';
+import { DefaultTemplate } from "payload/components/templates";
+import { Eyebrow } from "payload/components/elements";
+import { AdminView } from "payload/config";
+import { useStepNav } from "payload/components/hooks";
+import { Meta } from "payload/components/utilities";
 
 type ViewTemplateProps = React.ComponentProps<AdminView> & {
-  description: string
-  keywords: string
+  description: string;
+  keywords: string;
   /** Page Title */
-  title: string
-  children: React.ReactNode
-}
+  title: string;
+  children: React.ReactNode;
+};
 
-const ViewTemplate = ({ user, canAccessAdmin, description, keywords, title, children }: ViewTemplateProps) => {
-  const { routes: { admin: adminRoute } } = useConfig();
+const ViewTemplate = ({
+  user,
+  canAccessAdmin,
+  description,
+  keywords,
+  title,
+  children,
+}: ViewTemplateProps) => {
+  const {
+    routes: { admin: adminRoute },
+  } = useConfig();
   const { setStepNav } = useStepNav();
 
   // This effect will only run one time and will allow us
@@ -34,18 +43,12 @@ const ViewTemplate = ({ user, canAccessAdmin, description, keywords, title, chil
   // If an unauthorized user tries to navigate straight to this page,
   // Boot 'em out
   if (!user || (user && !canAccessAdmin)) {
-    return (
-      <Redirect to={`${adminRoute}/unauthorized`} />
-    );
+    return <Redirect to={`${adminRoute}/unauthorized`} />;
   }
 
   return (
     <DefaultTemplate>
-      <Meta
-        title={title}
-        description={description}
-        keywords={keywords}
-      />
+      <Meta title={title} description={description} keywords={keywords} />
       <Eyebrow />
       <div className="gutter--left gutter--right">
         <h1>{title}</h1>
@@ -55,4 +58,4 @@ const ViewTemplate = ({ user, canAccessAdmin, description, keywords, title, chil
   );
 };
 
-export default ViewTemplate
+export default ViewTemplate;

@@ -3,11 +3,23 @@
   "pipeline": {
     "dev": {
       "cache": false,
-      "env": ["PAYLOAD_SECRET", "MONGODB_URI", "WORDPRESS_API_URL", "PAYLOAD_PUBLIC_SERVER_URL", "PAYLOAD_PUBLIC_SERVER_PORT"]
+      "env": [
+        "PAYLOAD_SECRET",
+        "MONGODB_URI",
+        "WORDPRESS_API_URL",
+        "PAYLOAD_PUBLIC_SERVER_URL",
+        "PAYLOAD_PUBLIC_SERVER_PORT"
+      ]
     },
     "build": {
       "dependsOn": ["^build"],
-      "env": ["PAYLOAD_SECRET", "MONGODB_URI", "WORDPRESS_API_URL", "PAYLOAD_PUBLIC_SERVER_URL", "PAYLOAD_PUBLIC_SERVER_PORT"],
+      "env": [
+        "PAYLOAD_SECRET",
+        "MONGODB_URI",
+        "WORDPRESS_API_URL",
+        "PAYLOAD_PUBLIC_SERVER_URL",
+        "PAYLOAD_PUBLIC_SERVER_PORT"
+      ],
       "outputs": ["dist/**", "build/**", "out/**", ".next/**"]
     },
     "build-storybook": {
@@ -16,11 +28,23 @@
     },
     "start": {
       "dependsOn": ["build"],
-      "env": ["PAYLOAD_SECRET", "MONGODB_URI", "WORDPRESS_API_URL", "PAYLOAD_PUBLIC_SERVER_URL", "PAYLOAD_PUBLIC_SERVER_PORT"]
+      "env": [
+        "PAYLOAD_SECRET",
+        "MONGODB_URI",
+        "WORDPRESS_API_URL",
+        "PAYLOAD_PUBLIC_SERVER_URL",
+        "PAYLOAD_PUBLIC_SERVER_PORT"
+      ]
     },
     "serve": {
       "dependsOn": ["build"],
-      "env": ["PAYLOAD_SECRET", "MONGODB_URI", "WORDPRESS_API_URL", "PAYLOAD_PUBLIC_SERVER_URL", "PAYLOAD_PUBLIC_SERVER_PORT"]
+      "env": [
+        "PAYLOAD_SECRET",
+        "MONGODB_URI",
+        "WORDPRESS_API_URL",
+        "PAYLOAD_PUBLIC_SERVER_URL",
+        "PAYLOAD_PUBLIC_SERVER_PORT"
+      ]
     },
     "lint": {
       "outputs": []

@@ -1,13 +1,13 @@
-import React from "react"
+import React from "react";
 
 const Title = () => {
-  return(
-    <h4>SCSE Club <br/> Admin Panel</h4>
-  )
-}
+  return (
+    <h4>
+      SCSE Club <br /> Admin Panel
+    </h4>
+  );
+};
 
-const BeforeNavLinks = [
-  Title
-]
+const BeforeNavLinks = [Title];
 
-export default BeforeNavLinks
+export default BeforeNavLinks;

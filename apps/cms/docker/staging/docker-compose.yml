@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   payload:
@@ -10,4 +10,3 @@ services:
       - "80:80"
     env_file:
       - container.env
-

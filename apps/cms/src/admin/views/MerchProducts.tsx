@@ -1,27 +1,26 @@
 import React from "react";
-import { Button } from 'payload/components/elements';
-import { AdminView } from 'payload/config';
+import { Button } from "payload/components/elements";
+import { AdminView } from "payload/config";
 import ViewTemplate from "./ViewTemplate";
 
 const MerchProducts: AdminView = ({ user, canAccessAdmin }) => {
   return (
-  <ViewTemplate
-    user={user}
-    canAccessAdmin={canAccessAdmin}
-    description=""
-    keywords=""
-    title="Merchandise Products"
-  >
-    <p>Here is a custom route that was added in the Payload config. It uses the Default Template, so the sidebar is rendered.</p>
-    <Button
-      el="link"
-      to={"/admin"}
-      buttonStyle="primary"
+    <ViewTemplate
+      user={user}
+      canAccessAdmin={canAccessAdmin}
+      description=""
+      keywords=""
+      title="Merchandise Products"
     >
-      Go to Main Admin View
-    </Button>
-  </ViewTemplate>
+      <p>
+        Here is a custom route that was added in the Payload config. It uses the
+        Default Template, so the sidebar is rendered.
+      </p>
+      <Button el="link" to={"/admin"} buttonStyle="primary">
+        Go to Main Admin View
+      </Button>
+    </ViewTemplate>
   );
 };
 
-export default MerchProducts
+export default MerchProducts;
