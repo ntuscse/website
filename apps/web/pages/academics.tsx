@@ -1,4 +1,4 @@
-import { Button, FooterContentText, FooterContentTextProps, Hero } from "ui";
+import { ButtonLink as Button, FooterContentText, FooterContentTextProps, Hero } from "ui";
 import { Box, Heading, Text, VStack, Grid, GridItem } from "@chakra-ui/react";
 import Image from "next/image";
 
@@ -42,13 +42,14 @@ const Academics = () => {
                         <Button
                             label='PYP QUESTIONS'
                             href='https://ts.ntu.edu.sg/sites/lib-repository/exam-question-papers/_layouts/15/start.aspx#/Shared%20Documents/Forms/AllItems.aspx'
+                            variant='primary-blue'
                             width={{ base: '100%', md: 'auto' }}/>
                     </GridItem>
                     <GridItem>
                         <Button
                             label='PYP SOLUTIONS'
                             href='https://bit.ly/3CDVXlf'
-                            buttonType='primary.black'
+                            variant='primary-black'
                             width={{ base: '100%', md: 'auto' }}/>
                     </GridItem>
                 </Grid>

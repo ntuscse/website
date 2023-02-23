@@ -9,15 +9,17 @@ export interface ButtonLinkProps extends HTMLChakraProps<"button">, ButtonOption
 }
 
 export const ButtonLink = (props: ButtonLinkProps) => {
-  const { label, href,  variant='primary-blue-btn', ...buttonProps } = props
+  const { label, href,  variant='primary-blue', ...buttonProps } = props
     return (
-    <BaseButton
-      key={ label }
-      variant = { variant }
-      { ...buttonProps }>
+
       <Link href={ href } _hover={{ textDecoration: 'none' }}>
-        <Text>{ label }</Text>
+        <BaseButton
+          key={ label }
+          variant = { variant }
+          { ...buttonProps }>
+          <Text>{ label }</Text>
+        </BaseButton>
       </Link>
-    </BaseButton>
+
     )
 }
