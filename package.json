@@ -12,6 +12,7 @@
     "lint": "turbo run lint --parallel --continue",
     "lint:fix": "turbo run lint:fix --parallel",
     "format": "prettier --write .",
+    "format:check": "prettier --write . --check",
     "build": "turbo run build --parallel",
     "test": "turbo run test --parallel",
     "test:watch": "turbo run test:watch",

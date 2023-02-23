@@ -31,6 +31,23 @@ jobs:
       - name: Install dependencies
         run: yarn install --prefer-offline --frozen-lockfile
 
+      - name: Run Prettier
+        id: prettier-run
+        uses: rutajdash/prettier-cli-action@v1.0.0
+        with:
+          config_path: ./.prettierrc
+
+      # This step only runs if prettier finds errors causing the previous step to fail
+      # This steps lists the files where errors were found
+      - name: Prettier Output
+        if: ${{ failure() }}
+        shell: bash
+        run: |
+          echo "❌ The following files are not formatted:"
+          echo "${{steps.prettier-run.outputs.prettier_output}}"
+          echo "⭐️ You should run `yarn format` in the root of the project directory to fix these files"
+
+
       - name: Lint + Build + Unit Test
         run: yarn turbo run lint build --parallel --filter=!cms test
         # run: turbo run lint build --filter=!cms test cypress:start-headless

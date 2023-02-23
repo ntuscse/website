@@ -4,10 +4,6 @@
   "events": {
     "restart": "yarn generate:types"
   },
-  "watch": [
-    "src"
-  ],
-  "ignore": [
-    "src/payload-types.ts"
-  ]
+  "watch": ["src"],
+  "ignore": ["src/payload-types.ts"]
 }
