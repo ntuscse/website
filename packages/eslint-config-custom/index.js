@@ -12,13 +12,15 @@ module.exports = {
   ],
   extends: [
     "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
     "next/core-web-vitals",
     "turbo",
     "prettier",
     "plugin:storybook/recommended",
   ],
   plugins: [
-    "cypress"
+    "cypress",
+    "@typescript-eslint"
   ],
   rules: {
     // common

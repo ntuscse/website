@@ -11,6 +11,7 @@
     "start": "turbo run start --parallel",
     "lint": "turbo run lint --parallel",
     "lint:fix": "turbo run lint:fix --parallel",
+    "format": "prettier --write .",
     "build": "turbo run build --parallel",
     "test": "turbo run test --parallel",
     "test:watch": "turbo run test:watch",
