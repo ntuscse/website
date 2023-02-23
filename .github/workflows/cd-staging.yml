@@ -36,6 +36,9 @@ jobs:
     needs:
       - build-cms
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
       - name: Deploy and run docker images
         env:
           PRIVATE_KEY: ${{ secrets.STAGING_EC2_PRIVATE_KEY  }}
@@ -43,9 +46,9 @@ jobs:
           USER_NAME: ${{ secrets.STAGING_EC2_USERNAME  }}
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          scp -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} ./deployments/staging/docker-compose.yml ${USER_NAME}@${HOSTNAME}:/home/ubuntu/deployment
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
             cd /home/ubuntu/deployment &&
-            wget -q https://raw.githubusercontent.com/ntuscse/website/main/deployments/staging/docker-compose.yml -O docker-compose.yml &&
             docker compose pull &&
             docker compose up -d
           '
