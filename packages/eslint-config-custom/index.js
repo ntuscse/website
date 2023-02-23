@@ -4,6 +4,7 @@ module.exports = {
     es2021: true,
   },
   ignorePatterns: [
+    "**/out/*",
     "**/dist/*",
     "**/build/*",
     "**/.next/*",
