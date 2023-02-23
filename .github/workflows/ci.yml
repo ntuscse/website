@@ -47,7 +47,6 @@ jobs:
           echo "${{steps.prettier-run.outputs.prettier_output}}"
           echo "⭐️ You should run `yarn format` in the root of the project directory to fix these files"
 
-
       - name: Lint + Build + Unit Test
         run: yarn turbo run lint build --parallel --filter=!cms test
         # run: turbo run lint build --filter=!cms test cypress:start-headless
