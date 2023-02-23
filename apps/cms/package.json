@@ -5,8 +5,8 @@
   "main": "dist/server.js",
   "license": "Apache-2.0",
   "scripts": {
-    "dev": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts nodemon",
-    "build:payload": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload build",
+    "dev": "yarn generate:types && cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts nodemon",
+    "build:payload": "yarn generate:types && PAYLOAD_CONFIG_PATH=src/payload.config.ts payload build",
     "build:server": "tsc",
     "build": "yarn copyfiles && yarn build:payload && yarn build:server",
     "serve": "cross-env PAYLOAD_CONFIG_PATH=dist/payload.config.js BABEL_DISABLE_CACHE=1 NODE_ENV=production node dist/server.js",
