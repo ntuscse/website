@@ -8,7 +8,8 @@
         "MONGODB_URI",
         "WORDPRESS_API_URL",
         "PAYLOAD_PUBLIC_SERVER_URL",
-        "PAYLOAD_PUBLIC_SERVER_PORT"
+        "PAYLOAD_PUBLIC_SERVER_PORT",
+        "NODE_ENV"
       ]
     },
     "build": {
@@ -18,7 +19,8 @@
         "MONGODB_URI",
         "WORDPRESS_API_URL",
         "PAYLOAD_PUBLIC_SERVER_URL",
-        "PAYLOAD_PUBLIC_SERVER_PORT"
+        "PAYLOAD_PUBLIC_SERVER_PORT",
+        "NODE_ENV"
       ],
       "outputs": ["dist/**", "build/**", "out/**", ".next/**"]
     },
