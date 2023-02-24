@@ -2,6 +2,10 @@ import requests
 import json
 import json
 import re
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # reading the blog posts from blogs.json
 with open('blogs.json') as json_file:
@@ -9,7 +13,10 @@ with open('blogs.json') as json_file:
 
 
 # importing the blogs onto payload
-url = "http://localhost:3000/api/posts"
+# variable
+url = os.getenv('Blog_URL')
+blog_author = os.getenv('author')
+token_auth = os.getenv('token_auth')
 print(len(blogs))
 for blog in blogs:
 
@@ -19,7 +26,7 @@ for blog in blogs:
     content = content.replace("\n", " \n")
     payload = json.dumps({
         "title": blogs[blog]["title"],
-        "author": "63e3b05e8ee6591800181b19",
+        "author": blog_author,
         "publishedDate": blogs[blog]["date"],
         "tags": [],
         "content": [{"children": [{
@@ -47,8 +54,7 @@ for blog in blogs:
     }, indent=4)
     headers = {
         'Content-Type': 'application/json',
-        # need to reload cookie if it doesn't work
-        'Cookie': 'payload-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtleXlld0BnbWFpbC5jb20iLCJpZCI6IjYzZTNiMDVlOGVlNjU5MTgwMDE4MWIxOSIsImNvbGxlY3Rpb24iOiJ1c2VycyIsImlhdCI6MTY3NjIwNzc0MSwiZXhwIjoxNjc2MjE0OTQxfQ.t2zvMPnZIm7QqmTEefyIpX21FwxLI0oq0Ege5u6hPP4'
+        'Cookie': token_auth
     }
 
     response = requests.request("POST", url, headers=headers, data=payload)
