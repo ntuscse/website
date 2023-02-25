@@ -1,6 +1,6 @@
 import { buildConfig } from 'payload/config';
 import { cloudStorage } from '@payloadcms/plugin-cloud-storage';
-import { s3Adapter } from '@payloadcms/plugin-cloud-storage/s3';
+import { s3Adapter as createS3Adapter } from '@payloadcms/plugin-cloud-storage/s3';
 import path from 'path';
 
 import Categories from './collections/Categories';
@@ -17,7 +17,7 @@ import MerchProducts from "./admin/views/MerchProducts";
 import { SCSEIcon, SCSELogo } from "./admin/graphics/Logos";
 import BeforeNavLinks from "./admin/components/BeforeNavLinks";
 
-const adapter = s3Adapter({
+const adapter = createS3Adapter({
   config: {
     credentials: {
       accessKeyId: process.env.S3_ACCESS_KEY_ID,
