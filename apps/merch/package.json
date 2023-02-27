@@ -5,7 +5,9 @@
   "main": "dist/server.js",
   "license": "Apache-2.0",
   "scripts": {
-    "dev": "nodemon src/server.ts"
+    "dev": "nodemon src/server.ts",
+    "lint": "TIMING=1 eslint \"**/*.ts*\"",
+    "lint:fix": "TIMING=1 eslint --fix \"**/*.ts*\""
   },
   "dependencies": {
     "express": "^4.17.1"
@@ -20,6 +22,7 @@
     "nodemon": "^2.0.6",
     "ts-node": "^9.1.1",
     "tsconfig": "*",
+    "types": "*",
     "typescript": "^4.8.4",
     "winston": "^3.8.2"
   }

@@ -20,6 +20,7 @@ payload.init({
   mongoURL: process.env.MONGODB_URI,
   express: app,
   onInit: () => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
     payload.logger.info(`Payload Admin URL: ${payload.getAdminURL()}`);
   },
 });
