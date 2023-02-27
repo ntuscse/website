@@ -21,7 +21,7 @@ exports[`renders homepage unchanged 1`] = `
           class="chakra-stack css-md5zo3"
         >
           <button
-            class="chakra-button css-1cwf3eu"
+            class="chakra-button css-ik4ihr"
             type="button"
           >
             <a
@@ -71,32 +71,28 @@ exports[`renders homepage unchanged 1`] = `
             href="blog/techterview-101-navigating-the-internship-world"
           >
             <div
-              class="css-1ivaz1t"
+              class="css-hkp7"
             >
               <div
                 class="css-1m6ql1p"
               >
                 <img
                   alt="Techterview 101: Navigating the Internship World"
-                  data-nimg="fill"
-                  decoding="async"
-                  loading="lazy"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  src="http://localhost/_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Ftechterview-101-navigating-the-internship-world%2Fcover-photo%2F&w=3840&q=75"
-                  srcset="/_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Ftechterview-101-navigating-the-internship-world%2Fcover-photo%2F&w=256&q=75 256w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Ftechterview-101-navigating-the-internship-world%2Fcover-photo%2F&w=384&q=75 384w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Ftechterview-101-navigating-the-internship-world%2Fcover-photo%2F&w=640&q=75 640w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Ftechterview-101-navigating-the-internship-world%2Fcover-photo%2F&w=750&q=75 750w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Ftechterview-101-navigating-the-internship-world%2Fcover-photo%2F&w=828&q=75 828w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Ftechterview-101-navigating-the-internship-world%2Fcover-photo%2F&w=1080&q=75 1080w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Ftechterview-101-navigating-the-internship-world%2Fcover-photo%2F&w=1200&q=75 1200w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Ftechterview-101-navigating-the-internship-world%2Fcover-photo%2F&w=1920&q=75 1920w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Ftechterview-101-navigating-the-internship-world%2Fcover-photo%2F&w=2048&q=75 2048w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Ftechterview-101-navigating-the-internship-world%2Fcover-photo%2F&w=3840&q=75 3840w"
-                  style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent; object-fit: fill;"
+                  src="https://clubs.ntu.edu.sg/csec/techterview-101-navigating-the-internship-world/cover-photo/"
+                  style="object-fit: fill;"
                 />
               </div>
               <div
                 class="chakra-stack css-lha1ht"
               >
                 <h2
-                  class="chakra-heading css-1fgxt6g"
+                  class="chakra-heading css-6hfru0"
                 >
                   Techterview 101: Navigating the Internship World
                 </h2>
                 <p
-                  class="chakra-text css-7wvmeg"
+                  class="chakra-text css-1h1oeyi"
                 >
                   February 22, 2022
                 </p>
@@ -121,32 +117,28 @@ exports[`renders homepage unchanged 1`] = `
             href="blog/21st-main-committee"
           >
             <div
-              class="css-1ivaz1t"
+              class="css-hkp7"
             >
               <div
                 class="css-1m6ql1p"
               >
                 <img
                   alt="21st Main Committee"
-                  data-nimg="fill"
-                  decoding="async"
-                  loading="lazy"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  src="http://localhost/_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Funtitled%2F&w=3840&q=75"
-                  srcset="/_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Funtitled%2F&w=256&q=75 256w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Funtitled%2F&w=384&q=75 384w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Funtitled%2F&w=640&q=75 640w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Funtitled%2F&w=750&q=75 750w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Funtitled%2F&w=828&q=75 828w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Funtitled%2F&w=1080&q=75 1080w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Funtitled%2F&w=1200&q=75 1200w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Funtitled%2F&w=1920&q=75 1920w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Funtitled%2F&w=2048&q=75 2048w, /_next/image?url=https%3A%2F%2Fclubs.ntu.edu.sg%2Fcsec%2Funtitled%2F&w=3840&q=75 3840w"
-                  style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent; object-fit: fill;"
+                  src="https://clubs.ntu.edu.sg/csec/untitled/"
+                  style="object-fit: fill;"
                 />
               </div>
               <div
                 class="chakra-stack css-lha1ht"
               >
                 <h2
-                  class="chakra-heading css-1fgxt6g"
+                  class="chakra-heading css-6hfru0"
                 >
                   21st Main Committee
                 </h2>
                 <p
-                  class="chakra-text css-7wvmeg"
+                  class="chakra-text css-1h1oeyi"
                 >
                   March 31, 2021
                 </p>
@@ -171,7 +163,7 @@ exports[`renders homepage unchanged 1`] = `
       Let’s work together
     </h2>
     <button
-      class="chakra-button css-1godlkh"
+      class="chakra-button css-2nck4"
       type="button"
     >
       <a

@@ -1,24 +1,25 @@
 import React from "react";
-import { Link } from '@chakra-ui/react'
-import Image from "next/image"
+import { Link } from "@chakra-ui/react";
+import { Image } from "../image";
 
 export interface VercelPoweredProps {
-    href: string
-    src: string
-    alt: string
-    width: number
-    height: number
+  href: string;
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
 }
 
-export const VercelPowered = ({ href, src, alt, width, height } : VercelPoweredProps) => {
-    return (
-        <Link href={href} bgColor='white' borderRadius='7px' p='1px'>
-            <Image
-                src={src}
-                alt={alt}
-                width={width}
-                height={height}
-            />
-        </Link>
-    )
-}
+export const VercelPowered = ({
+  href,
+  src,
+  alt,
+  width,
+  height,
+}: VercelPoweredProps) => {
+  return (
+    <Link href={href} bgColor="white" borderRadius="7px" p="1px">
+      <Image src={src} alt={alt} width={width} height={height} />
+    </Link>
+  );
+};

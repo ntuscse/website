@@ -1,2 +1,2 @@
-export { Faq } from "./Faq"
-export type { FaqProps } from "./Faq"
+export { Faq } from "./Faq";
+export type { FaqProps } from "./Faq";

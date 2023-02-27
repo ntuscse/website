@@ -38,21 +38,23 @@ export default buildConfig({
       },
       routes: [
         {
-          path: '/merch/overview',
-          Component: MerchOverview
-        },{
-          path: '/merch/sales',
-          Component: MerchSales
-        },{
-          path: '/merch/products',
-          Component: MerchProducts
+          path: "/merch/overview",
+          Component: MerchOverview,
+        },
+        {
+          path: "/merch/sales",
+          Component: MerchSales,
+        },
+        {
+          path: "/merch/products",
+          Component: MerchProducts,
         },
       ],
       beforeNavLinks: BeforeNavLinks,
-      afterNavLinks: AfterNavLinks
+      afterNavLinks: AfterNavLinks,
     },
     user: Users.slug,
-    css: path.resolve(__dirname, 'admin', 'styles.scss'),
+    css: path.resolve(__dirname, "admin", "styles.scss"),
   },
   collections: [
     Categories,
@@ -61,11 +63,15 @@ export default buildConfig({
     Users,
     Media,
   ],
+  csrf: [
+    // whitelist of domains to allow cookie auth from
+    process.env.PAYLOAD_PUBLIC_SERVER_URL,
+  ],
   typescript: {
-    outputFile: path.resolve(__dirname, 'payload-types.ts')
+    outputFile: path.resolve(__dirname, "payload-types.ts"),
   },
   graphQL: {
-    schemaOutputFile: path.resolve(__dirname, 'generated-schema.graphql'),
+    schemaOutputFile: path.resolve(__dirname, "generated-schema.graphql"),
   },
   plugins: [
     cloudStorage({

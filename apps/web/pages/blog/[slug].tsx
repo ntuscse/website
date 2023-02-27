@@ -24,10 +24,20 @@ const BlogPost = (props: BlogPostProps) => {
           by {props.author?.node?.name} / {getDisplayDate(new Date(props.date))}
         </Text>
         {/* Image needed as it is the primary image of the blog (it is also used as the thumbnail) */}
-        {props.featuredImage &&
-          <Box w="100%" position="relative" style={{ aspectRatio: 1.5 }} mt="50px">
-            <Image fill={true} src={props.featuredImage.node.link}  alt={props.featuredImage.node.link}/>
-          </Box>}
+        {props.featuredImage && (
+          <Box
+            w="100%"
+            position="relative"
+            style={{ aspectRatio: 1.5 }}
+            mt="50px"
+          >
+            <Image
+              fill={true}
+              src={props.featuredImage.node.link}
+              alt={props.featuredImage.node.link}
+            />
+          </Box>
+        )}
       </Box>
 
       <Box

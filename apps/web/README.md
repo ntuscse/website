@@ -1,4 +1,5 @@
 # Web
+
 NTU SCSE's main public facing website, built with Next.js.
 
 [<img src="https://user-images.githubusercontent.com/98306554/151310855-3293e4ae-b673-40ec-adc0-5f2e56426470.svg">](https://vercel.com/?utm_source=cse-it&&utm_campaign=os)
@@ -10,7 +11,6 @@ NTU SCSE's main public facing website, built with Next.js.
 3. [Storybook](#storybook)
 4. [How to Contribute](#how-to-contribute)
 5. [Tests](#tests)
-
 
 ## Requirements
 
@@ -51,17 +51,20 @@ Learn how to contribute to this project [here](#how-to-contribute).
 ## Storybook
 
 ### Introduction:
+
 Storybook is a frontend workshop for building UI components and pages in isolation.
 It can be used for UI development, testing, and documentation.
 
 The basics of Storybook can be learned from https://storybook.js.org/docs/react/writing-stories/introduction
 
 ### When to use Storybook?
+
 Stories are usually written for testing components in isolation from the main web page.
 
 Thus, you should write stories when developing a component in the `packages/ui/components` directory.
 
 ### Starting Storybook:
+
 Navigate to the `website/packages/ui` directory, and run:
 
 ```bash

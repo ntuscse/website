@@ -1,0 +1,26 @@
+{
+  "extends": "tsconfig/node.json",
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "esnext"
+    ],
+    "allowJs": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "allowSyntheticDefaultImports": true
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+  ],
+  "ts-node": {
+    "transpileOnly": true
+  },
+}
