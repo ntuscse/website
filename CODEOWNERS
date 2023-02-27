@@ -1,0 +1,16 @@
+# more info: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+/apps/cms @jamiegoh
+/apps/merch @chanbakjsd
+/apps/web @xJQx
+
+/packages/eslint-custom-config @realdyllon
+/packages/nodelogger @realdyllon
+/packages/schemas @realdyllon
+/packages/schemas/lib/cms.graphql @jamiegoh
+/packages/tsconfig @realdyllon
+/packages/types @realdyllon
+/packages/types/lib/cms.ts @jamiegoh
+/packages/types/lib/merch.ts @chanbakjsd
+/packages/ui @xJQx
+
