@@ -1,10 +1,8 @@
 # NTU School of Computer Science and Engineering Club Website
 
-This monorepo contains the source code for the website of the School of Computer Science and Engineering Club (SCSE Club) at the National Taiwan University (NTU), along with related applications and packages
+This monorepo contains the source code for the website of the School of Computer Science and Engineering Club (SCSE Club) at National Technological University (NTU), along with related applications and packages.
 
-## Monorepo
-
-This repo used turborepo to manage the monorepo. You can find more information about turborepo at https://turborepo.com
+This repo uses turborepo to manage the monorepo. You can find more information about turborepo at https://turborepo.com
 
 ## Apps
 
