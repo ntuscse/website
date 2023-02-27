@@ -1,6 +1,6 @@
 # cms
 
-This project was created using create-payload-app using the ts-blog template.
+This application is a Content Management System and Admin Panel for the SCSE Website
 
 ## How to Run
 
@@ -43,10 +43,13 @@ docker run -e "PAYLOAD_SECRET=some_secret" \
 Remember to change the secret var and the mongo URI.
 
 [//]: # "2. run `docker compose up -d`"
+
 [//]: # "### Build and run via minikube locally"
 
 ## Deployment
 
-Deployment will be triggered upon a successfully merged Pull Request on Github
+Deployment will be triggered upon a successfully merged Pull Request on Github, based on [this Github Workflow](../../.github/workflows/cd-staging.yml)
 
-Github Actions will build an image of the cms service, and push it to Github Container Registry
+Github Actions will build an image of the cms service, and push it to Github Container Registry (GHCR), and then deploy it to the staging environment.
+
+You can view the image in GHCR, here: https://github.com/ntuscse/website/pkgs/container/website%2Fcms

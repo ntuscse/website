@@ -1,73 +1,36 @@
-# Turborepo starter
+# NTU School of Computer Science and Engineering Club Website
 
-This is an official Yarn v1 starter turborepo.
+This monorepo contains the source code for the website of the School of Computer Science and Engineering Club (SCSE Club) at the National Taiwan University (NTU), along with related applications and packages
 
-## What's inside?
+## Monorepo
 
-This turborepo uses [Yarn](https://classic.yarnpkg.com/) as a package manager. It includes the following packages/apps:
+This repo used turborepo to manage the monorepo. You can find more information about turborepo at https://turborepo.com
 
-### Apps and Packages
+## Apps
 
-- `docs`: a [Next.js](https://nextjs.org) app
-- `web`: another [Next.js](https://nextjs.org) app
-- `ui`: a stub React component library shared by both `web` and `docs` applications
-- `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `tsconfig`: `tsconfig.json`s used throughout the monorepo
+- [cms](./apps/cms/README.md): The CMS for the SCSE Club website
+- [merch](./apps/merch/README.md): Backend for the merchandise store for the SCSE Club
+- [web](./apps/web/README.md): The SCSE Club website, built with Next.js
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+## Packages
 
-### Utilities
+- [eslint-custom-config](./packages/eslint-custom-config/README.md): Custom ESLint config for SCSE Club projects
+- [nodelogger](./packages/nodelogger/README.md): A simple logger for Node.js
+- [schemas](./packages/schemas/README.md): Schemas for SCSE Club projects
+- [tsconfig](./packages/tsconfig/README.md): Custom TypeScript config for SCSE Club projects
+- [types](./packages/types/README.md): Types for SCSE Club projects
+- [ui](./packages/ui/README.md): UI components for SCSE Club projects
 
-This turborepo has some additional tools already setup for you:
+## Scripts
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+- `yarn dev`: Run the development servers
+- `yard build`: Build the production bundles
+- `yarn lint`: Lint the codebase with eslint
+- `yarn format`: Format the codebase with prettier
+- `yarn test`: Run unit tests
+- `yarn cypress`: Run end-to-end tests
 
-### Build
+You can view all the scripts in the root `package.json` file
 
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-yarn run build
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-yarn run dev
-```
-
-### Remote Caching
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.org/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Pipelines](https://turborepo.org/docs/core-concepts/pipelines)
-- [Caching](https://turborepo.org/docs/core-concepts/caching)
-- [Remote Caching](https://turborepo.org/docs/core-concepts/remote-caching)
-- [Scoped Tasks](https://turborepo.org/docs/core-concepts/scopes)
-- [Configuration Options](https://turborepo.org/docs/reference/configuration)
-- [CLI Usage](https://turborepo.org/docs/reference/command-line-reference)
+## License
+Apache-2.0
