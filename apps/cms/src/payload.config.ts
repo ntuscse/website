@@ -72,7 +72,10 @@ export default buildConfig({
     outputFile: path.resolve(__dirname, "../../../packages/types/lib/cms.ts"), // overridden by PAYLOAD_TS_OUTPUT_PATH env var
   },
   graphQL: {
-    schemaOutputFile: path.resolve(__dirname, "generated-schema.graphql"),
+    schemaOutputFile: path.resolve(
+      __dirname,
+      "../../../packages/schemas/lib/cms.graphql"
+    ),
   },
   plugins: [
     cloudStorage({
