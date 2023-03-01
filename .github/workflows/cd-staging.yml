@@ -2,7 +2,9 @@ name: CD Staging
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
+  pull_request: # TODO: remove this before merging
+    types: [opened, synchronize] # TODO: remove this before merging
   workflow_dispatch:
 
 jobs:
@@ -44,9 +46,11 @@ jobs:
           PRIVATE_KEY: ${{ secrets.STAGING_EC2_PRIVATE_KEY  }}
           HOSTNAME: ${{ secrets.STAGING_EC2_HOSTNAME  }}
           USER_NAME: ${{ secrets.STAGING_EC2_USERNAME  }}
-        run: |
+        run: |ß
+          pwd
+          ls
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          scp -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} ./deployments/staging/docker-compose.yml ${USER_NAME}@${HOSTNAME}:/home/ubuntu/deployment
+          scp -o StrictHostKeyChecking=no -i private_key ./deployments/staging/docker-compose.yml ${USER_NAME}@${HOSTNAME}:/home/ubuntu/deployment
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
             cd /home/ubuntu/deployment &&
             docker compose pull &&
