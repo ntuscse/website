@@ -1,0 +1,29 @@
+name: PR Validation
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - synchronize
+      - labeled
+      - unlabeled
+
+jobs:
+  pr-title-validation:
+    name: Pull Request Title Validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        
+      - name: Title validation
+        uses: YoNG-Zaii/linear-actions@v1.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          linear_id_prefix: "SCSE"
+          linear_auth_type: "apiKey"
+          linear_auth_key: ${{ secrets.LINEAR_API_KEY }}
+          label_name: "bad PR title"
+          label_description: "PR title needs formatting"
+          label_color: "D4C5F9"
