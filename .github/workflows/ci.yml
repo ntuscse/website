@@ -48,5 +48,6 @@ jobs:
           echo "⭐️ You should run `yarn format` in the root of the project directory to fix these files"
 
       - name: Lint + Build + Unit Test
-        run: yarn turbo run lint build --parallel --filter=!cms test
-        # run: turbo run lint build --filter=!cms test cypress:start-headless
+        run: yarn turbo run lint build test cypress:start-headless --parallel
+        env:
+          WORDPRESS_API_URL: 'https://clubs.ntu.edu.sg/csec/graphql'

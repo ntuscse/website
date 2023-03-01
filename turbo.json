@@ -9,7 +9,11 @@
         "WORDPRESS_API_URL",
         "PAYLOAD_PUBLIC_SERVER_URL",
         "PAYLOAD_PUBLIC_SERVER_PORT",
-        "NODE_ENV"
+        "NODE_ENV",
+        "S3_ACCESS_KEY_ID",
+        "S3_SECRET_ACCESS_KEY",
+        "AWS_REGION",
+        "S3_BUCKET"
       ]
     },
     "build": {
@@ -20,7 +24,11 @@
         "WORDPRESS_API_URL",
         "PAYLOAD_PUBLIC_SERVER_URL",
         "PAYLOAD_PUBLIC_SERVER_PORT",
-        "NODE_ENV"
+        "NODE_ENV",
+        "S3_ACCESS_KEY_ID",
+        "S3_SECRET_ACCESS_KEY",
+        "AWS_REGION",
+        "S3_BUCKET"
       ],
       "outputs": ["dist/**", "build/**", "out/**", ".next/**"]
     },
@@ -35,7 +43,11 @@
         "MONGODB_URI",
         "WORDPRESS_API_URL",
         "PAYLOAD_PUBLIC_SERVER_URL",
-        "PAYLOAD_PUBLIC_SERVER_PORT"
+        "PAYLOAD_PUBLIC_SERVER_PORT",
+        "S3_ACCESS_KEY_ID",
+        "S3_SECRET_ACCESS_KEY",
+        "AWS_REGION",
+        "S3_BUCKET"
       ]
     },
     "serve": {
@@ -45,7 +57,11 @@
         "MONGODB_URI",
         "WORDPRESS_API_URL",
         "PAYLOAD_PUBLIC_SERVER_URL",
-        "PAYLOAD_PUBLIC_SERVER_PORT"
+        "PAYLOAD_PUBLIC_SERVER_PORT",
+        "S3_ACCESS_KEY_ID",
+        "S3_SECRET_ACCESS_KEY",
+        "AWS_REGION",
+        "S3_BUCKET"
       ]
     },
     "lint": {
