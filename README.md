@@ -1,6 +1,7 @@
 # NTU School of Computer Science and Engineering Club Website
 
-This monorepo contains the source code for the website of the School of Computer Science and Engineering Club (SCSE Club) at National Technological University (NTU), along with related applications and packages.
+This monorepo contains the source code for the website of the School of Computer Science and Engineering Club (SCSE
+Club) at Nanyang Technological University (NTU), along with related applications and packages.
 
 This repo uses turborepo to manage the monorepo. You can find more information about turborepo at https://turborepo.com
 
@@ -28,7 +29,8 @@ This repo uses turborepo to manage the monorepo. You can find more information a
 - `yarn test`: Run unit tests
 - `yarn cypress`: Run end-to-end tests
 
-You can view all the scripts in the root `package.json` file
+You can view all the scripts in the root `package.json` file.
 
 ## License
+
 Apache-2.0
