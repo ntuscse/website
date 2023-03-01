@@ -15,7 +15,7 @@ app.get("/", (_, res) => {
 app.use(express.static(path.join(__dirname, "..", "public")));
 
 // Initialize Payload
-payload.init({
+void payload.init({
   secret: process.env.PAYLOAD_SECRET,
   mongoURL: process.env.MONGODB_URI,
   express: app,
