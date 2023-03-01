@@ -6,7 +6,7 @@ This repo uses turborepo to manage the monorepo. You can find more information a
 
 ## Apps
 
-- [cms](./apps/cms/README.md): The CMS for the SCSE Club website
+- [cms](./apps/cms/README.md): The CMS & Admin Panel for the SCSE Club website
 - [merch](./apps/merch/README.md): Backend for the merchandise store for the SCSE Club
 - [web](./apps/web/README.md): The SCSE Club website, built with Next.js
 
