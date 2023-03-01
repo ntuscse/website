@@ -5,19 +5,20 @@
  * and re-run `payload generate:types` to regenerate this file.
  */
 
-export interface Config {}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories".
- */
+export interface Config {
+  collections: {
+    categories: Category;
+    posts: Post;
+    tags: Tag;
+    users: User;
+    media: Media;
+  };
+  globals: {};
+}
 export interface Category {
   id: string;
   name?: string;
 }
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "posts".
- */
 export interface Post {
   id: string;
   title?: string;
@@ -32,10 +33,6 @@ export interface Post {
   createdAt: string;
   updatedAt: string;
 }
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
- */
 export interface User {
   id: string;
   name?: string;
@@ -46,12 +43,21 @@ export interface User {
   lockUntil?: string;
   createdAt: string;
   updatedAt: string;
+  password?: string;
 }
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "tags".
- */
 export interface Tag {
   id: string;
   name?: string;
+}
+export interface Media {
+  id: string;
+  alt?: string;
+  url?: string;
+  filename?: string;
+  mimeType?: string;
+  filesize?: number;
+  width?: number;
+  height?: number;
+  createdAt: string;
+  updatedAt: string;
 }

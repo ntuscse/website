@@ -4,3 +4,6 @@
 **/build
 **/coverage
 **/storybook-static
+
+# auto generated files
+packages/types/lib/cms.ts
