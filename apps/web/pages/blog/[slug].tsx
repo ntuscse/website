@@ -10,6 +10,7 @@ import { GetBlogPostResponse } from "../../lib/types/wordpress";
 import { Box, Heading, Text } from "@chakra-ui/react";
 import { getDisplayDate } from "../../lib/helpers/getDisplayDate";
 import Image from "next/image";
+import Link from "next/link";
 
 type BlogPostProps = GetBlogPostResponse["post"];
 
@@ -21,7 +22,8 @@ const BlogPost = (props: BlogPostProps) => {
           {props.title}
         </Heading>
         <Text fontWeight="light" fontSize="13px">
-          by {props.author?.node?.name} / {getDisplayDate(new Date(props.date))}
+          by <Link href={`/blog/author/${props.author ? props.author.node.name : 'no-author'}`}><Text as="span" color="blue.700" fontWeight="bold" _hover={{ textDecoration: "underline" }}>{props.author?.node?.name}</Text></Link>
+          <Text as="span">{' '}/ {getDisplayDate(new Date(props.date))}</Text>
         </Text>
         {/* Image needed as it is the primary image of the blog (it is also used as the thumbnail) */}
         {props.featuredImage && (

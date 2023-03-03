@@ -1,16 +1,16 @@
-import { Text, Heading, Box, Grid, GridItem } from "@chakra-ui/react";
-import { GetStaticProps, GetStaticPropsResult } from "next";
-import { getAllBlogPosts } from "../../lib/api/wordpress";
-import { GetAllBlogPostsResponse } from "../../lib/types/wordpress";
-import Image from "next/image";
+import { GetStaticPaths, GetStaticPathsResult, GetStaticProps, GetStaticPropsContext, GetStaticPropsResult } from "next";
+import { getAllBlogPostsSlugs, getAllBlogPosts } from "../../../lib/api/wordpress";
+import { GetAllBlogPostsResponse } from "../../../lib/types/wordpress";
+import { Box, Grid, GridItem, Heading, Text } from "@chakra-ui/react";
 import Link from "next/link";
-import { getDisplayDate } from "../../lib/helpers/getDisplayDate";
+import Image from "next/image";
+import { getDisplayDate } from "../../../lib/helpers/getDisplayDate";
 
-export interface BlogProps {
-  posts: GetAllBlogPostsResponse["posts"]["edges"];
+interface AuthorBlogsProps {
+  posts: GetAllBlogPostsResponse["posts"]["edges"]
 }
 
-const Blog = ({ posts }: BlogProps) => {
+const AuthorBlogs = ({ posts }: AuthorBlogsProps) => {
   return (
     <Box p="50px" display="flex" justifyContent="center">
       <Grid
@@ -19,7 +19,7 @@ const Blog = ({ posts }: BlogProps) => {
         columnGap="20px"
         maxW={1100}
       >
-        {posts.map((post) => {
+        {posts?.map((post) => {
           return (
             <>
               <GridItem
@@ -68,13 +68,26 @@ const Blog = ({ posts }: BlogProps) => {
       </Grid>
     </Box>
   );
-};
+}
 
-export default Blog;
+export default AuthorBlogs;
 
-// This function gets called at build time
-export const getStaticProps: GetStaticProps<any> = async (_context) => {
-  const data = await getAllBlogPosts();
+// this function gets called at build time
+export const getStaticProps: GetStaticProps = async ({
+  params,
+}: GetStaticPropsContext) => {
+  // const data = await getAllBlogPostsByAuthor(params?.name as string);
+  const data = await getAllBlogPosts()
+
+  // filter by author
+  data.edges = data.edges.filter((edge) => {
+    if (edge.node.author) {
+      return edge.node.author.node.name === params?.name as string;
+    } else {
+      // no author
+      return !edge.node.author && params?.name === 'no-author';
+    }
+  })
 
   return {
     props: {
@@ -91,5 +104,16 @@ export const getStaticProps: GetStaticProps<any> = async (_context) => {
       })),
     },
     revalidate: 10,
-  } as GetStaticPropsResult<BlogProps>;
-};
+  } as GetStaticPropsResult<AuthorBlogsProps>;
+}
+
+// this function gets called at build time
+// this defines a list of paths to be statically generated.
+export const getStaticPaths: GetStaticPaths = async () => {
+  const data = await getAllBlogPostsSlugs();
+
+  return {
+    paths: data.edges.map((edge) => `/blog/author/${edge.node.author ? edge.node.author.node.name : 'no-author'}`),
+    fallback: true,
+  } as GetStaticPathsResult;
+}
