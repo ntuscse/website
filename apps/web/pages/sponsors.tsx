@@ -1,7 +1,6 @@
 import { Carousel, FooterContentButton } from "ui";
 import { sponsorsImageData } from "@/pages/api/sponsors";
 import { Divider, Heading, VStack } from "@chakra-ui/react";
-
 const Sponsors = () => {
   return (
     <>
