@@ -1,7 +1,6 @@
-import { Carousel, FooterContentButton } from "ui";
+import { FooterContentButton, Image } from "ui";
 import { sponsorsImageData } from "@/pages/api/sponsors";
-import { Divider, Heading, VStack } from "@chakra-ui/react";
-
+import { Box, Divider, Heading, Link, SimpleGrid, VStack } from "@chakra-ui/react";
 const Sponsors = () => {
   return (
     <>
@@ -15,7 +14,34 @@ const Sponsors = () => {
           borderBottom="0px"
           borderColor="black"
         ></Divider>
-        <Carousel items={sponsorsImageData} />
+
+        {/* Sponsors Grid */}
+        <Box>
+          <SimpleGrid
+            columns={{ sm: 1, md: 2, lg: 3 }}
+            spacing={["30px", "50px", "150px"]}
+            marginBottom="5rem"
+            marginTop="3rem"
+          >
+            {sponsorsImageData.map(({ imageSrc, altText, href }) => (
+              <Box key={altText} width="250px" height="100px" mx={4}>
+                <Link href={href}>
+                  <Image
+                    height={100}
+                    width={250}
+                    src={imageSrc}
+                    alt={altText}
+                    style={{
+                      objectFit: "contain",
+                      height: "100px",
+                      width: "250px",
+                    }}
+                  />
+                </Link>
+              </Box>
+            ))}
+          </SimpleGrid>
+        </Box>
       </VStack>
       <FooterContentButton
         href="./contact"

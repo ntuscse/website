@@ -6,6 +6,7 @@ import {
   SystemStyleObject,
 } from "@chakra-ui/react";
 import { Image } from "../image";
+import Link from "next/link";
 
 export interface AnimatedCarouselProps extends FlexProps {
   items: Array<{
@@ -18,21 +19,23 @@ export interface AnimatedCarouselProps extends FlexProps {
 const CarouselSlides = ({ items }: AnimatedCarouselProps) => {
   return (
     <>
-      {items.map(({ imageSrc, altText }) => (
+      {items.map(({ imageSrc, altText, href }) => (
         <Box key={altText} width="250px" height="100px" mx={4}>
           {" "}
           {/* slide */}
-          <Image
-            height={100}
-            width={250}
-            src={imageSrc}
-            alt={altText}
-            style={{
-              objectFit: "contain",
-              height: "100px",
-              width: "250px",
-            }}
-          />
+          <Link href={href}>
+            <Image
+              height={100}
+              width={250}
+              src={imageSrc}
+              alt={altText}
+              style={{
+                objectFit: "contain",
+                height: "100px",
+                width: "250px",
+              }}
+            />
+          </Link>
         </Box>
       ))}
     </>
@@ -40,7 +43,6 @@ const CarouselSlides = ({ items }: AnimatedCarouselProps) => {
 };
 
 const sideGradient: SystemStyleObject = {
-  // background: `linear-gradient(to right,  rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%)`,
   bgGradient: "linear(to-r, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%)",
   content: `""`,
   height: "100px",
@@ -49,10 +51,7 @@ const sideGradient: SystemStyleObject = {
   zIndex: 2,
 };
 
-export const AnimatedCarousel = ({
-  items,
-  ...props
-}: AnimatedCarouselProps) => {
+export const AnimatedCarousel = ({ items, ...props }: AnimatedCarouselProps) => {
   const scroll = keyframes`
   0% {
     transform: translateX(0)

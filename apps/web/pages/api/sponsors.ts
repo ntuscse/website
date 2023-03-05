@@ -1,5 +1,4 @@
 import { CarouselProps } from "ui";
-
 export const sponsorsImageData: CarouselProps["items"] = [
   {
     imageSrc:
