@@ -1,13 +1,12 @@
 import {
-  Link,
   Box,
   Flex,
   FlexProps,
   keyframes,
-  SimpleGrid,
   SystemStyleObject,
 } from "@chakra-ui/react";
 import { Image } from "../image";
+import Link from "next/link";
 
 export interface AnimatedCarouselProps extends FlexProps {
   items: Array<{
@@ -20,38 +19,30 @@ export interface AnimatedCarouselProps extends FlexProps {
 const CarouselSlides = ({ items }: AnimatedCarouselProps) => {
   return (
     <>
-      <SimpleGrid
-        columns={{ sm: 1, md: 2, lg: 3 }}
-        spacing={["30px", "50px", "150px"]}
-        marginBottom={"5rem"}
-        marginTop={"3rem"}
-      >
-        {items.map(({ imageSrc, altText, href }) => (
-          <Box key={altText} width="250px" height="100px" mx={4}>
-            {" "}
-            {/* slide */}
-            <Link href={href}>
-              <Image
-                height={100}
-                width={250}
-                src={imageSrc}
-                alt={altText}
-                style={{
-                  objectFit: "contain",
-                  height: "100px",
-                  width: "250px",
-                }}
-              />
-            </Link>
-          </Box>
-        ))}
-      </SimpleGrid>
+      {items.map(({ imageSrc, altText, href }) => (
+        <Box key={altText} width="250px" height="100px" mx={4}>
+          {" "}
+          {/* slide */}
+          <Link href={href}>
+            <Image
+              height={100}
+              width={250}
+              src={imageSrc}
+              alt={altText}
+              style={{
+                objectFit: "contain",
+                height: "100px",
+                width: "250px",
+              }}
+            />
+          </Link>
+        </Box>
+      ))}
     </>
   );
 };
 
 const sideGradient: SystemStyleObject = {
-  // background: `linear-gradient(to right,  rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%)`,
   bgGradient: "linear(to-r, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%)",
   content: `""`,
   height: "100px",
@@ -60,10 +51,7 @@ const sideGradient: SystemStyleObject = {
   zIndex: 2,
 };
 
-export const AnimatedCarousel = ({
-  items,
-  ...props
-}: AnimatedCarouselProps) => {
+export const AnimatedCarousel = ({ items, ...props }: AnimatedCarouselProps) => {
   const scroll = keyframes`
   0% {
     transform: translateX(0)
@@ -73,5 +61,33 @@ export const AnimatedCarousel = ({
   }
 `;
   const scrollAnimation = `${scroll} 40s linear infinite`;
-  return <CarouselSlides items={items} />;
+
+  return (
+    <Flex
+      maxWidth="100vw"
+      height="100px"
+      margin="auto"
+      position="relative"
+      overflow="hidden"
+      _before={{ ...sideGradient, left: 0, top: 0 }}
+      _after={{
+        ...sideGradient,
+        right: 0,
+        top: 0,
+        transform: "rotateZ(180deg)",
+      }}
+      {...props}
+    >
+      <Flex
+        height="100px"
+        alignItems="center"
+        width={`calc(250px * ${items.length * 2})`}
+        animation={scrollAnimation}
+      >
+        {/* render slides twice for infinite effect */}
+        <CarouselSlides items={items} />
+        <CarouselSlides items={items} />
+      </Flex>
+    </Flex>
+  );
 };

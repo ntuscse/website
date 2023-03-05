@@ -14,7 +14,6 @@ const Template: ComponentStory<typeof Carousel> = (args) => (
 export const Primary = Template.bind({});
 
 Primary.args = {
-  headingText: "OUR SPONSORS",
   items: [
     {
       imageSrc:
