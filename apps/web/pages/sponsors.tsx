@@ -4,7 +4,7 @@ import { Box, Divider, Heading, Link, SimpleGrid, VStack } from "@chakra-ui/reac
 const Sponsors = () => {
   return (
     <>
-      <VStack pt={{ base: 5, lg: 10 }} minH="60vh">
+      <VStack pt={{ base: 5, lg: 10 }} minH="60vh" bg="#FFFFFF">
         <Heading>OUR SPONSORS</Heading>
         <Divider
           width="50%"
@@ -46,7 +46,7 @@ const Sponsors = () => {
       <FooterContentButton
         href="./contact"
         label="Contact Us"
-        title="Wanna Sponsor us or work on a event together!"
+        title="Want to sponsor us or work on a event together?"
       />
     </>
   );

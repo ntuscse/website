@@ -14,7 +14,7 @@ export const FooterContentButton = ({
   label,
 }: FooterContentButtonProps) => {
   return (
-    <VStack bg="black" py="30px">
+    <VStack bg="black" py="30px" px="1.25em">
       <Heading
         textAlign="center"
         as="h2"
