@@ -24,19 +24,31 @@ export interface Post {
   title?: string;
   category?: string | Category;
   tags?: string[] | Tag[];
-  layout: {
-    columns: {
-      width: 'oneThird' | 'half' | 'twoThirds' | 'full';
-      alignment: 'left' | 'center' | 'right';
-      richText?: {
-        [k: string]: unknown;
-      }[];
-      id?: string;
-    }[];
-    id?: string;
-    blockName?: string;
-    blockType: 'content';
-  }[];
+  layout: (
+    | {
+        columns: {
+          width: 'oneThird' | 'half' | 'twoThirds' | 'full';
+          alignment: 'left' | 'center' | 'right';
+          richText?: {
+            [k: string]: unknown;
+          }[];
+          id?: string;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'content';
+      }
+    | {
+        media: string | Media;
+        size?: 'normal' | 'wide' | 'fullscreen';
+        caption?: {
+          [k: string]: unknown;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'media';
+      }
+  )[];
   slug?: string;
   status?: 'draft' | 'published';
   author?: string | User;
@@ -49,18 +61,6 @@ export interface Tag {
   id: string;
   name?: string;
 }
-export interface User {
-  id: string;
-  name?: string;
-  email?: string;
-  resetPasswordToken?: string;
-  resetPasswordExpiration?: string;
-  loginAttempts?: number;
-  lockUntil?: string;
-  createdAt: string;
-  updatedAt: string;
-  password?: string;
-}
 export interface Media {
   id: string;
   alt?: string;
@@ -72,4 +72,16 @@ export interface Media {
   height?: number;
   createdAt: string;
   updatedAt: string;
+}
+export interface User {
+  id: string;
+  name?: string;
+  email?: string;
+  resetPasswordToken?: string;
+  resetPasswordExpiration?: string;
+  loginAttempts?: number;
+  lockUntil?: string;
+  createdAt: string;
+  updatedAt: string;
+  password?: string;
 }

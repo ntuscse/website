@@ -1,6 +1,7 @@
 import { CollectionConfig } from "payload/types";
 import populateSlug from "./hooks/populateSlug";
 import { ContentBlock } from "../blocks/Content";
+import { MediaBlock } from "../blocks/Media";
 
 const Posts: CollectionConfig = {
   slug: "posts",
@@ -44,7 +45,8 @@ const Posts: CollectionConfig = {
       type: "blocks",
       minRows: 1,
       blocks: [
-        ContentBlock
+        ContentBlock,
+        MediaBlock
       ]
     },
     // sidebar stuff
