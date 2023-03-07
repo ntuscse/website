@@ -1,5 +1,6 @@
 import { CollectionConfig } from "payload/types";
 import populateSlug from "./hooks/populateSlug";
+import { ContentBlock } from "../blocks/Content";
 
 const Posts: CollectionConfig = {
   slug: "posts",
@@ -18,19 +19,13 @@ const Posts: CollectionConfig = {
     read: () => true,
 
   },
+  versions: {
+    drafts: true,
+  },
   fields: [
     {
       name: "title",
       type: "text",
-    },
-    {
-      name: "author",
-      type: "relationship",
-      relationTo: "users",
-    },
-    {
-      name: "publishedDate",
-      type: "date",
     },
     {
       name: "category",
@@ -44,8 +39,13 @@ const Posts: CollectionConfig = {
       hasMany: true,
     },
     {
-      name: "content",
-      type: "richText",
+      name: "layout",
+      label: "Page Layout",
+      type: "blocks",
+      minRows: 1,
+      blocks: [
+        ContentBlock
+      ]
     },
     // sidebar stuff
     {
@@ -77,6 +77,21 @@ const Posts: CollectionConfig = {
         },
       ],
       defaultValue: "draft",
+      admin: {
+        position: "sidebar",
+      },
+    },
+    {
+      name: "author",
+      type: "relationship",
+      relationTo: "users",
+      admin: {
+        position: "sidebar",
+      },
+    },
+    {
+      name: "publishedDate",
+      type: "date",
       admin: {
         position: "sidebar",
       },
