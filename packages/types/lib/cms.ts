@@ -29,6 +29,7 @@ export interface Post {
   content?: {
     [k: string]: unknown;
   }[];
+  slug?: string;
   status?: 'draft' | 'published';
   createdAt: string;
   updatedAt: string;

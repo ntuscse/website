@@ -1,13 +1,22 @@
 import { CollectionConfig } from "payload/types";
+import populateSlug from "./hooks/populateSlug";
 
 const Posts: CollectionConfig = {
   slug: "posts",
   admin: {
     defaultColumns: ["title", "author", "category", "tags", "status"],
     useAsTitle: "title",
+    group: "Content",
+    preview: (doc, _options) => {
+      if (doc?.slug) {
+        return `${process.env.FRONTEND_STAGING_DOMAIN}/blog/${doc.slug}`
+      }
+      return null
+    }
   },
   access: {
     read: () => true,
+
   },
   fields: [
     {
@@ -37,6 +46,22 @@ const Posts: CollectionConfig = {
     {
       name: "content",
       type: "richText",
+    },
+    // sidebar stuff
+    {
+      name: "slug",
+      label: "Slug",
+      type: "text",
+      admin: {
+        position: "sidebar",
+        readOnly: true,
+        description: "This is automatically generated from the title."
+      },
+      hooks: {
+        beforeChange: [
+          populateSlug
+        ]
+      }
     },
     {
       name: "status",
