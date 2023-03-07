@@ -9,8 +9,6 @@ services:
       - --storageEngine=wiredTiger
     volumes:
       - ./data:/data/db
-    logging:
-      driver: none
 
 volumes:
   data:
