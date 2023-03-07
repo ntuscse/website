@@ -2,7 +2,7 @@ name: CD Staging
 
 on:
   push:
-    branches: [ main, fix/cd-staging ]
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
