@@ -51,7 +51,7 @@ jobs:
           scp -o StrictHostKeyChecking=no -i private_key ./deployments/staging/docker-compose.yml ${USER_NAME}@${HOSTNAME}:/home/ubuntu/deployment
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
             cd /home/ubuntu/deployment &&
-            docker image prune -a --force &&
+            docker system prune --force &&
             docker compose pull &&
             docker compose up -d
           '
