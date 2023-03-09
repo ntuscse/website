@@ -1,6 +1,6 @@
 import { defineStyleConfig } from "@chakra-ui/react";
 
-const ButtonLink = defineStyleConfig({
+const Button = defineStyleConfig({
   // Styles for the base style
   baseStyle: {
     fontWeight:  'bold',
@@ -24,7 +24,6 @@ const ButtonLink = defineStyleConfig({
   variants: {
     'primary-blue': {
       bg: 'blue.600',
-
     }
     ,
     'primary-black': {
@@ -36,4 +35,4 @@ const ButtonLink = defineStyleConfig({
   defaultProps: {},
 });
 
-export default ButtonLink;
+export default Button;

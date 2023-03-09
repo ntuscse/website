@@ -5,16 +5,16 @@ import { ButtonOptions } from "@chakra-ui/button";
 export interface ButtonLinkProps
   extends HTMLChakraProps<"button">,
     ButtonOptions,
-    ThemingProps<"ButtonLink"> {
+    ThemingProps<"Button"> {
   label: string;
   href: string;
   variant?: "primary-blue" | "primary-black";
 }
 
 export const ButtonLink = (props: ButtonLinkProps) => {
-  const { label, href, variant='primary-blue' } = props
+  const { label, href, variant='primary-blue', ...buttonProps } = props
   return (
-      <Button as='a' variant = { variant } href = { href }>
+      <Button as='a' variant = { variant } href = { href } { ...buttonProps }>
         <Text>{ label }</Text>
       </Button>
   )
