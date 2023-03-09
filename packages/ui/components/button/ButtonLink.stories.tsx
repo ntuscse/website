@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { ButtonLink } from "./ButtonLink";
 
 export default {
-  title: "Components/Button",
+  title: "Components/ButtonLink",
   component: ButtonLink,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},
