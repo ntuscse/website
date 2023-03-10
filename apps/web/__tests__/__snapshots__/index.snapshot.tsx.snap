@@ -21,7 +21,7 @@ exports[`renders homepage unchanged 1`] = `
           class="chakra-stack css-md5zo3"
         >
           <a
-            class="chakra-button css-1e450lk"
+            class="chakra-button css-jd3l4b"
             href="/events"
           >
             <p
@@ -31,7 +31,7 @@ exports[`renders homepage unchanged 1`] = `
             </p>
           </a>
           <a
-            class="chakra-button css-1e450lk"
+            class="chakra-button css-jd3l4b"
             href="/contact"
           >
             <p

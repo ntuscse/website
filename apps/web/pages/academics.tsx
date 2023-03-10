@@ -48,6 +48,7 @@ const Academics = () => {
               label="PYP QUESTIONS"
               href="https://ts.ntu.edu.sg/sites/lib-repository/exam-question-papers/_layouts/15/start.aspx#/Shared%20Documents/Forms/AllItems.aspx"
               width={{ base: "100%", md: "auto" }}
+              size="lg"
             />
           </GridItem>
           <GridItem>
@@ -55,6 +56,7 @@ const Academics = () => {
               label="PYP SOLUTIONS"
               href="https://bit.ly/3CDVXlf"
               variant="primary-black"
+              size="lg"
               width={{ base: "100%", md: "auto" }}
             />
           </GridItem>

@@ -14,8 +14,8 @@ export interface ButtonLinkProps
 export const ButtonLink = (props: ButtonLinkProps) => {
   const { label, href, variant='primary-blue', ...buttonProps } = props
   return (
-      <Button as='a' variant = { variant } href = { href } { ...buttonProps }>
-        <Text>{ label }</Text>
-      </Button>
+    <Button as='a' variant={variant} href={href} {...buttonProps}>
+      <Text>{ label }</Text>
+    </Button>
   )
 }

@@ -78,6 +78,7 @@ export const Hero = ({
                   href={href}
                   variant={variant}
                   size="lg"
+                  width={{ base: "100%", md: "auto" }}
                   {...buttonProps}
                 />
               );
