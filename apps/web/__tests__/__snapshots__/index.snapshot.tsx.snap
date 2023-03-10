@@ -20,36 +20,26 @@ exports[`renders homepage unchanged 1`] = `
         <div
           class="chakra-stack css-md5zo3"
         >
-          <button
-            class="chakra-button css-ik4ihr"
-            type="button"
+          <a
+            class="chakra-button css-jd3l4b"
+            href="/events"
           >
-            <a
-              class="chakra-link css-13jvj27"
-              href="/events"
+            <p
+              class="chakra-text css-0"
             >
-              <p
-                class="chakra-text css-0"
-              >
-                LEARN MORE
-              </p>
-            </a>
-          </button>
-          <button
-            class="chakra-button css-1bittrd"
-            type="button"
+              LEARN MORE
+            </p>
+          </a>
+          <a
+            class="chakra-button css-jd3l4b"
+            href="/contact"
           >
-            <a
-              class="chakra-link css-13jvj27"
-              href="/contact"
+            <p
+              class="chakra-text css-0"
             >
-              <p
-                class="chakra-text css-0"
-              >
-                CONTACT US
-              </p>
-            </a>
-          </button>
+              CONTACT US
+            </p>
+          </a>
         </div>
       </div>
     </div>
@@ -162,21 +152,16 @@ exports[`renders homepage unchanged 1`] = `
     >
       Let’s work together
     </h2>
-    <button
-      class="chakra-button css-2nck4"
-      type="button"
+    <a
+      class="chakra-button css-qklkzv"
+      href="./contact"
     >
-      <a
-        class="chakra-link css-13jvj27"
-        href="./contact"
+      <p
+        class="chakra-text css-0"
       >
-        <p
-          class="chakra-text css-0"
-        >
-          Contact Us
-        </p>
-      </a>
-    </button>
+        Contact Us
+      </p>
+    </a>
   </div>
   <span
     hidden=""

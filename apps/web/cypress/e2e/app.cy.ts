@@ -7,7 +7,7 @@ describe("Navigation", () => {
     cy.get('[role="heading"]').contains("WELCOME TO SCSE CLUB");
 
     // Find a button with a href attribute containing "contact" and click it
-    cy.get('button a[href*="contact"]').first().click();
+    cy.get('a[class*="chakra-button"][href*="contact"]').first().click();
 
     // The new url should include "/contact"
     cy.url().should("include", "/contact");

@@ -6,12 +6,12 @@ import {
   FlexProps,
   TextProps,
 } from "@chakra-ui/react";
-import { Button, ButtonProps } from "ui";
+import { ButtonLink, ButtonLinkProps } from "ui";
 
 export interface HeroProps extends FlexProps {
   backgroundImage: string;
   backgroundGradient?: string;
-  buttons?: Array<ButtonProps>;
+  buttons?: Array<ButtonLinkProps>;
   text?: string;
   textProps?: TextProps;
 }
@@ -70,13 +70,13 @@ export const Hero = ({
             justify="center"
           >
             {buttons?.map((button) => {
-              const { label, href, buttonType, ...buttonProps } = button;
+              const { label, href, variant, ...buttonProps } = button;
               return (
-                <Button
+                <ButtonLink
                   key={label}
                   label={label}
                   href={href}
-                  buttonType={buttonType}
+                  variant={variant}
                   size="lg"
                   width={{ base: "100%", md: "auto" }}
                   {...buttonProps}
