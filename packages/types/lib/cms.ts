@@ -22,28 +22,40 @@ export interface Category {
 export interface Post {
   id: string;
   title?: string;
-  author?: string | User;
-  publishedDate?: string;
   category?: string | Category;
   tags?: string[] | Tag[];
-  content?: {
-    [k: string]: unknown;
-  }[];
+  layout: (
+    | {
+        columns: {
+          width: 'oneThird' | 'half' | 'twoThirds' | 'full';
+          alignment: 'left' | 'center' | 'right';
+          richText?: {
+            [k: string]: unknown;
+          }[];
+          id?: string;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'content';
+      }
+    | {
+        media: string | Media;
+        size?: 'normal' | 'wide' | 'fullscreen';
+        caption?: {
+          [k: string]: unknown;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'media';
+      }
+  )[];
+  slug?: string;
   status?: 'draft' | 'published';
+  author?: string | User;
+  publishedDate?: string;
+  _status?: 'draft' | 'published';
   createdAt: string;
   updatedAt: string;
-}
-export interface User {
-  id: string;
-  name?: string;
-  email?: string;
-  resetPasswordToken?: string;
-  resetPasswordExpiration?: string;
-  loginAttempts?: number;
-  lockUntil?: string;
-  createdAt: string;
-  updatedAt: string;
-  password?: string;
 }
 export interface Tag {
   id: string;
@@ -60,4 +72,16 @@ export interface Media {
   height?: number;
   createdAt: string;
   updatedAt: string;
+}
+export interface User {
+  id: string;
+  name?: string;
+  email?: string;
+  resetPasswordToken?: string;
+  resetPasswordExpiration?: string;
+  loginAttempts?: number;
+  lockUntil?: string;
+  createdAt: string;
+  updatedAt: string;
+  password?: string;
 }
