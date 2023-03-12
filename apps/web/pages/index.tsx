@@ -17,12 +17,12 @@ const Home = ({ posts }: HomeProps) => {
       {
         label: "LEARN MORE",
         href: "/events",
-        buttonType: "primary.blue",
+        variant: "primary-blue",
       },
       {
         label: "CONTACT US",
         href: "/contact",
-        buttonType: "primary.black",
+        variant: "primary-black",
       },
     ],
   };
