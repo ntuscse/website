@@ -11,7 +11,7 @@ const Posts: CollectionConfig = {
     group: "Content",
     preview: (doc, _options) => {
       if (doc?.slug) {
-        return `${process.env.FRONTEND_STAGING_DOMAIN}/blog/${doc.slug}`
+        return `${process.env.FRONTEND_STAGING_DOMAIN}/blog/${doc.slug as string}`
       }
       return null
     }

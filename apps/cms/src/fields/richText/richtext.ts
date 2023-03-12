@@ -14,7 +14,7 @@ type RichText = (
 
 const richText: RichText = (
   overrides,
-  additions = {
+  _additions = {
     elements: [],
     leaves: [],
   },
