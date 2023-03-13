@@ -1,5 +1,4 @@
 ---
-
 services:
   traefik:
     container_name: traefik
@@ -80,8 +79,8 @@ services:
     container_name: uptime-kuma
     image: louislam/uptime-kuma:1
     volumes:
-      - '/var/run/docker.sock:/tmp/docker.sock:ro'
-      - './data/uptime-kuma:/app/data'
+      - "/var/run/docker.sock:/tmp/docker.sock:ro"
+      - "./data/uptime-kuma:/app/data"
     restart: always
     networks:
       - default
