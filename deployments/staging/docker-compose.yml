@@ -50,7 +50,6 @@ services:
       - "traefik.http.routers.cms.rule=Host(`cms.staging.ntuscse.com`, `13.213.116.60`, `localhost`)"
       - "traefik.http.routers.cms.entrypoints=websecure"
       - "traefik.http.routers.cms.tls.certresolver=myresolver"
-      -
 
   mongo:
     container_name: mongo
