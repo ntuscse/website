@@ -59,6 +59,21 @@ services:
     volumes:
       - ./db_data:/data/db
     restart: always
+   
+  merch:
+    container_name: merch
+    image: nginx
+    networks:
+      cms_network:
+        ipv4_address: 10.5.0.4
+    restart: always
+    depends_on:
+      - mongo
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.cms.rule=Host(`merch2.ntuscse.com`, `13.213.116.60`, `localhost`)"
+      - "traefik.http.routers.cms.entrypoints=websecure"
+      - "traefik.http.routers.cms.tls.certresolver=myresolver"
 
 networks:
   cms_network:
