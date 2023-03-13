@@ -1,5 +1,4 @@
 ---
-
 services:
   traefik:
     container_name: traefik
@@ -23,6 +22,7 @@ services:
       - "443:443"
       - "8080:8080"
     networks:
+      default:
       cms_network:
         ipv4_address: 10.5.0.99
     volumes:
@@ -59,7 +59,7 @@ services:
     volumes:
       - ./db_data:/data/db
     restart: always
-   
+
   merch:
     container_name: merch
     image: nginx
@@ -75,7 +75,28 @@ services:
       - "traefik.http.routers.merch.entrypoints=websecure"
       - "traefik.http.routers.merch.tls.certresolver=myresolver"
 
+  uptime-kuma:
+    container_name: uptime-kuma
+    image: louislam/uptime-kuma:1
+    volumes:
+      - "/var/run/docker.sock:/tmp/docker.sock:ro"
+      - "./data/uptime-kuma:/app/data"
+    restart: always
+    networks:
+      - default
+    logging:
+      options:
+        max-size: 1g
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.uptime-kuma.rule=Host(`uptime.staging.ntuscse.com`)"
+      - "traefik.http.routers.uptime-kuma.entrypoints=websecure"
+      - "traefik.http.routers.uptime-kuma.tls.certresolver=myresolver"
+      # - "traefik.http.services.uptime-kuma.loadbalancer.server.port=3001"
+
 networks:
+  default:
+    driver: bridge
   cms_network:
     driver: bridge
     ipam:
