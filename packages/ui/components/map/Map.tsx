@@ -1,14 +1,28 @@
 import { Flex, AspectRatio } from "@chakra-ui/react";
 
+export enum MapEnums {
+  NTUMap = "NTUMap",
+}
+
 export interface MapProps {
+  title: string;
+  map: MapEnums
+}
+
+export const Map = ({ title, map }: MapProps) => {
+  switch (map) {
+    case MapEnums.NTUMap:
+      return <NTUMap title={title} />
+  }
+  return <></>;
+};
+
+// ---------- Specific Maps ---------- //
+interface IMap {
   title: string;
 }
 
-export const Map = ({ title }: MapProps) => {
-  return <NtuMap title={title} />;
-};
-
-const NtuMap = ({ title }: MapProps) => {
+const NTUMap = ({ title }: IMap) => {
   return (
     <Flex
       bgGradient="linear(to-t,black 48%,transparent 45%)"

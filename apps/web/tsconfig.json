@@ -12,7 +12,9 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/pages/*": ["pages/*"]
+      "@/pages/*": ["pages/*"],
+      "@/features/*": ["features/*"],
+      "@/lib/*": ["lib/*"]
     }
   }
 }

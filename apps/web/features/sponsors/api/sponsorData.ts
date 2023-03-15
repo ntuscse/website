@@ -1,5 +1,12 @@
-import { CarouselProps } from "ui";
-export const sponsorsImageData: CarouselProps["items"] = [
+export interface sponsorsDataProps {
+  data: Array<{
+    imageSrc: string;
+    href: string;
+    altText: string;
+  }>
+}
+
+export const sponsorsData: sponsorsDataProps["data"] = [
   {
     imageSrc:
       "https://clubs.ntu.edu.sg/csec/wp-content/uploads/2022/01/xorex-logo.jpg",
