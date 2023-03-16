@@ -1,11 +1,11 @@
 import { VStack, Heading } from "@chakra-ui/react";
-import { getAllBlogPosts } from "lib/api/wordpress";
 import { GetStaticProps, GetStaticPropsResult } from "next";
 import { FooterContentButton, Hero } from "ui";
-import { BlogProps } from "./blog";
-import { BlogCardsDisplay } from "@/features/blogs";
+import { BlogCardsDisplay, BlogCardsDisplayProps, getAllBlogPosts } from "@/features/blogs";
 
-type EventsProps = BlogProps;
+interface EventsProps {
+  posts: BlogCardsDisplayProps["posts"];
+}
 
 const Events = ({ posts }: EventsProps) => {
   return (
@@ -35,22 +35,12 @@ export default Events;
 
 // This function gets called at build time
 export const getStaticProps: GetStaticProps<any> = async (_context) => {
-  const data = await getAllBlogPosts();
+  const posts = await getAllBlogPosts();
 
   return {
     props: {
-      posts: data.edges.map((edge) => ({
-        ...edge,
-        node: {
-          ...edge.node,
-          excerpt: edge.node.excerpt
-            .replace(/<[^>]+>/g, "")
-            .replace(/\n/g, " ")
-            .replace(/;&nbsp;/g, '"')
-            .substring(0, 120),
-        },
-      })),
+      posts: posts
     },
     revalidate: 10,
-  } as GetStaticPropsResult<BlogProps>;
+  } as GetStaticPropsResult<EventsProps>;
 };

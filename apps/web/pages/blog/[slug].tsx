@@ -5,12 +5,11 @@ import {
   GetStaticPropsContext,
   GetStaticPropsResult,
 } from "next";
-import { getAllBlogPostsSlugs, getBlogPost } from "../../lib/api/wordpress";
-import { GetBlogPostResponse } from "../../lib/types/wordpress";
 import { Box, Heading, Text } from "@chakra-ui/react";
-import { getDisplayDate } from "../../lib/helpers/getDisplayDate";
+import { getDisplayDate } from "@/lib/helpers/getDisplayDate";
 import Image from "next/image";
 import Link from "next/link";
+import { getAllBlogPostsSlugs, getBlogPost, GetBlogPostResponse } from "@/features/blogs";
 
 type BlogPostProps = GetBlogPostResponse["post"];
 

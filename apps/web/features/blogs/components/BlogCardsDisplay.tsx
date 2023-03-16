@@ -2,9 +2,11 @@ import { Grid, GridItem } from "@chakra-ui/react";
 import { BlogCard } from "ui";
 import { removeTextImgTag } from "@/lib/helpers/removeTextImgTag";
 import { getDisplayDate } from "@/lib/helpers/getDisplayDate";
-import { BlogProps } from "@/pages/blog";
+import { GetAllBlogPostsResponse } from "@/lib/types/wordpress";
 
-type BlogCardsDisplayProps = BlogProps;
+export interface BlogCardsDisplayProps {
+  posts: GetAllBlogPostsResponse["posts"]["edges"];
+}
 
 export const BlogCardsDisplay = ({ posts }: BlogCardsDisplayProps) => {
   return (
@@ -17,7 +19,7 @@ export const BlogCardsDisplay = ({ posts }: BlogCardsDisplayProps) => {
       gap={12}
       pb={32}
     >
-      {posts?.slice(0, 6).map((post) => (
+      {posts?.map((post) => (
         <GridItem key={post.node.slug}>
           <BlogCard
             href={`blog/${post.node.slug}`}
