@@ -5,7 +5,7 @@ import {
 
 const API_URL = process.env.WORDPRESS_API_URL ?? "";
 
-async function fetchAPI(
+export async function fetchAPI(
   query = "",
   { variables }: Record<string, unknown> = {}
 ) {

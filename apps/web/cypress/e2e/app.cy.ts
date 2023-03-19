@@ -12,8 +12,8 @@ describe("Navigation", () => {
     // The new url should include "/contact"
     cy.url().should("include", "/contact");
 
-    // The new page should contain a heading with "Contact Us"
-    cy.get('[role="heading"]').contains("Contact Us");
+    // The new page should contain a heading with "CONTACT US"
+    cy.get('[role="heading"]').contains("CONTACT US");
 
     // Find the first link with an href attribute containing "/" and click it
     cy.get('a[href*="/"]').first().click();

@@ -1,12 +1,11 @@
-import { VStack, Heading, Grid, GridItem } from "@chakra-ui/react";
-import { getAllBlogPosts } from "lib/api/wordpress";
-import { getDisplayDate } from "lib/helpers/getDisplayDate";
-import { removeTextImgTag } from "lib/helpers/removeTextImgTag";
+import { VStack, Heading } from "@chakra-ui/react";
 import { GetStaticProps, GetStaticPropsResult } from "next";
-import { BlogCard, FooterContentButton, Hero } from "ui";
-import { BlogProps } from "./blog";
+import { FooterContentButton, Hero } from "ui";
+import { BlogCardsDisplay, BlogCardsDisplayProps, getAllBlogPosts } from "@/features/blogs";
 
-type EventsProps = BlogProps;
+interface EventsProps {
+  posts: BlogCardsDisplayProps["posts"];
+}
 
 const Events = ({ posts }: EventsProps) => {
   return (
@@ -15,35 +14,14 @@ const Events = ({ posts }: EventsProps) => {
         backgroundImage="/heroes/events-banner.png"
         backgroundGradient="linear(to-r, whiteAlpha.500, whiteAlpha.500)"
       />
+
+      {/* Blog Cards */}
       <VStack mx={{ base: 5, lg: 10 }}>
         <Heading p={5}>Recent/Ongoing Events</Heading>
-        <Grid
-          templateColumns={{
-            base: "1fr",
-            md: "repeat(2, 1fr)",
-            xl: "repeat(3, 1fr)",
-          }}
-          gap={12}
-          pb={32}
-        >
-          {posts.map((post) => (
-            <GridItem key={post.node.slug}>
-              <BlogCard
-                href={`blog/${post.node.slug}`}
-                blogCardImageProps={{
-                  src: post.node.featuredImage?.node?.link ?? "",
-                  alt: post.node.title,
-                }}
-                blogCardContentProps={{
-                  title: post.node.title,
-                  body: removeTextImgTag(post.node.excerpt) + "...",
-                  date: getDisplayDate(new Date(post.node.date)),
-                }}
-              />
-            </GridItem>
-          ))}
-        </Grid>
+        <BlogCardsDisplay posts={posts} />
       </VStack>
+
+      {/* Extra Footer Content */}
       <FooterContentButton
         href="./contact"
         label="Contact Us"
@@ -57,22 +35,12 @@ export default Events;
 
 // This function gets called at build time
 export const getStaticProps: GetStaticProps<any> = async (_context) => {
-  const data = await getAllBlogPosts();
+  const posts = await getAllBlogPosts();
 
   return {
     props: {
-      posts: data.edges.map((edge) => ({
-        ...edge,
-        node: {
-          ...edge.node,
-          excerpt: edge.node.excerpt
-            .replace(/<[^>]+>/g, "")
-            .replace(/\n/g, " ")
-            .replace(/;&nbsp;/g, '"')
-            .substring(0, 120),
-        },
-      })),
+      posts: posts
     },
     revalidate: 10,
-  } as GetStaticPropsResult<BlogProps>;
+  } as GetStaticPropsResult<EventsProps>;
 };
