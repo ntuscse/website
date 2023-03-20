@@ -5,11 +5,13 @@
   "main": "dist/server.js",
   "license": "Apache-2.0",
   "scripts": {
-    "dev": "nodemon src/server.ts",
+    "dev": "nodemon -r dotenv/config src/server.ts",
     "lint": "TIMING=1 eslint \"**/*.ts*\"",
     "lint:fix": "TIMING=1 eslint --fix \"**/*.ts*\""
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.289.0",
+    "@aws-sdk/util-dynamodb": "^3.289.0",
     "express": "^4.17.1"
   },
   "devDependencies": {
