@@ -16,7 +16,8 @@
         "S3_BUCKET",
         "FRONTEND_STAGING_DOMAIN",
         "PRODUCT_TABLE_NAME",
-        "ORDER_TABLE_NAME"
+        "ORDER_TABLE_NAME",
+        "NEXT_PUBLIC_MERCH_API_ORIGIN"
       ]
     },
     "build": {
@@ -34,7 +35,8 @@
         "S3_BUCKET",
         "FRONTEND_STAGING_DOMAIN",
         "PRODUCT_TABLE_NAME",
-        "ORDER_TABLE_NAME"
+        "ORDER_TABLE_NAME",
+        "NEXT_PUBLIC_MERCH_API_ORIGIN"
       ],
       "outputs": ["dist/**", "build/**", "out/**", ".next/**"]
     },
@@ -56,7 +58,8 @@
         "S3_BUCKET",
         "FRONTEND_STAGING_DOMAIN",
         "PRODUCT_TABLE_NAME",
-        "ORDER_TABLE_NAME"
+        "ORDER_TABLE_NAME",
+        "NEXT_PUBLIC_MERCH_API_ORIGIN"
       ]
     },
     "serve": {
@@ -73,7 +76,8 @@
         "S3_BUCKET",
         "FRONTEND_STAGING_DOMAIN",
         "PRODUCT_TABLE_NAME",
-        "ORDER_TABLE_NAME"
+        "ORDER_TABLE_NAME",
+        "NEXT_PUBLIC_MERCH_API_ORIGIN"
       ]
     },
     "lint": {
