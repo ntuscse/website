@@ -14,7 +14,9 @@
         "S3_SECRET_ACCESS_KEY",
         "AWS_REGION",
         "S3_BUCKET",
-        "FRONTEND_STAGING_DOMAIN"
+        "FRONTEND_STAGING_DOMAIN",
+        "PRODUCT_TABLE_NAME",
+        "ORDER_TABLE_NAME"
       ]
     },
     "build": {
@@ -30,7 +32,9 @@
         "S3_SECRET_ACCESS_KEY",
         "AWS_REGION",
         "S3_BUCKET",
-        "FRONTEND_STAGING_DOMAIN"
+        "FRONTEND_STAGING_DOMAIN",
+        "PRODUCT_TABLE_NAME",
+        "ORDER_TABLE_NAME"
       ],
       "outputs": ["dist/**", "build/**", "out/**", ".next/**"]
     },
@@ -50,7 +54,9 @@
         "S3_SECRET_ACCESS_KEY",
         "AWS_REGION",
         "S3_BUCKET",
-        "FRONTEND_STAGING_DOMAIN"
+        "FRONTEND_STAGING_DOMAIN",
+        "PRODUCT_TABLE_NAME",
+        "ORDER_TABLE_NAME"
       ]
     },
     "serve": {
@@ -65,7 +71,9 @@
         "S3_SECRET_ACCESS_KEY",
         "AWS_REGION",
         "S3_BUCKET",
-        "FRONTEND_STAGING_DOMAIN"
+        "FRONTEND_STAGING_DOMAIN",
+        "PRODUCT_TABLE_NAME",
+        "ORDER_TABLE_NAME"
       ]
     },
     "lint": {
