@@ -14,6 +14,7 @@ export const WebLayout = ({ children }: WebLayoutProps) => {
       { label: "Sponsors", href: "/sponsors" },
       { label: "Contact", href: "/contact" },
       { label: "BLOG", href: "/blog", menuLinkStyle: "button.golden" },
+      { label: "MERCH", href: "/merch", menuLinkStyle: "button.golden" }
     ],
     logoProps: {
       src: "/scse-logo.png",
