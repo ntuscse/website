@@ -1,0 +1,9 @@
+export enum QueryKeys {
+  PRODUCTS = "PRODUCTS",
+  PRODUCT = "PRODUCT",
+  VOUCHER = "VOUCHER",
+  ORDER = "ORDER",
+  ORDERS = "ORDERS",
+  EMAIL = "EMAIL",
+  CHECKOUT = "CHECKOUT",
+}

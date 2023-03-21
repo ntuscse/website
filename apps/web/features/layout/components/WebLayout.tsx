@@ -2,7 +2,7 @@ import React from "react";
 import { FooterProps, Layout, NavBarProps } from "ui";
 
 interface WebLayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export const WebLayout = ({ children }: WebLayoutProps) => {
@@ -14,6 +14,7 @@ export const WebLayout = ({ children }: WebLayoutProps) => {
       { label: "Academics", href: "/academics" },
       { label: "Learn", href: "/learn" },
       { label: "Sponsors", href: "/sponsors" },
+      { label: "Merch", href: "/merch" },
     ],
     logoProps: {
       src: "/scse-logo.png",
@@ -41,5 +42,5 @@ export const WebLayout = ({ children }: WebLayoutProps) => {
     <Layout navbarProps={navbarProps} footerProps={footerProps}>
       {children}
     </Layout>
-  )
+  );
 };
