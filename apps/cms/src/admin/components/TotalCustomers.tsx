@@ -25,7 +25,7 @@ const TotalCustomers = (props) => {
                 color="textPrimary"
                 variant="h4"
               >
-                1,6k
+                {props.orderNum}
               </Typography>
             </Grid>
             <Grid item>
