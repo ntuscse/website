@@ -21,7 +21,7 @@ export const ContactInfoSection = () => {
           >
             Email
           </Heading>
-          <Link color="white">scse-it@e.ntu.edu.sg</Link>
+          <Link color="white">scse-club@e.ntu.edu.sg</Link>
         </GridItem>
         <GridItem
           p="20px"
