@@ -31,6 +31,8 @@
     "yarn": ">= 1.22.17",
     "pnpm": "please-use-yarn"
   },
-  "dependencies": {},
+  "dependencies": {
+    "swiper": "^9.2.0"
+  },
   "packageManager": "yarn@1.22.17"
 }

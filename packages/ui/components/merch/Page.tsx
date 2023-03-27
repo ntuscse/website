@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Flex, FlexProps, Box } from "@chakra-ui/react";
-import CartHeader from "./CartHeader";
+import { CartHeader } from "./CartHeader";
 
 type PageProps = FlexProps & {
   children: ReactNode;
@@ -9,7 +9,7 @@ type PageProps = FlexProps & {
   contentPadding?: number[];
 };
 
-const Page = ({
+export const Page = ({
   children,
   hideHeader = false,
   contentWidth = "1400px",
@@ -33,5 +33,3 @@ const Page = ({
     </Flex>
   );
 };
-
-export default Page;

@@ -11,7 +11,7 @@ import Link from 'next/link';
 import routes from "../../../../apps/web/features/merch/constants/routes";
 
 
-const CartHeader = () => {
+export const CartHeader = () => {
   return (
     <Flex pos="sticky" zIndex={2} bg="#0e2b50" top={0} py={4} px={{ base: 4, md: 4, lg: 16 }} align="center">
       <Spacer />
@@ -43,5 +43,3 @@ const CartHeader = () => {
     </Flex>
   );
 };
-
-export default CartHeader;

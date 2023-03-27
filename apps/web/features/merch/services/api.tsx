@@ -51,7 +51,6 @@ export class Api {
     }
   }
 
-  /*
   // eslint-disable-next-line class-methods-use-this
   async getProduct(productId: string) {
     try {
@@ -63,6 +62,7 @@ export class Api {
     }
   }
 
+  /*
   async getOrder(userId: string, orderId: string) {
     try {
       const res = await this.get(`/orders/${orderId}`);
