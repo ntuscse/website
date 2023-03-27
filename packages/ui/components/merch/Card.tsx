@@ -13,7 +13,7 @@ type CardProps = {
   isOutOfStock?: boolean;
 };
 
-const Card = ({ _productId, imgSrc, text, price, sizeRange, isOutOfStock }: CardProps) => {
+export const Card = ({ _productId, imgSrc, text, price, sizeRange, isOutOfStock }: CardProps) => {
   return (
     <GridItem role="group" cursor="pointer" mt={4}>
       <Link href={`${routes.PRODUCT}/${_productId}`}>
@@ -65,5 +65,3 @@ const Card = ({ _productId, imgSrc, text, price, sizeRange, isOutOfStock }: Card
     </GridItem>
   );
 };
-
-export default Card;
