@@ -1,8 +1,8 @@
 import { Box } from "@chakra-ui/react";
-import React from "react";
-import { AnimatedCarousel, AnimatedCarouselProps } from "./AnimatedCarousel";
+import { AnimatedCarousel, AnimatedCarouselProps, AnimatedCarouselItem } from "./AnimatedCarousel";
 
-export interface CarouselProps extends AnimatedCarouselProps {}
+export type CarouselItem = AnimatedCarouselItem;
+export interface CarouselProps extends AnimatedCarouselProps {};
 
 export const Carousel = ({ items }: CarouselProps) => {
   return (
