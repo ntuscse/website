@@ -30,7 +30,7 @@ const GroupTitle = ({ children }: any) => (
   </Heading>
 );
 
-export const MerchDetail: React.FC = () => {
+const MerchDetail: React.FC = () => {
   // Context hook.
   const { state: cartState, dispatch: cartDispatch } = useCartStore();
   const router = useRouter();
@@ -332,3 +332,5 @@ export const MerchDetail: React.FC = () => {
 
   return <Page>{renderMerchPage()}</Page>;
 };
+
+export default MerchDetail;
