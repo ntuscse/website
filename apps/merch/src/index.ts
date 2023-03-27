@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+import cors from "cors";
 import cookieParser from "cookie-parser";
 import { nodeloggerMiddleware, Logger } from "nodelogger";
 
@@ -9,9 +10,20 @@ import ordersRouter from "./routes/orders";
 import productsRouter from "./routes/products";
 
 const app = express();
+const CORS_ORIGIN = process.env.CORS_ORIGIN;
+let corsMiddleware = cors();
+if (CORS_ORIGIN) {
+  corsMiddleware = cors({ origin: CORS_ORIGIN });
+} else {
+  Logger.warn("========================================");
+  Logger.warn(" CORS_ORIGIN was not set for merch app. ");
+  Logger.warn("Defaulting to allowing all CORS request!");
+  Logger.warn("========================================");
+}
 
 // middleware
 app.use(nodeloggerMiddleware);
+app.use(corsMiddleware);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
