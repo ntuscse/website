@@ -11,6 +11,7 @@ import "@fontsource/work-sans/700.css";
 import "ui/fonts/styles.css"; // for custom fonts not available on @fontsource
 
 import { WebLayout } from "@/features/layout";
+import { CartProvider } from "@/features/merch/context/cart";
 
 const queryClient = new QueryClient({ defaultOptions: { queries: { refetchOnWindowFocus: false } } });
 
@@ -18,9 +19,11 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <QueryClientProvider client={queryClient}>
       <ChakraProvider theme={theme}>
-        <WebLayout>
-          <Component {...pageProps} />
-        </WebLayout>
+        <CartProvider>
+          <WebLayout>
+            <Component {...pageProps} />
+          </WebLayout>
+        </CartProvider>
       </ChakraProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
