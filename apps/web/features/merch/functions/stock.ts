@@ -1,7 +1,7 @@
 import { Product } from "types/lib/merch"
 
-/*
-export const getQtyInStock = (product: ProductType, colorway: string, size: string): number => {
+
+export const getQtyInStock = (product: Product, colorway: string, size: string): number => {
     // returns remaining stock for specified colorway and size
     if (product.stock[colorway] && product.stock[colorway][size]) {
         return product.stock[colorway][size]
@@ -9,7 +9,7 @@ export const getQtyInStock = (product: ProductType, colorway: string, size: stri
     return 0;
 }
 
-export const displayStock = (product: ProductType, colorway: string, size: string): string => {
+export const displayStock = (product: Product, colorway: string, size: string): string => {
     // returns string describing remaining stock 
     if (product.stock[colorway] && product.stock[colorway][size]) {
         const qty = product.stock[colorway][size];
@@ -21,7 +21,7 @@ export const displayStock = (product: ProductType, colorway: string, size: strin
     
     return "ERROR: invalid color/size selected";
 }
-*/
+
 export const isOutOfStock = (product: Product): boolean => {
     // returns true if product is out of stock in all colorways and sizes
     const totalQty = Object.values(product.stock).reduce((acc, stockByColor)=>{
@@ -32,8 +32,7 @@ export const isOutOfStock = (product: Product): boolean => {
 
 } 
 
-/*
-export const isColorwayAvailable = (product: ProductType, colorway: string): boolean => {
+export const isColorwayAvailable = (product: Product, colorway: string): boolean => {
     // returns true if colorway is available in any size
     // returns false if colorway is out of stock in all sizes
     const colorwayStock = Object.values(product.stock[colorway]).reduce(
@@ -42,7 +41,7 @@ export const isColorwayAvailable = (product: ProductType, colorway: string): boo
     return (colorwayStock > 0);
 }
 
-export const isSizeAvailable = (product: ProductType, size: string): boolean => {
+export const isSizeAvailable = (product: Product, size: string): boolean => {
     // returns true if size is available in any colorway
     // returns false if size is out of stock in all colorways
     const sizeStock = Object.values(product.stock).map(d => d[size]||0);
@@ -52,7 +51,7 @@ export const isSizeAvailable = (product: ProductType, size: string): boolean => 
     return (totalQty > 0);
 } 
 
-export const getDefaultSize = (product: ProductType): string => {
+export const getDefaultSize = (product: Product): string => {
     const index = product.sizes.findIndex((size) => isSizeAvailable(product, size));
     if (index !== -1) {
         return product.sizes[index];
@@ -60,7 +59,7 @@ export const getDefaultSize = (product: ProductType): string => {
     return "";
 }
 
-export const getDefaultColorway = (product: ProductType, size: string): string => {
+export const getDefaultColorway = (product: Product, size: string): string => {
     const sizeIndex = product.sizes.indexOf(size);
     if (sizeIndex === -1) { // no such size
         return "";
@@ -68,14 +67,13 @@ export const getDefaultColorway = (product: ProductType, size: string): string =
     const colorwayStock = Object.values(product.stock).map(d => d[sizeIndex]);
     const availColorwayIndex = colorwayStock.map((qty, idx) => qty > 0 ? idx : -1).filter(idx => idx !== -1);
     if (availColorwayIndex.length > 0) {
-        return product.colorways[availColorwayIndex[0]];
+        return product.colors[availColorwayIndex[0]];
     }
     return "";
 }
 
-export const getDefaults = (product: ProductType): [string, string] => {
+export const getDefaults = (product: Product): [string, string] => {
     const size = getDefaultSize(product);
     const colorway = getDefaultColorway(product, size); 
     return [colorway, size];
 }
-*/
