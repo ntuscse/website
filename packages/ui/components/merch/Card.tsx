@@ -1,8 +1,8 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { Box, Image, Text, GridItem, Flex, Badge, Center } from "@chakra-ui/react";
 import Link from "next/link";
-import { displayPrice } from "../../../../apps/web/features/merch/functions/currency";
-import { routes } from "../../../../apps/web/features/merch/constants/routes"
+import { displayPrice } from "web/features/merch/functions/currency";
+import { routes } from "web/features/merch/constants/routes"
 
 type CardProps = {
   _productId: string;

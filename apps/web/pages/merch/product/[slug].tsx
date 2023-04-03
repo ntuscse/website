@@ -334,3 +334,11 @@ const MerchDetail: React.FC = () => {
 };
 
 export default MerchDetail;
+
+// const Test = () => {
+//   const router = useRouter();
+//   const { slug } = router.query;
+//   return <p>Slug: {slug}</p>;
+// }
+
+// export default Test;
