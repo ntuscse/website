@@ -14,7 +14,7 @@ import {
   Center,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { Carousel, CarouselItem } from "ui/components/carousel";
+import { MerchCarousel } from "ui/components/merch/MerchCarousel";
 import { EmptyProductView, MerchDetailSkeleton, Page, SizeChartDialog, SizeOption } from "ui/components/merch";
 import { Product } from "types/lib/merch";
 import { CartAction, CartActionType, useCartStore } from "features/merch/context/cart";
@@ -275,38 +275,11 @@ const MerchDetail: React.FC = () => {
     </Flex>
   );
 
-  // const renderDescription = (
-  //   <Flex flexDirection="column" gap={2}>
-  //     <GroupTitle>Description</GroupTitle>
-  //     <Box whiteSpace="pre-line" fontSize={{ base: "sm", md: "md" }}>
-  //       {`Keep cool all summer in these versatile pants, the neat shape slims the legs and flatters the bottom. A great staple garment to add to your wardrobe. The luxurious washed linen is comfortable, breathable and soft. The 7/8 Length leg can be worn rolled up to a crop pant. Style with our Broderie Anglaise or Fray Top.\n
-  // \n
-  // *100% European Linen\n*Contrast stripe lined pockets\n*Stitched inseam pockets\n`
-  //         .split("\n")
-  //         ?.map((line, idx) => {
-  //           if (line) {
-  //             return line.trim().startsWith("*") ? <li key={idx.toString()}>{line.trim().substring(1)}</li> : line;
-  //           }
-  //           return <br key={idx.toString()} />;
-  //         })}
-  //     </Box>
-  //   </Flex>
-  // );
-
   const renderMerchDetails = () => {
     return (
       <Grid templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(5, 1fr)" }}>
         <GridItem colSpan={2} px={[0, 4]}>
-          <Carousel
-            items={(product?.images ?? []).map<CarouselItem>((image) => {
-                    return {
-                        imageSrc: image,
-                        href: "#0", // no link
-                        altText: "Image for " + (product?.name ?? "product")
-                    };
-                })
-            }
-        />
+          <MerchCarousel images={product?.images ?? []} />
         </GridItem>
         <GridItem colSpan={3} px={[0, 4]}>
           {ProductNameSection}
@@ -316,7 +289,7 @@ const MerchDetail: React.FC = () => {
           {renderQuantitySection}
           <Divider my={6} />
           {purchaseButtons}
-          {/* <Divider my={6} /> */}
+          <Divider my={6} />
           {/* {renderDescription} */}
         </GridItem>
         <SizeChartDialog sizeChart={product?.size_chart} onClose={onClose} isOpen={isOpen} />
@@ -334,11 +307,3 @@ const MerchDetail: React.FC = () => {
 };
 
 export default MerchDetail;
-
-// const Test = () => {
-//   const router = useRouter();
-//   const { slug } = router.query;
-//   return <p>Slug: {slug}</p>;
-// }
-
-// export default Test;

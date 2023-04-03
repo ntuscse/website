@@ -1,6 +1,7 @@
 export * from "./Card"
 export * from "./CartHeader"
 export * from "./EmptyProductView"
+export * from "./MerchCarousel"
 export * from "./Page"
 export * from "./SizeChartDialog"
 export * from "./SizeOption"
