@@ -14,8 +14,7 @@ import {
   Center,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { MerchCarousel } from "ui/components/merch/MerchCarousel";
-import { EmptyProductView, MerchDetailSkeleton, Page, SizeChartDialog, SizeOption } from "ui/components/merch";
+import { EmptyProductView, MerchCarousel, MerchDetailSkeleton, Page, SizeChartDialog, SizeOption } from "ui/components/merch";
 import { Product } from "types/lib/merch";
 import { CartAction, CartActionType, useCartStore } from "features/merch/context/cart";
 import { api } from "features/merch/services/api";
@@ -184,7 +183,7 @@ const MerchDetail: React.FC = () => {
         <GroupTitle>Colors</GroupTitle>
       </Flex>
       <Flex gap={[4, 4]} flexWrap="wrap">
-        {product?.colors.map((colorway, idx) => {
+        {product?.colors?.map((colorway, idx) => {
           return (
             <SizeOption
               key={idx.toString()}
@@ -265,11 +264,26 @@ const MerchDetail: React.FC = () => {
   );
 
   const purchaseButtons = (
-    <Flex gap={4} flexWrap="wrap">
-      <Button flex={1} borderRadius={0} variant="outline" onClick={handleAddToCart} disabled={isDisabled || !(selectedColorway && selectedSize) || (maxQuantity === 0)}>
+    <Flex gap={6} flexWrap="wrap">
+      <Button 
+        bg="gray.200" 
+        _hover={{ bg: "gray.300", transform: 'scale(1.05)' }}
+        flex={1} 
+        borderRadius={0} 
+        variant="outline" 
+        onClick={handleAddToCart} 
+        disabled={isDisabled || !(selectedColorway && selectedSize) || (maxQuantity === 0)}
+      >
         ADD TO CART
       </Button>
-      <Button flex={1} borderRadius={0} onClick={handleBuyNow} disabled={isDisabled || !(selectedColorway && selectedSize) || (maxQuantity === 0)}>
+      <Button 
+        bg="red.600"
+        _hover={{ bg: "red.500", transform: 'scale(1.05)' }}
+        flex={1} 
+        borderRadius={0} 
+        onClick={handleBuyNow} 
+        disabled={isDisabled || !(selectedColorway && selectedSize) || (maxQuantity === 0)}
+      >
         BUY NOW
       </Button>
     </Flex>

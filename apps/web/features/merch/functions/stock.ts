@@ -24,7 +24,7 @@ export const displayStock = (product: Product, colorway: string, size: string): 
 
 export const isOutOfStock = (product: Product): boolean => {
     // returns true if product is out of stock in all colorways and sizes
-    if (product) {
+    if (product && product.stock) {
         const totalQty = Object.values(product.stock).reduce((acc, stockByColor)=>{
             const colorQty = Object.values(stockByColor).reduce((acc2, qty)=>acc2+qty, 0);
             return acc+colorQty
