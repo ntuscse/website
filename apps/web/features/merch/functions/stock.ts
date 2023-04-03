@@ -24,12 +24,15 @@ export const displayStock = (product: Product, colorway: string, size: string): 
 
 export const isOutOfStock = (product: Product): boolean => {
     // returns true if product is out of stock in all colorways and sizes
-    const totalQty = Object.values(product.stock).reduce((acc, stockByColor)=>{
-        const colorQty = Object.values(stockByColor).reduce((acc2, qty)=>acc2+qty, 0);
-        return acc+colorQty
-    }, 0);
-    return totalQty <= 0;
-
+    if (product) {
+        const totalQty = Object.values(product.stock).reduce((acc, stockByColor)=>{
+            const colorQty = Object.values(stockByColor).reduce((acc2, qty)=>acc2+qty, 0);
+            return acc+colorQty
+        }, 0);
+        return totalQty <= 0;
+    } else {
+        return false;
+    }
 } 
 
 export const isColorwayAvailable = (product: Product, colorway: string): boolean => {
