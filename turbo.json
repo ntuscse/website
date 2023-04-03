@@ -36,6 +36,7 @@
         "FRONTEND_STAGING_DOMAIN",
         "PRODUCT_TABLE_NAME",
         "ORDER_TABLE_NAME",
+        "CORS_ORIGIN",
         "NEXT_PUBLIC_MERCH_API_ORIGIN"
       ],
       "outputs": ["dist/**", "build/**", "out/**", ".next/**"]
@@ -59,6 +60,7 @@
         "FRONTEND_STAGING_DOMAIN",
         "PRODUCT_TABLE_NAME",
         "ORDER_TABLE_NAME",
+        "CORS_ORIGIN",
         "NEXT_PUBLIC_MERCH_API_ORIGIN"
       ]
     },
@@ -77,6 +79,7 @@
         "FRONTEND_STAGING_DOMAIN",
         "PRODUCT_TABLE_NAME",
         "ORDER_TABLE_NAME",
+        "CORS_ORIGIN",
         "NEXT_PUBLIC_MERCH_API_ORIGIN"
       ]
     },
