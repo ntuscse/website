@@ -9,6 +9,7 @@ import "@fontsource/roboto/700.css";
 import "@fontsource/roboto-slab/400.css";
 import "@fontsource/poppins/400.css";
 import { WebLayout } from "@/features/layout";
+import { CartProvider } from "@/features/merch/context/cart";
 
 const queryClient = new QueryClient({ defaultOptions: { queries: { refetchOnWindowFocus: false } } });
 
@@ -16,9 +17,11 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <QueryClientProvider client={queryClient}>
       <ChakraProvider theme={theme}>
-        <WebLayout>
-          <Component {...pageProps} />
-        </WebLayout>
+        <CartProvider>
+          <WebLayout>
+            <Component {...pageProps} />
+          </WebLayout>
+        </CartProvider>
       </ChakraProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

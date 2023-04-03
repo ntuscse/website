@@ -116,7 +116,7 @@ export const cartReducer = (state: CartState, action: CartAction) => {
 export const useCartStore = () => {
   const context = useContext(CartContext);
   if (context === null) {
-    throw new Error("useCardStore must be used within a CartProvider.");
+    throw new Error("useCartStore must be used within a CartProvider.");
   }
   return context;
 };
