@@ -1,9 +1,9 @@
 const fonts = {
-  heading: `'Roboto', sans-serif`,
-  body: `'Roboto', sans-serif`,
-  title: `'Roboto', sans-serif`,
-  navigation: `'Poppins', sans-serif`,
-  timestamp: `'Roboto Slab', sans-serif`,
+  heading: `'Work Sans', sans-serif`,
+  body: `'Work Sans', sans-serif`,
+  title: `'Work Sans', sans-serif`,
+  navigation: `'Garet', sans-serif`,
+  timestamp: `'Work Sans', sans-serif`,
 };
 
 export default fonts;

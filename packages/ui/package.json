@@ -42,6 +42,7 @@
   "dependencies": {
     "@fontsource/poppins": "^4.5.10",
     "@fontsource/roboto": "^4.5.8",
-    "@fontsource/roboto-slab": "^4.5.9"
+    "@fontsource/roboto-slab": "^4.5.9",
+    "@fontsource/work-sans": "^4.5.14"
   }
 }
