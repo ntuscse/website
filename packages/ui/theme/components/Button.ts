@@ -25,7 +25,7 @@ const Button = defineStyleConfig({
   // Styles for the visual style variations
   variants: {
     'primary-blue': {
-      bg: 'brand.blue',
+      bg: 'brand.navy.medium',
     },
     'primary-black': {
       bg: 'black',

@@ -21,7 +21,7 @@ export const NavBarContainer = ({
       bg="brand.white"
       color="brand.black"
       borderBottom="1px"
-      borderColor="brand.gray.midlight"
+      borderColor="brand.gray.mediumLight"
       {...props}
     >
       {children}

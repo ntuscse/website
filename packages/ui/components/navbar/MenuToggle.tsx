@@ -12,7 +12,7 @@ export const MenuToggle = ({ toggle, isOpen }: MenuToggleProps) => {
     <Box
       display={{ base: "block", xl: "none" }}
       onClick={toggle}
-      _hover={{ color: "brand.blue", cursor: "pointer" }}
+      _hover={{ color: "brand.navy.medium", cursor: "pointer" }}
       marginLeft={{ base: 5, md: 10 }}
     >
       {isOpen ? (
