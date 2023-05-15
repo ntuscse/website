@@ -9,7 +9,7 @@ export const WebLayout = ({ children }: WebLayoutProps) => {
   const navbarProps: NavBarProps = {
     links: [
       { label: "Home", href: "/" },
-      { label: "About", href: "/academics" },
+      { label: "About", href: "/about" },
       { label: "Events", href: "/events" },
       { label: "Academics", href: "/academics" },
       { label: "Learn", href: "/learn" },
