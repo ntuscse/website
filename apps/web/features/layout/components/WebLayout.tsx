@@ -9,16 +9,15 @@ export const WebLayout = ({ children }: WebLayoutProps) => {
   const navbarProps: NavBarProps = {
     links: [
       { label: "Home", href: "/" },
-      { label: "Academics", href: "/academics" },
+      { label: "About", href: "/academics" },
       { label: "Events", href: "/events" },
+      { label: "Academics", href: "/academics" },
+      { label: "Learn", href: "/learn" },
       { label: "Sponsors", href: "/sponsors" },
-      { label: "Contact", href: "/contact" },
-      { label: "BLOG", href: "/blog", menuLinkStyle: "button.golden" },
     ],
     logoProps: {
       src: "/scse-logo.png",
       alt: "scse logo",
-      text: "NTU School of Computer Science & Engineering Club",
     },
   };
   const footerProps: FooterProps = {

@@ -12,16 +12,16 @@ export const NavBarContainer = ({
   return (
     <Flex
       as="nav"
+      position="fixed"
+      zIndex={100}
+      backdropFilter="auto"
+      backdropBlur="base"
       align="center"
       justify="space-between"
-      w="100%"
-      p={[3, 3, 5, 5]}
+      w="100vw"
       pl={4}
       pr={8}
-      bg="brand.white"
-      color="brand.black"
-      borderBottom="1px"
-      borderColor="brand.gray.mediumLight"
+      color="brand.navy-dark"
       {...props}
     >
       {children}
