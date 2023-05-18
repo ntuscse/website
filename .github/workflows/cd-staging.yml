@@ -39,6 +39,16 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
+      - name: Free Up Space
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: false
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: false
+          swap-storage: false
+
       - name: Deploy and run docker images
         env:
           PRIVATE_KEY: ${{ secrets.STAGING_EC2_PRIVATE_KEY  }}
