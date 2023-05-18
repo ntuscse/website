@@ -77,12 +77,12 @@ exports[`renders homepage unchanged 1`] = `
                 class="chakra-stack css-lha1ht"
               >
                 <h2
-                  class="chakra-heading css-6hfru0"
+                  class="chakra-heading css-zr62dw"
                 >
                   Techterview 101: Navigating the Internship World
                 </h2>
                 <p
-                  class="chakra-text css-1h1oeyi"
+                  class="chakra-text css-v04ol"
                 >
                   February 22, 2022
                 </p>
@@ -123,12 +123,12 @@ exports[`renders homepage unchanged 1`] = `
                 class="chakra-stack css-lha1ht"
               >
                 <h2
-                  class="chakra-heading css-6hfru0"
+                  class="chakra-heading css-zr62dw"
                 >
                   21st Main Committee
                 </h2>
                 <p
-                  class="chakra-text css-1h1oeyi"
+                  class="chakra-text css-v04ol"
                 >
                   March 31, 2021
                 </p>

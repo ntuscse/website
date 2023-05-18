@@ -1,0 +1,13 @@
+/* Custom Font */
+@font-face {
+  font-family: 'Garet';
+  src: url('./garet/Garet-Book.otf') format('opentype'), /* OpenType (.otf) */
+      url('./garet/Garet-Book.ttf') format('truetype'), /* TrueType (.ttf) */
+      url('./garet/Garet-Book.woff') format('woff'), /* Web Open Font Format (.woff) */
+      url('./garet/Garet-Book.woff2') format('woff2'), /* Web Open Font Format 2 (.woff2) */
+      /* Heavy */
+      url('./garet/Garet-Heavy.otf') format('opentype'), /* OpenType (.otf) */
+      url('./garet/Garet-Heavy.ttf') format('truetype'), /* TrueType (.ttf) */
+      url('./garet/Garet-Heavy.woff') format('woff'), /* Web Open Font Format (.woff) */
+      url('./garet/Garet-Heavy.woff2') format('woff2'); /* Web Open Font Format 2 (.woff2) */
+}

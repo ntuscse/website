@@ -33,7 +33,7 @@ export const BlogCardImage = ({ alt, src, ...props }: BlogCardImageProps) => {
         <Box
           h="100%"
           w="100%"
-          bgColor="brand.blackAlpha.mid"
+          bgColor="brand.blackAlpha.medium"
           display="flex"
           justifyContent="center"
           alignItems="center"

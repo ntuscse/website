@@ -1,6 +1,6 @@
 import React from "react";
 import { Box } from "@chakra-ui/react";
-import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
+import { HamburgerIcon } from "@chakra-ui/icons";
 
 interface MenuToggleProps {
   toggle: React.MouseEventHandler<HTMLDivElement>;
@@ -12,14 +12,14 @@ export const MenuToggle = ({ toggle, isOpen }: MenuToggleProps) => {
     <Box
       display={{ base: "block", xl: "none" }}
       onClick={toggle}
-      _hover={{ color: "brand.blue", cursor: "pointer" }}
+      color="brand.white"
+      bgColor={ isOpen ? "brand.red.dark" : "brand.red.medium" }
+      p="6px"
+      borderRadius="6px"
+      _hover={{ bgColor: "brand.red.dark", cursor: "pointer" }}
       marginLeft={{ base: 5, md: 10 }}
     >
-      {isOpen ? (
-        <CloseIcon boxSize={{ base: 5, md: 8 }} />
-      ) : (
-        <HamburgerIcon boxSize={{ base: 8, md: 10 }} />
-      )}
+      <HamburgerIcon boxSize={{ base: 6, md: 8 }} />
     </Box>
   );
 };
