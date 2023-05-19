@@ -40,16 +40,38 @@ export interface Order {
   status: OrderStatus;
 }
 
+export interface Cart {
+  items: {
+    id: string;
+    color: string;
+    size: string;
+    quantity: number;
+  }[];
+}
+
 export interface Promotion {
   promoCode: string;
+  maxRedemptions: number;
+  redemptionsRemaining: number;
   discounts: Array<{
     promoType: PromoType;
     promoValue: number; // percent off or fixed value off based on promoType property
-    appliesTo: Array<string>; // array of product ids
-    minimumQty: number; // minimum quantity of items in the order to apply the discount
-    maxRedemptions: number;
-    redemptionsRemaining: number;
+    appliesTo?: Array<string>; // array of product ids
+    minimumQty?: number; // minimum quantity of items in the order to apply the discount
   }>;
+}
+
+export interface PricedCart {
+  promoCode?: string;
+  total: number;
+  items: {
+    id: string;
+    color: string;
+    size: string;
+    quantity: number;
+    originalPrice: number;
+    discountedPrice: number;
+  }[];
 }
 
 enum PromoType {
