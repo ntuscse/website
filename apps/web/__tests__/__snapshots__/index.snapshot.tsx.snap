@@ -144,25 +144,6 @@ exports[`renders homepage unchanged 1`] = `
       </div>
     </div>
   </div>
-  <div
-    class="chakra-stack css-ku5d1q"
-  >
-    <h2
-      class="chakra-heading css-df8nxq"
-    >
-      Let’s work together
-    </h2>
-    <a
-      class="chakra-button css-qklkzv"
-      href="./contact"
-    >
-      <p
-        class="chakra-text css-0"
-      >
-        Contact Us
-      </p>
-    </a>
-  </div>
   <span
     hidden=""
     id="__chakra_env"
