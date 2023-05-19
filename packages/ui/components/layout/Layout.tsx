@@ -18,14 +18,11 @@ export const Layout = ({ navbarProps, footerProps, children }: LayoutProps) => {
         <link rel="icon" href="/"></link>
       </header>
 
-      <NavBar links={navbarProps.links} logoProps={navbarProps.logoProps} />
+      <NavBar {...navbarProps} />
       <main>
         <Box bg="brand.blackAlpha.light" minH="91.7vh">{children}</Box>
       </main>
-      <Footer
-        links={footerProps.links}
-        vercelpoweredProps={footerProps.vercelpoweredProps}
-      />
+      <Footer {...footerProps} />
     </>
   );
 };
