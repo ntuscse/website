@@ -20,7 +20,7 @@ Default.args = {
     { label: "Contact", href: "/contact" },
   ],
   logoProps: {
-    src: "/scse-logo.png",
+    src: "/scse-logo-blue.png",
     alt: "scse logo",
   },
 };
