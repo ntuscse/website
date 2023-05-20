@@ -1,6 +1,6 @@
 import { VStack, Heading } from "@chakra-ui/react";
 import { GetStaticProps, GetStaticPropsResult } from "next";
-import { FooterContentButton, Hero } from "ui";
+import { Hero } from "ui";
 import { BlogCardsDisplay, BlogCardsDisplayProps, getAllBlogPosts } from "@/features/blogs";
 
 interface EventsProps {
@@ -20,13 +20,6 @@ const Events = ({ posts }: EventsProps) => {
         <Heading p={5}>Recent/Ongoing Events</Heading>
         <BlogCardsDisplay posts={posts} />
       </VStack>
-
-      {/* Extra Footer Content */}
-      <FooterContentButton
-        href="./contact"
-        label="Contact Us"
-        title="Let's Talk"
-      />
     </>
   );
 };
