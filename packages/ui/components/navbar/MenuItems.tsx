@@ -1,6 +1,6 @@
-import React from "react";
 import { Box, Link, Stack, Text } from "@chakra-ui/react";
 import { MenuLink, MenuLinkProps } from "./MenuLink";
+import CartButton from "../merch/CartButton";
 
 interface MenuItemProps {
   isOpen?: boolean;
@@ -34,6 +34,7 @@ export const MenuItems = ({ isOpen = false, links }: MenuItemProps) => {
             />
           );
         })}
+      <CartButton />
       </Stack>
 
       {/* CTA Button -> Contact */}
