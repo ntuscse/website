@@ -1,6 +1,9 @@
-import React from "react";
 import { Box, Link, Stack, Text } from "@chakra-ui/react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { MenuLink, MenuLinkProps } from "./MenuLink";
+import CartButton from "../merch/CartButton";
+import routes from "../../../../apps/web/features/merch/constants/routes";
 
 interface MenuItemProps {
   isOpen?: boolean;
@@ -8,6 +11,17 @@ interface MenuItemProps {
 }
 
 export const MenuItems = ({ isOpen = false, links }: MenuItemProps) => {
+
+  const router = useRouter()
+  const [route, setRoute] = useState('')
+
+  useEffect(() => {
+    setRoute(router.pathname),
+    []
+  })
+
+  const regexp = /\/merch*/;
+  
   return (
     <Box
       display={{ base: isOpen ? "flex" : "none", xl: "flex" }}
@@ -37,8 +51,9 @@ export const MenuItems = ({ isOpen = false, links }: MenuItemProps) => {
       </Stack>
 
       {/* CTA Button -> Contact */}
+      {/* If on merch site, change to Cart */}
       <Link
-        href={"/contact"}
+        href={route.match(regexp) ? routes.CART : "/contact"}
         _hover={{
           bgColor: "brand.red.dark"
         }}
@@ -51,7 +66,8 @@ export const MenuItems = ({ isOpen = false, links }: MenuItemProps) => {
         w="max-content"
         display={{ base: "block", xl: "block" }}
       >
-        <Text display="block">Contact</Text>
+          {route.match(regexp) ? <CartButton /> :
+          <Text display="block">Contact</Text>}
       </Link>
     </Box>
   );
