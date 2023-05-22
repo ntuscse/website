@@ -28,7 +28,6 @@ export const SizeOption: React.FC<SizeOptionType> = (props) => {
       borderColor="secondary.400"
       color={active ? "#FFF" : "secondary.400"}
       backgroundColor={active ? "red.600" : "#FFF"}
-      _active={{ color: "#FFF", backgroundColor: "secondary.500" }}
       {...props}
     >
       {children}

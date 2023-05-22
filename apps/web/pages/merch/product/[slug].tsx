@@ -18,9 +18,10 @@ import { EmptyProductView, MerchCarousel, MerchDetailSkeleton, Page, SizeChartDi
 import { Product } from "types/lib/merch";
 import { CartAction, CartActionType, useCartStore } from "features/merch/context/cart";
 import { api } from "features/merch/services/api";
+import { routes } from "features/merch/constants/routes"
 import { QueryKeys } from "features/merch/constants/queryKeys";
 import { displayPrice } from "features/merch/functions/currency";
-import { displayStock, getQtyInStock, isColorwayAvailable, isOutOfStock, isSizeAvailable } from "features/merch/functions/stock";
+import { displayStock, getDefaultColorway, getDefaultSize, getQtyInStock, isColorwayAvailable, isOutOfStock, isSizeAvailable } from "features/merch/functions/stock";
 import { displayQtyInCart, getQtyInCart } from "features/merch/functions/cart";
 
 const GroupTitle = ({ children }: any) => (
@@ -46,6 +47,8 @@ const MerchDetail: React.FC = () => {
   const { data: product, isLoading } = useQuery([QueryKeys.PRODUCT, productId], () => api.getProduct(productId), {
     onSuccess: (data: Product) => {
       setIsDisabled(!(data?.is_available === true));
+      setSelectedSize(getDefaultSize(data));
+      setSelectedColorway(getDefaultColorway(data));
     },
   });
 
@@ -105,7 +108,7 @@ const MerchDetail: React.FC = () => {
 
   const handleBuyNow = () => {
     handleAddToCart();
-    window.location.href = `/cart`;
+    window.location.href = routes.CART;
   };
 
   const ProductNameSection = (
@@ -267,7 +270,7 @@ const MerchDetail: React.FC = () => {
     <Flex gap={6} flexWrap="wrap">
       <Button 
         bg="gray.200" 
-        _hover={{ bg: "gray.300", transform: 'scale(1.05)' }}
+        _hover={{ bg: "gray.300" }}
         flex={1} 
         borderRadius={0} 
         variant="outline" 
@@ -278,7 +281,7 @@ const MerchDetail: React.FC = () => {
       </Button>
       <Button 
         bg="red.600"
-        _hover={{ bg: "red.500", transform: 'scale(1.05)' }}
+        _hover={{ bg: "red.500" }}
         flex={1} 
         borderRadius={0} 
         onClick={handleBuyNow} 
