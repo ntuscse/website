@@ -1,7 +1,7 @@
-import { readItem, readTable } from "./dynamodb";
+import { readItem, readTable, updateItem } from "./dynamodb";
 import { Product } from "types";
 
-const PRODUCT_TABLE_NAME = process.env.PRODUCT_TABLE_NAME;
+const PRODUCT_TABLE_NAME = process.env.PRODUCT_TABLE_NAME || "";
 
 export const getProducts = async () => {
   const dynamoProducts = await readTable<DynamoProduct>(PRODUCT_TABLE_NAME);
@@ -43,3 +43,26 @@ const decodeProduct = (product: DynamoProduct): Product => {
     stock: product.stock || {},
   };
 };
+
+export const incrementStockCount = async (item_id: string, increment_value: number, size: string, color: string): Promise<void> => {
+  const update_expression = `ADD stock.#color.#size :incrementValue`;
+  const condition_expression = "is_available = :isAvailable AND stock.#color.#size >= :incrementValue";
+  const expression_attribute_values = {
+    ":incrementValue": { "N": String(increment_value) },
+    ":isAvailable": { "BOOL": true },
+  };
+  const expression_attribute_names = {
+    "#color": color,
+    "#size": size,
+  };
+  await updateItem(
+    PRODUCT_TABLE_NAME,
+    item_id,
+    update_expression,
+    condition_expression,
+    expression_attribute_values,
+    expression_attribute_names,
+    "id",
+  );
+};
+

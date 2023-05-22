@@ -12,12 +12,15 @@
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.289.0",
     "@aws-sdk/util-dynamodb": "^3.289.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "stripe": "^12.5.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.3",
     "@types/express": "^4.17.9",
     "@types/morgan": "^1.9.4",
+    "@types/uuid": "^9.0.1",
     "cookie-parser": "^1.4.6",
     "morgan": "^1.10.0",
     "nodelogger": "*",
