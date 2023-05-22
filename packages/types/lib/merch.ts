@@ -25,18 +25,9 @@ export enum OrderStatus {
 
 export interface Order {
   id: string;
-  items: {
-    id: string;
-    name: string;
-    category: string;
-    image?: string;
-    color: string;
-    size: string;
-    price: number;
-    quantity: number;
-  }[];
+  items: OrderItem[];
   transaction_id: string;
-  transaction_time?: string;
+  transaction_time: string | null;
   payment_method: string;
   customer_email: string;
   status: OrderStatus;
@@ -62,6 +53,17 @@ export interface CartItem {
 }
 
 // Promotion
+export interface OrderItem {
+  id: string;
+  name: string;
+  category: string;
+  image?: string;
+  color: string;
+  size: string;
+  price: number;
+  quantity: number;
+}
+
 export interface Promotion {
   promoCode: string;
   maxRedemptions: number;
@@ -156,3 +158,14 @@ export type CheckoutResponseDto = {
 
 export type ProductInfoMap = Record<string, ProductInfo>;
 */
+
+export type ReservedProduct = {
+  productID: string;
+  qty: number;
+};
+
+export type OrderHoldEntry = {
+  transactionID: string;
+  expiry: number;
+  reservedProducts: ReservedProduct[];
+}
