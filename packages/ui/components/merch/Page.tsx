@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import { Flex, FlexProps, Box } from "@chakra-ui/react";
-import CartButton from "./CartButton";
 
 
 type PageProps = FlexProps & {
@@ -30,7 +29,6 @@ const Page = ({
       >
         {children}
       </Box>
-      <CartButton />
     </Flex>
   );
 };

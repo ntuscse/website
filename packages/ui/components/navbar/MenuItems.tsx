@@ -1,4 +1,5 @@
 import { Box, Link, Stack, Text } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import { MenuLink, MenuLinkProps } from "./MenuLink";
 import CartButton from "../merch/CartButton";
 
@@ -8,6 +9,9 @@ interface MenuItemProps {
 }
 
 export const MenuItems = ({ isOpen = false, links }: MenuItemProps) => {
+  const router = useRouter();
+  const regexp = /\/merch*/;
+  
   return (
     <Box
       display={{ base: isOpen ? "flex" : "none", xl: "flex" }}
@@ -34,7 +38,7 @@ export const MenuItems = ({ isOpen = false, links }: MenuItemProps) => {
             />
           );
         })}
-      <CartButton />
+      {router.pathname.match(regexp) && <CartButton />}
       </Stack>
 
       {/* CTA Button -> Contact */}
