@@ -42,13 +42,23 @@ export interface Order {
   status: OrderStatus;
 }
 
+// Cart
+export type CartState = {
+  cart: Cart;
+  voucher: string | null;
+  name: string;
+  billingEmail: string;
+};
+
 export interface Cart {
-  items: {
-    id: string;
-    color: string;
-    size: string;
-    quantity: number;
-  }[];
+  items: CartItem[];
+}
+
+export interface CartItem {
+  id: string;
+  color: string;
+  size: string;
+  quantity: number;
 }
 
 // Promotion
@@ -81,21 +91,6 @@ enum PromoType {
   PERCENTAGE = "PERCENTAGE",
   FIXED_VALUE = "FIXED_VALUE",
 }
-
-// Cart
-export type CartItem = {
-  productId: string;
-  size: string;
-  colorway: string;
-  quantity: number;
-};
-
-export type CartState = {
-  voucher: string | null;
-  items: CartItem[];
-  name: string;
-  billingEmail: string;
-};
 
 /*
 export type ProductInfo = {

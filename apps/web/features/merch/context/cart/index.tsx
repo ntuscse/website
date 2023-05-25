@@ -3,7 +3,7 @@ import { CartState, CartItem } from "types/lib/merch";
 
 type ContextType = {
   state: CartState;
-  dispatch: React.Dispatch<any>;
+  dispatch: React.Dispatch<CartAction>;
 } | null;
 
 export enum CartActionType {
@@ -35,74 +35,75 @@ export type CartAction =
 const CartContext = React.createContext<ContextType>(null);
 
 const initState: CartState = {
-  items: [],
+  cart: {
+    items: [],
+  },
   voucher: "",
   name: "",
   billingEmail: "",
 };
 
-export const cartReducer = (state: CartState, action: CartAction) => {
+export const cartReducer = (
+  state: CartState,
+  action: CartAction
+): CartState => {
   switch (action.type) {
     case CartActionType.RESET_CART: {
-      return JSON.parse(JSON.stringify(initState));
+      return JSON.parse(JSON.stringify(initState)) as typeof initState;
     }
     case CartActionType.INITALIZE: {
       return { ...state, ...action.payload };
     }
     case CartActionType.ADD_ITEM: {
       // Find if there's an existing item already:
-      const { productId, size, colorway, quantity } = action.payload;
-      const idx = state.items.findIndex(
-        (x) =>
-          x.productId === productId && x.size === size && x.colorway == colorway
+      const { id, size, color, quantity } = action.payload;
+      const idx = state.cart.items.findIndex(
+        (x) => x.id === id && x.size === size && x.color === color
       );
       const newQuantity = Math.min(
-        (state?.items[idx]?.quantity ?? 0) + quantity,
+        (state?.cart?.items[idx]?.quantity ?? 0) + quantity,
         99
       );
       return {
         ...state,
-        items:
-          idx === -1
-            ? [...state.items, action.payload]
-            : [
-                ...state.items.slice(0, idx),
-                { ...state.items[idx], quantity: newQuantity },
-                ...state.items.slice(idx + 1),
-              ],
+        cart: {
+          ...state,
+          items:
+            idx === -1
+              ? [...state.cart.items, action.payload]
+              : [
+                  ...state.cart.items.slice(0, idx),
+                  { ...state.cart.items[idx], quantity: newQuantity },
+                  ...state.cart.items.slice(idx + 1),
+                ],
+        },
       };
     }
 
     case CartActionType.UPDATE_QUANTITY: {
-      const { productId, size, colorway, quantity } = action.payload;
-      const idx = state.items.findIndex(
-        (x) =>
-          x.productId === productId && x.size === size && x.colorway == colorway
+      const { id, size, color, quantity } = action.payload;
+      const idx = state.cart.items.findIndex(
+        (x) => x.id === id && x.size === size && x.color === color
       );
       return {
         ...state,
         items:
           idx === -1
-            ? [...state.items]
+            ? [...state.cart.items]
             : [
-                ...state.items.slice(0, idx),
-                { ...state.items[idx], quantity },
-                ...state.items.slice(idx + 1),
+                ...state.cart.items.slice(0, idx),
+                { ...state.cart.items[idx], quantity },
+                ...state.cart.items.slice(idx + 1),
               ],
       };
     }
     case CartActionType.REMOVE_ITEM: {
-      const { productId, size, colorway } = action.payload;
+      const { id, size, color } = action.payload;
       return {
         ...state,
         items: [
-          ...state.items.filter(
-            (x) =>
-              !(
-                x.productId === productId &&
-                x.size === size &&
-                x.colorway == colorway
-              )
+          ...state.cart.items.filter(
+            (x) => !(x.id === id && x.size === size && x.color == color)
           ),
         ],
       };
@@ -138,13 +139,6 @@ export const useCartStore = () => {
   return context;
 };
 
-const initStorageCart: CartState = {
-  voucher: "",
-  name: "",
-  billingEmail: "",
-  items: [],
-};
-
 interface CartProviderProps {
   children: React.ReactNode;
 }
@@ -154,10 +148,14 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const value = useMemo(() => ({ state, dispatch }), [state]);
 
   useEffect(() => {
-    const cartState: CartState = JSON.parse(JSON.stringify(initState));
+    const cartState: CartState = JSON.parse(
+      JSON.stringify(initState)
+    ) as typeof initState;
     const storedCartData: CartState =
-      JSON.parse(localStorage.getItem("cart") as string) ?? initStorageCart;
-    cartState.items = storedCartData.items;
+      (JSON.parse(
+        localStorage.getItem("cart") as string
+      ) as typeof initState) ?? cartState;
+    cartState.cart.items = storedCartData.cart.items;
     cartState.name = storedCartData.name;
     cartState.billingEmail = storedCartData.billingEmail;
     dispatch({ type: CartActionType.INITALIZE, payload: cartState });
