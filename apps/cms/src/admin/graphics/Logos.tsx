@@ -1,5 +1,6 @@
 import React from "react";
 import "./Logo.scss";
+import Image from 'next/image'
 
 interface SCSEImageProps {
   classname: string;
@@ -8,7 +9,7 @@ interface SCSEImageProps {
 const SCSEImage = ({ classname }: SCSEImageProps) => {
   return (
     <div className={classname}>
-      <img src="/assets/scse-logo.png" alt="SCSE Logo" />
+      <Image src="/assets/scse-logo.png" alt="SCSE Logo" />
     </div>
   );
 };

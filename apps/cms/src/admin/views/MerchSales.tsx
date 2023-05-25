@@ -47,11 +47,13 @@ const MerchSales: AdminView = ({ user, canAccessAdmin }) => {
           <SortedColumn
             label={prettifyKey(key)}
             name={key}
-            data={data}
-          />
+            data={data as never[]}/>
         ),
         renderCell: renderCell
       },
+      label: "",
+      name: "",
+      active: false
     }
     tableCols.push(col);
   }

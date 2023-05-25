@@ -1,11 +1,13 @@
 import React from "react";
 import payload from "payload";
+import Image from 'next/image'
 
 export class RenderCellFactory {
 
   static get(element: unknown, key: string) {
     console.log(key)
     if (element[key] == undefined) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
       payload.logger.error(`Attribute ${key} cannot be found in element ${element.toString()}`);
       return null;
     }
@@ -14,7 +16,7 @@ export class RenderCellFactory {
     if (isImageUrl.test((element[key] as string).toString())) {
       const ImageComponent: React.FC<{children?: React.ReactNode}> = ({ children }) => (
         <span>
-          <img src={children.toString()} alt="image of object"/>
+          <Image src={children.toString()} alt="image of object"/>
         </span>
       );
       const ImageComponentCell = (row, data) => <ImageComponent>{data}</ImageComponent>;
