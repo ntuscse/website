@@ -19,13 +19,13 @@ export enum CartActionType {
 }
 
 export type CartAction =
-  | { type: CartActionType.RESET_CART; }
-  | { type: CartActionType.INITALIZE; payload: CartState; }
+  | { type: CartActionType.RESET_CART }
+  | { type: CartActionType.INITALIZE; payload: CartState }
   | { type: CartActionType.ADD_ITEM; payload: CartItem }
   | { type: CartActionType.UPDATE_QUANTITY; payload: CartItem }
-  | { 
-      type: CartActionType.REMOVE_ITEM; 
-      payload: { productId: string; size: string ; colorway: string} 
+  | {
+      type: CartActionType.REMOVE_ITEM;
+      payload: { productId: string; size: string; colorway: string };
     }
   | { type: CartActionType.VALID_VOUCHER; payload: string }
   | { type: CartActionType.REMOVE_VOUCHER; payload: null }
@@ -52,8 +52,14 @@ export const cartReducer = (state: CartState, action: CartAction) => {
     case CartActionType.ADD_ITEM: {
       // Find if there's an existing item already:
       const { productId, size, colorway, quantity } = action.payload;
-      const idx = state.items.findIndex((x) => x.productId === productId && x.size === size && x.colorway == colorway);
-      const newQuantity = Math.min((state?.items[idx]?.quantity ?? 0) + quantity, 99);
+      const idx = state.items.findIndex(
+        (x) =>
+          x.productId === productId && x.size === size && x.colorway == colorway
+      );
+      const newQuantity = Math.min(
+        (state?.items[idx]?.quantity ?? 0) + quantity,
+        99
+      );
       return {
         ...state,
         items:
@@ -69,20 +75,36 @@ export const cartReducer = (state: CartState, action: CartAction) => {
 
     case CartActionType.UPDATE_QUANTITY: {
       const { productId, size, colorway, quantity } = action.payload;
-      const idx = state.items.findIndex((x) => x.productId === productId && x.size === size && x.colorway == colorway);
+      const idx = state.items.findIndex(
+        (x) =>
+          x.productId === productId && x.size === size && x.colorway == colorway
+      );
       return {
         ...state,
         items:
           idx === -1
             ? [...state.items]
-            : [...state.items.slice(0, idx), { ...state.items[idx], quantity }, ...state.items.slice(idx + 1)],
+            : [
+                ...state.items.slice(0, idx),
+                { ...state.items[idx], quantity },
+                ...state.items.slice(idx + 1),
+              ],
       };
     }
     case CartActionType.REMOVE_ITEM: {
       const { productId, size, colorway } = action.payload;
       return {
         ...state,
-        items: [...state.items.filter((x) => !(x.productId === productId && x.size === size && x.colorway == colorway))],
+        items: [
+          ...state.items.filter(
+            (x) =>
+              !(
+                x.productId === productId &&
+                x.size === size &&
+                x.colorway == colorway
+              )
+          ),
+        ],
       };
     }
 
@@ -96,7 +118,7 @@ export const cartReducer = (state: CartState, action: CartAction) => {
 
     case CartActionType.UPDATE_NAME: {
       return { ...state, name: action.payload };
-    }   
+    }
 
     case CartActionType.UPDATE_BILLING_EMAIL: {
       return { ...state, billingEmail: action.payload };
@@ -116,11 +138,16 @@ export const useCartStore = () => {
   return context;
 };
 
-const initStorageCart: CartState = { voucher: "", name: "", billingEmail: "", items: [] };
+const initStorageCart: CartState = {
+  voucher: "",
+  name: "",
+  billingEmail: "",
+  items: [],
+};
 
 interface CartProviderProps {
-    children: React.ReactNode;
-  }
+  children: React.ReactNode;
+}
 
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, initState);
@@ -128,7 +155,8 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
 
   useEffect(() => {
     const cartState: CartState = JSON.parse(JSON.stringify(initState));
-    const storedCartData: CartState = JSON.parse(localStorage.getItem("cart") as string) ?? initStorageCart;
+    const storedCartData: CartState =
+      JSON.parse(localStorage.getItem("cart") as string) ?? initStorageCart;
     cartState.items = storedCartData.items;
     cartState.name = storedCartData.name;
     cartState.billingEmail = storedCartData.billingEmail;

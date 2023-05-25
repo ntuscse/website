@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 import {
   Flex,
   Heading,
@@ -14,14 +14,33 @@ import {
   Center,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { EmptyProductView, MerchCarousel, MerchDetailSkeleton, Page, SizeChartDialog, SizeOption } from "ui/components/merch";
+import {
+  EmptyProductView,
+  MerchCarousel,
+  MerchDetailSkeleton,
+  Page,
+  SizeChartDialog,
+  SizeOption,
+} from "ui/components/merch";
 import { Product } from "types/lib/merch";
-import { CartAction, CartActionType, useCartStore } from "features/merch/context/cart";
+import {
+  CartAction,
+  CartActionType,
+  useCartStore,
+} from "features/merch/context/cart";
 import { api } from "features/merch/services/api";
-import { routes } from "features/merch/constants/routes"
+import { routes } from "features/merch/constants/routes";
 import { QueryKeys } from "features/merch/constants/queryKeys";
 import { displayPrice } from "features/merch/functions/currency";
-import { displayStock, getDefaultColorway, getDefaultSize, getQtyInStock, isColorwayAvailable, isOutOfStock, isSizeAvailable } from "features/merch/functions/stock";
+import {
+  displayStock,
+  getDefaultColorway,
+  getDefaultSize,
+  getQtyInStock,
+  isColorwayAvailable,
+  isOutOfStock,
+  isSizeAvailable,
+} from "features/merch/functions/stock";
 import { displayQtyInCart, getQtyInCart } from "features/merch/functions/cart";
 
 const GroupTitle = ({ children }: any) => (
@@ -40,20 +59,24 @@ const MerchDetail: React.FC = () => {
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [selectedColorway, setSelectedColorway] = useState<string | null>(null);
-  const [maxQuantity, setMaxQuantity] = useState<number>(1); 
+  const [maxQuantity, setMaxQuantity] = useState<number>(1);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const { data: product, isLoading } = useQuery([QueryKeys.PRODUCT, productId], () => api.getProduct(productId), {
-    onSuccess: (data: Product) => {
-      setIsDisabled(!(data?.is_available === true));
-      setSelectedSize(getDefaultSize(data));
-      setSelectedColorway(getDefaultColorway(data));
-    },
-  });
+  const { data: product, isLoading } = useQuery(
+    [QueryKeys.PRODUCT, productId],
+    () => api.getProduct(productId),
+    {
+      onSuccess: (data: Product) => {
+        setIsDisabled(!(data?.is_available === true));
+        setSelectedSize(getDefaultSize(data));
+        setSelectedColorway(getDefaultColorway(data));
+      },
+    }
+  );
 
   //* In/decrement quantity
-  const handleQtyChangeCounter = (isAdd = true) => { 
+  const handleQtyChangeCounter = (isAdd = true) => {
     const value = isAdd ? 1 : -1;
     if (!isAdd && quantity === 1) return;
     if (isAdd && quantity >= maxQuantity) return;
@@ -61,7 +84,7 @@ const MerchDetail: React.FC = () => {
   };
 
   //* Manual input quantity.
-  const handleQtyChangeInput = (e: React.FormEvent<EventTarget>): void => { 
+  const handleQtyChangeInput = (e: React.FormEvent<EventTarget>): void => {
     const target = e.target as HTMLInputElement;
     if (Number.isNaN(parseInt(target.value, 10))) {
       setQuantity(1);
@@ -70,7 +93,7 @@ const MerchDetail: React.FC = () => {
     const value = parseInt(target.value, 10);
     if (value <= 0) {
       setQuantity(1);
-    } else if (value > maxQuantity) { 
+    } else if (value > maxQuantity) {
       setQuantity(maxQuantity);
     } else {
       setQuantity(value);
@@ -81,10 +104,10 @@ const MerchDetail: React.FC = () => {
     if (product) {
       const stockQty = getQtyInStock(product, colorway, size);
       const cartQty = getQtyInCart(cartState.items, product.id, colorway, size);
-      const max = (stockQty > cartQty) ? stockQty - cartQty : 0;
+      const max = stockQty > cartQty ? stockQty - cartQty : 0;
       setMaxQuantity(max);
     }
-  }
+  };
 
   const handleAddToCart = () => {
     if (!selectedColorway || !selectedSize) {
@@ -96,8 +119,8 @@ const MerchDetail: React.FC = () => {
       payload: {
         productId,
         quantity,
-        colorway: selectedColorway, 
-        size: selectedSize, 
+        colorway: selectedColorway,
+        size: selectedSize,
       },
     };
     cartDispatch(payload);
@@ -116,12 +139,24 @@ const MerchDetail: React.FC = () => {
       <Heading color="primary.600" fontSize={["xl", "2xl", "3xl", "4xl"]}>
         {product?.name}
         {!product?.is_available && (
-          <Badge color="grey" ml={4} fontSize="md" variant="outline" display="inline">
+          <Badge
+            color="grey"
+            ml={4}
+            fontSize="md"
+            variant="outline"
+            display="inline"
+          >
             unavailable
           </Badge>
         )}
         {product && isOutOfStock(product) && (
-          <Badge color="grey" ml={4} fontSize="md" variant="outline" display="inline">
+          <Badge
+            color="grey"
+            ml={4}
+            fontSize="md"
+            variant="outline"
+            display="inline"
+          >
             out of stock
           </Badge>
         )}
@@ -134,11 +169,18 @@ const MerchDetail: React.FC = () => {
 
   const renderSizeSection = (
     <Flex flexDirection="column">
-      <Flex justifyContent="space-between" alignItems="center" mb={2} display="flex">
+      <Flex
+        justifyContent="space-between"
+        alignItems="center"
+        mb={2}
+        display="flex"
+      >
         <GroupTitle>Sizes</GroupTitle>
-        {product?.size_chart && <Button size="sm" variant="unstyled" onClick={onOpen}>
-          Size Chart
-        </Button>}
+        {product?.size_chart && (
+          <Button size="sm" variant="unstyled" onClick={onOpen}>
+            Size Chart
+          </Button>
+        )}
       </Flex>
       <Flex gap={[4, 4]} flexWrap="wrap">
         {product?.sizes?.map((size, idx) => {
@@ -151,26 +193,26 @@ const MerchDetail: React.FC = () => {
                 if (size !== selectedSize) {
                   setSelectedSize(size);
                   if (selectedColorway) {
-                    updateMaxQuantity(selectedColorway, size)
+                    updateMaxQuantity(selectedColorway, size);
                   }
-                }
-                else {
+                } else {
                   setSelectedSize(null);
                 }
               }}
               disabled={
-                isDisabled || 
-                (product ? 
-                  (!isSizeAvailable(product, size)) : // size is not available for all colorways
-                  false
-                ) ||
-                ((product && selectedColorway) ? 
-                  (getQtyInStock(product, selectedColorway, size) === 0) : // size is not available for selected colorway
-                  false
-                ) 
-              } 
+                isDisabled ||
+                (product
+                  ? !isSizeAvailable(product, size) // size is not available for all colorways
+                  : false) ||
+                (product && selectedColorway
+                  ? getQtyInStock(product, selectedColorway, size) === 0 // size is not available for selected colorway
+                  : false)
+              }
             >
-              <Text textTransform="uppercase" fontSize={{ base: "sm", md: "md" }}>
+              <Text
+                textTransform="uppercase"
+                fontSize={{ base: "sm", md: "md" }}
+              >
                 {size}
               </Text>
             </SizeOption>
@@ -182,7 +224,12 @@ const MerchDetail: React.FC = () => {
 
   const renderColorwaySection = (
     <Flex flexDirection="column" mt={4}>
-      <Flex justifyContent="space-between" alignItems="center" mb={2} display="flex">
+      <Flex
+        justifyContent="space-between"
+        alignItems="center"
+        mb={2}
+        display="flex"
+      >
         <GroupTitle>Colors</GroupTitle>
       </Flex>
       <Flex gap={[4, 4]} flexWrap="wrap">
@@ -196,28 +243,28 @@ const MerchDetail: React.FC = () => {
                 if (colorway !== selectedColorway) {
                   setSelectedColorway(colorway);
                   if (selectedSize) {
-                    updateMaxQuantity(colorway, selectedSize)
+                    updateMaxQuantity(colorway, selectedSize);
                   }
-                }
-                else {
+                } else {
                   setSelectedColorway(null);
                 }
               }}
               width="auto"
               px={4}
               disabled={
-                isDisabled || 
-                (product ? 
-                  (!isColorwayAvailable(product, colorway)) : // colorway is not available for all sizes
-                  false
-                ) ||
-                ((product && selectedSize) ? 
-                  (getQtyInStock(product, colorway, selectedSize) === 0) : // colorway is not available for selected size
-                  false
-                ) 
-              } 
+                isDisabled ||
+                (product
+                  ? !isColorwayAvailable(product, colorway) // colorway is not available for all sizes
+                  : false) ||
+                (product && selectedSize
+                  ? getQtyInStock(product, colorway, selectedSize) === 0 // colorway is not available for selected size
+                  : false)
+              }
             >
-              <Text textTransform="uppercase" fontSize={{ base: "sm", md: "md" }}>
+              <Text
+                textTransform="uppercase"
+                fontSize={{ base: "sm", md: "md" }}
+              >
                 {colorway}
               </Text>
             </SizeOption>
@@ -231,61 +278,93 @@ const MerchDetail: React.FC = () => {
     <Flex flexDirection="column" mt={8}>
       <GroupTitle>Quantity</GroupTitle>
       <Flex gap={4}>
-        <SizeOption disabled={isDisabled || !(selectedColorway && selectedSize) || quantity <= 1} active={false} onClick={() => handleQtyChangeCounter(false)}>
+        <SizeOption
+          disabled={
+            isDisabled || !(selectedColorway && selectedSize) || quantity <= 1
+          }
+          active={false}
+          onClick={() => handleQtyChangeCounter(false)}
+        >
           -
         </SizeOption>
         <Input
           type="tel"
           pattern="[0-9]*"
-          max={maxQuantity} 
+          max={maxQuantity}
           textAlign="center"
           value={quantity}
           borderRadius={0}
           maxWidth={100}
           placeholder="Item Count"
-          disabled={isDisabled || !(selectedColorway && selectedSize) }
+          disabled={isDisabled || !(selectedColorway && selectedSize)}
           onChange={handleQtyChangeInput}
         />
-        <SizeOption disabled={isDisabled || !(selectedColorway && selectedSize) || quantity >= maxQuantity} active={false} onClick={() => handleQtyChangeCounter(true)}>
+        <SizeOption
+          disabled={
+            isDisabled ||
+            !(selectedColorway && selectedSize) ||
+            quantity >= maxQuantity
+          }
+          active={false}
+          onClick={() => handleQtyChangeCounter(true)}
+        >
           +
         </SizeOption>
         <Center>
-          <Text fontSize="m" fontWeight={500} color="primary.600"> 
-            {(product && selectedColorway && selectedSize && (product.is_available === true)) ? displayStock(product, selectedColorway, selectedSize) : ""}
-          </Text> 
+          <Text fontSize="m" fontWeight={500} color="primary.600">
+            {product &&
+            selectedColorway &&
+            selectedSize &&
+            product.is_available === true
+              ? displayStock(product, selectedColorway, selectedSize)
+              : ""}
+          </Text>
         </Center>
       </Flex>
       <Flex flexDirection="column" mt={2}>
-        <Text fontSize="m" fontWeight={300} color="primary.400"> 
-          {(product && selectedColorway && selectedSize) ? displayQtyInCart(cartState.items, product.id, selectedColorway, selectedSize) : ""}
-        </Text> 
-        <Text fontSize="m" fontWeight={300} color="primary.400"> 
-          {(product && selectedColorway && selectedSize && (maxQuantity === 0)) ? "You have reached the maximum purchase quantity."  : ""}
-        </Text> 
+        <Text fontSize="m" fontWeight={300} color="primary.400">
+          {product && selectedColorway && selectedSize
+            ? displayQtyInCart(
+                cartState.items,
+                product.id,
+                selectedColorway,
+                selectedSize
+              )
+            : ""}
+        </Text>
+        <Text fontSize="m" fontWeight={300} color="primary.400">
+          {product && selectedColorway && selectedSize && maxQuantity === 0
+            ? "You have reached the maximum purchase quantity."
+            : ""}
+        </Text>
       </Flex>
     </Flex>
   );
 
   const purchaseButtons = (
     <Flex gap={6} flexWrap="wrap">
-      <Button 
-        bg="gray.200" 
+      <Button
+        bg="gray.200"
         _hover={{ bg: "gray.300" }}
-        flex={1} 
-        borderRadius={0} 
-        variant="outline" 
-        onClick={handleAddToCart} 
-        disabled={isDisabled || !(selectedColorway && selectedSize) || (maxQuantity === 0)}
+        flex={1}
+        borderRadius={0}
+        variant="outline"
+        onClick={handleAddToCart}
+        disabled={
+          isDisabled || !(selectedColorway && selectedSize) || maxQuantity === 0
+        }
       >
         ADD TO CART
       </Button>
-      <Button 
+      <Button
         bg="red.600"
         _hover={{ bg: "red.500" }}
-        flex={1} 
-        borderRadius={0} 
-        onClick={handleBuyNow} 
-        disabled={isDisabled || !(selectedColorway && selectedSize) || (maxQuantity === 0)}
+        flex={1}
+        borderRadius={0}
+        onClick={handleBuyNow}
+        disabled={
+          isDisabled || !(selectedColorway && selectedSize) || maxQuantity === 0
+        }
       >
         BUY NOW
       </Button>
@@ -309,7 +388,11 @@ const MerchDetail: React.FC = () => {
           <Divider my={6} />
           {/* {renderDescription} */}
         </GridItem>
-        <SizeChartDialog sizeChart={product?.size_chart} onClose={onClose} isOpen={isOpen} />
+        <SizeChartDialog
+          sizeChart={product?.size_chart}
+          onClose={onClose}
+          isOpen={isOpen}
+        />
       </Grid>
     );
   };
