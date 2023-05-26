@@ -3,11 +3,11 @@ describe("Navigation", () => {
     // Start from the index page
     cy.visit("http://localhost:3001/");
 
-    // The page should contain a heading with "WELCOME TO SCSE CLUB"
-    cy.get('[role="heading"]').contains("WELCOME TO SCSE CLUB");
+    // The page should contain a heading with "NTU SCSE Club"
+    cy.get('[role="heading"]').contains("NTU SCSE Club");
 
-    // Find a button with a href attribute containing "contact" and click it
-    cy.get('a[class*="chakra-button"][href*="contact"]').first().click();
+    // Find a link with a href attribute containing "contact" and click it
+    cy.get('a[class*="chakra-link"][href*="contact"]').last().click();
 
     // The new url should include "/contact"
     cy.url().should("include", "/contact");
@@ -21,8 +21,8 @@ describe("Navigation", () => {
     // The new url should include "/"
     cy.url().should("include", "/");
 
-    // The new page should contain a heading with "WELCOME TO SCSE CLUB"
-    cy.get('[role="heading"]').contains("WELCOME TO SCSE CLUB");
+    // The new page should contain a heading with "NTU SCSE Club"
+    cy.get('[role="heading"]').contains("NTU SCSE Club");
   });
 });
 
