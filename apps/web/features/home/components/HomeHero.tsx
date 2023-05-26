@@ -24,6 +24,7 @@ export const HomeHero = () => {
         <Link href="/" >
           <Text
             as="header"
+            role="heading"
             fontSize={["32px", "48px", "48px", "64px"]}
             fontWeight="semibold"
             background={linearGradientBrand}
