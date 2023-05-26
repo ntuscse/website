@@ -15,6 +15,7 @@ export const HomeHero = () => {
       justifyContent="center"
       alignItems="center"
       position="relative"
+      overflow="hidden"
     >
       {/* Header */}
       <Box
@@ -42,6 +43,7 @@ export const HomeHero = () => {
         flexDirection={["column", "column", "column", "row"]}
         justifyContent="center"
         mx="18px"
+        zIndex={1}
       >
         {/* Links #1 */}
         <Flex
@@ -150,6 +152,42 @@ export const HomeHero = () => {
           })
         }}
       />
+
+      {/* Images of Students in the background */}
+      <Box
+        position="absolute"
+        top="20%"
+        left="-50px"
+        boxSize={["175px", "200px", "250px", "300px"]}
+        borderRadius="400px"
+        borderWidth="6px"
+        borderColor="brand.navy.medium"
+        opacity="40%"
+      >
+        <Image
+          src="/hero/students-1.png"
+          alt="image of scse students"
+          fill={true}
+          style={{ borderRadius: "400px" }}
+        />
+      </Box>
+      <Box
+        position="absolute"
+        bottom="-25px"
+        right="-25px"
+        boxSize={["175px", "200px", "250px", "300px"]}
+        borderRadius="400px"
+        borderWidth="6px"
+        borderColor="brand.navy.medium"
+        opacity="40%"
+      >
+        <Image
+          src="/hero/students-2.png"
+          alt="image of scse students"
+          fill={true}
+          style={{ borderRadius: "400px" }}
+        />
+      </Box>
     </Flex>
   );
 };
