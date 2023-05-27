@@ -38,26 +38,28 @@ export const MenuItems = ({ isOpen = false, links }: MenuItemProps) => {
             />
           );
         })}
-      {router.pathname.match(regexp) && <CartButton />}
       </Stack>
 
       {/* CTA Button -> Contact */}
-      <Link
-        href={"/contact"}
-        _hover={{
-          bgColor: "brand.red.dark"
-        }}
-        bgColor="brand.red.medium"
-        color="white"
-        px="16px"
-        py="10px"
-        mt={{ base: 8, xl: 0 }}
-        borderRadius="6px"
-        w="max-content"
-        display={{ base: "block", xl: "block" }}
-      >
-        <Text display="block">Contact</Text>
-      </Link>
+      {/* If on merch site, change to Cart */}
+      {router.pathname.match(regexp) ? 
+        <CartButton /> :
+        <Link
+          href={"/contact"}
+          _hover={{
+            bgColor: "brand.red.dark"
+          }}
+          bgColor="brand.red.medium"
+          color="white"
+          px="16px"
+          py="10px"
+          mt={{ base: 8, xl: 0 }}
+          borderRadius="6px"
+          w="max-content"
+          display={{ base: "block", xl: "block" }}
+        >
+          <Text display="block">Contact</Text>
+        </Link>}
     </Box>
   );
 };

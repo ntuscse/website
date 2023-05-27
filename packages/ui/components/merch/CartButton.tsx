@@ -17,9 +17,9 @@ const CartButton = () => {
         alignItems: "center"
       }}>
           <Icon p="0.3em"
-          bg="darkblue" 
+          bg="brand.red.medium" 
           borderRadius="50%"  _hover={{
-            background: 'blue'
+            background: "brand.red.dark"
           }}
           viewBox="0 0 24 24" boxSize={10}>
             <path fill="none" stroke-width="1.5" stroke="white"
