@@ -14,6 +14,11 @@ const nextConfig = {
         hostname: "clubs.ntu.edu.sg",
         pathname: "/csec/**",
       },
+      {
+        protocol: "https",
+        hostname: "cdn.ntuscse.com",
+        pathname: "/merch/products/images/**",
+      },
     ],
   },
 };

@@ -1,3 +1,4 @@
+// Product
 export interface Product {
   id: string;
   name: string;
@@ -15,6 +16,7 @@ export interface Product {
   };
 }
 
+// Order
 export enum OrderStatus {
   PENDING_PAYMENT = 1,
   PAYMENT_COMPLETED = 2,
@@ -40,15 +42,26 @@ export interface Order {
   status: OrderStatus;
 }
 
+// Cart
+export type CartState = {
+  cart: Cart;
+  voucher: string | null;
+  name: string;
+  billingEmail: string;
+};
+
 export interface Cart {
-  items: {
-    id: string;
-    color: string;
-    size: string;
-    quantity: number;
-  }[];
+  items: CartItem[];
 }
 
+export interface CartItem {
+  id: string;
+  color: string;
+  size: string;
+  quantity: number;
+}
+
+// Promotion
 export interface Promotion {
   promoCode: string;
   maxRedemptions: number;
@@ -78,3 +91,68 @@ enum PromoType {
   PERCENTAGE = "PERCENTAGE",
   FIXED_VALUE = "FIXED_VALUE",
 }
+
+/*
+export type ProductInfo = {
+  name: string;
+  image: string;
+  price: number;
+};
+
+export type CartPrice = {
+  currency: string;
+  subtotal: number;
+  discount: number;
+  grandTotal: number;
+};
+
+export type CartResponseDto = {
+  items: [
+    {
+      id: string;
+      name: string;
+      price: number;
+      images: string[];
+      sizes: string;
+      productCategory: string;
+      isAvailable: boolean;
+      quantity: number;
+    }
+  ];
+  price: {
+    currency: string;
+    subtotal: number;
+    discount: number;
+    grandTotal: number;
+  };
+};
+
+export type CheckoutResponseDto = {
+  orderId: string;
+  items: [
+    {
+      id: string;
+      name: string;
+      price: number;
+      images: string[];
+      sizes: string[];
+      productCategory: string;
+      isAvailable: boolean;
+      quantity: number;
+    }
+  ];
+  price: {
+    currency: string;
+    subtotal: number;
+    discount: number;
+    grandTotal: number;
+  };
+  payment: {
+    paymentGateway: string;
+    clientSecret: string;
+  };
+  email: string;
+};
+
+export type ProductInfoMap = Record<string, ProductInfo>;
+*/

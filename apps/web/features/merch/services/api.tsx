@@ -5,7 +5,9 @@ export class Api {
 
   constructor() {
     if (!process.env.NEXT_PUBLIC_MERCH_API_ORIGIN) {
-      throw new Error("NEXT_PUBLIC_MERCH_API_ORIGIN environment variable is not set")
+      throw new Error(
+        "NEXT_PUBLIC_MERCH_API_ORIGIN environment variable is not set"
+      );
     }
     this.API_ORIGIN = process.env.NEXT_PUBLIC_MERCH_API_ORIGIN || "";
   }
@@ -14,7 +16,7 @@ export class Api {
   async get(urlPath: string): Promise<Record<string, Product[]>> {
     const response = await fetch(`${this.API_ORIGIN}${urlPath}`);
     const convert = response.json() as unknown; // Convert to unknown type
-    return convert as Record<string, Product[]>
+    return convert as Record<string, Product[]>;
   }
 
   /*
@@ -44,14 +46,13 @@ export class Api {
       console.log("product-list", res);
       return res?.products ?? [];
     } catch (e) {
-      if(e instanceof Error){
+      if (e instanceof Error) {
         throw new Error(e.message);
       }
-      return []
+      return [];
     }
   }
 
-  /*
   // eslint-disable-next-line class-methods-use-this
   async getProduct(productId: string) {
     try {
@@ -63,6 +64,7 @@ export class Api {
     }
   }
 
+  /*
   async getOrder(userId: string, orderId: string) {
     try {
       const res = await this.get(`/orders/${orderId}`);

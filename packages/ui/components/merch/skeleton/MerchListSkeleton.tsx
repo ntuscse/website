@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, Skeleton, SkeletonText, GridItem } from "@chakra-ui/react";
 
-const ProductListSkeleton: React.FC = () => {
+export const MerchListSkeleton: React.FC = () => {
   return (
     <Grid templateColumns={{ base: "repeat(2, 1fr)", lg: "repeat(4, 1fr)" }} columnGap={4} rowGap={2}>
       {new Array(8).fill(null).map((item: any) => (
@@ -15,4 +15,3 @@ const ProductListSkeleton: React.FC = () => {
   );
 };
 
-export default ProductListSkeleton;

@@ -9,7 +9,7 @@ type PageProps = FlexProps & {
   contentPadding?: number[];
 };
 
-const Page = ({
+export const Page = ({
   children,
   contentWidth = "1400px",
   contentPadding = [4, 6, 8],
@@ -32,5 +32,3 @@ const Page = ({
     </Flex>
   );
 };
-
-export default Page;
