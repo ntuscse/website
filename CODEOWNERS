@@ -20,4 +20,5 @@
 /packages/types/lib/cms.ts @jamiegoh
 /packages/types/lib/merch.ts @chanbakjsd
 /packages/ui/** @xJQx
+/packages/ui/merch/** @chanbakjsd
 
