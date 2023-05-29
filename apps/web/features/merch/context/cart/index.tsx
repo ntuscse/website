@@ -25,7 +25,7 @@ export type CartAction =
   | { type: CartActionType.UPDATE_QUANTITY; payload: CartItem }
   | {
       type: CartActionType.REMOVE_ITEM;
-      payload: { productId: string; size: string; colorway: string };
+      payload: { id: string; size: string; color: string };
     }
   | { type: CartActionType.VALID_VOUCHER; payload: string }
   | { type: CartActionType.REMOVE_VOUCHER; payload: null }
@@ -67,7 +67,7 @@ export const cartReducer = (
       return {
         ...state,
         cart: {
-          ...state,
+          ...state.cart,
           items:
             idx === -1
               ? [...state.cart.items, action.payload]
@@ -87,25 +87,31 @@ export const cartReducer = (
       );
       return {
         ...state,
-        items:
-          idx === -1
-            ? [...state.cart.items]
-            : [
-                ...state.cart.items.slice(0, idx),
-                { ...state.cart.items[idx], quantity },
-                ...state.cart.items.slice(idx + 1),
-              ],
+        cart: {
+          ...state.cart,
+          items:
+            idx === -1
+              ? [...state.cart.items]
+              : [
+                  ...state.cart.items.slice(0, idx),
+                  { ...state.cart.items[idx], quantity },
+                  ...state.cart.items.slice(idx + 1),
+                ],
+        },
       };
     }
     case CartActionType.REMOVE_ITEM: {
       const { id, size, color } = action.payload;
       return {
         ...state,
-        items: [
-          ...state.cart.items.filter(
-            (x) => !(x.id === id && x.size === size && x.color == color)
-          ),
-        ],
+        cart: {
+          ...state.cart,
+          items: [
+            ...state.cart.items.filter(
+              (x) => !(x.id === id && x.size === size && x.color == color)
+            ),
+          ],
+        },
       };
     }
 
