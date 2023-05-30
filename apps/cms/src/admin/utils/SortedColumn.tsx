@@ -23,7 +23,6 @@ const SortedColumn: React.FC<Props> = (prop) => {
   // https://v5.reactrouter.com/web/api/Hooks/usehistory
   // this is the official way to use it - not sure how to fix the ESLint complaints
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call
   const history = useHistory();
 
   const setSort = useCallback((newSort: string) => {
