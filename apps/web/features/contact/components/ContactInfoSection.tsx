@@ -21,7 +21,9 @@ export const ContactInfoSection = () => {
           >
             Email
           </Heading>
-          <Link color="white">scse-club@e.ntu.edu.sg</Link>
+          <Link color="white" data-testid="email-text">
+            scse-club@e.ntu.edu.sg
+          </Link>
         </GridItem>
         <GridItem
           p="20px"
@@ -36,9 +38,11 @@ export const ContactInfoSection = () => {
           >
             Address
           </Heading>
-          <Text color="white">50 Nanyang Ave, Singapore 639798</Text>
+          <Text color="white" data-testid="address-text">
+            50 Nanyang Ave, Singapore 639798
+          </Text>
         </GridItem>
       </Grid>
     </Box>
-  )
+  );
 };
