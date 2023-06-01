@@ -1,4 +1,4 @@
-import {StorybookConfig} from "@storybook/react-webpack5";
+import {StorybookConfig} from "@storybook/nextjs";
 
 const config: StorybookConfig = {
   stories: [
@@ -14,8 +14,10 @@ const config: StorybookConfig = {
     "@storybook/addon-interactions",
     "@storybook/addon-mdx-gfm"],
   framework: {
-    name: "@storybook/react-webpack5",
-    options: {}
+    name: "@storybook/nextjs",
+    options: {
+      nextConfigPath: "../next.config.js",
+    }
   },
   features: {
     // emotionAlias: false
