@@ -23,7 +23,6 @@
     "@storybook/addon-essentials": "^7.0.18",
     "@storybook/addon-interactions": "^7.0.18",
     "@storybook/addon-links": "^7.0.18",
-    "@storybook/addon-mdx-gfm": "^7.0.18",
     "@storybook/addons": "^7.0.18",
     "@storybook/jest": "^0.1.0",
     "@storybook/react": "^7.0.18",
@@ -48,6 +47,7 @@
     "@fontsource/poppins": "^4.5.10",
     "@fontsource/roboto": "^4.5.8",
     "@fontsource/roboto-slab": "^4.5.9",
-    "@fontsource/work-sans": "^4.5.14"
+    "@fontsource/work-sans": "^4.5.14",
+    "@storybook/addon-docs": "^7.0.18"
   }
 }
