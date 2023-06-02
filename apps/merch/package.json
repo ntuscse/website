@@ -6,6 +6,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "dev": "nodemon src/server.ts",
+    "build": "tsc",
     "lint": "TIMING=1 eslint \"**/*.ts*\"",
     "lint:fix": "TIMING=1 eslint --fix \"**/*.ts*\""
   },
