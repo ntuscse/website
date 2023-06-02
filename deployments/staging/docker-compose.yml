@@ -49,7 +49,6 @@ services:
       - "traefik.http.routers.cms.rule=Host(`cms.staging.ntuscse.com`, `13.213.116.60`, `localhost`)"
       - "traefik.http.routers.cms.entrypoints=websecure"
       - "traefik.http.routers.cms.tls.certresolver=myresolver"
-
   mongo:
     container_name: mongo
     image: mongo:latest
@@ -62,7 +61,7 @@ services:
 
   merch:
     container_name: merch
-    image: nginx
+    image: ghcr.io/ntuscse/website/merch:latest
     networks:
       cms_network:
         ipv4_address: 10.5.0.4
