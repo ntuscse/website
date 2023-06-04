@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import {Box, Flex, Icon, Image, useBreakpointValue} from "@chakra-ui/react";
+import { Box, Flex, Icon, Image, useBreakpointValue } from "@chakra-ui/react";
 import { FaChevronLeft, FaChevronRight, FaCameraRetro } from "react-icons/fa";
-import {keyframes} from "@emotion/react";
+import { keyframes } from "@emotion/react";
 
 export interface HomeMemoriesCarouselProps {
   images: Array<{
@@ -33,7 +33,7 @@ export const HomeMemoriesCarousel = (props: HomeMemoriesCarouselProps) => {
     const slideInterval = setInterval(next, autoSlideInterval);
     return () => clearInterval(slideInterval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [next]);
 
   return (
     <Flex
