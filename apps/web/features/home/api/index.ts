@@ -1,0 +1,1 @@
+export { memoriesData } from "./memoriesData"

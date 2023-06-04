@@ -84,6 +84,7 @@ export const Footer = (props : FooterProps) => {
           <Flex flexWrap="wrap" gap={6}>
             {socialLinks.map((social) => (
               <Link
+                key={social.name}
                 href={social.href}
                 display="flex"
                 flexDir="row"

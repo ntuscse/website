@@ -132,6 +132,169 @@ exports[`renders homepage unchanged 1`] = `
     </div>
   </div>
   <div
+    class="css-p7zbsy"
+  >
+    <div
+      class="css-1yc5myk"
+    >
+      <div
+        class="css-368bfx"
+      />
+      <div
+        class="css-ia346u"
+      >
+        <div
+          class="framed-text-container css-5wel2l"
+        >
+          <p
+            class="chakra-text css-1gu5k9l"
+          >
+            Memories
+          </p>
+          <div
+            class="css-19mfpbt"
+          />
+          <div
+            class="css-1nfbmmu"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="css-h9kdrx"
+    >
+      <div
+        class="css-kw7qpy"
+      >
+        <div
+          class="css-177g2fo"
+        >
+          <svg
+            class="chakra-icon css-1sbq9ay"
+            fill="currentColor"
+            focusable="false"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 512 512"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M48 32C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48H48zm0 32h106c3.3 0 6 2.7 6 6v20c0 3.3-2.7 6-6 6H38c-3.3 0-6-2.7-6-6V80c0-8.8 7.2-16 16-16zm426 96H38c-3.3 0-6-2.7-6-6v-36c0-3.3 2.7-6 6-6h138l30.2-45.3c1.1-1.7 3-2.7 5-2.7H464c8.8 0 16 7.2 16 16v74c0 3.3-2.7 6-6 6zM256 424c-66.2 0-120-53.8-120-120s53.8-120 120-120 120 53.8 120 120-53.8 120-120 120zm0-208c-48.5 0-88 39.5-88 88s39.5 88 88 88 88-39.5 88-88-39.5-88-88-88zm-48 104c-8.8 0-16-7.2-16-16 0-35.3 28.7-64 64-64 8.8 0 16 7.2 16 16s-7.2 16-16 16c-17.6 0-32 14.4-32 32 0 8.8-7.2 16-16 16z"
+            />
+          </svg>
+          <div
+            class="css-1e0zu2b"
+          >
+            <svg
+              class="chakra-icon css-1d5rxcs"
+              fill="currentColor"
+              focusable="false"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 320 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M34.52 239.03L228.87 44.69c9.37-9.37 24.57-9.37 33.94 0l22.67 22.67c9.36 9.36 9.37 24.52.04 33.9L131.49 256l154.02 154.75c9.34 9.38 9.32 24.54-.04 33.9l-22.67 22.67c-9.37 9.37-24.57 9.37-33.94 0L34.52 272.97c-9.37-9.37-9.37-24.57 0-33.94z"
+              />
+            </svg>
+          </div>
+          <div
+            class="css-s88hxx"
+          >
+            <div
+              class="css-135g186"
+            >
+              <div
+                class="css-m29uso"
+              >
+                <img
+                  alt="back to school"
+                  class="chakra-image css-m017b4"
+                  src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+                  style="object-fit: cover; width: 100%; height: 100%;"
+                />
+              </div>
+              <div
+                class="css-m29uso"
+              >
+                <img
+                  alt="students doing project work together"
+                  class="chakra-image css-m017b4"
+                  src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+                  style="object-fit: cover; width: 100%; height: 100%;"
+                />
+              </div>
+              <div
+                class="css-m29uso"
+              >
+                <img
+                  alt="library"
+                  class="chakra-image css-m017b4"
+                  src="https://images.unsplash.com/photo-1537202108838-e7072bad1927?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=892&q=80"
+                  style="object-fit: cover; width: 100%; height: 100%;"
+                />
+              </div>
+              <div
+                class="css-m29uso"
+              >
+                <img
+                  alt="beautiful campus"
+                  class="chakra-image css-m017b4"
+                  src="https://images.unsplash.com/photo-1580537782437-8d6a0ca13de6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+                  style="object-fit: cover; width: 100%; height: 100%;"
+                />
+              </div>
+              <div
+                class="css-m29uso"
+              >
+                <img
+                  alt="scse friends"
+                  class="chakra-image css-m017b4"
+                  src="https://plus.unsplash.com/premium_photo-1683887034179-c498b684dd57?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1738&q=80"
+                  style="object-fit: cover; width: 100%; height: 100%;"
+                />
+              </div>
+              <div
+                class="css-m29uso"
+              >
+                <img
+                  alt="scse networking event"
+                  class="chakra-image css-m017b4"
+                  src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+                  style="object-fit: cover; width: 100%; height: 100%;"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="css-1iimj3y"
+          >
+            <svg
+              class="chakra-icon css-1d5rxcs"
+              fill="currentColor"
+              focusable="false"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 320 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
     class="chakra-stack css-12nxbtz"
   >
     <div

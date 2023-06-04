@@ -9,3 +9,4 @@ export * from "./components/footer";
 export * from "./components/carousel";
 export * from "./components/faq";
 export * from "./components/image";
+export * from "./components/text"
