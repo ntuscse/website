@@ -1,4 +1,4 @@
-import { Box, FlexProps } from "@chakra-ui/react";
+import { Box, FlexProps, Text } from "@chakra-ui/react";
 interface FramedTextProps extends FlexProps {
   text: String;
   fontSize?: number;
@@ -6,17 +6,22 @@ interface FramedTextProps extends FlexProps {
 export const FramedText = ({ text, fontSize }: FramedTextProps) => {
   return (
     <Box
-    className="framed-text-container"
+      className="framed-text-container"
       position="relative"
-      paddingX={{base: "16px"}}
+      paddingX={{ base: "16px" }}
       textAlign="center"
       textColor={"white"}
-      fontSize={fontSize ? fontSize : 64}
+      // fontSize={fontSize ? fontSize : 64}
     >
-      {text}
+      <Text
+        fontSize={["32px", "48px", "48px", "64px"]}
+        transitionDuration="0.3s"
+      >
+        {text}
+      </Text>
       <Box
         position="absolute"
-        top={2}
+        top={[0, 2]}
         left={0}
         width={{ base: "40px" }}
         height={{ base: "40px" }}
@@ -26,7 +31,7 @@ export const FramedText = ({ text, fontSize }: FramedTextProps) => {
       />
       <Box
         position="absolute"
-        bottom={2}
+        bottom={[0, 2]}
         right={0}
         width={{ base: "40px" }}
         height={{ base: "40px" }}

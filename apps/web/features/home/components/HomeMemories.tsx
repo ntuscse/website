@@ -12,8 +12,9 @@ export const HomeMemories = () => {
     <>
       <Flex // Outer box
         pos={"relative"}
-        w={"100%"}
-        h={{ base: "873px" }}
+        w={"100vw"}
+        minH={"100vh"}
+        // h={{ base: "873px" }}
         backgroundColor={"#EDEDED"}
         justify={"center"}
       >
