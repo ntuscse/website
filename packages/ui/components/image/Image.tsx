@@ -4,7 +4,7 @@ import { ImageProps as NextImageProps } from "next/image";
 interface ImageProps extends NextImageProps {}
 
 export const Image = (props: ImageProps) => {
-  const { src, alt, width, height, ...nextImageProps } = props;
+  const { src, alt, width, height, fill, ...nextImageProps } = props;
   const [ImageComponent, setImageComponent] =
     useState<React.ElementType | null>(null);
 
@@ -24,8 +24,8 @@ export const Image = (props: ImageProps) => {
   if (ImageComponent == null) {
     return null;
   } else if (ImageComponent === "img") {
-    // eslint-disable-next-line @next/next/no-img-element
     return (
+      // eslint-disable-next-line @next/next/no-img-element
       <img
         src={typeof src === "string" ? src : ""}
         alt={alt}
@@ -41,6 +41,7 @@ export const Image = (props: ImageProps) => {
         alt={alt}
         width={width}
         height={height}
+        fill={fill}
         {...nextImageProps}
       />
     );
