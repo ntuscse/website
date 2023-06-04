@@ -1,38 +1,34 @@
-export let memoriesData = [
+import { HomeMemoriesCarouselProps } from "../components/HomeMemoriesCarousel";
+
+export let memoriesData: HomeMemoriesCarouselProps["images"] = [
     {
-      imageSrc:
-        "https://clubs.ntu.edu.sg/csec/wp-content/uploads/2022/01/xorex-logo.jpg",
-      href: "http://xp.com.sg/",
-      altText: "XP",
+      src:
+        "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
+      alt: "back to school",
     },
     {
-      imageSrc:
-        "https://clubs.ntu.edu.sg/csec/wp-content/uploads/2022/01/I_m-Kim-Korean-BBQ-Logo.png",
-      href: "https://kingdomfood.sg/",
-      altText: "Kim Korean BBQ",
+      src:
+        "https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
+      alt: "students doing project work together",
     },
     {
-      imageSrc:
-        "https://clubs.ntu.edu.sg/csec/wp-content/uploads/2022/01/GYS-Logo.jpg",
-      href: "https://www.gohyeowseng.com.sg/index.php",
-      altText: "GYS",
+      src:
+        "https://images.unsplash.com/photo-1537202108838-e7072bad1927?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=892&q=80",
+      alt: "library",
     },
     {
-      imageSrc:
-        "https://clubs.ntu.edu.sg/csec/wp-content/uploads/2022/02/kisspng-logo-brand-font-shopee-5b4720246c7c03.5906172915313879404444.png",
-      href: "https://shopee.sg/",
-      altText: "Shopee SG",
+      src:
+        "https://images.unsplash.com/photo-1580537782437-8d6a0ca13de6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
+      alt: "beautiful campus",
     },
     {
-      imageSrc:
-        "https://clubs.ntu.edu.sg/csec/wp-content/uploads/2022/01/DSTA-Logo10775.gif",
-      href: "https://www.dsta.gov.sg/home",
-      altText: "DSTA",
+      src:
+        "https://plus.unsplash.com/premium_photo-1683887034179-c498b684dd57?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1738&q=80",
+      alt: "scse friends",
     },
     {
-      imageSrc:
-        "https://clubs.ntu.edu.sg/csec/wp-content/uploads/2022/01/NSS-Logo-high-res-2.jpeg",
-      href: "https://www.nss.org.sg/",
-      altText: "NSS",
+      src:
+        "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
+      alt: "scse networking event",
     },
   ];

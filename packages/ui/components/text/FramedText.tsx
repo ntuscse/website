@@ -11,10 +11,9 @@ export const FramedText = ({ text, fontSize }: FramedTextProps) => {
       paddingX={{ base: "16px" }}
       textAlign="center"
       textColor={"white"}
-      // fontSize={fontSize ? fontSize : 64}
     >
       <Text
-        fontSize={["32px", "48px", "48px", "64px"]}
+        fontSize={fontSize || ["32px", "48px", "48px", "58px"]}
         transitionDuration="0.3s"
       >
         {text}
