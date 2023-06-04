@@ -1,6 +1,6 @@
 import { Box, FlexProps, Text } from "@chakra-ui/react";
 interface FramedTextProps extends FlexProps {
-  text: String;
+  text: string;
   fontSize?: number;
 }
 export const FramedText = ({ text, fontSize }: FramedTextProps) => {
