@@ -20,19 +20,22 @@ const CarouselSlides = ({ items }: AnimatedCarouselProps) => {
   return (
     <>
       {items.map(({ imageSrc, altText, href }) => (
-        <Box key={altText} width="250px" height="100px" mx={4}>
-          {" "}
+        <Box 
+        position={"relative"}
+        key={altText} width="300px" height="300px" mx={4}>
           {/* slide */}
-          <Link href={href}>
+          <Link 
+          href={href}>
             <Image
-              height={100}
-              width={250}
+              // height={100}
+              // width={250}
+              fill={true}
               src={imageSrc}
               alt={altText}
               style={{
                 objectFit: "contain",
-                height: "100px",
-                width: "250px",
+                // height: "100px",
+                // width: "250px",
               }}
             />
           </Link>
@@ -43,11 +46,11 @@ const CarouselSlides = ({ items }: AnimatedCarouselProps) => {
 };
 
 const sideGradient: SystemStyleObject = {
-  bgGradient: "linear(to-r, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%)",
+  // bgGradient: "linear(to-r, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%)",
   content: `""`,
   height: "100px",
   position: "absolute",
-  width: "200px",
+  // width: "200px",
   zIndex: 2,
 };
 
@@ -65,7 +68,7 @@ export const AnimatedCarousel = ({ items, ...props }: AnimatedCarouselProps) => 
   return (
     <Flex
       maxWidth="100vw"
-      height="100px"
+      height="300px"
       margin="auto"
       position="relative"
       overflow="hidden"
@@ -79,9 +82,11 @@ export const AnimatedCarousel = ({ items, ...props }: AnimatedCarouselProps) => 
       {...props}
     >
       <Flex
-        height="100px"
+      className="image-container"
+        height="300px"
         alignItems="center"
-        width={`calc(250px * ${items.length * 2})`}
+        width="auto"
+        // width={`calc(250px * ${items.length * 2})`}
         animation={scrollAnimation}
       >
         {/* render slides twice for infinite effect */}

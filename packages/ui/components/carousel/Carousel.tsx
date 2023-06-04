@@ -6,8 +6,8 @@ export interface CarouselProps extends AnimatedCarouselProps {}
 
 export const Carousel = ({ items }: CarouselProps) => {
   return (
-    <Box>
+    <>
       <AnimatedCarousel items={items} mt={4} />
-    </Box>
+    </>
   );
 };

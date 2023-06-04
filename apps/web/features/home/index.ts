@@ -1,2 +1,2 @@
 // Export Components
-export { HomeHero } from './components';
+export { HomeHero, HomeMemories } from './components';
