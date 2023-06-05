@@ -23,21 +23,23 @@ export enum OrderStatus {
 
 export interface Order {
   id: string;
-  items: {
-    id: string;
-    name: string;
-    category: string;
-    image?: string;
-    color: string;
-    size: string;
-    price: string;
-    quantity: number;
-  }[];
+  items: OrderItem[];
   transaction_id: string;
-  transaction_time?: string;
+  transaction_time: string | null;
   payment_method: string;
   customer_email: string;
   status: OrderStatus;
+}
+
+export interface OrderItem {
+  id: string;
+  name: string;
+  category: string;
+  image: string | null;
+  color: string;
+  size: string;
+  price: number;
+  quantity: number;
 }
 
 export interface Promotion {
@@ -55,4 +57,34 @@ export interface Promotion {
 enum PromoType {
   PERCENTAGE = "PERCENTAGE",
   FIXED_VALUE = "FIXED_VALUE",
+}
+
+export type CartItem = {
+  productId: string;
+  size: string;
+  quantity: number;
+  colorway: string;
+}
+
+export type Cart = {
+  items: CartItem[];
+  promoCode?: string;
+}
+
+export type PriceModel = {
+  currency: string;
+  subtotal: number;
+  discount: number;
+  grandTotal: number;
+}
+
+export type ReservedProduct = {
+  productID: string;
+  qty: number;
+};
+
+export type OrderHoldEntry = {
+  transactionID: string;
+  expiry: number;
+  reservedProducts: ReservedProduct[];
 }

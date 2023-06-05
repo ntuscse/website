@@ -114,7 +114,7 @@ router.post("/", (req, res) => {
 })
 
 
-function calcCartValue(cartOrderItems: OrderItem[]): PriceModel {
+export function calcCartValue(cartOrderItems: OrderItem[]): PriceModel {
   let subtotal = 0;
   for (const i of cartOrderItems) {
     subtotal += i.price * i.quantity;

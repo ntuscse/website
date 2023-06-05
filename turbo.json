@@ -17,6 +17,9 @@
         "FRONTEND_STAGING_DOMAIN",
         "PRODUCT_TABLE_NAME",
         "ORDER_TABLE_NAME",
+        "ORDER_HOLD_TABLE_NAME",
+        "STRIPE_SECRET_KEY",
+        "ORDER_EXPIRY_TIME",
         "NEXT_PUBLIC_MERCH_API_ORIGIN"
       ]
     },
@@ -36,6 +39,9 @@
         "FRONTEND_STAGING_DOMAIN",
         "PRODUCT_TABLE_NAME",
         "ORDER_TABLE_NAME",
+        "STRIPE_SECRET_KEY",
+        "ORDER_HOLD_TABLE_NAME",
+        "ORDER_EXPIRY_TIME",
         "NEXT_PUBLIC_MERCH_API_ORIGIN"
       ],
       "outputs": ["dist/**", "build/**", "out/**", ".next/**"]
@@ -59,6 +65,9 @@
         "FRONTEND_STAGING_DOMAIN",
         "PRODUCT_TABLE_NAME",
         "ORDER_TABLE_NAME",
+        "ORDER_HOLD_TABLE_NAME",
+        "STRIPE_SECRET_KEY",
+        "ORDER_EXPIRY_TIME",
         "NEXT_PUBLIC_MERCH_API_ORIGIN"
       ]
     },
@@ -77,6 +86,9 @@
         "FRONTEND_STAGING_DOMAIN",
         "PRODUCT_TABLE_NAME",
         "ORDER_TABLE_NAME",
+        "ORDER_HOLD_TABLE_NAME",
+        "STRIPE_SECRET_KEY",
+        "ORDER_EXPIRY_TIME",
         "NEXT_PUBLIC_MERCH_API_ORIGIN"
       ]
     },
