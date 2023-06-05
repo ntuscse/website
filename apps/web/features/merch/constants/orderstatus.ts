@@ -1,5 +1,4 @@
 import { OrderStatus } from "types";
-
 export const renderOrderStatus = (status: OrderStatus) => {
   switch (status) {
     case OrderStatus.ORDER_COMPLETED:

@@ -22,7 +22,7 @@ import { QueryKeys } from "features/merch/constants/queryKeys";
 import { displayPrice } from "features/merch/functions/currency";
 import Link from "next/link"
 import LoadingScreen from "ui/components/merch/skeleton/LoadingScreen";
-import { getOrderStatusColor,renderOrderStatus } from "../../../../../packages/merch/lib/orderstatus";
+import { getOrderStatusColor,renderOrderStatus } from "@/features/merch/constants/orderstatus";
 import OrderItem from "ui/components/merch/OrderItem";
 const OrderSummary: React.FC = () => {
 // Check if break point hit. KIV
