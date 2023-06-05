@@ -1,29 +1,19 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import {
-  Flex,
-  Heading,
-  Text,
-  Divider,
-  Button,
-  Badge,
-  useBreakpointValue
-} from "@chakra-ui/react";
+import { Badge, Button, Divider, Flex, Heading, Text, useBreakpointValue } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import {
-  EmptyProductView,
-  Page,
-} from "ui/components/merch";
-import { Order, OrderStatus }  from "types";
+import { EmptyProductView, Page, } from "ui/components/merch";
+import { Order, OrderStatus } from "types";
 import { api } from "features/merch/services/api";
 import { routes } from "features/merch/constants/routes";
 import { QueryKeys } from "features/merch/constants/queryKeys";
 import { displayPrice } from "features/merch/functions/currency";
 import Link from "next/link"
 import LoadingScreen from "ui/components/merch/skeleton/LoadingScreen";
-import { getOrderStatusColor,renderOrderStatus } from "features/merch/functions/orderstatus";
+import { getOrderStatusColor, renderOrderStatus } from "merch-helpers";
 import OrderItem from "ui/components/merch/OrderItem";
+
 const OrderSummary: React.FC = () => {
 // Check if break point hit. KIV
   const isMobile: boolean = useBreakpointValue({ base: true, md: false }) || false;
