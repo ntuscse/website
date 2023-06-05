@@ -1,0 +1,16 @@
+{
+  "name": "merch-helpers",
+  "version": "0.0.1",
+  "main": "src/index.ts",
+  "license": "Apache-2.0",
+  "scripts": {
+    "lint": "TIMING=1 eslint \"**/*.ts*\"",
+    "lint:fix": "TIMING=1 eslint --fix \"**/*.ts*\""
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-custom": "*",
+    "tsconfig": "*",
+    "typescript": "^4.5.2"
+  }
+}
