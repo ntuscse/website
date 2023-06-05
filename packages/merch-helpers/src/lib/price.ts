@@ -1,4 +1,4 @@
-import { Cart, PricedCart, Product, Promotion } from "types";
+import { Cart, PricedCart, Product, Promotion, PromoType } from "types";
 
 export const calculatePricing = (
   products: Product[],
@@ -33,10 +33,10 @@ export const calculatePricing = (
         continue;
       }
       switch (discount.promoType) {
-        case FIXED_VALUE:
+        case PromoType.FIXED_VALUE:
           itemPrice -= discount.promoValue;
           break;
-        case PERCENTAGE:
+        case PromoType.PERCENTAGE:
           itemPrice *= 1 - discount.promoValue;
           itemPrice = Math.floor(itemPrice);
           break;

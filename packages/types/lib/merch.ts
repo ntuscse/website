@@ -87,7 +87,7 @@ export interface PricedCart {
   }[];
 }
 
-enum PromoType {
+export enum PromoType {
   PERCENTAGE = "PERCENTAGE",
   FIXED_VALUE = "FIXED_VALUE",
 }

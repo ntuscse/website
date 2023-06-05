@@ -2,6 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  transpilePackages: ['ui', 'merch-helpers'],
   images: {
     remotePatterns: [
       {
@@ -23,6 +24,4 @@ const nextConfig = {
   },
 };
 
-const withTM = require("next-transpile-modules")(["ui"]);
-
-module.exports = withTM(nextConfig);
+module.exports = nextConfig;
