@@ -17,7 +17,8 @@
         "FRONTEND_STAGING_DOMAIN",
         "PRODUCT_TABLE_NAME",
         "ORDER_TABLE_NAME",
-        "NEXT_PUBLIC_MERCH_API_ORIGIN"
+        "NEXT_PUBLIC_MERCH_API_ORIGIN",
+        "NEXT_PUBLIC_FRONTEND_URL"
       ]
     },
     "build": {

@@ -1,4 +1,4 @@
-import { Product } from "types/lib/merch";
+import { Product } from 'types'
 
 export class Api {
   private API_ORIGIN: string;
@@ -64,8 +64,7 @@ export class Api {
     }
   }
 
-  /*
-  async getOrder(userId: string, orderId: string) {
+  async getOrder(orderId: string) {
     try {
       const res = await this.get(`/orders/${orderId}`);
       console.log("Order Summary response:", res);
@@ -74,7 +73,7 @@ export class Api {
       throw new Error(e);
     }
   }
-
+  /*
   async getOrderHistory(userId: string) {
     try {
       const res = await this.get(`/orders/${userId}`);
