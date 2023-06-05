@@ -1,2 +1,2 @@
 // Export Components
-export { PYPSection, AcademicsFooterContentText } from './components';
+export { PYPSection } from './components';

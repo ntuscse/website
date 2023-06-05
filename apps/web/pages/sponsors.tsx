@@ -1,4 +1,3 @@
-import { FooterContentButton } from "ui";
 import { Divider, Heading, VStack } from "@chakra-ui/react";
 import { sponsorsData, SponsorsGrid } from "@/features/sponsors";
 const Sponsors = () => {
@@ -18,11 +17,6 @@ const Sponsors = () => {
         {/* Sponsors Grid */}
         <SponsorsGrid sponsorsData={sponsorsData} />
       </VStack>
-      <FooterContentButton
-        href="./contact"
-        label="Contact Us"
-        title="Want to sponsor us or work on a event together?"
-      />
     </>
   );
 };

@@ -13,7 +13,8 @@ export const FaqSection = () => {
       },
       {
         question: "Level required?",
-        answer: "Lorem ipsum.",
+        answer: "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. " +
+          "The passage is attributed to an unknown typesetter in the 15th century who is thought to have.",
       },
       {
         question: "What is the level required?",

@@ -4,7 +4,7 @@ import { Logo, LogoProps } from "./Logo";
 import { MenuToggle } from "./MenuToggle";
 import { MenuItems } from "./MenuItems";
 import { NavDrawer } from "./NavDrawer";
-import { useDisclosure } from "@chakra-ui/react";
+import { HStack, useDisclosure } from "@chakra-ui/react";
 import { MenuLinkProps } from "./MenuLink";
 
 export interface NavBarProps {
@@ -17,8 +17,10 @@ export const NavBar = ({ links, logoProps }: NavBarProps) => {
 
   return (
     <NavBarContainer>
-      <Logo src={logoProps.src} alt={logoProps.alt} text={logoProps.text} />
-      <MenuItems links={links} />
+      <HStack columnGap="25px" minW={{ base: "auto", xl: "100%" }}>
+        <Logo src={logoProps.src} alt={logoProps.alt} />
+        <MenuItems links={links} />
+      </HStack>
 
       {/* For small screen sizes */}
       <MenuToggle toggle={onOpen} isOpen={isOpen} />

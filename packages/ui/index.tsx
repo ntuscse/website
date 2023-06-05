@@ -6,8 +6,7 @@ export * from "./components/hero";
 export * from "./components/blog-card";
 export * from "./components/vercelpowered";
 export * from "./components/footer";
-export * from "./components/footer-content-button";
-export * from "./components/footer-content-text";
 export * from "./components/carousel";
 export * from "./components/faq";
 export * from "./components/image";
+export * from "./components/text"

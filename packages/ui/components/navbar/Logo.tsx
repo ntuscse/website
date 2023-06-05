@@ -1,14 +1,13 @@
 import React from "react";
-import { Box, Text, Stack, Link } from "@chakra-ui/react";
+import { Box, Stack, Link } from "@chakra-ui/react";
 import { Image } from "../image";
 
 export interface LogoProps {
   src: string;
   alt: string;
-  text?: string;
 }
 
-export const Logo = ({ src, alt, text }: LogoProps) => {
+export const Logo = ({ src, alt }: LogoProps) => {
   return (
     <Link href="/" _hover={{ textDecoration: "none" }}>
       <Stack align="center" justify={"flex-start"} direction={"row"}>
@@ -19,13 +18,6 @@ export const Logo = ({ src, alt, text }: LogoProps) => {
         >
           <Image src={src} alt={alt} width={100} height={100} />
         </Box>
-        <Text
-          fontSize={[12, 12, 24, 24]}
-          fontWeight="bold"
-          transitionDuration="200ms"
-        >
-          {text}
-        </Text>
       </Stack>
     </Link>
   );

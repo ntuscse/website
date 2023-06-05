@@ -1,7 +1,7 @@
-import { FooterContentButton } from "ui";
 import { VStack } from "@chakra-ui/react";
 import { GetStaticProps, GetStaticPropsResult } from "next";
 import { HomeHero } from "@/features/home";
+import { HomeMemories } from "@/features/home";
 import { BlogCardsDisplay, BlogCardsDisplayProps, getAllBlogPosts } from "@/features/blogs";
 
 interface HomeProps {
@@ -12,14 +12,10 @@ const Home = ({ posts }: HomeProps) => {
   return (
     <>
       <HomeHero />
+      <HomeMemories />
       <VStack mx={{ base: 5, lg: 10 }} pt={12}>
         <BlogCardsDisplay posts={posts.slice(0, 6)} />
       </VStack>
-      <FooterContentButton
-        href="./contact"
-        label="Contact Us"
-        title="Let’s work together"
-      />
     </>
   );
 };
