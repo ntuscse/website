@@ -15,14 +15,14 @@ import {
   EmptyProductView,
   Page,
 } from "ui/components/merch";
-import { Order, OrderStatus }  from "types/lib/merch";
+import { Order, OrderStatus }  from "types";
 import { api } from "features/merch/services/api";
 import { routes } from "features/merch/constants/routes";
 import { QueryKeys } from "features/merch/constants/queryKeys";
 import { displayPrice } from "features/merch/functions/currency";
 import Link from "next/link"
 import LoadingScreen from "ui/components/merch/skeleton/LoadingScreen";
-import { getOrderStatusColor,renderOrderStatus } from "@/features/merch/constants/orderstatus";
+import { getOrderStatusColor,renderOrderStatus } from "features/merch/functions/orderstatus";
 import OrderItem from "ui/components/merch/OrderItem";
 const OrderSummary: React.FC = () => {
 // Check if break point hit. KIV

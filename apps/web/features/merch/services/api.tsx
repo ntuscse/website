@@ -1,4 +1,4 @@
-import { Product } from "types/lib/merch";
+import { Product } from 'types'
 
 export class Api {
   private API_ORIGIN: string;
