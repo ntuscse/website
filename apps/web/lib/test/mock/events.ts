@@ -1,6 +1,6 @@
 import { BlogCardsDisplayProps } from "@/features/blogs";
 
-export const mockEvents: BlogCardsDisplayProps["posts"] = [
+export const getMockEvents = (): BlogCardsDisplayProps["posts"] => [
   {
     node: {
       id: "cG9zdDoxNjk1",
@@ -9,7 +9,7 @@ export const mockEvents: BlogCardsDisplayProps["posts"] = [
       uri: "/techterview-101-navigating-the-internship-world/",
       slug: "techterview-101-navigating-the-internship-world",
       excerpt:
-        "Techterview 101: Navigating the Internship World, a senior sharing event for the SCSE students took place on the 24th of",
+        "Techterview 101: Navigating the Internship World, a senior sharing event for the SCSE students took place on the 24th of February 2022. The event had an audience of over 150 participants eagerly listening to valuable tips provided by their seniors who have achieved great successes in their lives.",
       author: {
         node: {
           id: "dXNlcjoz",
@@ -26,12 +26,13 @@ export const mockEvents: BlogCardsDisplayProps["posts"] = [
   {
     node: {
       id: "cG9zdDoxNjk1",
-      title: "Techterview 101: Navigating the Internship World",
+      title: "21",
       date: "2022-02-22T13:58:38",
       uri: "/sce-members-day/",
       slug: "sce-members-day",
       excerpt:
-        "Dear SCE-ians, Interested to know more about Computer Engineering Club and win vouchers? Here you go! CEC will be bringi",
+        "Dear SCE-ians, Interested to know more about Computer EnIntroducing the 21st Main Committee Mission of 21st Main Committee School of Computer Science and Engineering Club (CSEC)",
+
       author: {
         node: {
           id: "dXNlcjozx",
@@ -53,7 +54,7 @@ export const mockEvents: BlogCardsDisplayProps["posts"] = [
       uri: "/scse-dinner-dance-2019/",
       slug: "scse-dinner-dance-2019",
       excerpt:
-        "SCSE Dinner &amp; Dance 2019 &nbsp; &nbsp; The School of Computer Science and Engineering (SCSE) hosted its annual Dinne",
+        "The School of Computer Science and Engineering (SCSE) hosted its annual Dinner & Dance on 11th September 19 at the Novotel Singapore on Stevens. The annual Dinner & Dance is always seen as the event to look forward to for undergraduates as it marks an important milestone in their varsity life.",
       author: {
         node: {
           id: "dXNlcjozx",

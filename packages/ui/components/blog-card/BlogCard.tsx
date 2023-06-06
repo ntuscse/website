@@ -30,6 +30,7 @@ export const BlogCard = ({
             bg: "brand.gray",
           }}
           transition="transform 0.25s ease"
+          data-testid="blog-card"
         >
           {/* Image */}
           <BlogCardImage {...blogCardImageProps} />

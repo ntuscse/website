@@ -20,17 +20,24 @@ export const BlogCardContent = ({
         fontSize="2xl"
         fontFamily="body"
         _hover={{ cursor: "pointer", color: "brand.navy.medium" }}
+        data-testid="blog-card-title"
       >
         {title}
       </Heading>
 
       {/* Date */}
-      <Text color="brand.gray.medium" _before={{ content: '"🕓 "' }}>
+      <Text
+        color="brand.gray.medium"
+        _before={{ content: '"🕓 "' }}
+        data-testid="blog-card-date"
+      >
         {date}
       </Text>
 
       {/* Body */}
-      <Text color="gray.500">{body}</Text>
+      <Text color="gray.500" data-testid="blog-card-excerpt">
+        {body}
+      </Text>
     </Stack>
   );
 };
