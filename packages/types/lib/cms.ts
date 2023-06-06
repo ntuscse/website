@@ -24,7 +24,7 @@ export interface Post {
   title?: string;
   category?: string | Category;
   tags?: string[] | Tag[];
-  layout: (
+  layout?: (
     | {
         columns: {
           width: 'oneThird' | 'half' | 'twoThirds' | 'full';
@@ -53,9 +53,9 @@ export interface Post {
   status?: 'draft' | 'published';
   author?: string | User;
   publishedDate?: string;
-  _status?: 'draft' | 'published';
-  createdAt: string;
   updatedAt: string;
+  createdAt: string;
+  _status?: 'draft' | 'published';
 }
 export interface Tag {
   id: string;
@@ -64,24 +64,24 @@ export interface Tag {
 export interface Media {
   id: string;
   alt?: string;
+  updatedAt: string;
+  createdAt: string;
   url?: string;
   filename?: string;
   mimeType?: string;
   filesize?: number;
   width?: number;
   height?: number;
-  createdAt: string;
-  updatedAt: string;
 }
 export interface User {
   id: string;
   name?: string;
+  updatedAt: string;
+  createdAt: string;
   email?: string;
   resetPasswordToken?: string;
   resetPasswordExpiration?: string;
   loginAttempts?: number;
   lockUntil?: string;
-  createdAt: string;
-  updatedAt: string;
   password?: string;
 }
