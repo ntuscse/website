@@ -27,11 +27,7 @@ export const MenuItems = ({ isOpen = false, links }: MenuItemProps) => {
       >
         {links.map((link) => {
           return (
-            <MenuLink
-              key={link.label}
-              label={link.label}
-              href={link.href}
-            />
+            <MenuLink key={link.label} label={link.label} href={link.href} />
           );
         })}
       </Stack>
@@ -40,7 +36,7 @@ export const MenuItems = ({ isOpen = false, links }: MenuItemProps) => {
       <Link
         href={"/contact"}
         _hover={{
-          bgColor: "brand.red.dark"
+          bgColor: "brand.red.dark",
         }}
         bgColor="brand.red.medium"
         color="white"
@@ -50,6 +46,7 @@ export const MenuItems = ({ isOpen = false, links }: MenuItemProps) => {
         borderRadius="6px"
         w="max-content"
         display={{ base: "block", xl: "block" }}
+        data-testid="navbar-contact-link"
       >
         <Text display="block">Contact</Text>
       </Link>

@@ -15,11 +15,13 @@ export const MenuLink = ({ label, href = "/" }: MenuLinkProps) => {
       color={router?.pathname === href ? "brand.red.dark" : "brand.navy.dark"}
       _hover={{ color: "brand.red.dark" }}
       _focus={{ color: "brand.red.dark" }}
+      data-testid="navbar-link"
     >
       <Text
         display="block"
         fontWeight="semibold"
         fontSize="18px"
+        data-testid="navbar-link-label"
       >
         {label}
       </Text>

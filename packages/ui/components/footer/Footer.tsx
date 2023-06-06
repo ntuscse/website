@@ -10,13 +10,13 @@ export interface FooterProps {
     name: string;
     icon: any;
     href: string;
-  }>
+  }>;
   studentLinksGroup: FooterLinkGroupProps;
   companyLinksGroup?: FooterLinkGroupProps;
   vercelPoweredProps: VercelPoweredProps;
 }
 
-export const Footer = (props : FooterProps) => {
+export const Footer = (props: FooterProps) => {
   const {
     logoProps,
     socialLinks,
@@ -31,6 +31,7 @@ export const Footer = (props : FooterProps) => {
       px={{ base: "5px", md: "8px", lg: "75px" }}
       pt={{ base: "50px", md: "48px" }}
       pb={{ base: "32px", md: "5px" }}
+      data-testid="footer-container"
     >
       {/* Main Footer */}
       <Flex
@@ -50,13 +51,23 @@ export const Footer = (props : FooterProps) => {
           {/* Logo and Club Name */}
           <Box>
             <Link href="/" _hover={{ textDecoration: "none" }}>
-              <Stack align="center" justify="flex-start" direction="row" gap={2}>
+              <Stack
+                align="center"
+                justify="flex-start"
+                direction="row"
+                gap={2}
+              >
                 <Box
                   minWidth={{ base: 50, md: 75 }}
                   maxWidth={{ base: 50, md: 75 }}
                   transitionDuration="200ms"
                 >
-                  <Image src={logoProps.src} alt={logoProps.alt} width={100} height={100} />
+                  <Image
+                    src={logoProps.src}
+                    alt={logoProps.alt}
+                    width={100}
+                    height={100}
+                  />
                 </Box>
                 <Text
                   fontSize={{ base: "18px", md: "22px" }}
@@ -72,11 +83,21 @@ export const Footer = (props : FooterProps) => {
           {/* Club Description */}
           <Box fontWeight="light">
             <Text>
-              NTU SCSE Club is an academic club in Nanyang Technological University.
-              It serves the the SCSE students and allow them to have a safe space to&nbsp;
-              <Text as="span" color="brand.red.medium" fontWeight="semibold">experience</Text>,&nbsp;
-              <Text as="span" color="brand.red.medium" fontWeight="semibold">share</Text>, and&nbsp;
-              <Text as="span" color="brand.red.medium" fontWeight="semibold">grow</Text>.
+              NTU SCSE Club is an academic club in Nanyang Technological
+              University. It serves the the SCSE students and allow them to have
+              a safe space to&nbsp;
+              <Text as="span" color="brand.red.medium" fontWeight="semibold">
+                experience
+              </Text>
+              ,&nbsp;
+              <Text as="span" color="brand.red.medium" fontWeight="semibold">
+                share
+              </Text>
+              , and&nbsp;
+              <Text as="span" color="brand.red.medium" fontWeight="semibold">
+                grow
+              </Text>
+              .
             </Text>
           </Box>
 
@@ -98,11 +119,19 @@ export const Footer = (props : FooterProps) => {
             ))}
           </Flex>
           <Box>
-            <Text as="span" fontWeight="light">Email:&nbsp;</Text>
-            <Link href="mailto:scse-it@e.ntu.edu.sg" fontWeight="semibold" textDecor="underline" _hover={{ color: "brand.red.medium" }}>scse-it@e.ntu.edu.sg</Link>
+            <Text as="span" fontWeight="light">
+              Email:&nbsp;
+            </Text>
+            <Link
+              href="mailto:scse-it@e.ntu.edu.sg"
+              fontWeight="semibold"
+              textDecor="underline"
+              _hover={{ color: "brand.red.medium" }}
+            >
+              scse-it@e.ntu.edu.sg
+            </Link>
           </Box>
         </Flex>
-
 
         {/* Footer Links Container */}
         <Flex
@@ -117,12 +146,12 @@ export const Footer = (props : FooterProps) => {
             header={studentLinksGroup.header}
           />
           {/* Footer Links for Companies */}
-          {companyLinksGroup &&
+          {companyLinksGroup && (
             <FooterLinkGroup
               links={companyLinksGroup.links}
               header={companyLinksGroup.header}
             />
-          }
+          )}
         </Flex>
       </Flex>
 
@@ -143,11 +172,11 @@ export const Footer = (props : FooterProps) => {
           color="white"
           fontSize="12px"
           fontWeight="light"
+          data-testid="footer-copyright"
         >
           Copyright &#169; 2023 - NTU SCSE Club
         </Text>
       </Flex>
-
     </VStack>
   );
 };

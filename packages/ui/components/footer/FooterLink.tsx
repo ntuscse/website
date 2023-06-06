@@ -13,6 +13,7 @@ export const FooterLink = ({ href, label }: FooterLinkProps) => {
       fontWeight="light"
       href={href}
       _hover={{ color: "brand.red.medium" }}
+      data-testid="footer-link"
     >
       {label}
     </Link>
@@ -27,10 +28,7 @@ export interface FooterLinkGroupProps {
 
 export const FooterLinkGroup = ({ header, links }: FooterLinkGroupProps) => {
   return (
-    <Box
-      py="12px"
-      px={{ base: "24px", md: "28px", lg: "36px" }}
-    >
+    <Box py="12px" px={{ base: "24px", md: "28px", lg: "36px" }}>
       <Text
         color="white"
         textDecor="underline"
@@ -40,14 +38,11 @@ export const FooterLinkGroup = ({ header, links }: FooterLinkGroupProps) => {
         {header}
       </Text>
 
-      {links.map(link => (
-        <Box
-          key={link.label}
-          py={{ base: "4px", md: "6px" }}
-        >
+      {links.map((link) => (
+        <Box key={link.label} py={{ base: "4px", md: "6px" }}>
           <FooterLink href={link.href} label={link.label} />
         </Box>
       ))}
     </Box>
-  )
+  );
 };

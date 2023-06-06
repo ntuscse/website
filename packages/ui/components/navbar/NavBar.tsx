@@ -16,7 +16,7 @@ export const NavBar = ({ links, logoProps }: NavBarProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <NavBarContainer>
+    <NavBarContainer data-testid="navbar-container">
       <HStack columnGap="25px" minW={{ base: "auto", xl: "100%" }}>
         <Logo src={logoProps.src} alt={logoProps.alt} />
         <MenuItems links={links} />
