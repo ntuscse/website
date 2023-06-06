@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import Image from "next/image";
 import { useRouter } from "next/router";
-import { Badge, Button, Divider, Flex, Heading, Text, useBreakpointValue } from "@chakra-ui/react";
+import { Image, Badge, Button, Divider, Flex, Heading, Text, useBreakpointValue } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { EmptyProductView, Page, } from "ui/components/merch";
 import { Order, OrderStatus } from "types";
@@ -27,7 +26,7 @@ const OrderSummary: React.FC = () => {
   // Fetch and check if cart item is valid. Number(item.price) set to convert string to num
   const { isLoading } = useQuery(
     [QueryKeys.ORDER, orderSlug],
-    () => api.getOrder("jacob" ,orderSlug),
+    () => api.getOrder(orderSlug),
     {
       onSuccess: (data: Order) => {
         console.log(data);
@@ -67,8 +66,8 @@ const OrderSummary: React.FC = () => {
         overflow="hidden"
         flexDir="column"
       >
-        <div className="md:hidden">
-          <Flex justifyContent="space-between">
+        <div>
+          <Flex display= { { base: "flex", md: "none" } } justifyContent="space-between">
             <Flex flexDir="column" w="100%">
               <Badge
                 width="fit-content"
@@ -88,7 +87,7 @@ const OrderSummary: React.FC = () => {
               <Text fontSize="sm" color="grey">
                 Order date:{" "}
                 {orderState?.transaction_time
-                  ? new Date(`${orderState.transaction_time}Z`).toLocaleString(
+                  ? new Date(`${orderState.transaction_time}`).toLocaleString(
                     "en-sg"
                   )
                   : ""}
@@ -97,8 +96,8 @@ const OrderSummary: React.FC = () => {
             </Flex>
           </Flex>
         </div>
-        <div className="hidden md:flex">
-          <Flex justifyContent="space-between">
+        <div>
+          <Flex display= { { base: "none", md: "flex" } } justifyContent="space-between">
             <Flex flexDir="column">
               <Flex alignItems="center" gap={6}>
                 <Heading size="md">Order Number</Heading>
@@ -121,7 +120,7 @@ const OrderSummary: React.FC = () => {
               <Text>
                 Order date:{" "}
                 {orderState?.transaction_time
-                  ? new Date(`${orderState.transaction_time}Z`).toLocaleString(
+                  ? new Date(`${orderState.transaction_time}`).toLocaleString(
                     "en-sg"
                   )
                   : ""}
@@ -136,6 +135,8 @@ const OrderSummary: React.FC = () => {
         {/*))}*/}
 
         {orderState? <OrderItem  isMobile={isMobile} orderData={orderState}/>: <Text>Order Not Found</Text>}
+
+
         <Flex alignItems="end" flexDirection="row" gap={1} mt={4}>
           <Flex flexDir="column" flex={1} textAlign="end" fontWeight={500}>
             <Text>Item Subtotal:</Text>
@@ -166,15 +167,17 @@ const OrderSummary: React.FC = () => {
         rowGap={4}
       >
         {/* TODO: QR Code generator based on Param. */}
-        <Image
-          src={
-            orderState
-              ? `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://dev.merch.ntuscse.com/order-summary/${orderState?.id}`
-              : ""
-          }
-          alt="QRCode"
-          sizes="(max-width: 768px)"
-        />
+        {/*<Image*/}
+        {/*  src={*/}
+        {/*    orderState*/}
+        {/*      ? `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://dev.merch.ntuscse.com/order-summary/${orderState?.id}`*/}
+        {/*      : ""*/}
+        {/*  }*/}
+        {/*  alt="QRCode"*/}
+        {/*  width={150}*/}
+        {/*  height={150}*/}
+        {/*  sizes="(max-width: 768px)"*/}
+        {/*/>*/}
         <Text fontWeight="bold">
           Please screenshot this QR code and show it at SCSE Lounge to collect your order.
           Alternatively, show the email receipt you have received.
@@ -189,7 +192,7 @@ const OrderSummary: React.FC = () => {
   const renderSummaryPage = () => {
     if (isLoading) return <LoadingScreen text="Fetching order detail" />;
     //rmb to change this v
-    if (orderState === undefined || orderState === null){return <EmptyProductView />;}
+    if (orderState === undefined || orderState === null){return <LoadingScreen text="Order Does Not Exist" />;}
     return renderOrderSummary();
   };
   return <Page>{renderSummaryPage()}</Page>;

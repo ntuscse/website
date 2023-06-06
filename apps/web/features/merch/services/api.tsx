@@ -63,7 +63,7 @@ export class Api {
       throw new Error(e);
     }
   }
-  async getOrder(userId: string, orderId: string) {
+  async getOrder(orderId: string) {
     try {
       const res = await this.get(`/orders/${orderId}`);
       console.log("Order Summary response:", res);

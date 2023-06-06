@@ -20,6 +20,11 @@ const nextConfig = {
         hostname: "cdn.ntuscse.com",
         pathname: "/merch/products/images/**",
       },
+      {
+        protocol:"https",
+        hostname: "api.qrserver.com",
+        pathname: "/merch/order/**"
+      }
     ],
   },
 };
