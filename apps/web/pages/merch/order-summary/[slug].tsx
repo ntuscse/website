@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { Image, Badge, Button, Divider, Flex, Heading, Text, useBreakpointValue } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { EmptyProductView, Page, } from "ui/components/merch";
+import {  Page } from "ui/components/merch";
 import { Order, OrderStatus } from "types";
 import { api } from "features/merch/services/api";
 import { routes } from "features/merch/constants/routes";
@@ -12,7 +12,6 @@ import Link from "next/link"
 import LoadingScreen from "ui/components/merch/skeleton/LoadingScreen";
 import { getOrderStatusColor, renderOrderStatus } from "merch-helpers";
 import OrderItem from "ui/components/merch/OrderItem";
-
 const OrderSummary: React.FC = () => {
 // Check if break point hit. KIV
   const isMobile: boolean = useBreakpointValue({ base: true, md: false }) || false;
@@ -167,17 +166,17 @@ const OrderSummary: React.FC = () => {
         rowGap={4}
       >
         {/* TODO: QR Code generator based on Param. */}
-        {/*<Image*/}
-        {/*  src={*/}
-        {/*    orderState*/}
-        {/*      ? `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://dev.merch.ntuscse.com/order-summary/${orderState?.id}`*/}
-        {/*      : ""*/}
-        {/*  }*/}
-        {/*  alt="QRCode"*/}
-        {/*  width={150}*/}
-        {/*  height={150}*/}
-        {/*  sizes="(max-width: 768px)"*/}
-        {/*/>*/}
+        <Image
+          src={
+            orderState
+              ? `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${ process.env.NEXT_PUBLIC_FRONTEND_URL ?? "localhost:3001"}/merch/orderSummary/${orderState?.id}`
+              : ""
+          }
+          alt="QRCode"
+          width={150}
+          height={150}
+          sizes="(max-width: 768px)"
+        />
         <Text fontWeight="bold">
           Please screenshot this QR code and show it at SCSE Lounge to collect your order.
           Alternatively, show the email receipt you have received.
