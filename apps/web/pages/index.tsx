@@ -1,6 +1,7 @@
-import { HomeHero, HomeWhoRWe } from "@/features/home";
+import { HomeHero, HomeWhoRWe, UpcomingEventRibbon } from "@/features/home";
 import { HomeMemories } from "@/features/home";
-import { Box, Flex } from "@chakra-ui/react";
+import { FooterSeparator } from "ui";
+import React from "react";
 
 const Home = () => {
   return (
@@ -8,16 +9,8 @@ const Home = () => {
       <HomeHero />
       <HomeWhoRWe />
       <HomeMemories />
-      <Flex
-        backgroundColor={"brand.navy.dark"}
-        justifyContent={"center"}
-        paddingY={["4px", "12px", "12px", "12px"]}
-      >
-        <Box
-          width={["80%", "80%", "80%", "90%"]}
-          border={"1px white solid"}
-        ></Box>
-      </Flex>
+      <FooterSeparator />
+      <UpcomingEventRibbon href={"/events"} />
     </>
   );
 };
