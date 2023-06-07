@@ -1,36 +1,25 @@
-import { VStack } from "@chakra-ui/react";
-import { GetStaticProps, GetStaticPropsResult } from "next";
-import {HomeHero, HomeWhoRWe} from "@/features/home";
+import { HomeHero, HomeWhoRWe } from "@/features/home";
 import { HomeMemories } from "@/features/home";
-import { BlogCardsDisplay, BlogCardsDisplayProps, getAllBlogPosts } from "@/features/blogs";
+import { Box, Flex } from "@chakra-ui/react";
 
-interface HomeProps {
-  posts: BlogCardsDisplayProps["posts"];
-}
-
-const Home = ({ posts }: HomeProps) => {
+const Home = () => {
   return (
     <>
       <HomeHero />
       <HomeWhoRWe />
       <HomeMemories />
-      <VStack mx={{ base: 5, lg: 10 }} pt={12}>
-        <BlogCardsDisplay posts={posts.slice(0, 6)} />
-      </VStack>
+      <Flex
+        backgroundColor={"brand.navy.dark"}
+        justifyContent={"center"}
+        paddingY={["4px", "12px", "12px", "12px"]}
+      >
+        <Box
+          width={["80%", "80%", "80%", "90%"]}
+          border={"1px white solid"}
+        ></Box>
+      </Flex>
     </>
   );
 };
 
 export default Home;
-
-// This function gets called at build time
-export const getStaticProps: GetStaticProps<any> = async (_context) => {
-  const posts = await getAllBlogPosts();
-
-  return {
-    props: {
-      posts: posts
-    },
-    revalidate: 10,
-  } as GetStaticPropsResult<HomeProps>;
-};
