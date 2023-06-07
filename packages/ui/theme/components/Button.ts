@@ -4,7 +4,7 @@ const Button = defineStyleConfig({
   // Styles for the base style
   baseStyle: {
     fontWeight: 'bold',
-    rounded: 'none',
+    borderRadius: '5px',
     textColor: 'white',
     _hover:
       {
@@ -29,7 +29,14 @@ const Button = defineStyleConfig({
     },
     'primary-black': {
       bg: 'black',
-    }
+    },
+    'red-scse':
+      {
+        bg: '#DD616B',
+        fontWeight: 'bold',
+        textTransform: 'uppercase'
+      }
+
   },
 
   // The default `size` or `variant` values

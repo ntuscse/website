@@ -132,6 +132,70 @@ exports[`renders homepage unchanged 1`] = `
     </div>
   </div>
   <div
+    class="css-5zcxmf"
+  >
+    <div
+      class="framed-text-container css-1dmffpb"
+    >
+      <p
+        class="chakra-text css-1gu5k9l"
+      >
+        Who Are We
+      </p>
+      <div
+        class="css-19mfpbt"
+      />
+      <div
+        class="css-1nfbmmu"
+      />
+    </div>
+    <div
+      class="css-15eotbs"
+    >
+      <div
+        class="css-y6l269"
+      >
+        <div
+          class="css-1t060a7"
+        >
+          <p
+            class="chakra-text css-1xz1xgn"
+          >
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aperiam aspernatur commodi cupiditate eaque laboriosam maiores quibusdam similique sint sit, vel velit vitae. Amet aspernatur iste minus molestiae, obcaecati voluptates.
+          </p>
+          <button
+            class="chakra-button css-18n18r6"
+            type="button"
+          >
+            Learn More
+          </button>
+        </div>
+      </div>
+      <div
+        class="css-1vj1p7i"
+      >
+        <div
+          class="css-1l4w6pd"
+        >
+          <div
+            class="css-o7xm2g"
+          >
+            <img
+              alt="who r we image"
+              data-nimg="fill"
+              decoding="async"
+              loading="lazy"
+              sizes="100vw"
+              src="/home/who_r_we_doodle.svg"
+              srcset="/home/who_r_we_doodle.svg 640w, /home/who_r_we_doodle.svg 750w, /home/who_r_we_doodle.svg 828w, /home/who_r_we_doodle.svg 1080w, /home/who_r_we_doodle.svg 1200w, /home/who_r_we_doodle.svg 1920w, /home/who_r_we_doodle.svg 2048w, /home/who_r_we_doodle.svg 3840w"
+              style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
     class="css-p7zbsy"
   >
     <div
@@ -295,104 +359,20 @@ exports[`renders homepage unchanged 1`] = `
     </div>
   </div>
   <div
-    class="chakra-stack css-12nxbtz"
+    class="css-2skx7c"
   >
     <div
-      class="css-1jbryaa"
+      class="css-1va48wu"
+    />
+  </div>
+  <div
+    class="css-15t96st"
+  >
+    <a
+      href="/events"
     >
-      <div
-        class="css-0"
-      >
-        <div
-          class="css-1vz34qo"
-        >
-          <a
-            class="chakra-link css-13jvj27"
-            href="blog/techterview-101-navigating-the-internship-world"
-          >
-            <div
-              class="css-hkp7"
-            >
-              <div
-                class="css-1m6ql1p"
-              >
-                <img
-                  alt="Techterview 101: Navigating the Internship World"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  src="https://clubs.ntu.edu.sg/csec/techterview-101-navigating-the-internship-world/cover-photo/"
-                  style="object-fit: fill;"
-                />
-              </div>
-              <div
-                class="chakra-stack css-lha1ht"
-              >
-                <h2
-                  class="chakra-heading css-zr62dw"
-                >
-                  Techterview 101: Navigating the Internship World
-                </h2>
-                <p
-                  class="chakra-text css-v04ol"
-                >
-                  February 22, 2022
-                </p>
-                <p
-                  class="chakra-text css-q9k0mw"
-                >
-                  Techterview 101: Navigating the Internship World, a senior sharing event for the SCSE students took place on the 24th of...
-                </p>
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-      <div
-        class="css-0"
-      >
-        <div
-          class="css-1vz34qo"
-        >
-          <a
-            class="chakra-link css-13jvj27"
-            href="blog/21st-main-committee"
-          >
-            <div
-              class="css-hkp7"
-            >
-              <div
-                class="css-1m6ql1p"
-              >
-                <img
-                  alt="21st Main Committee"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  src="https://clubs.ntu.edu.sg/csec/untitled/"
-                  style="object-fit: fill;"
-                />
-              </div>
-              <div
-                class="chakra-stack css-lha1ht"
-              >
-                <h2
-                  class="chakra-heading css-zr62dw"
-                >
-                  21st Main Committee
-                </h2>
-                <p
-                  class="chakra-text css-v04ol"
-                >
-                  March 31, 2021
-                </p>
-                <p
-                  class="chakra-text css-q9k0mw"
-                >
-                  Introducing the 21st Main Committee Mission of 21st Main Committee School of Computer Science and Engineering Club (CSEC...
-                </p>
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
+      Upcoming Event
+    </a>
   </div>
   <span
     hidden=""

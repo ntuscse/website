@@ -3,14 +3,14 @@ interface FramedTextProps extends FlexProps {
   text: string;
   fontSize?: number;
 }
-export const FramedText = ({ text, fontSize }: FramedTextProps) => {
+export const FramedText = ({ text, fontSize, textColor }: FramedTextProps) => {
   return (
     <Box
       className="framed-text-container"
       position="relative"
       paddingX={{ base: "16px" }}
       textAlign="center"
-      textColor={"white"}
+      textColor= { textColor }
     >
       <Text
         fontSize={fontSize || ["32px", "48px", "48px", "58px"]}

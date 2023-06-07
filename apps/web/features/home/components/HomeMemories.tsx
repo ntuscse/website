@@ -40,7 +40,7 @@ export const HomeMemories = () => {
             borderRadius={"37px 37px 0px 0px"}
             borderBottom={"1px dashed #FFFFFF"}
           >
-            <FramedText text={"Memories"} />
+            <FramedText text={"Memories"} textColor={'white'} />
           </Box>
         </Flex>
         <Flex h={["55%", "55%", "65%", "65%"]} w={"100%"} justifyContent={"center"} alignItems={"center"}>
