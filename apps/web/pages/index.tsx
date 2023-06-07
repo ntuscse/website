@@ -1,6 +1,6 @@
 import { VStack } from "@chakra-ui/react";
 import { GetStaticProps, GetStaticPropsResult } from "next";
-import { HomeHero } from "@/features/home";
+import {HomeHero, HomeWhoRWe} from "@/features/home";
 import { HomeMemories } from "@/features/home";
 import { BlogCardsDisplay, BlogCardsDisplayProps, getAllBlogPosts } from "@/features/blogs";
 
@@ -12,6 +12,7 @@ const Home = ({ posts }: HomeProps) => {
   return (
     <>
       <HomeHero />
+      <HomeWhoRWe />
       <HomeMemories />
       <VStack mx={{ base: 5, lg: 10 }} pt={12}>
         <BlogCardsDisplay posts={posts.slice(0, 6)} />
