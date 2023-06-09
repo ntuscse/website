@@ -16,7 +16,7 @@ const OrderSummary: React.FC = () => {
 // Check if break point hit. KIV
   const isMobile: boolean = useBreakpointValue({ base: true, md: false }) || false;
   const router = useRouter();
-  const orderSlug = (router.query.slug ?? "" )as string;
+  const orderSlug = router.query.slug as string | undefined;
 
   const [showThankYou, setShowThankYou] = useState<boolean>(false);
   const [orderState, setOrderState] = useState<Order | null>(null);
@@ -25,14 +25,14 @@ const OrderSummary: React.FC = () => {
   // Fetch and check if cart item is valid. Number(item.price) set to convert string to num
   const { isLoading } = useQuery(
     [QueryKeys.ORDER, orderSlug],
-    () => api.getOrder(orderSlug),
+    () => api.getOrder(orderSlug ?? ""),
     {
+      enabled: !!orderSlug,
       onSuccess: (data: Order) => {
-        console.log(data);
         setOrderState(data);
         setTotal(
           data.items.reduce((acc, item) => {
-            return Number(item.price) * item.quantity + acc;
+            return item.price * item.quantity + acc;
           }, 0)
         );
         setShowThankYou(true);
@@ -169,7 +169,7 @@ const OrderSummary: React.FC = () => {
         <Image
           src={
             orderState
-              ? `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${ process.env.NEXT_PUBLIC_FRONTEND_URL ?? "localhost:3001"}/merch/orderSummary/${orderState?.id}`
+              ? `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${ process.env.NEXT_PUBLIC_FRONTEND_URL ?? "http://localhost:3001"}/merch/orders/${orderState?.id}`
               : ""
           }
           alt="QRCode"

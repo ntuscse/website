@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { getProduct, getProducts } from "../db";
 import { Product } from "types";
+import { getProduct, getProducts, NotFoundError } from "../db";
 
 const router = Router();
 
@@ -10,6 +10,9 @@ router.get("/", (req, res) => {
       res.json({ products });
     })
     .catch((e) => {
+      if (e instanceof NotFoundError) {
+        return res.status(404).json({ error: "NOT_FOUND" });
+      }
       console.warn(e);
       res.status(500).json({ error: "INTERNAL_SERVER_ERROR" });
     });
@@ -21,6 +24,9 @@ router.get("/:id", (req, res) => {
       res.json(product);
     })
     .catch((e) => {
+      if (e instanceof NotFoundError) {
+        return res.status(404).json({ error: "NOT_FOUND" });
+      }
       console.warn(e);
       res.status(500).json({ error: "INTERNAL_SERVER_ERROR" });
     });

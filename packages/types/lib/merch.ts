@@ -32,7 +32,7 @@ export interface Order {
     image?: string;
     color: string;
     size: string;
-    price: string;
+    price: number;
     quantity: number;
   }[];
   transaction_id: string;

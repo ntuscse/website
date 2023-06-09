@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { getOrder } from "../db";
 import { Order } from "types";
+import { getOrder, NotFoundError } from "../db";
 
 const router = Router();
 
@@ -10,6 +10,9 @@ router.get("/:id", (req, res) => {
       res.json(censorDetails(order));
     })
     .catch((e) => {
+      if (e instanceof NotFoundError) {
+        return res.status(404).json({ error: "NOT_FOUND" });
+      }
       console.warn(e);
       res.status(500).json({ error: "INTERNAL_SERVER_ERROR" });
     });
