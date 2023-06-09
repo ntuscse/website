@@ -24,7 +24,7 @@ interface DynamoOrder {
 
 export const getOrder = async (id: string) => {
   const dynamoOrder = await readItem<DynamoOrder>(
-    ORDER_TABLE_NAME,
+    ORDER_TABLE_NAME ?? "",
     id,
     "orderID"
   );
@@ -32,7 +32,7 @@ export const getOrder = async (id: string) => {
 };
 
 const decodeOrder = (order: DynamoOrder): Order => {
-  let date: ?string;
+  let date: string | null;
   try {
     date = new Date(order.orderDateTime).toISOString();
   } catch (e) {
@@ -45,15 +45,15 @@ const decodeOrder = (order: DynamoOrder): Order => {
       id: item.id || "",
       name: item.name || "",
       category: item.product_category || "",
-      image: item.image || null,
+      image: item.image || undefined,
       color: item.colorway || "",
       size: item.size || "",
       price: item.price || 0,
       quantity: item.quantity || 1,
     })),
-    status: order.status || PENDING_PAYMENT,
+    status: order.status || OrderStatus.PENDING_PAYMENT,
     customer_email: order.customerEmail || "",
     transaction_id: order.transactionID || "",
-    transaction_time: date,
+    transaction_time: date || undefined,
   };
 };

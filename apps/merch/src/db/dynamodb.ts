@@ -1,13 +1,23 @@
 import {
-  DynamoDB,
-  GetItemCommand,
-  ScanCommand,
+    DynamoDB,
+    GetItemCommand,
+    ScanCommand
 } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { Logger } from "nodelogger";
 import { Order } from "types";
 
-const ORDER_TABLE_NAME = process.env.ORDER_TABLE_NAME;
+const ORDER_TABLE_NAME = process.env.ORDER_TABLE_NAME ?? "";
+
+// Due to Babel transpiling, extending Error will cause instanceof to not work
+// properly.
+export class NotFoundError {
+  message: string;
+
+  constructor(item = "") {
+    this.message = "Item " + item + " not found.";
+  }
+}
 
 export const getOrders = () => readTable<Order>(ORDER_TABLE_NAME);
 export const getOrder = (id: string) =>
@@ -25,7 +35,10 @@ export const readTable = async <T>(tableName: string): Promise<T[]> => {
       `LastEvaluatedKey was not undefined when querying ${tableName}, dropping additional items`
     );
   }
-  return response.Items.map((item) => unmarshall(item));
+  if (!response.Items) {
+    return [];
+  }
+  return response.Items.map((item) => unmarshall(item)) as T[];
 };
 
 // readItem retrieves the specified item from the table.
@@ -39,5 +52,8 @@ export const readItem = async <T>(
     Key: marshall({ [keyID]: key }),
   });
   const response = await client.send(command);
-  return unmarshall(response.Item);
+  if (!response.Item) {
+    throw new NotFoundError(key);
+  }
+  return unmarshall(response.Item) as T;
 };

@@ -1,4 +1,4 @@
-import { Product } from 'types'
+import { Product } from "types";
 
 export class Api {
   private API_ORIGIN: string;
@@ -13,10 +13,13 @@ export class Api {
   }
 
   // http methods
-  async get(urlPath: string): Promise<Record<string, Product[]>> {
+  async get<T>(urlPath: string): Promise<T> {
     const response = await fetch(`${this.API_ORIGIN}${urlPath}`);
-    const convert = response.json() as unknown; // Convert to unknown type
-    return convert as Record<string, Product[]>;
+    const convert = await response.json() as (T & {error: undefined}) | { error: string };
+    if (convert.error) {
+      throw new Error(`Server error: ${convert.error}`);
+    }
+    return convert as T;
   }
 
   /*
@@ -42,12 +45,12 @@ export class Api {
   // eslint-disable-next-line class-methods-use-this
   async getProducts(): Promise<Product[]> {
     try {
-      const res = await this.get("/products");
+      const res = await this.get<{products: Product[]}>("/products");
       console.log("product-list", res);
-      return res?.products ?? [];
+      return res.products;
     } catch (e) {
       if (e instanceof Error) {
-        throw new Error(e.message);
+        throw e;
       }
       return [];
     }
@@ -60,17 +63,24 @@ export class Api {
       console.log("product res", res);
       return res;
     } catch (e: any) {
-      throw new Error(e);
+      if (e instanceof Error) {
+        throw e;
+      }
     }
   }
 
   async getOrder(orderId: string) {
     try {
+      if (!orderId) {
+        throw new Error("No order ID");
+      }
       const res = await this.get(`/orders/${orderId}`);
       console.log("Order Summary response:", res);
       return res;
     } catch (e: any) {
-      throw new Error(e);
+      if (e instanceof Error) {
+        throw e;
+      }
     }
   }
   /*
