@@ -1,11 +1,14 @@
 import React, { useEffect } from "react";
 import { Center, Flex, Heading, Spinner, Text } from "@chakra-ui/react";
-import routes from "../../../../apps/web/features/merch/constants/routes";
+import { useRouter } from "next/router";
+import { routes } from "web/features/merch/constants";
 
 export const EmptyProductView: React.FC = () => {
+  const router = useRouter();
+
   useEffect(() => {
     setTimeout(() => {
-      window.location.href = routes.HOME;
+      router.push(routes.HOME); 
     }, 3000);
   }, []);
 

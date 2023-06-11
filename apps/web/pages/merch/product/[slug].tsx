@@ -29,19 +29,20 @@ import {
   useCartStore,
 } from "features/merch/context/cart";
 import { api } from "features/merch/services/api";
-import { routes } from "features/merch/constants/routes";
-import { QueryKeys } from "features/merch/constants/queryKeys";
-import { displayPrice } from "features/merch/functions/currency";
+import { routes, QueryKeys } from "features/merch/constants";
 import {
+  displayPrice,
+  displayQtyInCart,
   displayStock,
   getDefaultColor,
   getDefaultSize,
+  getQtyInCart,
   getQtyInStock,
   isColorAvailable,
   isOutOfStock,
   isSizeAvailable,
-} from "features/merch/functions/stock";
-import { displayQtyInCart, getQtyInCart } from "features/merch/functions/cart";
+} from "features/merch/functions";
+
 
 const GroupTitle = ({ children }: any) => (
   <Heading fontSize="md" mb={2} color="grey" textTransform="uppercase">
@@ -136,7 +137,7 @@ const MerchDetail: React.FC = () => {
 
   const handleBuyNow = () => {
     handleAddToCart();
-    window.location.href = routes.CART;
+    router.push(routes.CART);
   };
 
   const ProductNameSection = (
@@ -192,7 +193,7 @@ const MerchDetail: React.FC = () => {
           return (
             <SizeOption
               key={idx.toString()}
-              active={selectedSize === size}
+              active={(selectedSize === size).toString()}
               onClick={() => {
                 setQuantity(1);
                 if (size !== selectedSize) {
@@ -242,7 +243,7 @@ const MerchDetail: React.FC = () => {
           return (
             <SizeOption
               key={idx.toString()}
-              active={selectedColor === color}
+              active={(selectedColor === color).toString()}
               onClick={() => {
                 setQuantity(1);
                 if (color !== selectedColor) {
@@ -284,10 +285,11 @@ const MerchDetail: React.FC = () => {
       <GroupTitle>Quantity</GroupTitle>
       <Flex gap={4}>
         <SizeOption
+          key={"decrement_qty"}
           disabled={
             isDisabled || !(selectedColor && selectedSize) || quantity <= 1
           }
-          active={false}
+          active={false.toString()}
           onClick={() => handleQtyChangeCounter(false)}
         >
           -
@@ -305,12 +307,13 @@ const MerchDetail: React.FC = () => {
           onChange={handleQtyChangeInput}
         />
         <SizeOption
+          key={"increment_qty"}
           disabled={
             isDisabled ||
             !(selectedColor && selectedSize) ||
             quantity >= maxQuantity
           }
-          active={false}
+          active={false.toString()}
           onClick={() => handleQtyChangeCounter(true)}
         >
           +

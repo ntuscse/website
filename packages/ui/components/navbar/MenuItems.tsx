@@ -1,9 +1,10 @@
 import { Box, Link, Stack, Text } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
+import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { MenuLink, MenuLinkProps } from "./MenuLink";
-import CartButton from "../merch/CartButton";
-import routes from "../../../../apps/web/features/merch/constants/routes";
+import { MenuLink, MenuLinkProps } from "ui/components/navbar/MenuLink";
+import CartButton from "ui/components/merch/CartButton";
+import routes from "web/features/merch/constants/routes";
 
 interface MenuItemProps {
   isOpen?: boolean;
@@ -53,6 +54,7 @@ export const MenuItems = ({ isOpen = false, links }: MenuItemProps) => {
       {/* CTA Button -> Contact */}
       {/* If on merch site, change to Cart */}
       <Link
+        as={NextLink}
         href={route.match(regexp) ? routes.CART : "/contact"}
         _hover={{
           bgColor: "brand.red.dark"
