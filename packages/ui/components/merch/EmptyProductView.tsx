@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Center, Flex, Heading, Spinner, Text } from "@chakra-ui/react";
-import routes from "../../../../apps/web/features/merch/constants/routes";
+import { routes } from "web/features/merch/constants";
 
 export const EmptyProductView: React.FC = () => {
   useEffect(() => {

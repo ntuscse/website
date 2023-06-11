@@ -29,19 +29,20 @@ import {
   useCartStore,
 } from "features/merch/context/cart";
 import { api } from "features/merch/services/api";
-import { routes } from "features/merch/constants/routes";
-import { QueryKeys } from "features/merch/constants/queryKeys";
-import { displayPrice } from "features/merch/functions/currency";
+import { routes, QueryKeys } from "features/merch/constants";
 import {
+  displayPrice,
+  displayQtyInCart,
   displayStock,
   getDefaultColor,
   getDefaultSize,
+  getQtyInCart,
   getQtyInStock,
   isColorAvailable,
   isOutOfStock,
   isSizeAvailable,
-} from "features/merch/functions/stock";
-import { displayQtyInCart, getQtyInCart } from "features/merch/functions/cart";
+} from "features/merch/functions";
+
 
 const GroupTitle = ({ children }: any) => (
   <Heading fontSize="md" mb={2} color="grey" textTransform="uppercase">

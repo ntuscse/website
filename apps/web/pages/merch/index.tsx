@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Flex, Divider, Select, Heading, Grid } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { Card, Page } from "ui/components/merch";
-import { QueryKeys } from "features/merch/constants/queryKeys";
+import { Card, MerchListSkeleton, Page } from "ui/components/merch";
+import { QueryKeys } from "features/merch/constants";
 import { api } from "features/merch/services/api";
 import { Product } from "types/lib/merch";
-import { MerchListSkeleton } from "ui/components/merch/skeleton";
-import { isOutOfStock } from "features/merch/functions/stock";
+import { isOutOfStock } from "features/merch/functions";
 
 const MerchandiseList = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
