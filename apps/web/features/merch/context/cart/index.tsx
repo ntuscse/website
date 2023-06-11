@@ -161,7 +161,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
       (JSON.parse(
         localStorage.getItem("cart") as string
       ) as typeof initState) ?? cartState;
-    cartState.cart.items = storedCartData.cart.items;
+    cartState.cart.items = storedCartData.cart?.items;
     cartState.name = storedCartData.name;
     cartState.billingEmail = storedCartData.billingEmail;
     dispatch({ type: CartActionType.INITALIZE, payload: cartState });
