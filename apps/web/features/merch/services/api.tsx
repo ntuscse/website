@@ -1,4 +1,4 @@
-import { Product } from "types";
+import { CartItem, Product } from "types";
 
 export class Api {
   private API_ORIGIN: string;
@@ -22,7 +22,6 @@ export class Api {
     return convert as T;
   }
 
-  /*
   // eslint-disable-next-line class-methods-use-this
   async post(urlPath: string, data: any): Promise<any> {
     const response = await fetch(`${this.API_ORIGIN}${urlPath}`, {
@@ -40,7 +39,6 @@ export class Api {
     });
     return response.json();
   }
-  */
 
   // eslint-disable-next-line class-methods-use-this
   async getProducts(): Promise<Product[]> {
@@ -110,8 +108,8 @@ export class Api {
       throw new Error(e);
     }
   }
-
-  async postQuotation(items: CartItemType[], promoCode: string | null) {
+  */
+  async postQuotation(items: CartItem[], promoCode: string | null) {
     try {
       const res = await this.post(`/cart/quotation`, {
         items,
@@ -122,7 +120,6 @@ export class Api {
       throw new Error(e);
     }
   }
-  */
 }
 
 export const api = new Api();
