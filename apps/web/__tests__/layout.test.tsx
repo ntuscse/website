@@ -1,7 +1,10 @@
 import "@testing-library/jest-dom";
 import { renderComponent } from "@/lib/test/providers";
 import { Layout } from "ui";
-import { getMockFooterProps, getMockNavProps } from "@/lib/test/mock/layout";
+import {
+  getMockFooterProps,
+  getMockNavProps,
+} from "@/lib/test/fixtures/layout";
 
 const mockNavBarProps = getMockNavProps();
 const mockFooterProps = getMockFooterProps();

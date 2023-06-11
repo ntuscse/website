@@ -1,9 +1,13 @@
 import { VStack } from "@chakra-ui/react";
 import { GetStaticProps, GetStaticPropsResult } from "next";
 import { HomeHero } from "@/features/home";
-import { BlogCardsDisplay, BlogCardsDisplayProps, getAllBlogPosts } from "@/features/blogs";
+import {
+  BlogCardsDisplay,
+  BlogCardsDisplayProps,
+  getAllBlogPosts,
+} from "@/features/blogs";
 
-interface HomeProps {
+export interface HomeProps {
   posts: BlogCardsDisplayProps["posts"];
 }
 
@@ -26,7 +30,7 @@ export const getStaticProps: GetStaticProps<any> = async (_context) => {
 
   return {
     props: {
-      posts: posts
+      posts: posts,
     },
     revalidate: 10,
   } as GetStaticPropsResult<HomeProps>;

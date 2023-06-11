@@ -47,7 +47,7 @@ export async function getAllBlogPosts(filter?: IBlogFilter) {
         .replace(/;&nbsp;/g, '"')
         .substring(0, 120),
     },
-  }))
+  }));
 
   // Filter posts (if any)
   if (filter) {
@@ -58,9 +58,9 @@ export async function getAllBlogPosts(filter?: IBlogFilter) {
             return edge.node.author.node.name === filter.key;
           } else {
             // no author
-            return !edge.node.author && filter.key === 'no-author';
+            return !edge.node.author && filter.key === "no-author";
           }
-        })
+        });
     }
   }
 
