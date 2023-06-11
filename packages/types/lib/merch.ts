@@ -92,12 +92,13 @@ export enum PromoType {
   FIXED_VALUE = "FIXED_VALUE",
 }
 
-/*
 export type ProductInfo = {
   name: string;
   image: string;
   price: number;
 };
+
+export type ProductInfoMap = Record<string, ProductInfo>;
 
 export type CartPrice = {
   currency: string;
@@ -127,6 +128,7 @@ export type CartResponseDto = {
   };
 };
 
+/*
 export type CheckoutResponseDto = {
   orderId: string;
   items: [
@@ -153,6 +155,4 @@ export type CheckoutResponseDto = {
   };
   email: string;
 };
-
-export type ProductInfoMap = Record<string, ProductInfo>;
 */
