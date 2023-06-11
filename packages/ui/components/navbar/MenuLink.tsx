@@ -1,5 +1,5 @@
 import { Link, Text } from "@chakra-ui/react";
-import React from "react";
+import NextLink from "next/link";
 import { useRouter } from "next/router";
 
 export interface MenuLinkProps {
@@ -11,6 +11,7 @@ export const MenuLink = ({ label, href = "/" }: MenuLinkProps) => {
   const router = useRouter();
   return (
     <Link
+      as={NextLink}
       href={href}
       color={router?.pathname === href ? "brand.red.dark" : "brand.navy.dark"}
       _hover={{ color: "brand.red.dark" }}

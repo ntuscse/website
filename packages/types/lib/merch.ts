@@ -111,6 +111,21 @@ export type OrderHold = {
   reserved_products: ReservedProduct[];
 }
 
+export type ProductInfo = {
+  name: string;
+  image: string;
+  price: number;
+};
+
+export type ProductInfoMap = Record<string, ProductInfo>;
+
+export type CartPrice = {
+  currency: string;
+  subtotal: number;
+  discount: number;
+  grandTotal: number;
+};
+
 // API Types
 export const QuotationRequest = Cart.merge(z.object({
   promoCode: z.string().optional(),

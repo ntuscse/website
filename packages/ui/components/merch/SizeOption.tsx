@@ -2,13 +2,13 @@ import React from "react";
 import { Box, BoxProps } from "@chakra-ui/react";
 
 type SizeOptionType = BoxProps & {
-  active: boolean;
+  active: string;
   disabled?: boolean;
   onClick: (param: any) => void;
 };
 
 export const SizeOption: React.FC<SizeOptionType> = (props) => {
-  const { active = false, disabled = false, children } = props;
+  const { active = false.toString(), disabled = false, children } = props;
   return (
     <Box
       display="inline-block"
@@ -26,8 +26,8 @@ export const SizeOption: React.FC<SizeOptionType> = (props) => {
       cursor={disabled ? "not-allowed" : "pointer"}
       borderWidth={1}
       borderColor="secondary.400"
-      color={active ? "#FFF" : "secondary.400"}
-      backgroundColor={active ? "red.600" : "#FFF"}
+      color={active == "true" ? "#FFF" : "secondary.400"}
+      backgroundColor={active == "true" ? "red.600" : "#FFF"}
       {...props}
     >
       {children}

@@ -144,8 +144,8 @@ const OrderSummary: React.FC = () => {
           </Flex>
           <Flex flexDir="column" textAlign="end">
             <Text fontSize="md"> {displayPrice(total)}</Text>
-            <Text fontSize="md">
-              {/*{displayPrice(*/}
+            <Text fontSize="md"> 
+              {/*{displayPrice( TODO*/}
               {/*  (orderState?.billing?.subtotal ?? 0) -*/}
               {/*  (orderState?.billing?.total ?? 0)*/}
               {/*)}*/}
