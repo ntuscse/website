@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import * as moduleApi from "@/features/blogs/api/getAllBlogPosts";
+import * as blogsApi from "@/features/blogs/api/getAllBlogPosts";
 import { renderComponent } from "@/lib/test/providers";
 import { GetStaticPropsContext } from "next";
 import Home, { getStaticProps, HomeProps } from "../pages";
@@ -12,8 +12,8 @@ import { removeTextImgTag } from "@/lib/helpers/removeTextImgTag";
 jest.mock("@/features/blogs/api/getAllBlogPosts");
 
 describe("test home page", () => {
-  test("should return", async () => {
-    const mockedGeAllBlogs = jest.spyOn(moduleApi, "getAllBlogPosts");
+  test("should return correct details", async () => {
+    const mockedGeAllBlogs = jest.spyOn(blogsApi, "getAllBlogPosts");
     mockedGeAllBlogs.mockImplementation(() => Promise.resolve(getMockEvents()));
     const context = {
       params: {} as ParsedUrlQuery,
