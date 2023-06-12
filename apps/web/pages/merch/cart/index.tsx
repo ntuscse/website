@@ -31,9 +31,9 @@ import {
 } from "ui/components/merch";
 import { api } from "features/merch/services/api";
 import { 
-  CartItem, 
-  CartPrice, 
-  CartResponseDto, 
+  CartItem,
+  CartPrice,
+  CartResponseDto,
   ProductInfoMap
 } from "types/lib/merch";
 import { routes, QueryKeys } from "features/merch/constants";
@@ -90,7 +90,7 @@ const Cart: FC = () => {
 
   // Initialise Cart page
   const { mutate: initCartPage, isLoading: isCartLoading } = useMutation(
-    () => api.postQuotation(cartState.cart.items, cartState.voucher),
+    () => api.postQuotation(cartState.cart, cartState.voucher),
     {
       onSuccess: (data: CartResponseDto) => {
         // Validate cart product id is correct
@@ -114,7 +114,7 @@ const Cart: FC = () => {
   );
 
   // Calculate price - Used when updating / removing of items.
-  const { mutate: calcCartPrice } = useMutation(() => api.postQuotation(cartState.cart.items, cartState.voucher), {
+  const { mutate: calcCartPrice } = useMutation(() => api.postQuotation(cartState.cart, cartState.voucher), {
     onSuccess: (data: CartResponseDto) => {
       setPriceInfo(data.price);
     },
@@ -125,7 +125,7 @@ const Cart: FC = () => {
 
   // Apply voucher -
   const { mutate: applyVoucher, isLoading: voucherLoading } = useMutation(
-    () => api.postQuotation(cartState.cart.items, voucherInput),
+    () => api.postQuotation(cartState.cart, voucherInput),
     {
       onMutate: () => {
         setPriceLoading(true);

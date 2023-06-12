@@ -1,6 +1,7 @@
 import {
     APIError,
     Cart,
+    CartResponseDto,
     CheckoutRequest,
     CheckoutResponse,
     PricedCart,
@@ -22,7 +23,7 @@ export class Api {
   }
 
   // http methods
-  async get<T>(urlPath: string): Promise<T> {
+  async get<T extends Object>(urlPath: string): Promise<T> {
     const response = await fetch(`${this.API_ORIGIN}${urlPath}`);
     type responseType = T | APIError;
     const resp = (await response.json()) as responseType;
@@ -33,7 +34,7 @@ export class Api {
     return resp;
   }
 
-  async post<R, T>(urlPath: string, data: R): Promise<T> {
+  async post<R, T extends Object>(urlPath: string, data: R): Promise<T> {
     const response = await fetch(`${this.API_ORIGIN}${urlPath}`, {
       method: "POST",
       mode: "cors",
@@ -85,10 +86,10 @@ export class Api {
     );
   }
 
-  async postQuotation(cart: Cart, promoCode?: string) {
-    return await this.post<QuotationRequest, PricedCart>(`/cart/quotation`, {
+  async postQuotation(cart: Cart, promoCode: string | null) {
+    return await this.post<QuotationRequest, CartResponseDto>(`/cart/quotation`, {
       ...cart,
-      promoCode: promoCode,
+      promoCode: promoCode ?? "",
     });
   }
 }
