@@ -1,5 +1,38 @@
 import { Cart, PricedCart, Product, Promotion, PromoType } from "types";
 
+const frontendURL = process.env.FRONTEND_STAGING_DOMAIN || "";
+
+export class PricingError {
+  message: string;
+
+  constructor(message: string) {
+    this.message = message;
+  }
+}
+
+export const describeCart = (products: Product[], cart: PricedCart, orderID: string): string => {
+  const entries = [`${frontendURL}/orders/${orderID} | `];
+
+  const productMap: Record<string, Product> = {};
+  for (const product of products) {
+    productMap[product.id] = product;
+  }
+
+  for (const item of cart.items) {
+    const product = productMap[item.id];
+    if (!product) {
+      throw new PricingError("unknown product ID: " + item.id);
+    }
+    let name = product.name;
+    if (item.size) {
+      name = `${product.name} (Size: ${item.size.toUpperCase()})`;
+    }
+    entries.push(`${name} x${item.quantity} - S$${item.discountedPrice}`);
+  }
+
+  return entries.join("\n");
+}
+
 export const calculatePricing = (
   products: Product[],
   cart: Cart,
@@ -7,7 +40,7 @@ export const calculatePricing = (
 ): PricedCart => {
   const productMap: Record<string, Product> = {};
   if (promotion && promotion.redemptionsRemaining <= 0) {
-    throw new Error("no redemptions left for the provided promotion");
+    throw new PricingError("no redemptions left for the provided promotion");
   }
   for (const product of products) {
     productMap[product.id] = product;
@@ -15,7 +48,13 @@ export const calculatePricing = (
   const pricedItems = cart.items.map((item) => {
     const product = productMap[item.id];
     if (!product) {
-      throw new Error("unknown product ID: " + item.id);
+      throw new PricingError("unknown product ID: " + item.id);
+    }
+    if (!product.colors.includes(item.color)) {
+      throw new PricingError(`invalid color ${item.color} for product ${item.id}`);
+    }
+    if (!product.sizes.includes(item.size)) {
+      throw new PricingError(`invalid size ${item.color} for product ${item.id}`);
     }
     let itemPrice = product.price * item.quantity;
     if (!promotion) {
