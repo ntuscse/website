@@ -61,7 +61,6 @@ export type CartItem = z.infer<typeof CartItem>;
 export interface OrderItem {
   id: string;
   name: string;
-  category: string;
   image?: string;
   color: string;
   size: string;
@@ -86,6 +85,8 @@ export interface PricedCart {
   total: number;
   items: {
     id: string;
+    name: string;
+    image?: string;
     color: string;
     size: string;
     quantity: number;

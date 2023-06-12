@@ -60,8 +60,10 @@ export const calculatePricing = (
     if (!promotion) {
       return {
         ...item,
-        originalPrice: product.price,
-        discountedPrice: product.price,
+        name: product.name,
+        image: product.images.length ? product.images[0] : undefined,
+        originalPrice: itemPrice,
+        discountedPrice: itemPrice,
       };
     }
     for (const discount of promotion.discounts) {
@@ -84,7 +86,9 @@ export const calculatePricing = (
     itemPrice = Math.max(0, itemPrice);
     return {
       ...item,
-      originalPrice: product.price,
+      name: product.name,
+      image: product.images.length ? product.images[0] : undefined,
+      originalPrice: product.price * item.quantity,
       discountedPrice: itemPrice,
     };
   });
