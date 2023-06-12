@@ -1,9 +1,9 @@
 import { calculatePricing, PricingError } from "merch-helpers";
 import { PricedCart, Product, QuotationRequest } from "types";
 import { getProducts } from "../db";
-import { JSONResponse, Request } from "../lib/types";
+import { Request, Response } from "../lib/types";
 
-export const quotation = (req: Request, res: JSONResponse<PricedCart>) => {
+export const quotation = (req: Request, res: Response<PricedCart>) => {
   const body = QuotationRequest.safeParse(req.body);
   if (!body.success) {
     return res.status(400).json({

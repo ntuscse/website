@@ -18,7 +18,7 @@ import {
     getProducts,
     incrementStockCount
 } from "../db";
-import { JSONResponse, Request } from "../lib/types";
+import { Request, Response } from "../lib/types";
 
 const ORDER_EXPIRY_TIME = parseInt(process.env.ORDER_EXPIRY_TIME ?? "24");
 
@@ -27,7 +27,7 @@ const stripe = new Stripe(STRIPE_KEY, {
   apiVersion: "2022-11-15",
 });
 
-export const checkout = (req: Request, res: JSONResponse<CheckoutResponse>) => {
+export const checkout = (req: Request, res: Response<CheckoutResponse>) => {
   const body = CheckoutRequest.safeParse(req.body);
   if (!body.success) {
     return res.status(400).json({
