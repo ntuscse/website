@@ -1,8 +1,8 @@
 import { Product, ProductsResponse } from "types";
 import { getProduct, getProducts, NotFoundError } from "../db";
-import { JSONResponse, Request } from "../lib/types";
+import { Request, Response } from "../lib/types";
 
-export const productsAll = (req: Request, res: JSONResponse<ProductsResponse>) => {
+export const productsAll = (req: Request, res: Response<ProductsResponse>) => {
   getProducts()
     .then((products: Product[]) => {
       res.json({ products });
@@ -16,7 +16,7 @@ export const productsAll = (req: Request, res: JSONResponse<ProductsResponse>) =
     });
 };
 
-export const productGet = (req: Request<"id">, res: JSONResponse<Product>) => {
+export const productGet = (req: Request<"id">, res: Response<Product>) => {
   getProduct(req.params.id)
     .then((product: Product) => {
       res.json(product);

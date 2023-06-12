@@ -1,8 +1,8 @@
 import { Order } from "types";
 import { getOrder, NotFoundError } from "../db";
-import { JSONResponse, Request } from "../lib/types";
+import { Request, Response } from "../lib/types";
 
-export const orderGet = (req: Request<"id">, res: JSONResponse<Order>) => {
+export const orderGet = (req: Request<"id">, res: Response<Order>) => {
   getOrder(req.params.id)
     .then((order: Order) => {
       res.json(censorDetails(order));
