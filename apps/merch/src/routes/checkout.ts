@@ -1,22 +1,22 @@
 import { calculatePricing, describeCart, PricingError } from "merch-helpers";
 import { Stripe } from "stripe";
 import {
-    CheckoutRequest,
-    CheckoutResponse,
-    Order,
-    OrderHold,
-    OrderItem,
-    OrderStatus,
-    PricedCart,
-    Product,
-    ReservedProduct
+  CheckoutRequest,
+  CheckoutResponse,
+  Order,
+  OrderHold,
+  OrderItem,
+  OrderStatus,
+  PricedCart,
+  Product,
+  ReservedProduct,
 } from "types";
 import { v4 as uuidv4 } from "uuid";
 import {
-    createOrder,
-    createOrderHoldEntry,
-    getProducts,
-    incrementStockCount
+  createOrder,
+  createOrderHoldEntry,
+  getProducts,
+  incrementStockCount,
 } from "../db";
 import { Request, Response } from "../lib/types";
 
@@ -63,7 +63,6 @@ export const checkout = (req: Request, res: Response<CheckoutResponse>) => {
     })
     .then(([products, cart]) =>
       Promise.all([
-        products,
         cart,
         stripe.paymentIntents.create({
           payment_method_types: ["paynow"],
@@ -79,29 +78,24 @@ export const checkout = (req: Request, res: Response<CheckoutResponse>) => {
         }),
       ])
     )
-    .then(([products, cart, stripeIntent]) => {
-      const productMap: Record<string, Product> = {};
-      for (const product of products) {
-        productMap[product.id] = product;
-      }
-
+    .then(([cart, stripeIntent]) => {
       const transactionID = stripeIntent.id;
-      const orderItems = cart.items.map((item): OrderItem => {
-        const product = productMap[item.id];
-        return {
+      const orderItems = cart.items.map(
+        (item): OrderItem => ({
           id: item.id,
-          name: product.name,
-          category: product.category,
+          name: item.name,
           color: item.color,
           size: item.size,
           quantity: item.quantity,
           price: item.discountedPrice,
-        };
-      });
-      const reserved = cart.items.map((item): ReservedProduct => ({
-        id: item.id,
-        quantity: item.quantity,
-      }));
+        })
+      );
+      const reserved = cart.items.map(
+        (item): ReservedProduct => ({
+          id: item.id,
+          quantity: item.quantity,
+        })
+      );
       const order: Order = {
         id: orderID,
         items: orderItems,
@@ -115,13 +109,18 @@ export const checkout = (req: Request, res: Response<CheckoutResponse>) => {
         transaction_id: transactionID,
         expiry: expiryTime.toISOString(),
         reserved_products: reserved,
-      }
+      };
 
-      const stockIncrements = cart.items.map((item) => incrementStockCount(
-        item.id, -item.quantity, item.size, item.color,
-      ))
+      const stockIncrements = cart.items.map((item) =>
+        incrementStockCount(item.id, -item.quantity, item.size, item.color)
+      );
 
-      return Promise.all([createOrder(order), stripeIntent, createOrderHoldEntry(orderHold), ...stockIncrements])
+      return Promise.all([
+        createOrder(order),
+        stripeIntent,
+        createOrderHoldEntry(orderHold),
+        ...stockIncrements,
+      ]);
     })
     .then(([order, stripeIntent]) => {
       res.json({
@@ -131,7 +130,7 @@ export const checkout = (req: Request, res: Response<CheckoutResponse>) => {
           method: "stripe",
           client_secret: stripeIntent.client_secret ?? "",
         },
-      })
+      });
     })
     .catch((e) => {
       if (e instanceof PricingError) {
