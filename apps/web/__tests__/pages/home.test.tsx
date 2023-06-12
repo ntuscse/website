@@ -2,7 +2,7 @@ import "@testing-library/jest-dom";
 import * as blogsApi from "@/features/blogs/api/getAllBlogPosts";
 import { renderComponent } from "@/lib/test/providers";
 import { GetStaticPropsContext } from "next";
-import Home, { getStaticProps, HomeProps } from "../pages";
+import Home, { getStaticProps, HomeProps } from "../../pages";
 import { ParsedUrlQuery } from "querystring";
 import { waitFor } from "@testing-library/react";
 import { getMockEvents } from "@/lib/test/fixtures/events";

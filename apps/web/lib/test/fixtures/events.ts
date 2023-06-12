@@ -1,6 +1,6 @@
 import { BlogCardsDisplayProps } from "@/features/blogs";
 
-export const mockEvents: BlogCardsDisplayProps["posts"] = [
+export const getMockEvents = (): BlogCardsDisplayProps["posts"] => [
   {
     node: {
       id: "cG9zdDoxNjk1",
@@ -26,7 +26,7 @@ export const mockEvents: BlogCardsDisplayProps["posts"] = [
   {
     node: {
       id: "cG9zdDoxNjk1",
-      title: "Techterview 101: Navigating the Internship World",
+      title: "SCSE Members Day",
       date: "2022-02-22T13:58:38",
       uri: "/sce-members-day/",
       slug: "sce-members-day",
