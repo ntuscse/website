@@ -1,24 +1,33 @@
-import { Router } from "express";
-import { Cart } from "types";
-import { calcCartValue, generateOrderItemsFromCart } from "./checkout";
+import { calculatePricing, PricingError } from "merch-helpers";
+import { PricedCart, Product, QuotationRequest } from "types";
+import { getProducts } from "../db";
+import { JSONResponse, Request } from "../lib/types";
 
-const router = Router();
-
-type QuotationBody = Cart
-
-router.post("/", (req, res) => {
-    const body = req.body as QuotationBody;
-    const itemsProductsPromise = generateOrderItemsFromCart(body);
-    itemsProductsPromise.then(itemsProducts => {
-        const price = calcCartValue(itemsProducts);
-        res.json({
-            items: itemsProducts,
-            price: price,
-        })
-    })
-    .catch(err => {
-        console.error('Error creating quotation:', err);
-        res.status(500).json({ detail: 'Error unable to check out.' });
+export const quotation = (req: Request, res: JSONResponse<PricedCart>) => {
+  const body = QuotationRequest.safeParse(req.body);
+  if (!body.success) {
+    return res.status(400).json({
+      error: "INVALID_TYPE",
+      detail: body.error.format(),
     });
-})
+  }
 
+  const cart = body.data;
+
+  getProducts()
+    .then((products: Product[]) => {
+      // TODO: Fetch promotion.
+      return calculatePricing(products, cart, undefined);
+    })
+    .then((cart: PricedCart) => res.json(cart))
+    .catch((e) => {
+      if (e instanceof PricingError) {
+        return res.status(400).json({
+          error: "INVALID_REQUEST",
+          detail: e.message,
+        });
+      }
+      console.warn(e);
+      return res.status(500).json({ error: "INTERNAL_SERVER_ERROR" });
+    });
+};

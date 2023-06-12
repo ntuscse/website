@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 // Product
 export interface Product {
   id: string;
@@ -41,16 +43,19 @@ export type CartState = {
   billingEmail: string;
 };
 
-export interface Cart {
-  items: CartItem[];
-}
+export const CartItem = z.object({
+  id: z.string(),
+  color: z.string(),
+  size: z.string(),
+  quantity: z.number().gt(0),
+});
 
-export interface CartItem {
-  id: string;
-  color: string;
-  size: string;
-  quantity: number;
-}
+export const Cart = z.object({
+  items: z.array(CartItem),
+});
+
+export type Cart = z.infer<typeof Cart>;
+export type CartItem = z.infer<typeof CartItem>;
 
 // Promotion
 export interface OrderItem {
@@ -94,78 +99,42 @@ export enum PromoType {
   FIXED_VALUE = "FIXED_VALUE",
 }
 
-/*
-export type ProductInfo = {
-  name: string;
-  image: string;
-  price: number;
-};
-
-export type CartPrice = {
-  currency: string;
-  subtotal: number;
-  discount: number;
-  grandTotal: number;
-};
-
-export type CartResponseDto = {
-  items: [
-    {
-      id: string;
-      name: string;
-      price: number;
-      images: string[];
-      sizes: string;
-      productCategory: string;
-      isAvailable: boolean;
-      quantity: number;
-    }
-  ];
-  price: {
-    currency: string;
-    subtotal: number;
-    discount: number;
-    grandTotal: number;
-  };
-};
-
-export type CheckoutResponseDto = {
-  orderId: string;
-  items: [
-    {
-      id: string;
-      name: string;
-      price: number;
-      images: string[];
-      sizes: string[];
-      productCategory: string;
-      isAvailable: boolean;
-      quantity: number;
-    }
-  ];
-  price: {
-    currency: string;
-    subtotal: number;
-    discount: number;
-    grandTotal: number;
-  };
-  payment: {
-    paymentGateway: string;
-    clientSecret: string;
-  };
-  email: string;
-};
-
-export type ProductInfoMap = Record<string, ProductInfo>;
-*/
-
 export type ReservedProduct = {
-  productID: string;
-  qty: number;
+  id: string;
+  quantity: number;
 };
 
-export type OrderHoldEntry = {
-  transactionID: string;
-  expiry: number;
-  reservedProducts: ReservedProduct[];
+export type OrderHold = {
+  transaction_id: string;
+  expiry: string;
+  reserved_products: ReservedProduct[];
+}
+
+// API Types
+export const QuotationRequest = Cart.merge(z.object({
+  promoCode: z.string().optional(),
+}));
+
+export const CheckoutRequest = QuotationRequest.merge(z.object({
+  email: z.string(),
+}));
+
+export type QuotationRequest = z.infer<typeof QuotationRequest>;
+export type CheckoutRequest = z.infer<typeof CheckoutRequest>;
+
+export type CheckoutResponse = Order & {
+  expiry: string,
+  payment: {
+    method: "stripe",
+    client_secret: string,
+  };
+};
+
+export type ProductsResponse = {
+  products: Product[],
+};
+
+export type APIError = {
+  error: string,
+  detail?: string|object,
 }

@@ -10,7 +10,8 @@
     "skipLibCheck": true,
     "outDir": "./dist",
     "rootDir": "./src",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "strict": true
   },
   "include": [
     "src"
