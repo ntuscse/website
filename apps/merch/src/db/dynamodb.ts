@@ -1,7 +1,9 @@
 import {
-    DynamoDB,
-    GetItemCommand,
-    ScanCommand
+  DynamoDB,
+  GetItemCommand,
+  PutItemCommand,
+  ScanCommand,
+  UpdateItemCommand,
 } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { Logger } from "nodelogger";
@@ -56,4 +58,53 @@ export const readItem = async <T>(
     throw new NotFoundError(key);
   }
   return unmarshall(response.Item) as T;
+};
+
+// writeItem adds the given item to the specified DynamoDB table
+export const writeItem = async <T>(
+  tableName: string,
+  item: T
+): Promise<void> => {
+  const command = new PutItemCommand({
+    TableName: tableName,
+    Item: marshall(item),
+  });
+  try {
+    await client.send(command);
+  } catch (error: any) {
+    if (error.code === 'ConditionalCheckFailedException') {
+      Logger.warn(`Item already exists in table ${tableName}`);
+      return;
+    }
+    throw error;
+  }
+};
+
+// updateItem updates the specified item in the table.
+export const updateItem = async (
+  tableName: string,
+  key: string,
+  updateExpression?: string,
+  conditionExpression?: string,
+  expressionAttributeValues?: Record<string, any>,
+  expressionAttributeNames?: Record<string, string>,
+  keyID = "id"
+): Promise<void> => {
+  const command = new UpdateItemCommand({
+    TableName: tableName,
+    Key: marshall({ [keyID]: key }),
+    ConditionExpression: conditionExpression,
+    UpdateExpression: updateExpression,
+    ExpressionAttributeValues: marshall(expressionAttributeValues),
+    ExpressionAttributeNames: expressionAttributeNames,
+  });
+  try {
+    await client.send(command);
+  } catch (error: any) {
+    if (error.code === "ConditionalCheckFailedException") {
+      Logger.warn(`Item does not exist in table ${tableName}`);
+      return;
+    }
+    throw error;
+  }
 };

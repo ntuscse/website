@@ -1,10 +1,8 @@
-import { Router } from "express";
 import { Order } from "types";
 import { getOrder, NotFoundError } from "../db";
+import { Request, Response } from "../lib/types";
 
-const router = Router();
-
-router.get("/:id", (req, res) => {
+export const orderGet = (req: Request<"id">, res: Response<Order>) => {
   getOrder(req.params.id)
     .then((order: Order) => {
       res.json(censorDetails(order));
@@ -16,17 +14,15 @@ router.get("/:id", (req, res) => {
       console.warn(e);
       res.status(500).json({ error: "INTERNAL_SERVER_ERROR" });
     });
-});
+};
 
 const censorDetails = (order: Order): Order => {
-  const censored = { ...order };
   const customerEmail = order.customer_email.split("@");
-  censored.customer_email =
-    starCensor(customerEmail[0]) + "@" + customerEmail.slice(1).join("@");
-  if (censored.transaction_id.length > 3) {
-    censored.transaction_id = starCensor(censored.transaction_id);
-  }
-  return censored;
+  return {
+    ...order,
+    customer_email: starCensor(customerEmail[0]) + "@" + customerEmail.slice(1).join("@"),
+    transaction_id: starCensor(order.transaction_id),
+  };
 };
 
 const starCensor = (text: string, lettersToKeep = 3): string => {
@@ -35,5 +31,3 @@ const starCensor = (text: string, lettersToKeep = 3): string => {
   }
   return text.substring(0, lettersToKeep) + "*".repeat(text.length - 3);
 };
-
-export default router;

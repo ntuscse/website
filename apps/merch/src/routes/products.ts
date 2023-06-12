@@ -1,10 +1,8 @@
-import { Router } from "express";
-import { Product } from "types";
+import { Product, ProductsResponse } from "types";
 import { getProduct, getProducts, NotFoundError } from "../db";
+import { Request, Response } from "../lib/types";
 
-const router = Router();
-
-router.get("/", (req, res) => {
+export const productsAll = (req: Request, res: Response<ProductsResponse>) => {
   getProducts()
     .then((products: Product[]) => {
       res.json({ products });
@@ -16,9 +14,9 @@ router.get("/", (req, res) => {
       console.warn(e);
       res.status(500).json({ error: "INTERNAL_SERVER_ERROR" });
     });
-});
+};
 
-router.get("/:id", (req, res) => {
+export const productGet = (req: Request<"id">, res: Response<Product>) => {
   getProduct(req.params.id)
     .then((product: Product) => {
       res.json(product);
@@ -30,6 +28,4 @@ router.get("/:id", (req, res) => {
       console.warn(e);
       res.status(500).json({ error: "INTERNAL_SERVER_ERROR" });
     });
-});
-
-export default router;
+};

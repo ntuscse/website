@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 // Product
 export interface Product {
   id: string;
@@ -25,18 +27,9 @@ export enum OrderStatus {
 
 export interface Order {
   id: string;
-  items: {
-    id: string;
-    name: string;
-    category: string;
-    image?: string;
-    color: string;
-    size: string;
-    price: number;
-    quantity: number;
-  }[];
+  items: OrderItem[];
   transaction_id: string;
-  transaction_time?: string;
+  transaction_time: string | null;
   payment_method: string;
   customer_email: string;
   status: OrderStatus;
@@ -50,18 +43,32 @@ export type CartState = {
   billingEmail: string;
 };
 
-export interface Cart {
-  items: CartItem[];
-}
+export const CartItem = z.object({
+  id: z.string(),
+  color: z.string(),
+  size: z.string(),
+  quantity: z.number().gt(0),
+});
 
-export interface CartItem {
+export const Cart = z.object({
+  items: z.array(CartItem),
+});
+
+export type Cart = z.infer<typeof Cart>;
+export type CartItem = z.infer<typeof CartItem>;
+
+// Promotion
+export interface OrderItem {
   id: string;
+  name: string;
+  category: string;
+  image?: string;
   color: string;
   size: string;
+  price: number;
   quantity: number;
 }
 
-// Promotion
 export interface Promotion {
   promoCode: string;
   maxRedemptions: number;
@@ -92,67 +99,42 @@ export enum PromoType {
   FIXED_VALUE = "FIXED_VALUE",
 }
 
-export type ProductInfo = {
-  name: string;
-  image: string;
-  price: number;
+export type ReservedProduct = {
+  id: string;
+  quantity: number;
 };
 
-export type ProductInfoMap = Record<string, ProductInfo>;
+export type OrderHold = {
+  transaction_id: string;
+  expiry: string;
+  reserved_products: ReservedProduct[];
+}
 
-export type CartPrice = {
-  currency: string;
-  subtotal: number;
-  discount: number;
-  grandTotal: number;
-};
+// API Types
+export const QuotationRequest = Cart.merge(z.object({
+  promoCode: z.string().optional(),
+}));
 
-export type CartResponseDto = {
-  items: [
-    {
-      id: string;
-      name: string;
-      price: number;
-      images: string[];
-      sizes: string;
-      productCategory: string;
-      isAvailable: boolean;
-      quantity: number;
-    }
-  ];
-  price: {
-    currency: string;
-    subtotal: number;
-    discount: number;
-    grandTotal: number;
-  };
-};
+export const CheckoutRequest = QuotationRequest.merge(z.object({
+  email: z.string(),
+}));
 
-/*
-export type CheckoutResponseDto = {
-  orderId: string;
-  items: [
-    {
-      id: string;
-      name: string;
-      price: number;
-      images: string[];
-      sizes: string[];
-      productCategory: string;
-      isAvailable: boolean;
-      quantity: number;
-    }
-  ];
-  price: {
-    currency: string;
-    subtotal: number;
-    discount: number;
-    grandTotal: number;
-  };
+export type QuotationRequest = z.infer<typeof QuotationRequest>;
+export type CheckoutRequest = z.infer<typeof CheckoutRequest>;
+
+export type CheckoutResponse = Order & {
+  expiry: string,
   payment: {
-    paymentGateway: string;
-    clientSecret: string;
+    method: "stripe",
+    client_secret: string,
   };
-  email: string;
 };
-*/
+
+export type ProductsResponse = {
+  products: Product[],
+};
+
+export type APIError = {
+  error: string,
+  detail?: string|object,
+}

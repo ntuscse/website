@@ -1,21 +1,25 @@
-import { readItem } from "./dynamodb";
-import { Order, OrderStatus } from "types";
+import { readItem, writeItem } from "./dynamodb";
+import { v4 as uuidv4 } from "uuid";
+import { Order, OrderItem, OrderStatus, OrderHoldEntry } from "types";
 
-const ORDER_TABLE_NAME = process.env.ORDER_TABLE_NAME;
+const ORDER_TABLE_NAME = process.env.ORDER_TABLE_NAME || "";
+const ORDER_HOLD_TABLE_NAME = process.env.ORDER_HOLD_TABLE_NAME || "";
+
+interface DynamoOrderItem {
+  id: string;
+  image: string;
+  quantity: number;
+  size: string;
+  price: number;
+  name: string;
+  colorway: string;
+  product_category: string;
+}
 
 interface DynamoOrder {
   orderID: string;
   paymentGateway: string;
-  orderItems: {
-    image: string;
-    quantity: number;
-    size: string;
-    price: number;
-    name: string;
-    colorway: string;
-    id: string;
-    product_category: string;
-  }[];
+  orderItems: DynamoOrderItem[];
   status: OrderStatus;
   customerEmail: string;
   transactionID: string;
@@ -56,4 +60,38 @@ const decodeOrder = (order: DynamoOrder): Order => {
     transaction_id: order.transactionID || "",
     transaction_time: date || undefined,
   };
+};
+
+const encodeOrderItem = (item: OrderItem): DynamoOrderItem => ({
+  id: item.id,
+  image: item.image ? item.image : "",
+  quantity: item.quantity,
+  size: item.size,
+  price: item.price,
+  name: item.name,
+  colorway: item.color,
+  product_category: item.category,
+});
+
+const encodeOrder = (order: Order): DynamoOrder => ({
+  orderID: order.id,
+  paymentGateway: order.payment_method || "",
+  orderItems: order.items.map(encodeOrderItem),
+  status: order.status || OrderStatus.PENDING_PAYMENT,
+  customerEmail: order.customer_email || "",
+  transactionID: order.transaction_id || "",
+  orderDateTime: order.transaction_time
+    ? new Date(order.transaction_time).toISOString()
+    : new Date().toISOString(),
+});
+
+export const createOrder = async (order: Order): Promise<Order> => {
+  const dynamoOrder = encodeOrder(order);
+  dynamoOrder.orderID = uuidv4();
+  await writeItem<DynamoOrder>(ORDER_TABLE_NAME, dynamoOrder);
+  return decodeOrder(dynamoOrder);
+};
+
+export const createOrderHoldEntry = async (orderHoldEntry: OrderHoldEntry): Promise<void> => {
+  await writeItem(ORDER_HOLD_TABLE_NAME, orderHoldEntry);
 };
