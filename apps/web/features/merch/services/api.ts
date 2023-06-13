@@ -1,7 +1,6 @@
 import {
     APIError,
     Cart,
-    CartResponseDto,
     CheckoutRequest,
     CheckoutResponse,
     PricedCart,
@@ -87,7 +86,7 @@ export class Api {
   }
 
   async postQuotation(cart: Cart, promoCode: string | null) {
-    return await this.post<QuotationRequest, CartResponseDto>(`/cart/quotation`, {
+    return await this.post<QuotationRequest, PricedCart>(`/quotation`, {
       ...cart,
       promoCode: promoCode ?? "",
     });

@@ -33,23 +33,16 @@ import { api } from "features/merch/services/api";
 import { 
   CartItem,
   CartPrice,
-  CartResponseDto,
+  PricedCart,
   ProductInfoMap
 } from "types/lib/merch";
 import { routes, QueryKeys } from "features/merch/constants";
 import { displayPrice } from "features/merch/functions";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/router";
 
 type ValidationType = {
   error: boolean;
   isLoading: boolean;
-};
-
-const initCartPrice = {
-  currency: "SGD",
-  subtotal: 0,
-  discount: 0,
-  grandTotal: 0,
 };
 
 const Cart: FC = () => {
@@ -57,6 +50,7 @@ const Cart: FC = () => {
   const cartContext = useCartStore();
   const { state: cartState, dispatch: cartDispatch } = cartContext;
 
+  const router = useRouter();
   const [reroute, setReroute] = useState<boolean>(false);
 
   // Email input for billing.
@@ -65,7 +59,7 @@ const Cart: FC = () => {
 
   // Calculation of pricing
   const [priceLoading, setPriceLoading] = useState<boolean>(false);
-  const [priceInfo, setPriceInfo] = useState<CartPrice>(initCartPrice);
+  const [priceInfo, setPriceInfo] = useState<number>(0);
 
   // For mapping between cart item and info
   // const [productInfo, setProductInfo] = useState<ProductInfoMap>({});
@@ -92,7 +86,7 @@ const Cart: FC = () => {
   const { mutate: initCartPage, isLoading: isCartLoading } = useMutation(
     () => api.postQuotation(cartState.cart, cartState.voucher),
     {
-      onSuccess: (data: CartResponseDto) => {
+      onSuccess: (data: PricedCart) => {
         // Validate cart product id is correct
         const tempProductInfo: ProductInfoMap = {};
         cartState.cart.items.forEach((item: CartItem) => {
@@ -102,44 +96,50 @@ const Cart: FC = () => {
             cartDispatch({ type: CartActionType.REMOVE_ITEM, payload: { id, size, color } });
           } else {
             tempProductInfo[product.id] = {
-              image: product.images?.[0],
-              price: product.price,
+              image: product.image?.[0] ?? "",
+              price: product.discountedPrice, // TODO need orginal ??
               name: product.name,
             };
           }
         });
         // setProductInfo(tempProductInfo);
-      },
+      }
     }
   );
 
   // Calculate price - Used when updating / removing of items.
-  const { mutate: calcCartPrice } = useMutation(() => api.postQuotation(cartState.cart, cartState.voucher), {
-    onSuccess: (data: CartResponseDto) => {
-      setPriceInfo(data.price);
-    },
-    onSettled: () => {
-      setPriceLoading(false);
-    },
-  });
+  const { mutate: calcCartPrice } = useMutation(
+    () => api.postQuotation(cartState.cart, cartState.voucher), 
+    {
+      onSuccess: (data: PricedCart) => {
+        setPriceInfo(data.total);
+      },
+      onSettled: () => {
+        setPriceLoading(false);
+      },
+    }
+  );
 
-  // Apply voucher -
+  // Apply voucher - // TODO big fix
   const { mutate: applyVoucher, isLoading: voucherLoading } = useMutation(
-    () => api.postQuotation(cartState.cart, voucherInput),
+    () => {
+      console.log("applyVoucher cart state:", cartState.cart)
+      return api.postQuotation(cartState.cart, voucherInput);
+    },
     {
       onMutate: () => {
         setPriceLoading(true);
       },
-      onSuccess: (data: CartResponseDto) => {
-        setPriceInfo(data.price);
-        if (data.price.discount > 0) {
-          // Voucher is valid
-          cartDispatch({ type: CartActionType.VALID_VOUCHER, payload: voucherInput });
-          setVoucherError(false);
-          setVoucherInput("");
-        } else {
-          setVoucherError(true);
-        }
+      onSuccess: (data: PricedCart) => {
+        setPriceInfo(data.total);
+        // if (data.price.discount > 0) {
+        //   // Voucher is valid
+        //   cartDispatch({ type: CartActionType.VALID_VOUCHER, payload: voucherInput });
+        //   setVoucherError(false);
+        //   setVoucherInput("");
+        // } else {
+        //   setVoucherError(true);
+        // }
       },
       onSettled: () => {
         setPriceLoading(false);
@@ -208,7 +208,7 @@ const Cart: FC = () => {
       ) : (
         <>
           <Flex flexDir="column" gap={[2, 3]}>
-            <Flex justifyContent="space-between" fontSize={["sm", "md"]}>
+            {/* <Flex justifyContent="space-between" fontSize={["sm", "md"]}>
               <Text>Item(s) subtotal</Text>
               <Text>{displayPrice(priceInfo.subtotal)}</Text>
             </Flex>
@@ -216,10 +216,10 @@ const Cart: FC = () => {
               <Text>Voucher Discount</Text>
               <Text noOfLines={1}>{displayPrice(priceInfo.discount)}</Text>
             </Flex>
-            <Divider />
+            <Divider /> */}
             <Flex justifyContent="space-between" fontSize={["sm", "md"]} fontWeight={600}>
               <Text>Total</Text>
-              <Text>{displayPrice(priceInfo.grandTotal)}</Text>
+              <Text>{displayPrice(priceInfo)}</Text>
             </Flex>
           </Flex>
           <Divider />
@@ -276,7 +276,7 @@ const Cart: FC = () => {
       )}
     </CartCard>
   );
-
+/*
   const VoucherSection = (
     <CartCard title="Voucher">
       <FormControl>
@@ -324,7 +324,7 @@ const Cart: FC = () => {
       </FormControl>
     </CartCard>
   );
-
+*/
   const renderCartView = () => (
     <Grid templateColumns={{ base: "repeat(1, 1fr)", xl: "repeat(6, 1fr)" }}>
       <GridItem colSpan={4} px={[0, 4]}>
@@ -384,7 +384,7 @@ const Cart: FC = () => {
 
   useEffect(() => {
     if (reroute) {
-      redirect(routes.CHECKOUT);
+      router.push(routes.CHECKOUT);
     }
   }, [reroute]);
 

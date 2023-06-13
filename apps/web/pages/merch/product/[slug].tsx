@@ -137,7 +137,7 @@ const MerchDetail: React.FC = () => {
 
   const handleBuyNow = () => {
     handleAddToCart();
-    window.location.href = routes.CART;
+    router.push(routes.CART);
   };
 
   const ProductNameSection = (

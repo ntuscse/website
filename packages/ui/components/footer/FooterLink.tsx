@@ -1,4 +1,5 @@
 import { Link } from "@chakra-ui/react";
+import NextLink from "next/link";
 
 export interface FooterLinkProps {
   href: string;
@@ -8,6 +9,7 @@ export interface FooterLinkProps {
 export const FooterLink = ({ href, label }: FooterLinkProps) => {
   return (
     <Link
+      as={NextLink}
       fontWeight="bold"
       textAlign="center"
       color="white"

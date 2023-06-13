@@ -114,27 +114,6 @@ export type CartPrice = {
   grandTotal: number;
 };
 
-export type CartResponseDto = {
-  items: [
-    {
-      id: string;
-      name: string;
-      price: number;
-      images: string[];
-      sizes: string;
-      productCategory: string;
-      isAvailable: boolean;
-      quantity: number;
-    }
-  ];
-  price: {
-    currency: string;
-    subtotal: number;
-    discount: number;
-    grandTotal: number;
-  };
-};
-
 export type ReservedProduct = {
   id: string;
   quantity: number;

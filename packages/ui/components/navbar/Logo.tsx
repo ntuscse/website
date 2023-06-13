@@ -1,5 +1,5 @@
-import React from "react";
 import { Box, Stack, Link } from "@chakra-ui/react";
+import NextLink from "next/link";
 import { Image } from "../image";
 
 export interface LogoProps {
@@ -9,7 +9,11 @@ export interface LogoProps {
 
 export const Logo = ({ src, alt }: LogoProps) => {
   return (
-    <Link href="/" _hover={{ textDecoration: "none" }}>
+    <Link 
+      as={NextLink}
+      href="/" 
+      _hover={{ textDecoration: "none" }}
+    >
       <Stack align="center" justify={"flex-start"} direction={"row"}>
         <Box
           minWidth={{ base: 75, md: 100 }}
