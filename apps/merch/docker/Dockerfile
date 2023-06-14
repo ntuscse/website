@@ -49,5 +49,5 @@ WORKDIR /app/apps/merch
 #EXPOSE 80
 EXPOSE 7001
 
-CMD ["node", "dist/server.js"]
+CMD ["node", "dist/index.js"]
 
