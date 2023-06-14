@@ -1,4 +1,5 @@
 {
   "name": "schemas",
-  "description": "Schemas for graphql and other things"
+  "description": "Schemas for graphql and other things",
+  "version": "0.0.1"
 }

@@ -2,15 +2,19 @@
   "name": "merch",
   "description": "NTU SCSE Merch Backend",
   "version": "0.1.0",
-  "main": "dist/server.js",
+  "main": "dist/index.js",
   "license": "Apache-2.0",
   "scripts": {
-    "dev": "nodemon src/server.ts",
+    "build": "tsup src/index.ts --format cjs",
+    "start": "node dist/index.js",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
+    "dev": "tsup src/index.ts --format cjs --watch --onSuccess \"node dist/index.js\"",
     "lint": "TIMING=1 eslint \"**/*.ts*\"",
     "lint:fix": "TIMING=1 eslint --fix \"**/*.ts*\""
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "nodelogger": "*"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.3",
@@ -18,10 +22,10 @@
     "@types/morgan": "^1.9.4",
     "cookie-parser": "^1.4.6",
     "morgan": "^1.10.0",
-    "nodelogger": "*",
     "nodemon": "^2.0.6",
     "ts-node": "^9.1.1",
     "tsconfig": "*",
+    "tsup": "^6.7.0",
     "types": "*",
     "typescript": "^4.8.4",
     "winston": "^3.8.2"

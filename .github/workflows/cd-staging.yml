@@ -30,11 +30,37 @@ jobs:
             ghcr.io/${{ github.repository_owner }}/website/cms:${{ github.sha }}
             ghcr.io/${{ github.repository_owner }}/website/cms:latest
 
+
+  build-merch:
+    name: Build Merch Docker Image
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          file: ./apps/merch/Dockerfile
+          context: .
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/website/merch:${{ github.sha }}
+            ghcr.io/${{ github.repository_owner }}/website/merch:latest
+
   deploy-to-staging:
     name: Deploy To Staging
     runs-on: ubuntu-22.04
     needs:
       - build-cms
+      - build-merch
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
