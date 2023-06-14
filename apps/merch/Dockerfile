@@ -43,11 +43,9 @@ RUN rm -rf /app/apps/merch/src
 WORKDIR /app/apps/merch
 
 #ENV NODE_ENV=production
-#ENV PAYLOAD_CONFIG_PATH=dist/payload.config.js
-#ENV BABEL_DISABLE_CACHE=1
 
 #EXPOSE 80
-EXPOSE 7001
+EXPOSE 3000
 
 CMD ["node", "dist/index.js"]
 
