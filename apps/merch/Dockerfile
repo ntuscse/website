@@ -6,7 +6,7 @@ RUN apk update
 # Set working directory
 WORKDIR /app
 RUN yarn global add turbo
-COPY . .
+COPY docker .
 RUN rm -rf **/node_modules **/build **/dist **/out **/.turbo
 RUN rm -rf **/.env
 RUN turbo prune --scope=merch --docker
