@@ -46,7 +46,7 @@ services:
       - mongo
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.cms.rule=Host(`cms.staging.ntuscse.com`, `13.213.116.60`, `localhost`)"
+      - "traefik.http.routers.cms.rule=Host(`cms.staging.ntuscse.com`)"
       - "traefik.http.routers.cms.entrypoints=websecure"
       - "traefik.http.routers.cms.tls.certresolver=myresolver"
   mongo:
@@ -70,7 +70,7 @@ services:
       - mongo
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.merch.rule=Host(`merch.staging.ntuscse.com`, `13.213.116.60`, `localhost`)"
+      - "traefik.http.routers.merch.rule=Host(`merch.staging.ntuscse.com`)"
       - "traefik.http.routers.merch.entrypoints=websecure"
       - "traefik.http.routers.merch.tls.certresolver=myresolver"
 
