@@ -11,14 +11,11 @@ import { isOutOfStock } from "features/merch/functions/stock";
 const MerchandiseList = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   
-  const { data: products, isLoading } = { data: null, isLoading: false }
-  /*
   const { data: products, isLoading } = useQuery(
     [QueryKeys.PRODUCTS],
     () => api.getProducts(),
     {}
   );
-  */
 
   const categories = products?.map((product: Product) => product?.category);
   const uniqueCategories = categories
