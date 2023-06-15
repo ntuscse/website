@@ -12,13 +12,13 @@ import {
   Text,
   Input,
   Spinner,
-  FormControl,
-  FormHelperText,
+  // FormControl,
+  // FormHelperText
 } from "@chakra-ui/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Joi from "joi";
 import _ from "lodash";
-import { LinkIcon } from "@chakra-ui/icons";
+// import { LinkIcon } from "@chakra-ui/icons";
 import { CartAction, CartActionType, useCartStore } from "features/merch/context/cart";
 import { 
   CartCard, 
@@ -32,9 +32,7 @@ import {
 import { api } from "features/merch/services/api";
 import { 
   CartItem,
-  CartPrice,
-  PricedCart,
-  ProductInfoMap
+  PricedCart
 } from "types/lib/merch";
 import { routes, QueryKeys } from "features/merch/constants";
 import { displayPrice } from "features/merch/functions";
@@ -61,14 +59,12 @@ const Cart: FC = () => {
   const [priceLoading, setPriceLoading] = useState<boolean>(false);
   const [priceInfo, setPriceInfo] = useState<number>(0);
 
-  // For mapping between cart item and info
-  // const [productInfo, setProductInfo] = useState<ProductInfoMap>({});
   const { data: products, isLoading: isProductsQueryLoading } = useQuery([QueryKeys.PRODUCTS], () => api.getProducts(), {});
 
 
   // Voucher section
-  const [voucherInput, setVoucherInput] = useState("");
-  const [voucherError, setVoucherError] = useState<boolean>(false);
+  // const [voucherInput, setVoucherInput] = useState("");
+  // const [voucherError, setVoucherError] = useState<boolean>(false);
 
   const emailValidator = Joi.string()
     .email({ tlds: { allow: false } })
@@ -88,21 +84,13 @@ const Cart: FC = () => {
     {
       onSuccess: (data: PricedCart) => {
         // Validate cart product id is correct
-        const tempProductInfo: ProductInfoMap = {};
         cartState.cart.items.forEach((item: CartItem) => {
           const product = data.items.find((i) => i.id === item.id);
           if (!product) {
             const { id, size, color } = item;
             cartDispatch({ type: CartActionType.REMOVE_ITEM, payload: { id, size, color } });
-          } else {
-            tempProductInfo[product.id] = {
-              image: product.image?.[0] ?? "",
-              price: product.discountedPrice, // TODO need orginal ??
-              name: product.name,
-            };
-          }
+          } 
         });
-        // setProductInfo(tempProductInfo);
       }
     }
   );
@@ -120,38 +108,35 @@ const Cart: FC = () => {
     }
   );
 
-  // Apply voucher - // TODO big fix
-  const { mutate: applyVoucher, isLoading: voucherLoading } = useMutation(
-    () => {
-      console.log("applyVoucher cart state:", cartState.cart)
-      return api.postQuotation(cartState.cart, voucherInput);
-    },
-    {
-      onMutate: () => {
-        setPriceLoading(true);
-      },
-      onSuccess: (data: PricedCart) => {
-        setPriceInfo(data.total);
-        // if (data.price.discount > 0) {
-        //   // Voucher is valid
-        //   cartDispatch({ type: CartActionType.VALID_VOUCHER, payload: voucherInput });
-        //   setVoucherError(false);
-        //   setVoucherInput("");
-        // } else {
-        //   setVoucherError(true);
-        // }
-      },
-      onSettled: () => {
-        setPriceLoading(false);
-      },
-    }
-  );
+  // Apply voucher - TODO 
+  // const { mutate: applyVoucher, isLoading: voucherLoading } = useMutation(
+  //   () => api.postQuotation(cartState.cart, voucherInput),
+  //   {
+  //     onMutate: () => {
+  //       setPriceLoading(true);
+  //     },
+  //     onSuccess: (data: PricedCart) => {
+  //       setPriceInfo(data.total);
+  //       if (data.price.discount > 0) {
+  //         // Voucher is valid
+  //         cartDispatch({ type: CartActionType.VALID_VOUCHER, payload: voucherInput });
+  //         setVoucherError(false);
+  //         setVoucherInput("");
+  //       } else {
+  //         setVoucherError(true);
+  //       }
+  //     },
+  //     onSettled: () => {
+  //       setPriceLoading(false);
+  //     },
+  //   }
+  // );
 
-  const handleRemoveVoucher = () => {
-    setVoucherInput("");
-    cartDispatch({ type: CartActionType.REMOVE_VOUCHER, payload: null });
-    applyVoucher();
-  };
+  // const handleRemoveVoucher = () => {
+  //   setVoucherInput("");
+  //   cartDispatch({ type: CartActionType.REMOVE_VOUCHER, payload: null });
+  //   applyVoucher();
+  // };
 
   // Update Cart Item by Size & Id (To be changed next time: BE)
   const removeItem = (productId: string, size: string, color: string) => {
@@ -207,8 +192,8 @@ const Cart: FC = () => {
         </Flex>
       ) : (
         <>
-          <Flex flexDir="column" gap={[2, 3]}>
-            {/* <Flex justifyContent="space-between" fontSize={["sm", "md"]}>
+          <Flex flexDir="column" gap={[2, 3]}> 
+            {/* <Flex justifyContent="space-between" fontSize={["sm", "md"]}> TODO
               <Text>Item(s) subtotal</Text>
               <Text>{displayPrice(priceInfo.subtotal)}</Text>
             </Flex>
@@ -260,6 +245,7 @@ const Cart: FC = () => {
             <Button
               width="100%"
               onClick={handleToCheckout}
+              _hover={{ bg: "primary-blue" }}
               isLoading={validation.isLoading}
               disabled={cartState.billingEmail.length === 0 || cartState.name.length === 0 || validation.isLoading}
             >
@@ -276,7 +262,7 @@ const Cart: FC = () => {
       )}
     </CartCard>
   );
-/*
+/* TODO
   const VoucherSection = (
     <CartCard title="Voucher">
       <FormControl>
@@ -345,7 +331,7 @@ const Cart: FC = () => {
         ))}
       </GridItem>
       <GridItem colSpan={2} px={[0, 4]}>
-        {/* {VoucherSection} */}
+        {/* {VoucherSection} TODO*/} 
         {PriceInfoSection}
         <CartCard title="Collection Details" mt={[2, 4]}>
           <Text fontSize={["xs", "sm"]}>
