@@ -23,7 +23,6 @@ import { CartAction, CartActionType, useCartStore } from "features/merch/context
 import { 
   CartCard, 
   CartEmptyView,
-  CartHeader,
   CartItemCard, 
   CartRemoveModal,
   LoadingScreen, 
@@ -81,18 +80,7 @@ const Cart: FC = () => {
   // Initialise Cart page
   const { mutate: initCartPage, isLoading: isCartLoading } = useMutation(
     () => api.postQuotation(cartState.cart, cartState.voucher),
-    {
-      onSuccess: (data: PricedCart) => {
-        // Validate cart product id is correct
-        cartState.cart.items.forEach((item: CartItem) => {
-          const product = data.items.find((i) => i.id === item.id);
-          if (!product) {
-            const { id, size, color } = item;
-            cartDispatch({ type: CartActionType.REMOVE_ITEM, payload: { id, size, color } });
-          } 
-        });
-      }
-    }
+    {}
   );
 
   // Calculate price - Used when updating / removing of items.
@@ -314,7 +302,6 @@ const Cart: FC = () => {
   const renderCartView = () => (
     <Grid templateColumns={{ base: "repeat(1, 1fr)", xl: "repeat(6, 1fr)" }}>
       <GridItem colSpan={4} px={[0, 4]}>
-        {!isMobile && <CartHeader />}
         {cartState.cart.items.map((item, index) => (
           <>
             <CartItemCard 
@@ -333,10 +320,10 @@ const Cart: FC = () => {
       <GridItem colSpan={2} px={[0, 4]}>
         {/* {VoucherSection} TODO*/} 
         {PriceInfoSection}
-        <CartCard title="Collection Details" mt={[2, 4]}>
+        <CartCard title="Collection Details" mt={[2, 4]} mb={[2, 4]}>
           <Text fontSize={["xs", "sm"]}>
             An email will be sent to you closer to the collection date. Our collection venue is at 50 Nanyang Ave, #32
-            Block N4 #02a, Singapore 639798
+            Block N4 #02a, Singapore 639798.
           </Text>
         </CartCard>
       </GridItem>

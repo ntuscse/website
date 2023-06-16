@@ -1,5 +1,4 @@
 export * from "./CartCard"
-export * from "./CartHeader"
 export * from "./CartItemCard"
 export * from "./CartEmptyView"
 export * from "./CartRemoveModal"

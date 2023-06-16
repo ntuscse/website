@@ -193,7 +193,7 @@ const MerchDetail: React.FC = () => {
           return (
             <SizeOption
               key={idx.toString()}
-              active={selectedSize === size}
+              active={(selectedSize === size).toString()}
               onClick={() => {
                 setQuantity(1);
                 if (size !== selectedSize) {
@@ -243,7 +243,7 @@ const MerchDetail: React.FC = () => {
           return (
             <SizeOption
               key={idx.toString()}
-              active={selectedColor === color}
+              active={(selectedColor === color).toString()}
               onClick={() => {
                 setQuantity(1);
                 if (color !== selectedColor) {
@@ -285,10 +285,11 @@ const MerchDetail: React.FC = () => {
       <GroupTitle>Quantity</GroupTitle>
       <Flex gap={4}>
         <SizeOption
+          key={"decrement_qty"}
           disabled={
             isDisabled || !(selectedColor && selectedSize) || quantity <= 1
           }
-          active={false}
+          active={false.toString()}
           onClick={() => handleQtyChangeCounter(false)}
         >
           -
@@ -306,12 +307,13 @@ const MerchDetail: React.FC = () => {
           onChange={handleQtyChangeInput}
         />
         <SizeOption
+          key={"increment_qty"}
           disabled={
             isDisabled ||
             !(selectedColor && selectedSize) ||
             quantity >= maxQuantity
           }
-          active={false}
+          active={false.toString()}
           onClick={() => handleQtyChangeCounter(true)}
         >
           +
