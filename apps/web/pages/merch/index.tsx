@@ -29,7 +29,7 @@ const MerchandiseList = () => {
 
   return (
     <Page>
-      <Flex justifyContent="space-between" my={5} alignItems="center">
+      <Flex justifyContent="space-between" alignItems="center">
         <Heading fontSize={["md", "2xl"]} textColor={["primary.600", "black"]}>
           New Drop
         </Heading>

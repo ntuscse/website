@@ -15,7 +15,7 @@ export const Page = ({
   ...props
 }: PageProps) => {
   return (
-    <Flex flexDirection="column" {...props}>
+    <Flex pt="2.5em" flexDirection="column" {...props}>
       <Box w="100%" h="3em"></Box>
       <Box
         w="100%"
