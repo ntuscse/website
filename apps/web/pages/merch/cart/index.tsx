@@ -20,16 +20,17 @@ import Joi from "joi";
 import _ from "lodash";
 // import { LinkIcon } from "@chakra-ui/icons";
 import { CartAction, CartActionType, useCartStore } from "features/merch/context/cart";
-import { 
-  CartCard, 
+import {
+  CartCard,
   CartEmptyView,
-  CartItemCard, 
+  CartHeader,
+  CartItemCard,
   CartRemoveModal,
-  LoadingScreen, 
+  LoadingScreen,
   Page
 } from "ui/components/merch";
 import { api } from "features/merch/services/api";
-import { 
+import {
   CartItem,
   PricedCart
 } from "types/lib/merch";
@@ -77,15 +78,13 @@ const Cart: FC = () => {
   // Check if break point hit.
   const isMobile: boolean = useBreakpointValue({ base: true, md: false }) || false;
 
-  // Initialise Cart page
-  const { mutate: initCartPage, isLoading: isCartLoading } = useMutation(
+  const { isLoading: isCartLoading } = useMutation(
     () => api.postQuotation(cartState.cart, cartState.voucher),
     {}
   );
 
-  // Calculate price - Used when updating / removing of items.
   const { mutate: calcCartPrice } = useMutation(
-    () => api.postQuotation(cartState.cart, cartState.voucher), 
+    () => api.postQuotation(cartState.cart, cartState.voucher),
     {
       onSuccess: (data: PricedCart) => {
         setPriceInfo(data.total);
@@ -96,7 +95,7 @@ const Cart: FC = () => {
     }
   );
 
-  // Apply voucher - TODO 
+  // Apply voucher - TODO
   // const { mutate: applyVoucher, isLoading: voucherLoading } = useMutation(
   //   () => api.postQuotation(cartState.cart, voucherInput),
   //   {
@@ -180,7 +179,7 @@ const Cart: FC = () => {
         </Flex>
       ) : (
         <>
-          <Flex flexDir="column" gap={[2, 3]}> 
+          <Flex flexDir="column" gap={[2, 3]}>
             {/* <Flex justifyContent="space-between" fontSize={["sm", "md"]}> TODO
               <Text>Item(s) subtotal</Text>
               <Text>{displayPrice(priceInfo.subtotal)}</Text>
@@ -304,7 +303,7 @@ const Cart: FC = () => {
       <GridItem colSpan={4} px={[0, 4]}>
         {cartState.cart.items.map((item, index) => (
           <>
-            <CartItemCard 
+            <CartItemCard
               key={item.id + item.size}
               data={item}
               productInfo={products?.find(product => product.id === item.id)}
@@ -318,7 +317,7 @@ const Cart: FC = () => {
         ))}
       </GridItem>
       <GridItem colSpan={2} px={[0, 4]}>
-        {/* {VoucherSection} TODO*/} 
+        {/* {VoucherSection} TODO*/}
         {PriceInfoSection}
         <CartCard title="Collection Details" mt={[2, 4]} mb={[2, 4]}>
           <Text fontSize={["xs", "sm"]}>
@@ -346,10 +345,6 @@ const Cart: FC = () => {
   };
 
   const debounceCalc = useCallback(_.debounce(calcCartPrice, 2000), []);
-
-  useEffect(() => {
-    initCartPage();
-  }, []);
 
   useEffect(() => {
     debounceCalc();

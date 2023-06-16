@@ -8,7 +8,7 @@ type ContextType = {
 
 export enum CartActionType {
   RESET_CART = "RESET_CART",
-  INITALIZE = "initialize",
+  INITIALIZE = "initialize",
   ADD_ITEM = "add_item",
   UPDATE_QUANTITY = "update_quantity",
   REMOVE_ITEM = "remove_item",
@@ -19,8 +19,7 @@ export enum CartActionType {
 }
 
 export type CartAction =
-  | { type: CartActionType.RESET_CART }
-  | { type: CartActionType.INITALIZE; payload: CartState }
+  | { type: CartActionType.INITIALIZE; payload: CartState }
   | { type: CartActionType.ADD_ITEM; payload: CartItem }
   | { type: CartActionType.UPDATE_QUANTITY; payload: CartItem }
   | {
@@ -48,10 +47,7 @@ export const cartReducer = (
   action: CartAction
 ): CartState => {
   switch (action.type) {
-    case CartActionType.RESET_CART: {
-      return JSON.parse(JSON.stringify(initState)) as typeof initState;
-    }
-    case CartActionType.INITALIZE: {
+    case CartActionType.INITIALIZE: {
       return { ...state, ...action.payload };
     }
     case CartActionType.ADD_ITEM: {
@@ -154,20 +150,21 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const value = useMemo(() => ({ state, dispatch }), [state]);
 
   useEffect(() => {
-    const cartState: CartState = JSON.parse(
-      JSON.stringify(initState)
+    const storedCartData: CartState = JSON.parse(
+      localStorage.getItem("cart") as string
     ) as typeof initState;
-    const storedCartData: CartState =
-      (JSON.parse(
-        localStorage.getItem("cart") as string
-      ) as typeof initState) ?? cartState;
-    cartState.cart.items = storedCartData.cart?.items;
-    cartState.name = storedCartData.name;
-    cartState.billingEmail = storedCartData.billingEmail;
-    dispatch({ type: CartActionType.INITALIZE, payload: cartState });
+    if (storedCartData) {
+      const cartState: CartState = JSON.parse(
+        JSON.stringify(initState)
+      ) as typeof initState;
+      cartState.cart.items = storedCartData.cart?.items;
+      cartState.name = storedCartData.name;
+      cartState.billingEmail = storedCartData.billingEmail;
+      dispatch({ type: CartActionType.INITIALIZE, payload: cartState });
+    }
   }, []);
-
   useEffect(() => {
+    if (state === initState) return;
     localStorage.setItem("cart", JSON.stringify(state));
   }, [state]);
 
