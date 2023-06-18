@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import {
   Button,
   Flex,
@@ -13,9 +14,10 @@ import {
   Box,
   Center,
 } from "@chakra-ui/react";
-import { SmallCloseIcon } from "@chakra-ui/icons";
+import { DeleteIcon, SmallCloseIcon } from "@chakra-ui/icons";
 import { CartItem, Product } from "types/lib/merch";
 import { displayPrice, getQtyInStock } from "web/features/merch/functions";
+import { routes } from "web/features/merch/constants";
 
 export type CartItemProps = {
   isMobile: boolean;
@@ -84,21 +86,25 @@ export const CartItemCard: React.FC<CartItemProps> = ({ isMobile, data, onRemove
     </Flex>
   );
   const desktopView = (
-    <Grid templateColumns="3fr repeat(4, 1fr)" rowGap={2}>
+    <Grid templateColumns="5fr repeat(3, 2fr) 1fr" rowGap={2}>
       <GridItem display="flex">
         <Box boxShadow="sm" maxWidth={[125, 100]}>
-          <Image 
-            src={productInfo?.images?.[0]} 
-            fallbackSrc="https://via.placeholder.com/100" 
-            boxSize="70"
-            objectFit="contain"
-            borderRadius="md" 
-          />
+          <Link href={[routes.PRODUCT , productInfo?.id].join('/')}>
+            <Image 
+              src={productInfo?.images?.[0]} 
+              fallbackSrc="https://via.placeholder.com/100" 
+              boxSize="70"
+              objectFit="contain"
+              borderRadius="md" 
+            />
+          </Link>
         </Box>
         <Flex flexDir="column" fontWeight="600" fontSize={["sm", "md"]} ml={2}>
-          <Text color="primary.600" noOfLines={2}>
-            {productInfo?.name}
-          </Text>
+          <Link href={[routes.PRODUCT , productInfo?.id].join('/')}>
+            <Text color="primary.600" noOfLines={2}>
+              {productInfo?.name}
+            </Text>
+          </Link>
           <Flex color="grey">
             <Flex>Size:</Flex>
             <Text ml={1} textTransform="uppercase">
@@ -128,7 +134,7 @@ export const CartItemCard: React.FC<CartItemProps> = ({ isMobile, data, onRemove
       </GridItem>
       <GridItem display="flex" alignItems="center" justifyContent="center">
         <Button size="sm" variant="link" onClick={() => onRemove(data.id, data.size, data.color)}>
-          Delete
+          <DeleteIcon h={4} w={4} _hover={{color: "brand.red.medium"}} />
         </Button>
       </GridItem>
     </Grid>
@@ -145,7 +151,7 @@ export const CartItemCard: React.FC<CartItemProps> = ({ isMobile, data, onRemove
             {productInfo?.name}
           </Text>
           <Button size="sm" variant="link" onClick={() => onRemove(data.id, data.size, data.color)}>
-            <SmallCloseIcon h={5} w={5} />
+            <SmallCloseIcon h={5} w={5} _hover={{color: "brand.red.medium"}} />
           </Button>
         </Flex>
         <Flex color="grey" direction="column">

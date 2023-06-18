@@ -30,10 +30,7 @@ import {
   Page
 } from "ui/components/merch";
 import { api } from "features/merch/services/api";
-import {
-  CartItem,
-  PricedCart
-} from "types/lib/merch";
+import { PricedCart } from "types/lib/merch";
 import { routes, QueryKeys } from "features/merch/constants";
 import { displayPrice } from "features/merch/functions";
 import { useRouter } from "next/router";
@@ -165,7 +162,7 @@ const Cart: FC = () => {
   };
 
   const CartHeading = (
-    <Heading textAlign="center" mt={[4, 6, 12]} mb={[4, 6, 12]} size="xl">
+    <Heading textAlign="center" mb={[4, 6, 12]} size="xl">
       Your Cart
     </Heading>
   );
@@ -180,15 +177,17 @@ const Cart: FC = () => {
       ) : (
         <>
           <Flex flexDir="column" gap={[2, 3]}>
-            {/* <Flex justifyContent="space-between" fontSize={["sm", "md"]}> TODO
+            <Flex justifyContent="space-between" fontSize={["sm", "md"]}> 
               <Text>Item(s) subtotal</Text>
-              <Text>{displayPrice(priceInfo.subtotal)}</Text>
+              <Text>{displayPrice(priceInfo)}</Text>
+              {/* TODO <Text>{displayPrice(priceInfo.subtotal)}</Text> */}
             </Flex>
             <Flex justifyContent="space-between" fontSize={["sm", "md"]}>
               <Text>Voucher Discount</Text>
-              <Text noOfLines={1}>{displayPrice(priceInfo.discount)}</Text>
+              <Text noOfLines={1}>{displayPrice(0)}</Text>
+              {/* TODO <Text noOfLines={1}>{displayPrice(priceInfo.discount)}</Text> */}
             </Flex>
-            <Divider /> */}
+            <Divider />
             <Flex justifyContent="space-between" fontSize={["sm", "md"]} fontWeight={600}>
               <Text>Total</Text>
               <Text>{displayPrice(priceInfo)}</Text>
@@ -301,6 +300,7 @@ const Cart: FC = () => {
   const renderCartView = () => (
     <Grid templateColumns={{ base: "repeat(1, 1fr)", xl: "repeat(6, 1fr)" }}>
       <GridItem colSpan={4} px={[0, 4]}>
+        {!isMobile && <CartHeader/>}
         {cartState.cart.items.map((item, index) => (
           <>
             <CartItemCard
