@@ -12,10 +12,11 @@ node_modules
 # testing
 coverage
 
-# next.js
+# outputs
 .next/
 out/
 build
+dist
 
 # misc
 .DS_Store
