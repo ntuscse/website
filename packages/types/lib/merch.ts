@@ -80,8 +80,10 @@ export interface Promotion {
   }>;
 }
 
-export interface PricedCart {
+export type PricedCart = {
   promoCode?: string;
+  subtotal: number;
+  discount: number;
   total: number;
   items: {
     id: string;

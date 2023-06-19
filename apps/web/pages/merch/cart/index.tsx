@@ -1,4 +1,4 @@
-import React, { useRef, useState, FC, useEffect, useCallback } from "react";
+import React, { useRef, useState, FC, useEffect } from "react";
 import Link from "next/link";
 import {
   Button,
@@ -12,14 +12,14 @@ import {
   Text,
   Input,
   Spinner,
-  // FormControl,
-  // FormHelperText
 } from "@chakra-ui/react";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import Joi from "joi";
-import _ from "lodash";
-// import { LinkIcon } from "@chakra-ui/icons";
-import { CartAction, CartActionType, useCartStore } from "features/merch/context/cart";
+import {
+  CartAction,
+  CartActionType,
+  useCartStore,
+} from "features/merch/context/cart";
 import {
   CartCard,
   CartEmptyView,
@@ -27,12 +27,12 @@ import {
   CartItemCard,
   CartRemoveModal,
   LoadingScreen,
-  Page
+  Page,
 } from "ui/components/merch";
 import { api } from "features/merch/services/api";
-import { PricedCart } from "types/lib/merch";
 import { routes, QueryKeys } from "features/merch/constants";
 import { displayPrice } from "features/merch/functions";
+import { calculatePricing } from "merch-helpers";
 import { useRouter } from "next/router";
 
 type ValidationType = {
@@ -49,19 +49,28 @@ const Cart: FC = () => {
   const [reroute, setReroute] = useState<boolean>(false);
 
   // Email input for billing.
-  // const [billingEmail, setBillingEmail] = useState<string>("");
-  const [validation, setValidation] = useState<ValidationType>({ isLoading: false, error: false });
+  const [validation, setValidation] = useState<ValidationType>({
+    isLoading: false,
+    error: false,
+  });
 
   // Calculation of pricing
-  const [priceLoading, setPriceLoading] = useState<boolean>(false);
-  const [priceInfo, setPriceInfo] = useState<number>(0);
-
-  const { data: products, isLoading: isProductsQueryLoading } = useQuery([QueryKeys.PRODUCTS], () => api.getProducts(), {});
-
+  const [isCartLoading, setIsCartLoading] = useState(true);
+  const { data: products, isLoading: isProductsQueryLoading } = useQuery(
+    [QueryKeys.PRODUCTS],
+    () => api.getProducts(),
+    {
+      onSuccess: () => {
+        setIsCartLoading(false);
+      }
+    }
+  );
 
   // Voucher section
   // const [voucherInput, setVoucherInput] = useState("");
   // const [voucherError, setVoucherError] = useState<boolean>(false);
+
+  const pricedCart = products ? calculatePricing(products, cartState.cart, undefined) : null;
 
   const emailValidator = Joi.string()
     .email({ tlds: { allow: false } })
@@ -73,24 +82,8 @@ const Cart: FC = () => {
   const toBeRemoved = useRef({ productId: "", size: "", color: "" });
 
   // Check if break point hit.
-  const isMobile: boolean = useBreakpointValue({ base: true, md: false }) || false;
-
-  const { isLoading: isCartLoading } = useMutation(
-    () => api.postQuotation(cartState.cart, cartState.voucher),
-    {}
-  );
-
-  const { mutate: calcCartPrice } = useMutation(
-    () => api.postQuotation(cartState.cart, cartState.voucher),
-    {
-      onSuccess: (data: PricedCart) => {
-        setPriceInfo(data.total);
-      },
-      onSettled: () => {
-        setPriceLoading(false);
-      },
-    }
-  );
+  const isMobile: boolean =
+    useBreakpointValue({ base: true, md: false }) || false;
 
   // Apply voucher - TODO
   // const { mutate: applyVoucher, isLoading: voucherLoading } = useMutation(
@@ -124,7 +117,6 @@ const Cart: FC = () => {
 
   // Update Cart Item by Size & Id (To be changed next time: BE)
   const removeItem = (productId: string, size: string, color: string) => {
-    setPriceLoading(true);
     cartDispatch({
       type: CartActionType.REMOVE_ITEM,
       payload: { id: productId, size: size, color: color },
@@ -141,8 +133,12 @@ const Cart: FC = () => {
   };
 
   // Update Cart Item by Size & Id (To be changed next time: BE)
-  const onQuantityChange = (productId: string, size: string, color: string, qty: number) => {
-    setPriceLoading(true);
+  const onQuantityChange = (
+    productId: string,
+    size: string,
+    color: string,
+    qty: number
+  ) => {
     const action: CartAction = {
       type: CartActionType.UPDATE_QUANTITY,
       payload: { id: productId, size: size, color: color, quantity: qty },
@@ -154,7 +150,10 @@ const Cart: FC = () => {
     setValidation({ isLoading: true, error: false });
     try {
       await emailValidator.validateAsync(cartState.billingEmail);
-      cartDispatch({ type: CartActionType.UPDATE_BILLING_EMAIL, payload: cartState.billingEmail });
+      cartDispatch({
+        type: CartActionType.UPDATE_BILLING_EMAIL,
+        payload: cartState.billingEmail,
+      });
       setReroute(true);
     } catch (error: any) {
       setValidation({ isLoading: false, error: true });
@@ -169,7 +168,7 @@ const Cart: FC = () => {
 
   const PriceInfoSection = (
     <CartCard title="Order Summary" mt={[2, 4]}>
-      {priceLoading ? (
+      {!pricedCart ? (
         <Flex flexDir="column" alignItems="center" justifyContent="center">
           <Spinner />
           <Text mt={2}>Calculating your cart price</Text>
@@ -177,20 +176,22 @@ const Cart: FC = () => {
       ) : (
         <>
           <Flex flexDir="column" gap={[2, 3]}>
-            <Flex justifyContent="space-between" fontSize={["sm", "md"]}> 
+            <Flex justifyContent="space-between" fontSize={["sm", "md"]}>
               <Text>Item(s) subtotal</Text>
-              <Text>{displayPrice(priceInfo)}</Text>
-              {/* TODO <Text>{displayPrice(priceInfo.subtotal)}</Text> */}
+              <Text>{displayPrice(pricedCart.subtotal)}</Text>
             </Flex>
             <Flex justifyContent="space-between" fontSize={["sm", "md"]}>
               <Text>Voucher Discount</Text>
-              <Text noOfLines={1}>{displayPrice(0)}</Text>
-              {/* TODO <Text noOfLines={1}>{displayPrice(priceInfo.discount)}</Text> */}
+              <Text noOfLines={1}>{displayPrice(pricedCart.discount)}</Text>
             </Flex>
             <Divider />
-            <Flex justifyContent="space-between" fontSize={["sm", "md"]} fontWeight={600}>
+            <Flex
+              justifyContent="space-between"
+              fontSize={["sm", "md"]}
+              fontWeight={600}
+            >
               <Text>Total</Text>
-              <Text>{displayPrice(priceInfo)}</Text>
+              <Text>{displayPrice(pricedCart.total)}</Text>
             </Flex>
           </Flex>
           <Divider />
@@ -233,7 +234,11 @@ const Cart: FC = () => {
               onClick={handleToCheckout}
               _hover={{ bg: "primary-blue" }}
               isLoading={validation.isLoading}
-              disabled={cartState.billingEmail.length === 0 || cartState.name.length === 0 || validation.isLoading}
+              disabled={
+                cartState.billingEmail.length === 0 ||
+                cartState.name.length === 0 ||
+                validation.isLoading
+              }
             >
               CHECK OUT
             </Button>
@@ -248,7 +253,7 @@ const Cart: FC = () => {
       )}
     </CartCard>
   );
-/* TODO
+  /* TODO
   const VoucherSection = (
     <CartCard title="Voucher">
       <FormControl>
@@ -300,13 +305,13 @@ const Cart: FC = () => {
   const renderCartView = () => (
     <Grid templateColumns={{ base: "repeat(1, 1fr)", xl: "repeat(6, 1fr)" }}>
       <GridItem colSpan={4} px={[0, 4]}>
-        {!isMobile && <CartHeader/>}
+        {!isMobile && <CartHeader />}
         {cartState.cart.items.map((item, index) => (
           <>
             <CartItemCard
               key={item.id + item.size}
               data={item}
-              productInfo={products?.find(product => product.id === item.id)}
+              productInfo={products?.find((product) => product.id === item.id)}
               isLoading={isProductsQueryLoading}
               isMobile={isMobile}
               onRemove={handleRemoveItem}
@@ -321,15 +326,22 @@ const Cart: FC = () => {
         {PriceInfoSection}
         <CartCard title="Collection Details" mt={[2, 4]} mb={[2, 4]}>
           <Text fontSize={["xs", "sm"]}>
-            An email will be sent to you closer to the collection date. Our collection venue is at 50 Nanyang Ave, #32
-            Block N4 #02a, Singapore 639798.
+            An email will be sent to you closer to the collection date. Our
+            collection venue is at 50 Nanyang Ave, #32 Block N4 #02a, Singapore
+            639798.
           </Text>
         </CartCard>
       </GridItem>
       <CartRemoveModal
         isOpen={isOpen}
         onClose={onClose}
-        removeItem={() => removeItem(toBeRemoved.current.productId, toBeRemoved.current.size, toBeRemoved.current.color)}
+        removeItem={() =>
+          removeItem(
+            toBeRemoved.current.productId,
+            toBeRemoved.current.size,
+            toBeRemoved.current.color
+          )
+        }
       />
     </Grid>
   );
@@ -343,12 +355,6 @@ const Cart: FC = () => {
     }
     return renderCartView();
   };
-
-  const debounceCalc = useCallback(_.debounce(calcCartPrice, 2000), []);
-
-  useEffect(() => {
-    debounceCalc();
-  }, [cartState.cart.items, cartState.voucher]);
 
   useEffect(() => {
     if (reroute) {

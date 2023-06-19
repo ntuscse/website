@@ -7,7 +7,6 @@ import { checkout } from "./routes/checkout";
 import { index, notFound } from "./routes/index";
 import { orderGet } from "./routes/orders";
 import { productGet, productsAll } from "./routes/products";
-import { quotation } from "./routes/quotation";
 
 const app = express();
 const CORS_ORIGIN = process.env.CORS_ORIGIN;
@@ -33,7 +32,6 @@ app.get("/", index);
 app.get("/orders/:id", orderGet);
 app.get("/products", productsAll);
 app.get("/products/:id", productGet);
-app.post("/quotation", quotation);
 app.post("/checkout", checkout);
 app.use(notFound);
 

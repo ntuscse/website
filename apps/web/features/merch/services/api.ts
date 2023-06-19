@@ -74,7 +74,7 @@ export class Api {
     return res;
   }
 
-  async postCheckoutCart(cart: Cart, email: string, promoCode?: string) {
+  async postCheckoutCart(cart: Cart, email: string, promoCode?: string): Promise<CheckoutResponse> {
     return await this.post<CheckoutRequest, CheckoutResponse>(
       `/cart/checkout`,
       {
@@ -83,13 +83,6 @@ export class Api {
         email,
       }
     );
-  }
-
-  async postQuotation(cart: Cart, promoCode: string | null) {
-    return await this.post<QuotationRequest, PricedCart>(`/quotation`, {
-      ...cart,
-      promoCode: promoCode ?? "",
-    });
   }
 }
 
