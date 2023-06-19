@@ -16,7 +16,7 @@ const nextConfig = {
       },
     ],
   },
-  transpileModules: ["ui"],
+  transpilePackages: ["ui"],
 };
 
 module.exports = nextConfig;
