@@ -92,9 +92,13 @@ export const calculatePricing = (
       discountedPrice: itemPrice,
     };
   });
+  const subtotal = pricedItems.reduce((acc, item) => acc + item.originalPrice, 0);
+  const total = pricedItems.reduce((acc, item) => acc + item.discountedPrice, 0);
   return {
     promoCode: promotion?.promoCode,
-    total: pricedItems.reduce((acc, item) => acc + item.discountedPrice, 0),
+    subtotal: subtotal,
+    discount: subtotal-total,
+    total: total,
     items: pricedItems,
   };
 };
