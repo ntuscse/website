@@ -9,7 +9,7 @@
     "lint:fix": "TIMING=1 eslint --fix \"**/*.ts*\""
   },
   "dependencies": {
+    "zod": "^3.21.4"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }
