@@ -19,6 +19,7 @@ export enum CartActionType {
 }
 
 export type CartAction =
+  | { type: CartActionType.RESET_CART }
   | { type: CartActionType.INITIALIZE; payload: CartState }
   | { type: CartActionType.ADD_ITEM; payload: CartItem }
   | { type: CartActionType.UPDATE_QUANTITY; payload: CartItem }
@@ -47,6 +48,9 @@ export const cartReducer = (
   action: CartAction
 ): CartState => {
   switch (action.type) {
+    case CartActionType.RESET_CART: {
+      return initState;
+    }
     case CartActionType.INITIALIZE: {
       return { ...state, ...action.payload };
     }

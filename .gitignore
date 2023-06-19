@@ -13,14 +13,10 @@ node_modules
 coverage
 
 # build
+**/.next
 **/build
 **/out
 **/dist
-
-# next.js
-.next/
-out/
-build
 
 # misc
 .DS_Store

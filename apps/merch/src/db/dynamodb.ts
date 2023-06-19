@@ -72,7 +72,7 @@ export const writeItem = async <T>(
   try {
     await client.send(command);
   } catch (error: any) {
-    if (error.code === 'ConditionalCheckFailedException') {
+    if (error.code === "ConditionalCheckFailedException") {
       Logger.warn(`Item already exists in table ${tableName}`);
       return;
     }

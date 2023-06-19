@@ -1,19 +1,20 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
+
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import {
-  Flex,
-  Heading,
-  Text,
-  Divider,
+  Badge,
   Button,
-  Input,
+  Center,
+  Divider,
+  Flex,
   Grid,
   GridItem,
-  Badge,
+  Heading,
+  Input,
+  Text,
   useDisclosure,
-  Center,
 } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
 import {
   EmptyProductView,
   MerchCarousel,
@@ -28,21 +29,19 @@ import {
   CartActionType,
   useCartStore,
 } from "features/merch/context/cart";
-import { api } from "features/merch/services/api";
-import { routes, QueryKeys } from "features/merch/constants";
+import { routes } from "features/merch/constants";
 import {
   displayPrice,
   displayQtyInCart,
   displayStock,
-  getDefaultColor,
-  getDefaultSize,
   getQtyInCart,
   getQtyInStock,
   isColorAvailable,
   isOutOfStock,
   isSizeAvailable,
 } from "features/merch/functions";
-
+import { trpc } from "@/lib/trpc";
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 
 const GroupTitle = ({ children }: any) => (
   <Heading fontSize="md" mb={2} color="grey" textTransform="uppercase">
@@ -50,7 +49,7 @@ const GroupTitle = ({ children }: any) => (
   </Heading>
 );
 
-const MerchDetail: React.FC = () => {
+const MerchDetail = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   // Context hook.
   const { state: cartState, dispatch: cartDispatch } = useCartStore();
   const router = useRouter();
@@ -64,17 +63,20 @@ const MerchDetail: React.FC = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const { data: product, isLoading } = useQuery(
-    [QueryKeys.PRODUCT, id],
-    () => api.getProduct(id),
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+  const { data, isLoading } = trpc.getProduct.useQuery(
     {
-      onSuccess: (data: Product) => {
-        setIsDisabled(!(data?.is_available === true));
-        setSelectedSize(getDefaultSize(data));
-        setSelectedColor(getDefaultColor(data));
-      },
+      id,
+    },
+    {
+      staleTime: Infinity,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+      initialData: props.product, // ssr magic
     }
   );
+
+  const product = data as Product;
 
   //* In/decrement quantity
   const handleQtyChangeCounter = (isAdd = true) => {
@@ -135,9 +137,9 @@ const MerchDetail: React.FC = () => {
     setIsDisabled(false);
   };
 
-  const handleBuyNow = () => {
+  const handleBuyNow = async () => {
     handleAddToCart();
-    router.push(routes.CART);
+    await router.push(routes.CART);
   };
 
   const ProductNameSection = (
@@ -320,10 +322,7 @@ const MerchDetail: React.FC = () => {
         </SizeOption>
         <Center>
           <Text fontSize="m" fontWeight={500} color="primary.600">
-            {product &&
-            selectedColor &&
-            selectedSize &&
-            product.is_available === true
+            {product && selectedColor && selectedSize && product.is_available
               ? displayStock(product, selectedColor, selectedSize)
               : ""}
           </Text>
@@ -415,3 +414,59 @@ const MerchDetail: React.FC = () => {
 };
 
 export default MerchDetail;
+
+export const getStaticProps: GetStaticProps<{
+  slug: string;
+  product: Product | undefined;
+}> = async ({ params }) => {
+  console.log("generating static props for /merch/product/[slug]");
+  console.log("params", JSON.stringify(params));
+
+  // TODO: replace this with trpc/react-query call
+  if (!process.env.NEXT_PUBLIC_MERCH_API_ORIGIN) {
+    throw new Error("NEXT_PUBLIC_MERCH_API_ORIGIN is not defined");
+  }
+  const res = await fetch(
+    `${
+      process.env.NEXT_PUBLIC_MERCH_API_ORIGIN
+    }/trpc/getProduct?batch=1&input=${encodeURIComponent(
+      JSON.stringify({ "0": { id: params?.slug } })
+    )}`
+  );
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  const product = (await res.json())[0].result.data as Product;
+
+  return {
+    props: {
+      slug: params?.slug as string,
+      product: product,
+    },
+  };
+};
+
+// eslint-disable-next-line @typescript-eslint/require-await
+export const getStaticPaths: GetStaticPaths = async () => {
+  console.log("generating static paths for /merch/product/[slug]");
+
+  // TODO: replace this with trpc/react-query call
+  if (!process.env.NEXT_PUBLIC_MERCH_API_ORIGIN) {
+    throw new Error("NEXT_PUBLIC_MERCH_API_ORIGIN is not defined");
+  }
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_MERCH_API_ORIGIN}/trpc/getProducts`
+  );
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  const products = (await res.json()).result.data.products as Product[];
+
+  return {
+    paths: products.map((product) => ({
+      params: {
+        slug: product.id,
+      },
+    })),
+    // https://nextjs.org/docs/pages/api-reference/functions/get-static-paths#fallback-blocking
+    fallback: "blocking",
+  };
+};

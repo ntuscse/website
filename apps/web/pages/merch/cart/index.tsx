@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
+
 import React, { useRef, useState, FC, useEffect } from "react";
 import Link from "next/link";
 import {
@@ -62,7 +64,7 @@ const Cart: FC = () => {
     {
       onSuccess: () => {
         setIsCartLoading(false);
-      }
+      },
     }
   );
 
@@ -70,7 +72,9 @@ const Cart: FC = () => {
   // const [voucherInput, setVoucherInput] = useState("");
   // const [voucherError, setVoucherError] = useState<boolean>(false);
 
-  const pricedCart = products ? calculatePricing(products, cartState.cart, undefined) : null;
+  const pricedCart = products
+    ? calculatePricing(products, cartState.cart, undefined)
+    : null;
 
   const emailValidator = Joi.string()
     .email({ tlds: { allow: false } })
@@ -358,7 +362,7 @@ const Cart: FC = () => {
 
   useEffect(() => {
     if (reroute) {
-      router.push(routes.CHECKOUT);
+      void router.push(routes.CHECKOUT);
     }
   }, [reroute]);
 

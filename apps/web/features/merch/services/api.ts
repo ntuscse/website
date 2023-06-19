@@ -1,12 +1,12 @@
 import {
-    APIError,
-    Cart,
-    CheckoutRequest,
-    CheckoutResponse,
-    PricedCart,
-    Product,
-    ProductsResponse,
-    QuotationRequest
+  APIError,
+  Cart,
+  CheckoutRequest,
+  CheckoutResponse,
+  PricedCart,
+  Product,
+  ProductsResponse,
+  QuotationRequest,
 } from "types";
 
 export class Api {
@@ -74,15 +74,16 @@ export class Api {
     return res;
   }
 
-  async postCheckoutCart(cart: Cart, email: string, promoCode?: string): Promise<CheckoutResponse> {
-    return await this.post<CheckoutRequest, CheckoutResponse>(
-      `/cart/checkout`,
-      {
-        ...cart,
-        promoCode: promoCode,
-        email,
-      }
-    );
+  async postCheckoutCart(
+    cart: Cart,
+    email: string,
+    promoCode?: string
+  ): Promise<CheckoutResponse> {
+    return await this.post<CheckoutRequest, CheckoutResponse>(`/checkout`, {
+      ...cart,
+      promoCode: promoCode,
+      email,
+    });
   }
 }
 

@@ -2,8 +2,15 @@ import { readItem, writeItem } from "./dynamodb";
 import { v4 as uuidv4 } from "uuid";
 import { Order, OrderItem, OrderStatus, OrderHoldEntry } from "types";
 
-const ORDER_TABLE_NAME = process.env.ORDER_TABLE_NAME || "";
-const ORDER_HOLD_TABLE_NAME = process.env.ORDER_HOLD_TABLE_NAME || "";
+const ORDER_TABLE_NAME = process.env.ORDER_TABLE_NAME;
+const ORDER_HOLD_TABLE_NAME = process.env.ORDER_HOLD_TABLE_NAME;
+
+if (!ORDER_TABLE_NAME) {
+  throw new Error("ORDER_TABLE_NAME is not defined");
+}
+if (!ORDER_HOLD_TABLE_NAME) {
+  throw new Error("ORDER_HOLD_TABLE_NAME is not defined");
+}
 
 interface DynamoOrderItem {
   id: string;
@@ -13,7 +20,7 @@ interface DynamoOrderItem {
   price: number;
   name: string;
   colorway: string;
-  product_category: string;
+  // product_category: string;
 }
 
 interface DynamoOrder {
@@ -24,6 +31,10 @@ interface DynamoOrder {
   customerEmail: string;
   transactionID: string;
   orderDateTime: string;
+}
+
+interface DynamoOrderHoldEntry {
+  // todo
 }
 
 export const getOrder = async (id: string) => {
@@ -48,7 +59,7 @@ const decodeOrder = (order: DynamoOrder): Order => {
     items: order.orderItems.map((item) => ({
       id: item.id || "",
       name: item.name || "",
-      category: item.product_category || "",
+      // category: item.product_category || "",
       image: item.image || undefined,
       color: item.colorway || "",
       size: item.size || "",
@@ -58,7 +69,7 @@ const decodeOrder = (order: DynamoOrder): Order => {
     status: order.status || OrderStatus.PENDING_PAYMENT,
     customer_email: order.customerEmail || "",
     transaction_id: order.transactionID || "",
-    transaction_time: date || undefined,
+    transaction_time: date || null,
   };
 };
 
@@ -70,16 +81,16 @@ const encodeOrderItem = (item: OrderItem): DynamoOrderItem => ({
   price: item.price,
   name: item.name,
   colorway: item.color,
-  product_category: item.category,
+  // product_category: item.category,
 });
 
 const encodeOrder = (order: Order): DynamoOrder => ({
+  transactionID: order.transaction_id || "",
   orderID: order.id,
   paymentGateway: order.payment_method || "",
   orderItems: order.items.map(encodeOrderItem),
   status: order.status || OrderStatus.PENDING_PAYMENT,
   customerEmail: order.customer_email || "",
-  transactionID: order.transaction_id || "",
   orderDateTime: order.transaction_time
     ? new Date(order.transaction_time).toISOString()
     : new Date().toISOString(),
@@ -92,6 +103,17 @@ export const createOrder = async (order: Order): Promise<Order> => {
   return decodeOrder(dynamoOrder);
 };
 
-export const createOrderHoldEntry = async (orderHoldEntry: OrderHoldEntry): Promise<void> => {
-  await writeItem(ORDER_HOLD_TABLE_NAME, orderHoldEntry);
+const encodeOrderHoldEntry = (
+  _orderHoldEntry: OrderHoldEntry
+): DynamoOrderHoldEntry => {
+  return {
+    // todo
+  };
+};
+
+export const createOrderHoldEntry = async (
+  orderHoldEntry: OrderHoldEntry
+): Promise<void> => {
+  const dynamoOrderHoldEntry = encodeOrderHoldEntry(orderHoldEntry);
+  await writeItem(ORDER_HOLD_TABLE_NAME, dynamoOrderHoldEntry);
 };
