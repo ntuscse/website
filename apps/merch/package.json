@@ -3,6 +3,7 @@
   "description": "NTU SCSE Merch Backend",
   "version": "0.1.0",
   "main": "dist/server.js",
+  "source": "src/server.ts",
   "license": "Apache-2.0",
   "scripts": {
     "build": "tsup src/index.ts --format cjs",
