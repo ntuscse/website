@@ -185,9 +185,7 @@ exports[`renders homepage unchanged 1`] = `
               data-nimg="fill"
               decoding="async"
               loading="lazy"
-              sizes="100vw"
               src="/home/who_r_we_doodle.svg"
-              srcset="/home/who_r_we_doodle.svg 640w, /home/who_r_we_doodle.svg 750w, /home/who_r_we_doodle.svg 828w, /home/who_r_we_doodle.svg 1080w, /home/who_r_we_doodle.svg 1200w, /home/who_r_we_doodle.svg 1920w, /home/who_r_we_doodle.svg 2048w, /home/who_r_we_doodle.svg 3840w"
               style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
             />
           </div>
