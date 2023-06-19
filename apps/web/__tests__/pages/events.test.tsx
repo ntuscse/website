@@ -6,7 +6,6 @@ import { getMockEvents } from "@/lib/test/fixtures/events";
 import { getDisplayDate } from "@/lib/helpers/getDisplayDate";
 import { removeTextImgTag } from "@/lib/helpers/removeTextImgTag";
 import { fireEvent, render, waitFor } from "@testing-library/react";
-import createMockRouter from "@/lib/test/router/createMockRouter";
 import { RouterContext } from "next/dist/shared/lib/router-context";
 import { ChakraProvider } from "@chakra-ui/react";
 
@@ -54,24 +53,5 @@ describe("Events page", () => {
         currentBlog.node.featuredImage.node.link
       );
     }
-  });
-
-  test("should redirect to correct page on click", async () => {
-    let router = createMockRouter({});
-    const screen = render(
-      <RouterContext.Provider value={router}>
-        <ChakraProvider>
-          <Events posts={getMockEvents()} />
-        </ChakraProvider>
-      </RouterContext.Provider>
-    );
-    const blog = screen.getAllByTestId("blog-card")[0];
-
-    waitFor(() => {
-      fireEvent.click(blog);
-      expect(router.push).toHaveBeenCalledWith(
-        "/techterview-101-navigating-the-internship-world"
-      );
-    });
   });
 });

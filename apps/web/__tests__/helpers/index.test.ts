@@ -1,4 +1,5 @@
 import { getDisplayDate } from "@/lib/helpers/getDisplayDate";
+import { removeTextImgTag } from "@/lib/helpers/removeTextImgTag";
 
 describe("Test helper functions", () => {
   test("expect getDisplayDate to return correctly", () => {
@@ -6,6 +7,12 @@ describe("Test helper functions", () => {
       expect(getDisplayDate(testCase.input)).toBe(testCase.expected);
     });
   });
+
+  test("expect removeTextImgTag to return correctly", () => {
+    removeTextImgTagTestCases.forEach(testCase => {
+      expect(removeTextImgTag(testCase.input)).toBe(testCase.expected)
+    })
+  })
 });
 
 interface TestCase {
@@ -23,3 +30,14 @@ const getDisplayDateTestCases: TestCase[] = [
     expected: "January 01, 2023",
   },
 ];
+
+const removeTextImgTagTestCases: TestCase[] = [
+  {
+    input: 'SCSE <img class="testClass" src="test.com" /> test',
+    expected: "SCSE <> test",
+  },
+  {
+    input: '<img class="testClass"/>',
+    expected: '<>'
+  }
+]
