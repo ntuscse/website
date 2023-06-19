@@ -16,8 +16,7 @@ const nextConfig = {
       },
     ],
   },
+  transpileModules: ["ui"],
 };
 
-const withTM = require("next-transpile-modules")(["ui"]);
-
-module.exports = withTM(nextConfig);
+module.exports = nextConfig;
