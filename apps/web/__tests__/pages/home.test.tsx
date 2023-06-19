@@ -13,8 +13,10 @@ jest.mock("@/features/blogs/api/getAllBlogPosts");
 
 describe("test home page", () => {
   test("should return correct details", async () => {
-    const mockedGeAllBlogs = jest.spyOn(blogsApi, "getAllBlogPosts");
-    mockedGeAllBlogs.mockImplementation(() => Promise.resolve(getMockEvents()));
+    const mockedGetAllBlogs = jest.spyOn(blogsApi, "getAllBlogPosts");
+    mockedGetAllBlogs.mockImplementation(() =>
+      Promise.resolve(getMockEvents())
+    );
     const context = {
       params: {} as ParsedUrlQuery,
     };

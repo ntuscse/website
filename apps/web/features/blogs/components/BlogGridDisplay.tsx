@@ -12,7 +12,7 @@ export const BlogGridDisplay = (props: BlogGridDisplayProps) => {
   const { posts, ...boxProps } = props;
 
   return (
-    <Box p="50px" display="flex" justifyContent="center" {...boxProps}>
+    <Box p="50px" display="flex" justifyContent="center" {...boxProps} >
       <Grid
         templateColumns={{ base: "1fr", lg: "0.5fr 1fr" }}
         rowGap={{ base: "20px", lg: "75px" }}
@@ -28,7 +28,7 @@ export const BlogGridDisplay = (props: BlogGridDisplayProps) => {
                 mb={{ base: 4, lg: 0 }}
               >
                 {post.node.featuredImage && (
-                  <Link href={`blog/${post.node.slug}`}>
+                  <Link href={`blog/${post.node.slug}`} data-testid="blog-grid-img">
                     <Image
                       src={post.node.featuredImage.node.link}
                       alt={post.node.title}
@@ -44,21 +44,23 @@ export const BlogGridDisplay = (props: BlogGridDisplayProps) => {
                 flexDirection="column"
                 justifyContent="center"
                 mb={{ base: 6, lg: 0 }}
+                data-testid="blog-grid"
               >
                 <Link href={`/blog/${post.node.slug}`}>
                   <Heading
                     size="lg"
                     mb="12px"
                     _hover={{ color: "gray.600", cursor: "pointer" }}
+                    data-testid="blog-grid-title"
                   >
                     {post.node.title}
                   </Heading>
                 </Link>
-                <Text fontWeight="light" fontSize="13px">
+                <Text fontWeight="light" fontSize="13px" data-testid="blog-grid-author">
                   by <Link href={`/blog/author/${post.node.author ? post.node.author.node.name : 'no-author'}`}><Text as="span" color="blue.700" fontWeight="bold" _hover={{ textDecoration: "underline" }}>{post.node.author?.node?.name}</Text></Link>
-                  <Text as="span">{' '}/ {getDisplayDate(new Date(post.node.date))}</Text>
+                  <Text as="span" data-testid="blog-grid-date">{' '}/ {getDisplayDate(new Date(post.node.date))}</Text>
                 </Text>
-                <Text noOfLines={2} mt={2} alignSelf="start" fontSize="14px">
+                <Text noOfLines={2} mt={2} alignSelf="start" fontSize="14px" data-testid="blog-grid-excerpt">
                   {post.node.excerpt + "..."}
                 </Text>
               </GridItem>

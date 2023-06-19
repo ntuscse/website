@@ -13,7 +13,7 @@ import {
   getAllBlogPostsSlugs
 } from "@/features/blogs";
 
-interface AuthorBlogsProps {
+export interface AuthorBlogsProps {
   posts: BlogGridDisplayProps["posts"];
 }
 
