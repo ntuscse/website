@@ -3,7 +3,7 @@ import { Product, ProductCategory } from "types";
 export const products: Product[] = [
   {
     id: "1",
-    name: "Sweater",
+    name: "Cool T-shirt",
     colors: ["blue", "yellow"],
     sizes: ["S", "M", "L"],
     images: [
@@ -29,8 +29,8 @@ export const products: Product[] = [
   },
   {
     id: "2",
-    name: "T-Shirt",
-    colors: ["blue", "yellow"],
+    name: "Neat T-Shirt",
+    colors: ["green", "black"],
     sizes: ["S", "M", "L"],
     images: [
       "https://image.uniqlo.com/UQ/ST3/sg/imagesgoods/451406/item/",
