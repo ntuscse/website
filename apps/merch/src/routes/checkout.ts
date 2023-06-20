@@ -16,7 +16,7 @@ import {
   createOrder,
   createOrderHoldEntry,
   getProducts,
-  incrementStockCount,
+  // incrementStockCount,
 } from "../db";
 import { Request, Response } from "../lib/types";
 
@@ -113,14 +113,14 @@ export const checkout = (req: Request, res: Response<CheckoutResponse>) => {
         reserved_products: reserved,
       };
 
-      const stockIncrements = cart.items.map((item) =>
-        incrementStockCount(item.id, -item.quantity, item.size, item.color)
-      );
+      // const stockIncrements = cart.items.map((item) =>
+      //   incrementStockCount(item.id, -item.quantity, item.size, item.color)
+      // );
 
       return Promise.all([
         createOrder(order),
         stripeIntent,
-        // createOrderHoldEntry(orderHold),
+        createOrderHoldEntry(orderHold),
         // ...stockIncrements,
       ]);
     })

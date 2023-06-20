@@ -33,6 +33,10 @@ interface DynamoOrder {
   orderDateTime: string;
 }
 
+interface DynamoOrderHoldEntry {
+  // todo
+}
+
 export const getOrder = async (id: string) => {
   const dynamoOrder = await readItem<DynamoOrder>(
     ORDER_TABLE_NAME ?? "",
@@ -81,12 +85,12 @@ const encodeOrderItem = (item: OrderItem): DynamoOrderItem => ({
 });
 
 const encodeOrder = (order: Order): DynamoOrder => ({
+  transactionID: order.transaction_id || "",
   orderID: order.id,
   paymentGateway: order.payment_method || "",
   orderItems: order.items.map(encodeOrderItem),
   status: order.status || OrderStatus.PENDING_PAYMENT,
   customerEmail: order.customer_email || "",
-  transactionID: order.transaction_id || "",
   orderDateTime: order.transaction_time
     ? new Date(order.transaction_time).toISOString()
     : new Date().toISOString(),
@@ -99,8 +103,17 @@ export const createOrder = async (order: Order): Promise<Order> => {
   return decodeOrder(dynamoOrder);
 };
 
+const encodeOrderHoldEntry = (
+  _orderHoldEntry: OrderHoldEntry
+): DynamoOrderHoldEntry => {
+  return {
+    // todo
+  };
+};
+
 export const createOrderHoldEntry = async (
   orderHoldEntry: OrderHoldEntry
 ): Promise<void> => {
-  await writeItem(ORDER_HOLD_TABLE_NAME, orderHoldEntry);
+  const dynamoOrderHoldEntry = encodeOrderHoldEntry(orderHoldEntry);
+  await writeItem(ORDER_HOLD_TABLE_NAME, dynamoOrderHoldEntry);
 };
