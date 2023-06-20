@@ -95,7 +95,7 @@ export type PricedCart = {
     originalPrice: number;
     discountedPrice: number;
   }[];
-}
+};
 
 export enum PromoType {
   PERCENTAGE = "PERCENTAGE",
@@ -111,7 +111,7 @@ export type OrderHold = {
   transaction_id: string;
   expiry: string;
   reserved_products: ReservedProduct[];
-}
+};
 
 export type ProductInfo = {
   name: string;
@@ -129,30 +129,38 @@ export type CartPrice = {
 };
 
 // API Types
-export const QuotationRequest = Cart.merge(z.object({
-  promoCode: z.string().optional(),
-}));
+export const QuotationRequest = Cart.merge(
+  z.object({
+    promoCode: z.string().optional(),
+  })
+);
 
-export const CheckoutRequest = QuotationRequest.merge(z.object({
-  email: z.string(),
-}));
+export const CheckoutRequest = QuotationRequest.merge(
+  z.object({
+    email: z.string(),
+  })
+);
 
 export type QuotationRequest = z.infer<typeof QuotationRequest>;
 export type CheckoutRequest = z.infer<typeof CheckoutRequest>;
 
 export type CheckoutResponse = Order & {
-  expiry: string,
+  expiry: string;
   payment: {
-    method: "stripe",
-    client_secret: string,
+    method: "stripe";
+    client_secret: string;
   };
 };
 
 export type ProductsResponse = {
-  products: Product[],
+  products: Product[];
 };
 
 export type APIError = {
-  error: string,
-  detail?: string|object,
-}
+  error: string;
+  detail?: string | object;
+};
+
+export type OrderHoldEntry = {
+  // todo: ???
+};

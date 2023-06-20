@@ -2,8 +2,11 @@
   "extends": "tsconfig/node.json",
   "include": [
     "**/*.js",
-    "**/*.ts",
+    "**/*.ts"
   ],
+  "compilerOptions": {
+    "outDir": "dist",
+  },
   "exclude": [
     "dist",
     "build",

@@ -1,6 +1,6 @@
 {
   "name": "nodelogger",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "main": "dist/index.js",
   "source": "src/index.ts",
   "types": "dist/index.d.ts",
@@ -10,16 +10,17 @@
   "license": "Apache-2.0",
   "scripts": {
     "build": "tsc",
-    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
+    "clean": "rm -rf .turbo && rm -rf dist",
     "dev": "tsc -w",
     "lint": "TIMING=1 eslint \"**/*.ts*\"",
     "lint:fix": "TIMING=1 eslint --fix \"**/*.ts*\""
   },
   "dependencies": {
-    "@types/morgan": "^1.9.4",
-    "@types/winston": "^2.4.4",
     "morgan": "^1.10.0",
     "winston": "^3.8.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/morgan": "^1.9.4",
+    "@types/winston": "^2.4.4"
+  }
 }
