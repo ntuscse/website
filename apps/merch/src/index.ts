@@ -9,6 +9,7 @@ import { index, notFound } from "./routes/index";
 import { orderGet } from "./routes/orders";
 import { productGet, productsAll } from "./routes/products";
 import { RegisterRoutes } from "../dist/routes";
+import { errorHandler } from "./lib/errorHandler";
 
 const app = express();
 const CORS_ORIGIN = process.env.CORS_ORIGIN;
@@ -40,9 +41,11 @@ app.get("/orders/:id", orderGet);
 app.get("/products", productsAll);
 app.get("/products/:id", productGet);
 app.post("/checkout", checkout);
-app.use(notFound);
 
 RegisterRoutes(app);
+
+app.use(errorHandler);
+app.use(notFound);
 
 app.listen("3000", () => Logger.info("server started on port 3000"));
 
