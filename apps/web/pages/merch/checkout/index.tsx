@@ -28,9 +28,6 @@ const CheckoutPage = () => {
   const { state: cartState } = useCartStore();
   const { setState: setCheckoutState } = useCheckoutStore();
 
-  // For mapping between cart item and info
-  // const [productInfo, setProductInfo] = useState<ProductInfoMapType>({});
-
   // Fetch and check if cart item is valid.
   const { mutate: initCheckout } = useMutation(
     () =>
@@ -46,24 +43,6 @@ const CheckoutPage = () => {
       },
       onSuccess: (data: CheckoutResponse) => {
         setCheckoutState(data);
-        // const tempProductInfo: ProductInfoMapType = {};
-        // cartState.items.forEach((item: CartItemType) => {
-        //   const product = data.items.find((i) => i.id === item.productId);
-        //   if (!product) {
-        //     const { productId, size } = item;
-        //     cartDispatch({
-        //       type: CartActionType.REMOVE_ITEM,
-        //       payload: { productId, size },
-        //     });
-        //   } else {
-        //     tempProductInfo[product.id] = {
-        //       image: product.images?.[0],
-        //       price: product.price,
-        //       name: product.name,
-        //     };
-        //   }
-        // setProductInfo(tempProductInfo);
-        // });
       },
       onSettled: () => {
         setIsLoading(false);
