@@ -1,7 +1,11 @@
 import { readItem, readTable, updateItem } from "./dynamodb";
 import { Product } from "types";
 
-const PRODUCT_TABLE_NAME = process.env.PRODUCT_TABLE_NAME || "";
+const PRODUCT_TABLE_NAME = process.env.PRODUCT_TABLE_NAME;
+
+if (!PRODUCT_TABLE_NAME) {
+  throw new Error("PRODUCT_TABLE_NAME not defined");
+}
 
 export const getProducts = async () => {
   const dynamoProducts = await readTable<DynamoProduct>(PRODUCT_TABLE_NAME);

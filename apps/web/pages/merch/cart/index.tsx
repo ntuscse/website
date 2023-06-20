@@ -62,7 +62,7 @@ const Cart: FC = () => {
     {
       onSuccess: () => {
         setIsCartLoading(false);
-      }
+      },
     }
   );
 
@@ -70,7 +70,9 @@ const Cart: FC = () => {
   // const [voucherInput, setVoucherInput] = useState("");
   // const [voucherError, setVoucherError] = useState<boolean>(false);
 
-  const pricedCart = products ? calculatePricing(products, cartState.cart, undefined) : null;
+  const pricedCart = products
+    ? calculatePricing(products, cartState.cart, undefined)
+    : null;
 
   const emailValidator = Joi.string()
     .email({ tlds: { allow: false } })

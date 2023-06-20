@@ -43,7 +43,6 @@ import {
   isSizeAvailable,
 } from "features/merch/functions";
 
-
 const GroupTitle = ({ children }: any) => (
   <Heading fontSize="md" mb={2} color="grey" textTransform="uppercase">
     {children}
@@ -135,9 +134,9 @@ const MerchDetail: React.FC = () => {
     setIsDisabled(false);
   };
 
-  const handleBuyNow = () => {
+  const handleBuyNow = async () => {
     handleAddToCart();
-    router.push(routes.CART);
+    await router.push(routes.CART);
   };
 
   const ProductNameSection = (
@@ -320,10 +319,7 @@ const MerchDetail: React.FC = () => {
         </SizeOption>
         <Center>
           <Text fontSize="m" fontWeight={500} color="primary.600">
-            {product &&
-            selectedColor &&
-            selectedSize &&
-            product.is_available === true
+            {product && selectedColor && selectedSize && product.is_available
               ? displayStock(product, selectedColor, selectedSize)
               : ""}
           </Text>

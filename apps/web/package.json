@@ -20,6 +20,8 @@
     "@chakra-ui/system": "^2.3.1",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@stripe/react-stripe-js": "^2.1.1",
+    "@stripe/stripe-js": "^1.54.0",
     "@tanstack/react-query": "^4.26.1",
     "@tanstack/react-query-devtools": "^4.26.1",
     "framer-motion": "^7.6.4",

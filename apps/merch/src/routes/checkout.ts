@@ -59,6 +59,7 @@ export const checkout = (req: Request, res: Response<CheckoutResponse>) => {
   getProducts()
     .then((products: Product[]): [Product[], PricedCart] => {
       // TODO: Fetch promotion.
+      console.log("calculating prices prices");
       return [products, calculatePricing(products, cart, undefined)];
     })
     .then(([products, cart]) =>
@@ -79,6 +80,7 @@ export const checkout = (req: Request, res: Response<CheckoutResponse>) => {
       ])
     )
     .then(([cart, stripeIntent]) => {
+      console.log("creating order");
       const transactionID = stripeIntent.id;
       const orderItems = cart.items.map(
         (item): OrderItem => ({
@@ -118,17 +120,21 @@ export const checkout = (req: Request, res: Response<CheckoutResponse>) => {
       return Promise.all([
         createOrder(order),
         stripeIntent,
-        createOrderHoldEntry(orderHold),
-        ...stockIncrements,
+        // createOrderHoldEntry(orderHold),
+        // ...stockIncrements,
       ]);
     })
     .then(([order, stripeIntent]) => {
+      console.log("order created");
       res.json({
         ...order,
         expiry: expiryTime.toISOString(),
+        price: {
+          grandTotal: stripeIntent.amount,
+        },
         payment: {
           method: "stripe",
-          client_secret: stripeIntent.client_secret ?? "",
+          clientSecret: stripeIntent.client_secret ?? "",
         },
       });
     })

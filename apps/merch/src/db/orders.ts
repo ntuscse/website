@@ -2,8 +2,15 @@ import { readItem, writeItem } from "./dynamodb";
 import { v4 as uuidv4 } from "uuid";
 import { Order, OrderItem, OrderStatus, OrderHoldEntry } from "types";
 
-const ORDER_TABLE_NAME = process.env.ORDER_TABLE_NAME || "";
-const ORDER_HOLD_TABLE_NAME = process.env.ORDER_HOLD_TABLE_NAME || "";
+const ORDER_TABLE_NAME = process.env.ORDER_TABLE_NAME;
+const ORDER_HOLD_TABLE_NAME = process.env.ORDER_HOLD_TABLE_NAME;
+
+if (!ORDER_TABLE_NAME) {
+  throw new Error("ORDER_TABLE_NAME is not defined");
+}
+if (!ORDER_HOLD_TABLE_NAME) {
+  throw new Error("ORDER_HOLD_TABLE_NAME is not defined");
+}
 
 interface DynamoOrderItem {
   id: string;

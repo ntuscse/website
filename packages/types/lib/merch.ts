@@ -38,7 +38,7 @@ export interface Order {
 // Cart
 export type CartState = {
   cart: Cart;
-  voucher: string | null;
+  voucher: string | undefined;
   name: string;
   billingEmail: string;
 };
@@ -146,9 +146,13 @@ export type CheckoutRequest = z.infer<typeof CheckoutRequest>;
 
 export type CheckoutResponse = Order & {
   expiry: string;
+  price: {
+    grandTotal: number;
+    // todo: add rest of price object
+  };
   payment: {
     method: "stripe";
-    client_secret: string;
+    clientSecret: string;
   };
 };
 

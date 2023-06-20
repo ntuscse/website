@@ -21,7 +21,8 @@
         "STRIPE_SECRET_KEY",
         "ORDER_EXPIRY_TIME",
         "NEXT_PUBLIC_MERCH_API_ORIGIN",
-        "NEXT_PUBLIC_FRONTEND_URL"
+        "NEXT_PUBLIC_FRONTEND_URL",
+        "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY"
       ]
     },
     "build": {
@@ -44,7 +45,8 @@
         "STRIPE_SECRET_KEY",
         "ORDER_HOLD_TABLE_NAME",
         "ORDER_EXPIRY_TIME",
-        "NEXT_PUBLIC_MERCH_API_ORIGIN"
+        "NEXT_PUBLIC_MERCH_API_ORIGIN",
+        "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY"
       ],
       "outputs": ["dist/**", "build/**", "out/**", ".next/**"]
     },
@@ -71,7 +73,8 @@
         "ORDER_HOLD_TABLE_NAME",
         "STRIPE_SECRET_KEY",
         "ORDER_EXPIRY_TIME",
-        "NEXT_PUBLIC_MERCH_API_ORIGIN"
+        "NEXT_PUBLIC_MERCH_API_ORIGIN",
+        "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY"
       ]
     },
     "serve": {
@@ -93,7 +96,8 @@
         "ORDER_HOLD_TABLE_NAME",
         "STRIPE_SECRET_KEY",
         "ORDER_EXPIRY_TIME",
-        "NEXT_PUBLIC_MERCH_API_ORIGIN"
+        "NEXT_PUBLIC_MERCH_API_ORIGIN",
+        "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY"
       ]
     },
     "lint": {
