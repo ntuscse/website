@@ -35,7 +35,7 @@ const decodeProduct = (product: DynamoProduct): Product => {
     name: product.name || "",
     price: product.price || 0,
     category: product.product_category || "",
-    size_chart: product.size_chart || null,
+    size_chart: product.size_chart || undefined,
     images: product.images || [],
     colors: product.colorways || {},
     is_available: product.is_available || false,
@@ -44,12 +44,18 @@ const decodeProduct = (product: DynamoProduct): Product => {
   };
 };
 
-export const incrementStockCount = async (item_id: string, increment_value: number, size: string, color: string): Promise<void> => {
+export const incrementStockCount = async (
+  item_id: string,
+  increment_value: number,
+  size: string,
+  color: string
+): Promise<void> => {
   const update_expression = `ADD stock.#color.#size :incrementValue`;
-  const condition_expression = "is_available = :isAvailable AND stock.#color.#size >= :incrementValue";
+  const condition_expression =
+    "is_available = :isAvailable AND stock.#color.#size >= :incrementValue";
   const expression_attribute_values = {
-    ":incrementValue": { "N": String(increment_value) },
-    ":isAvailable": { "BOOL": true },
+    ":incrementValue": { N: String(increment_value) },
+    ":isAvailable": { BOOL: true },
   };
   const expression_attribute_names = {
     "#color": color,
@@ -62,7 +68,6 @@ export const incrementStockCount = async (item_id: string, increment_value: numb
     condition_expression,
     expression_attribute_values,
     expression_attribute_names,
-    "id",
+    "id"
   );
 };
-

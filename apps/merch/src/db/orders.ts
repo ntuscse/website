@@ -13,7 +13,7 @@ interface DynamoOrderItem {
   price: number;
   name: string;
   colorway: string;
-  product_category: string;
+  // product_category: string;
 }
 
 interface DynamoOrder {
@@ -48,7 +48,7 @@ const decodeOrder = (order: DynamoOrder): Order => {
     items: order.orderItems.map((item) => ({
       id: item.id || "",
       name: item.name || "",
-      category: item.product_category || "",
+      // category: item.product_category || "",
       image: item.image || undefined,
       color: item.colorway || "",
       size: item.size || "",
@@ -58,7 +58,7 @@ const decodeOrder = (order: DynamoOrder): Order => {
     status: order.status || OrderStatus.PENDING_PAYMENT,
     customer_email: order.customerEmail || "",
     transaction_id: order.transactionID || "",
-    transaction_time: date || undefined,
+    transaction_time: date || null,
   };
 };
 
@@ -70,7 +70,7 @@ const encodeOrderItem = (item: OrderItem): DynamoOrderItem => ({
   price: item.price,
   name: item.name,
   colorway: item.color,
-  product_category: item.category,
+  // product_category: item.category,
 });
 
 const encodeOrder = (order: Order): DynamoOrder => ({
@@ -92,6 +92,8 @@ export const createOrder = async (order: Order): Promise<Order> => {
   return decodeOrder(dynamoOrder);
 };
 
-export const createOrderHoldEntry = async (orderHoldEntry: OrderHoldEntry): Promise<void> => {
+export const createOrderHoldEntry = async (
+  orderHoldEntry: OrderHoldEntry
+): Promise<void> => {
   await writeItem(ORDER_HOLD_TABLE_NAME, orderHoldEntry);
 };

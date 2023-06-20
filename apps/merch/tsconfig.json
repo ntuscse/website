@@ -1,6 +1,7 @@
 {
   "extends": "tsconfig/node.json",
   "compilerOptions": {
+    "experimentalDecorators": true,
     "target": "es5",
     "lib": [
       "esnext"
@@ -9,9 +10,10 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": ".",
     "allowSyntheticDefaultImports": true,
-    "strict": true
+    "strict": true,
+    "resolveJsonModule": true
   },
   "include": [
     "src"
@@ -19,9 +21,9 @@
   "exclude": [
     "node_modules",
     "dist",
-    "build",
+    "build"
   ],
   "ts-node": {
     "transpileOnly": true
-  },
+  }
 }
