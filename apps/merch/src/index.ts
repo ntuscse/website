@@ -48,6 +48,7 @@ app.use("/trpc-panel", (_, res) => {
 
 app.use(notFound);
 
-app.listen("3002", () => Logger.info("server started on port 3000"));
+const port = 3002;
+app.listen(port, () => Logger.info(`server started on port ${port}`));
 
 export default app;
