@@ -3,7 +3,7 @@ type Routes = {
   PRODUCT: string;
   CART: string;
   CHECKOUT: string;
-  ORDER_SUMMARY: string;
+  ORDERS: string;
 };
 
 export const routes: Routes = {
@@ -11,7 +11,7 @@ export const routes: Routes = {
   PRODUCT: "/merch/product",
   CART: "/merch/cart",
   CHECKOUT: "/merch/checkout",
-  ORDER_SUMMARY: "/merch/order-summary",
+  ORDERS: "/merch/orders",
 };
 
 export default routes;

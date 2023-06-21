@@ -113,6 +113,8 @@ export const checkout = (req: Request, res: Response<CheckoutResponse>) => {
         reserved_products: reserved,
       };
 
+      // TODO: fix and uncomment stock increment + hold order
+
       // const stockIncrements = cart.items.map((item) =>
       //   incrementStockCount(item.id, -item.quantity, item.size, item.color)
       // );
@@ -120,7 +122,7 @@ export const checkout = (req: Request, res: Response<CheckoutResponse>) => {
       return Promise.all([
         createOrder(order),
         stripeIntent,
-        createOrderHoldEntry(orderHold),
+        // createOrderHoldEntry(orderHold),
         // ...stockIncrements,
       ]);
     })

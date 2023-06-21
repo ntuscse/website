@@ -42,6 +42,6 @@ app.use("/trpc", trpcMiddleware);
 
 app.use(notFound);
 
-app.listen("3000", () => Logger.info("server started on port 3000"));
+app.listen("3002", () => Logger.info("server started on port 3000"));
 
 export default app;

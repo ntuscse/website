@@ -63,12 +63,15 @@ const PaymentForm = () => {
       // TODO: order ID to be generated iteratively with api call
       setIsLoading(true);
 
-      const payload: CartAction = {
+      cartDispatch({
         type: CartActionType.RESET_CART,
-      };
-      cartDispatch(payload);
+      });
       setIsLoading(false);
-      await router.push(`${routes.ORDER_SUMMARY}/${checkoutState?.orderId}`);
+      if (typeof checkoutState?.id === "string") {
+        await router.push(`${routes.ORDERS}/${checkoutState?.id}`);
+      } else {
+        // TODO: handle missing id
+      }
     }
   };
   return (
