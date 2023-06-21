@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
+
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import {
@@ -13,7 +15,6 @@ import {
   useDisclosure,
   Center,
 } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
 import {
   EmptyProductView,
   MerchCarousel,
@@ -28,20 +29,19 @@ import {
   CartActionType,
   useCartStore,
 } from "features/merch/context/cart";
-import { api } from "features/merch/services/api";
-import { routes, QueryKeys } from "features/merch/constants";
+import { routes } from "features/merch/constants";
 import {
   displayPrice,
   displayQtyInCart,
   displayStock,
-  getDefaultColor,
-  getDefaultSize,
   getQtyInCart,
   getQtyInStock,
   isColorAvailable,
   isOutOfStock,
   isSizeAvailable,
 } from "features/merch/functions";
+import { trpc } from "@/lib/trpc";
+import { GetStaticPaths } from "next";
 
 const GroupTitle = ({ children }: any) => (
   <Heading fontSize="md" mb={2} color="grey" textTransform="uppercase">
@@ -63,17 +63,20 @@ const MerchDetail: React.FC = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const { data: product, isLoading } = useQuery(
-    [QueryKeys.PRODUCT, id],
-    () => api.getProduct(id),
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+  const { data, isLoading } = trpc.getProduct.useQuery(
     {
-      onSuccess: (data: Product) => {
-        setIsDisabled(!(data?.is_available === true));
-        setSelectedSize(getDefaultSize(data));
-        setSelectedColor(getDefaultColor(data));
-      },
+      id,
+    },
+    {
+      staleTime: Infinity,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+      // initialData: props.product
     }
   );
+
+  const product = data as Product;
 
   //* In/decrement quantity
   const handleQtyChangeCounter = (isAdd = true) => {
@@ -411,3 +414,35 @@ const MerchDetail: React.FC = () => {
 };
 
 export default MerchDetail;
+
+// export const getStaticProps: GetStaticProps = async (
+//   context: GetStaticPropsContext<{ id: string }>
+// ) => {
+//   const id = context.params?.id as string;
+//
+//   const { data: product } = await trpc.getProduct.useQuery({ id });
+//
+//   return {
+//     props: {
+//       product,
+//       id,
+//     },
+//   };
+// };
+
+// eslint-disable-next-line @typescript-eslint/require-await
+export const getStaticPaths: GetStaticPaths = async () => {
+  console.log("generating static paths for /merch/product/[slug]");
+
+  const products: Product[] = [];
+
+  return {
+    paths: products.map((product) => ({
+      params: {
+        id: product.id,
+      },
+    })),
+    // https://nextjs.org/docs/pages/api-reference/functions/get-static-paths#fallback-blocking
+    fallback: "blocking",
+  };
+};

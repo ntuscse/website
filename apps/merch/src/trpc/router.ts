@@ -1,15 +1,14 @@
-import { publicProcedure, router } from "./lib";
+import { mergeRouters, publicProcedure, router } from "./lib";
 import * as trpcExpress from "@trpc/server/adapters/express";
 import { createContext } from "./lib";
-import { paymentRouter } from "./payment";
+import { productsRouter } from "./products";
 
-const appRouter = router({
+const greetingRouter = router({
   greeting: publicProcedure.query(() => "hello tRPC v10!"),
-  payment: paymentRouter,
 });
 
-// Export only the type of a router!
-// This prevents us from importing server code on the client.
+export const appRouter = mergeRouters(greetingRouter, productsRouter);
+
 export type AppRouter = typeof appRouter;
 
 export const trpcMiddleware = trpcExpress.createExpressMiddleware({

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
+
 import React, { useRef, useState, FC, useEffect } from "react";
 import Link from "next/link";
 import {
@@ -360,7 +362,7 @@ const Cart: FC = () => {
 
   useEffect(() => {
     if (reroute) {
-      router.push(routes.CHECKOUT);
+      void router.push(routes.CHECKOUT);
     }
   }, [reroute]);
 

@@ -1,5 +1,5 @@
 import "../styles/globals.css";
-import type { AppProps } from "next/app";
+import type { AppProps, AppType } from "next/app";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ChakraProvider } from "@chakra-ui/react";
@@ -13,12 +13,13 @@ import "ui/fonts/styles.css"; // for custom fonts not available on @fontsource
 import { WebLayout } from "@/features/layout";
 import { CartProvider } from "@/features/merch/context/cart";
 import { CheckoutProvider } from "@/features/merch/context/checkout";
+import { trpc } from "@/lib/trpc";
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { refetchOnWindowFocus: false } },
 });
 
-const App = ({ Component, pageProps }: AppProps) => {
+const App: AppType = ({ Component, pageProps }: AppProps) => {
   return (
     <QueryClientProvider client={queryClient}>
       <ChakraProvider theme={theme}>
@@ -35,4 +36,5 @@ const App = ({ Component, pageProps }: AppProps) => {
   );
 };
 
-export default App;
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+export default trpc.withTRPC(App);

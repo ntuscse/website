@@ -1,6 +1,7 @@
 {
   "extends": "tsconfig/node.json",
   "compilerOptions": {
+    "composite": true,
     "experimentalDecorators": true,
     "target": "es5",
     "lib": [

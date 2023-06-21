@@ -3,12 +3,13 @@ import cors from "cors";
 import express from "express";
 import { Logger, nodeloggerMiddleware } from "nodelogger";
 import path from "path";
+import { renderTrpcPanel } from "trpc-panel";
 import "dotenv/config";
 import { checkout } from "./routes/checkout";
 import { index, notFound } from "./routes/index";
 import { orderGet } from "./routes/orders";
 import { productGet, productsAll } from "./routes/products";
-import { trpcMiddleware } from "./trpc/router";
+import { appRouter, trpcMiddleware } from "./trpc/router";
 
 const app = express();
 const CORS_ORIGIN = process.env.CORS_ORIGIN;
@@ -39,6 +40,11 @@ app.post("/checkout", checkout);
 
 // trpc
 app.use("/trpc", trpcMiddleware);
+app.use("/trpc-panel", (_, res) => {
+  return res.send(
+    renderTrpcPanel(appRouter, { url: "http://localhost:3002/trpc" })
+  );
+});
 
 app.use(notFound);
 
