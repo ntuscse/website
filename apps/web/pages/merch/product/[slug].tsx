@@ -41,7 +41,7 @@ import {
   isSizeAvailable,
 } from "features/merch/functions";
 import { trpc } from "@/lib/trpc";
-import { GetStaticPaths, GetStaticProps } from "next";
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 
 const GroupTitle = ({ children }: any) => (
   <Heading fontSize="md" mb={2} color="grey" textTransform="uppercase">
@@ -49,7 +49,7 @@ const GroupTitle = ({ children }: any) => (
   </Heading>
 );
 
-const MerchDetail: React.FC = () => {
+const MerchDetail = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   // Context hook.
   const { state: cartState, dispatch: cartDispatch } = useCartStore();
   const router = useRouter();
@@ -72,7 +72,7 @@ const MerchDetail: React.FC = () => {
       staleTime: Infinity,
       refetchOnMount: false,
       refetchOnWindowFocus: false,
-      // initialData: props.product
+      initialData: props.product, // ssr magic
     }
   );
 

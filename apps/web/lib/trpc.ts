@@ -10,8 +10,6 @@ function getBaseUrl() {
   throw new Error("NEXT_PUBLIC_MERCH_API_ORIGIN is not set");
 }
 
-console.log("trpc baseUrl", getBaseUrl());
-
 export const trpc = createTRPCNext<AppRouter>({
   config(_opts) {
     return {
