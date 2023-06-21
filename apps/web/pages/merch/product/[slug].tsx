@@ -3,17 +3,17 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import {
-  Flex,
-  Heading,
-  Text,
-  Divider,
+  Badge,
   Button,
-  Input,
+  Center,
+  Divider,
+  Flex,
   Grid,
   GridItem,
-  Badge,
+  Heading,
+  Input,
+  Text,
   useDisclosure,
-  Center,
 } from "@chakra-ui/react";
 import {
   EmptyProductView,
@@ -41,7 +41,7 @@ import {
   isSizeAvailable,
 } from "features/merch/functions";
 import { trpc } from "@/lib/trpc";
-import { GetStaticPaths } from "next";
+import { GetStaticPaths, GetStaticProps } from "next";
 
 const GroupTitle = ({ children }: any) => (
   <Heading fontSize="md" mb={2} color="grey" textTransform="uppercase">
@@ -415,31 +415,55 @@ const MerchDetail: React.FC = () => {
 
 export default MerchDetail;
 
-// export const getStaticProps: GetStaticProps = async (
-//   context: GetStaticPropsContext<{ id: string }>
-// ) => {
-//   const id = context.params?.id as string;
-//
-//   const { data: product } = await trpc.getProduct.useQuery({ id });
-//
-//   return {
-//     props: {
-//       product,
-//       id,
-//     },
-//   };
-// };
+export const getStaticProps: GetStaticProps<{
+  slug: string;
+  product: Product | undefined;
+}> = async ({ params }) => {
+  console.log("generating static props for /merch/product/[slug]");
+  console.log("params", JSON.stringify(params));
+
+  // TODO: replace this with trpc/react-query call
+  if (!process.env.NEXT_PUBLIC_MERCH_API_ORIGIN) {
+    throw new Error("NEXT_PUBLIC_MERCH_API_ORIGIN is not defined");
+  }
+  const res = await fetch(
+    `${
+      process.env.NEXT_PUBLIC_MERCH_API_ORIGIN
+    }/trpc/getProduct?batch=1&input=${encodeURIComponent(
+      JSON.stringify({ "0": { id: params?.slug } })
+    )}`
+  );
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  const product = (await res.json())[0].result.data as Product;
+
+  return {
+    props: {
+      slug: params?.slug as string,
+      product: product,
+    },
+  };
+};
 
 // eslint-disable-next-line @typescript-eslint/require-await
 export const getStaticPaths: GetStaticPaths = async () => {
   console.log("generating static paths for /merch/product/[slug]");
 
-  const products: Product[] = [];
+  // TODO: replace this with trpc/react-query call
+  if (!process.env.NEXT_PUBLIC_MERCH_API_ORIGIN) {
+    throw new Error("NEXT_PUBLIC_MERCH_API_ORIGIN is not defined");
+  }
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_MERCH_API_ORIGIN}/trpc/getProducts`
+  );
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  const products = (await res.json()).result.data.products as Product[];
 
   return {
     paths: products.map((product) => ({
       params: {
-        id: product.id,
+        slug: product.id,
       },
     })),
     // https://nextjs.org/docs/pages/api-reference/functions/get-static-paths#fallback-blocking
