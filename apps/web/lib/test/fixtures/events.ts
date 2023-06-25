@@ -1,6 +1,6 @@
 import { BlogCardsDisplayProps } from "@/features/blogs";
 
-export const getMockEvents = (): BlogCardsDisplayProps["posts"] => [
+export const mockEvents: BlogCardsDisplayProps["posts"] = [
   {
     node: {
       id: "cG9zdDoxNjk1",
