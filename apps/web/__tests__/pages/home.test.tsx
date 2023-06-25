@@ -5,65 +5,106 @@ import { GetStaticPropsContext } from "next";
 import Home, { getStaticProps, HomeProps } from "../../pages";
 import { ParsedUrlQuery } from "querystring";
 import { waitFor } from "@testing-library/react";
-import { getMockEvents } from "@/lib/test/fixtures/events";
+import { mockEvents } from "@/lib/test/fixtures/events";
 import { getDisplayDate } from "@/lib/helpers/getDisplayDate";
 import { removeTextImgTag } from "@/lib/helpers/removeTextImgTag";
 
 jest.mock("@/features/blogs/api/getAllBlogPosts");
 
+const renderScreen = async () => {
+  const mockedGetAllBlogs = jest.spyOn(blogsApi, "getAllBlogPosts");
+  mockedGetAllBlogs.mockImplementation(() => Promise.resolve(mockEvents));
+  const context = {
+    params: {} as ParsedUrlQuery,
+  };
+
+  const { props } = (await getStaticProps(
+    context as GetStaticPropsContext
+  )) as { props: HomeProps };
+
+  const screen = renderComponent(<Home posts={props.posts} />);
+  return screen;
+};
+
 describe("test home page", () => {
-  test("should return correct details", async () => {
-    const mockedGetAllBlogs = jest.spyOn(blogsApi, "getAllBlogPosts");
-    mockedGetAllBlogs.mockImplementation(() =>
-      Promise.resolve(getMockEvents())
-    );
-    const context = {
-      params: {} as ParsedUrlQuery,
-    };
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
 
-    const { props } = (await getStaticProps(
-      context as GetStaticPropsContext
-    )) as { props: HomeProps };
-
-    const screen = renderComponent(<Home posts={props.posts} />);
+  test("Should render correct number of blogs", async () => {
+    const screen = await renderScreen();
 
     await waitFor(() => {
       // expect blogs to display
       const blogs = screen.getAllByTestId("blog-card");
+      expect(blogs.length).toBe(mockEvents.length);
+    });
+  });
 
-      // expect length of blogs rendered to be same as mock data
-      expect(blogs.length).toBe(getMockEvents().length);
+  test("Should render correct titles", async () => {
+    const screen = await renderScreen();
+
+    await waitFor(() => {
+      // expect blogs to display
+      const blogs = screen.getAllByTestId("blog-card");
+      expect(blogs.length).toBe(mockEvents.length);
     });
 
-    // expect title to be correct
     const blogsTitles = screen.getAllByTestId("blog-card-title");
     blogsTitles.forEach((title, idx) => {
       expect(title).toBeInTheDocument;
-      expect(title.textContent).toEqual(getMockEvents()[idx].node.title);
+      expect(title.textContent).toEqual(mockEvents[idx].node.title);
+    });
+  });
+
+  test("Should render correct dates", async () => {
+    const screen = await renderScreen();
+
+    await waitFor(() => {
+      // expect blogs to display
+      const blogs = screen.getAllByTestId("blog-card");
+      expect(blogs.length).toBe(mockEvents.length);
     });
 
-    // expect date to be correct
     const blogsDates = screen.getAllByTestId("blog-card-date");
     blogsDates.forEach((date, idx) => {
       expect(date).toBeInTheDocument;
       expect(date.textContent).toEqual(
-        getDisplayDate(new Date(getMockEvents()[idx].node.date))
+        getDisplayDate(new Date(mockEvents[idx].node.date))
       );
     });
+  });
 
-    // expect excerpt to be correct
+  test("Should render correct excerpts", async () => {
+    const screen = await renderScreen();
+
+    await waitFor(() => {
+      // expect blogs to display
+      const blogs = screen.getAllByTestId("blog-card");
+      expect(blogs.length).toBe(mockEvents.length);
+    });
+
     const blogsExcerpts = screen.getAllByTestId("blog-card-excerpt");
     blogsExcerpts.forEach((excerpt, idx) => {
       expect(excerpt).toBeInTheDocument;
       expect(excerpt.textContent).toEqual(
-        removeTextImgTag(getMockEvents()[idx].node.excerpt) + "..."
+        removeTextImgTag(mockEvents[idx].node.excerpt) + "..."
       );
     });
+  });
 
-    // expect image to be rendered to be correctly
-    const blogImagesAlt = getMockEvents().map((blog) => blog.node.title);
-    for (let i = 0; i < getMockEvents().length; i++) {
-      const currentBlog = getMockEvents()[i];
+  test("Should render correct blog images", async () => {
+    const screen = await renderScreen();
+
+    await waitFor(() => {
+      // expect blogs to display
+      const blogs = screen.getAllByTestId("blog-card");
+      expect(blogs.length).toBe(mockEvents.length);
+    });
+
+    const blogImagesAlt = mockEvents.map((blog) => blog.node.title);
+    for (let i = 0; i < mockEvents.length; i++) {
+      const currentBlog = mockEvents[i];
       const blogImage = screen.getByAltText(blogImagesAlt[i]);
       expect(blogImage).toBeInTheDocument();
       expect(blogImage).toHaveAttribute(
