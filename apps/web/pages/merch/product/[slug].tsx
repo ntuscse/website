@@ -56,7 +56,7 @@ const MerchDetail = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   const id = (router.query.slug ?? "") as string;
 
   const [quantity, setQuantity] = useState<number>(1);
-  const [isDisabled, setIsDisabled] = useState<boolean>(true);
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [maxQuantity, setMaxQuantity] = useState<number>(1);
