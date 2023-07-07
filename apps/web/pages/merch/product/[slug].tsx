@@ -29,27 +29,32 @@ import {
   CartActionType,
   useCartStore,
 } from "features/merch/context/cart";
-import { routes } from "features/merch/constants";
+import { QueryKeys, routes } from "features/merch/constants";
 import {
   displayPrice,
   displayQtyInCart,
-  displayStock,
+  displayStock, getDefaultColor, getDefaultSize,
   getQtyInCart,
   getQtyInStock,
   isColorAvailable,
   isOutOfStock,
   isSizeAvailable,
 } from "features/merch/functions";
-import { trpc } from "@/lib/trpc";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "@/features/merch/services/api";
 
-const GroupTitle = ({ children }: any) => (
+interface GroupTitleProps {
+  children: React.ReactNode;
+}
+
+const GroupTitle = ({ children }: GroupTitleProps) => (
   <Heading fontSize="md" mb={2} color="grey" textTransform="uppercase">
     {children}
   </Heading>
 );
 
-const MerchDetail = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
+const MerchDetail = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
   // Context hook.
   const { state: cartState, dispatch: cartDispatch } = useCartStore();
   const router = useRouter();
@@ -63,20 +68,17 @@ const MerchDetail = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-  const { data, isLoading } = trpc.getProduct.useQuery(
+  const { data: product, isLoading } = useQuery(
+    [QueryKeys.PRODUCT, id],
+    () => api.getProduct(id),
     {
-      id,
-    },
-    {
-      staleTime: Infinity,
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-      initialData: props.product, // ssr magic
+      onSuccess: (data: Product) => {
+        setIsDisabled(!(data?.is_available === true));
+        setSelectedSize(getDefaultSize(data));
+        setSelectedColor(getDefaultColor(data));
+      },
     }
   );
-
-  const product = data as Product;
 
   //* In/decrement quantity
   const handleQtyChangeCounter = (isAdd = true) => {

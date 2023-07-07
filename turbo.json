@@ -54,6 +54,11 @@
       "dependsOn": ["^build"],
       "outputs": ["storybook-static"]
     },
+    "clean": {
+      "cache": false,
+      "dependsOn": [],
+      "outputs": []
+    },
     "start": {
       "dependsOn": ["build"],
       "env": [

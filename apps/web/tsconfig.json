@@ -16,10 +16,5 @@
       "@/features/*": ["features/*"],
       "@/lib/*": ["lib/*"]
     }
-  },
-  "references": [
-    {
-      "path": "../merch"
-    }
-  ]
+  }
 }

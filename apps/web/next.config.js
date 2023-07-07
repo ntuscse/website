@@ -27,7 +27,6 @@ const nextConfig = {
       }
     ],
   },
-  transpilePackages: ["ui"],
 };
 
 module.exports = nextConfig;
