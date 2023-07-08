@@ -50,6 +50,10 @@
       ],
       "outputs": ["dist/**", "build/**", "out/**", ".next/**"]
     },
+    "web#build:ci": {
+      "outputs": [".next/**"],
+      "dependsOn": ["^build", "merch#start:ci"]
+    },
     "build-storybook": {
       "dependsOn": ["^build"],
       "outputs": ["storybook-static"]
@@ -81,6 +85,9 @@
         "NEXT_PUBLIC_MERCH_API_ORIGIN",
         "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY"
       ]
+    },
+    "start:ci":  {
+      "dependsOn": ["build"]
     },
     "serve": {
       "dependsOn": ["build"],

@@ -14,7 +14,6 @@ jobs:
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }} # remote caching
       TURBO_TEAM: ${{ secrets.TURBO_TEAM }} # remote caching
-      WORDPRESS_API_URL: ${{ secrets.WORDPRESS_API_URL }} # for web
 
     steps:
       - name: Check out code
@@ -48,6 +47,8 @@ jobs:
           echo "⭐️ You should run `yarn format` in the root of the project directory to fix these files"
 
       - name: Lint + Build + Unit Test
-        run: yarn turbo run lint build test cypress:start-headless --color
+        run: yarn turbo run lint build:ci test cypress:start-headless --color
         env:
           WORDPRESS_API_URL: 'https://clubs.ntu.edu.sg/csec/graphql'
+          # WORDPRESS_API_URL: ${{ secrets.WORDPRESS_API_URL }} # for web
+
