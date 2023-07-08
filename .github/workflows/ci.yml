@@ -53,7 +53,7 @@ jobs:
           # web
           WORDPRESS_API_URL: 'https://clubs.ntu.edu.sg/csec/graphql'
             # WORDPRESS_API_URL: ${{ secrets.WORDPRESS_API_URL }} # for web
-          NEXT_PUBLIC_MERCH_API_ORIGIN: 'http://localhost:3002'
+          NEXT_PUBLIC_MERCH_API_ORIGIN: 'http://127.0.0.1:3002'
 
       - name: Cache CI workflow for dependent jobs
         uses: actions/cache/save@v3
