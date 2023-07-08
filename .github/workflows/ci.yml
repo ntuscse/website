@@ -56,6 +56,11 @@ jobs:
 
       - name: Check merch#start
         run: yarn turbo run start --filter=merch
+        env:
+          AWS_REGION: 'ap-southeast-1'
+          PRODUCT_TABLE_NAME: 'be-dev-products'
+          ORDER_TABLE_NAME: 'be-dev-orders'
+          ORDER_HOLD_TABLE_NAME: 'be-dev-orders-hold'
 
       - name: Lint + Build + Unit Test
         run: yarn turbo run lint build:ci test cypress:start-headless --color
