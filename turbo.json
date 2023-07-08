@@ -50,6 +50,10 @@
       ],
       "outputs": ["dist/**", "build/**", "out/**", ".next/**"]
     },
+    "build:ci": {
+      "dependsOn": ["^build", "^build:ci"],
+      "outputs": ["dist/**", "build/**", "out/**", ".next/**"]
+    },
     "web#build:ci": {
       "outputs": [".next/**"],
       "dependsOn": ["^build", "merch#start:ci"]
@@ -87,7 +91,7 @@
       ]
     },
     "start:ci":  {
-      "dependsOn": ["build"]
+      "dependsOn": ["build:ci"]
     },
     "serve": {
       "dependsOn": ["build"],
