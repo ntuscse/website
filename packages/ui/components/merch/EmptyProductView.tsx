@@ -8,7 +8,7 @@ export const EmptyProductView: React.FC = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      router.push(routes.HOME); 
+      router.push(routes.HOME).catch((err) => console.error(err));
     }, 3000);
   }, []);
 

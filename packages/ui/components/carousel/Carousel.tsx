@@ -1,7 +1,7 @@
 import { AnimatedCarousel, AnimatedCarouselProps, AnimatedCarouselItem } from "./AnimatedCarousel";
 
 export type CarouselItem = AnimatedCarouselItem;
-export interface CarouselProps extends AnimatedCarouselProps {};
+export interface CarouselProps extends AnimatedCarouselProps {}
 
 export const Carousel = ({ items }: CarouselProps) => {
   return (

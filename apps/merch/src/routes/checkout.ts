@@ -4,17 +4,17 @@ import {
   CheckoutRequest,
   CheckoutResponse,
   Order,
-  OrderHold,
+  // OrderHold,
   OrderItem,
   OrderStatus,
   PricedCart,
   Product,
-  ReservedProduct,
+  // ReservedProduct,
 } from "types";
 import { v4 as uuidv4 } from "uuid";
 import {
   createOrder,
-  createOrderHoldEntry,
+  // createOrderHoldEntry,
   getProducts,
   // incrementStockCount,
 } from "../db";
@@ -92,12 +92,12 @@ export const checkout = (req: Request, res: Response<CheckoutResponse>) => {
           price: item.discountedPrice,
         })
       );
-      const reserved = cart.items.map(
-        (item): ReservedProduct => ({
-          id: item.id,
-          quantity: item.quantity,
-        })
-      );
+      // const reserved = cart.items.map(
+      //   (item): ReservedProduct => ({
+      //     id: item.id,
+      //     quantity: item.quantity,
+      //   })
+      // );
       const order: Order = {
         id: orderID,
         items: orderItems,
@@ -107,11 +107,11 @@ export const checkout = (req: Request, res: Response<CheckoutResponse>) => {
         customer_email: email,
         status: OrderStatus.PENDING_PAYMENT,
       };
-      const orderHold: OrderHold = {
-        transaction_id: transactionID,
-        expiry: expiryTime.toISOString(),
-        reserved_products: reserved,
-      };
+      // const orderHold: OrderHold = {
+      //   transaction_id: transactionID,
+      //   expiry: expiryTime.toISOString(),
+      //   reserved_products: reserved,
+      // };
 
       // TODO: fix and uncomment stock increment + hold order
 

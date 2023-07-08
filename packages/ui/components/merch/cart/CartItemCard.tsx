@@ -32,7 +32,7 @@ const MIN_ITEM_CNT = 1;
 
 export const CartItemCard: React.FC<CartItemProps> = ({ isMobile, data, onRemove, onQuantityChange, productInfo }) => {
   const MAX_ITEM_CNT = productInfo ? getQtyInStock(productInfo, data.color, data.size) : 1;
-  const handleQtyChangeCounter = (isAdd: boolean = true) => {
+  const handleQtyChangeCounter = (isAdd: boolean) => {
     const value = isAdd ? 1 : -1;
     if (!isAdd && data.quantity === MIN_ITEM_CNT) {
       onRemove(data.id, data.size, data.color);
@@ -79,9 +79,9 @@ export const CartItemCard: React.FC<CartItemProps> = ({ isMobile, data, onRemove
         </InputRightAddon>
       </InputGroup>
       <Center>
-        <Text fontSize="xs" fontWeight={300} color="primary.400"> 
+        <Text fontSize="xs" fontWeight={300} color="primary.400">
             In stock: {MAX_ITEM_CNT}
-        </Text> 
+        </Text>
       </Center>
     </Flex>
   );
@@ -90,12 +90,12 @@ export const CartItemCard: React.FC<CartItemProps> = ({ isMobile, data, onRemove
       <GridItem display="flex">
         <Box boxShadow="sm" maxWidth={[125, 100]}>
           <Link href={[routes.PRODUCT , productInfo?.id].join('/')}>
-            <Image 
-              src={productInfo?.images?.[0]} 
-              fallbackSrc="https://via.placeholder.com/100" 
+            <Image
+              src={productInfo?.images?.[0]}
+              fallbackSrc="https://via.placeholder.com/100"
               boxSize="70"
               objectFit="contain"
-              borderRadius="md" 
+              borderRadius="md"
             />
           </Link>
         </Box>
@@ -134,7 +134,7 @@ export const CartItemCard: React.FC<CartItemProps> = ({ isMobile, data, onRemove
       </GridItem>
       <GridItem display="flex" alignItems="center" justifyContent="center">
         <Button size="sm" variant="link" onClick={() => onRemove(data.id, data.size, data.color)}>
-          <DeleteIcon h={4} w={4} _hover={{color: "brand.red.medium"}} />
+          <DeleteIcon h={4} w={4} _hover={{ color: "brand.red.medium" }} />
         </Button>
       </GridItem>
     </Grid>
@@ -151,7 +151,7 @@ export const CartItemCard: React.FC<CartItemProps> = ({ isMobile, data, onRemove
             {productInfo?.name}
           </Text>
           <Button size="sm" variant="link" onClick={() => onRemove(data.id, data.size, data.color)}>
-            <SmallCloseIcon h={5} w={5} _hover={{color: "brand.red.medium"}} />
+            <SmallCloseIcon h={5} w={5} _hover={{ color: "brand.red.medium" }} />
           </Button>
         </Flex>
         <Flex color="grey" direction="column">

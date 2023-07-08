@@ -1,4 +1,5 @@
 import {
+  ConditionalCheckFailedException,
   DynamoDB,
   GetItemCommand,
   PutItemCommand,
@@ -71,8 +72,8 @@ export const writeItem = async <T>(
   });
   try {
     await client.send(command);
-  } catch (error: any) {
-    if (error.code === "ConditionalCheckFailedException") {
+  } catch (error) {
+    if (error instanceof ConditionalCheckFailedException) {
       Logger.warn(`Item already exists in table ${tableName}`);
       return;
     }
@@ -100,8 +101,8 @@ export const updateItem = async (
   });
   try {
     await client.send(command);
-  } catch (error: any) {
-    if (error.code === "ConditionalCheckFailedException") {
+  } catch (error) {
+    if (error instanceof ConditionalCheckFailedException) {
       Logger.warn(`Item does not exist in table ${tableName}`);
       return;
     }

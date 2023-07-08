@@ -3,6 +3,7 @@ import "swiper/less/autoplay";
 import { Flex, Box, Image } from "@chakra-ui/react";
 import { Controller } from "swiper";
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
+import type { Swiper as SwiperType } from "swiper";
 import React, { ReactElement, useState } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
@@ -83,7 +84,7 @@ const Controllerer = ({ length }: { length: number }) => {
 };
 
 export const MerchCarousel = ({ images }: CarouselProps) => {
-  const [controlledSwiper, setControlledSwiper] = useState<any>(null);
+  const [controlledSwiper, setControlledSwiper] = useState<SwiperType | null>(null);
 
   return (
     <Flex flexDirection="column" alignItems="center">
