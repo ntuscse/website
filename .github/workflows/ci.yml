@@ -6,14 +6,15 @@ on:
   pull_request:
     types: [opened, synchronize]
 
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }} # remote caching
+  TURBO_TEAM: ${{ secrets.TURBO_TEAM }} # remote caching
+
 jobs:
   build:
     name: Lint, Build and Test
     timeout-minutes: 15
     runs-on: ubuntu-latest
-    env:
-      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }} # remote caching
-      TURBO_TEAM: ${{ secrets.TURBO_TEAM }} # remote caching
 
     steps:
       - name: Check out code
@@ -49,7 +50,46 @@ jobs:
       - name: Lint + Build + Unit Test
         run: yarn turbo run lint build:ci test cypress:start-headless --color
         env:
+          # web
           WORDPRESS_API_URL: 'https://clubs.ntu.edu.sg/csec/graphql'
-          # WORDPRESS_API_URL: ${{ secrets.WORDPRESS_API_URL }} # for web
+            # WORDPRESS_API_URL: ${{ secrets.WORDPRESS_API_URL }} # for web
           NEXT_PUBLIC_MERCH_API_ORIGIN: 'http://localhost:3002'
+
+      - name: Cache CI workflow for dependent jobs
+        uses: actions/cache/save@v3
+        with:
+          path: .
+          key: CI-${{ runner.os }}-${{ github.run_id }}
+
+  preview:
+    name: Vercel Preview Deployment (web)
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    needs: build
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_WEB }}
+
+    steps:
+      - name: Get build cache
+        uses: actions/cache/restore@v3
+        with:
+          path: .
+          key: CI-${{ runner.os }}-${{ github.run_id }}
+          fail-on-cache-miss: true
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Copy Build Artifacts to .vercel dir
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+
+
 
