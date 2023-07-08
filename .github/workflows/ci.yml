@@ -51,4 +51,5 @@ jobs:
         env:
           WORDPRESS_API_URL: 'https://clubs.ntu.edu.sg/csec/graphql'
           # WORDPRESS_API_URL: ${{ secrets.WORDPRESS_API_URL }} # for web
+          NEXT_PUBLIC_MERCH_API_ORIGIN: 'http://localhost:3002'
 
