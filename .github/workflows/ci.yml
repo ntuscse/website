@@ -127,8 +127,7 @@ jobs:
         with:
           token: '${{ github.token }}'
           environment-url: '${{ steps.deploy-to-vercel.outputs.deployment-url }}'
-          environment: Preview
-          task: website
+          environment: Preview - website
 
       - name: Update deployment status (success)
         if: success()
