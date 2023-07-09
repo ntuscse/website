@@ -17,6 +17,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Grab cache
+        uses: actions/cache/restore@v3
+        with:
+          path: .
+          key: CI-${{ runner.os }}-${{ github.ref }}-${{ github.run_id }}
+          restore-keys: |
+            CI-${{ runner.os }}-${{ github.ref }}-
+            CI-${{ runner.os }}-refs/head/main-
+
       - name: Check out code
         uses: actions/checkout@v3
         with:
@@ -70,7 +79,7 @@ jobs:
         uses: actions/cache/save@v3
         with:
           path: .
-          key: CI-${{ runner.os }}-${{ github.run_id }}
+          key: CI-${{ runner.os }}-${{ github.ref }}-${{ github.run_id }}
 
   preview:
     name: Vercel Preview Deployment (web)
@@ -110,6 +119,15 @@ jobs:
           DEPLOYMENT_URL: ${{ steps.deploy-to-vercel.outputs.deployment-url }}
         run: echo $DEPLOYMENT_URL
 
+      - name: Update deployment status (success)
+        if: success()
+        uses: chrnorm/deployment-status@v2
+        with:
+          token: '${{ github.token }}'
+          environment-url: '${{ steps.deploy-to-vercel.outputs.deployment-url }}'
+          state: 'success'
+          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+
 #      - name: Comment PR with preview link
 #        uses: thollander/actions-comment-pull-request@v2
 #        env:
@@ -119,6 +137,14 @@ jobs:
 #            Deployment preview link:
 #          comment_tag: execution
 #          mode: recreate
+
+      - name: Update deployment status (failure)
+        if: failure()
+        uses: chrnorm/deployment-status@v2
+        with:
+          token: '${{ github.token }}'
+          state: 'failure'
+          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
 
 
 
