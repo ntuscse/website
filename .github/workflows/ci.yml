@@ -82,7 +82,7 @@ jobs:
           key: CI-${{ runner.os }}-${{ github.ref }}-${{ github.run_id }}
 
   preview:
-    name: Vercel Preview Deployment (web)
+    name: Vercel Preview - web
     timeout-minutes: 15
     runs-on: ubuntu-latest
     needs: build
