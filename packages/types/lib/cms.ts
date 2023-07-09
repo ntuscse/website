@@ -26,7 +26,7 @@ export interface Post {
   tags?: string[] | Tag[];
   layout?: (
     | {
-        columns: {
+        columns?: {
           width: 'oneThird' | 'half' | 'twoThirds' | 'full';
           alignment: 'left' | 'center' | 'right';
           richText?: {
@@ -81,6 +81,8 @@ export interface User {
   email?: string;
   resetPasswordToken?: string;
   resetPasswordExpiration?: string;
+  salt?: string;
+  hash?: string;
   loginAttempts?: number;
   lockUntil?: string;
   password?: string;

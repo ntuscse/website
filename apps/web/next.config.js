@@ -2,6 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  transpilePackages: ['ui', 'merch-helpers'],
   images: {
     remotePatterns: [
       {
@@ -14,9 +15,18 @@ const nextConfig = {
         hostname: "clubs.ntu.edu.sg",
         pathname: "/csec/**",
       },
+      {
+        protocol: "https",
+        hostname: "cdn.ntuscse.com",
+        pathname: "/merch/products/images/**",
+      },
+      {
+        protocol:"https",
+        hostname: "api.qrserver.com",
+        pathname: "/merch/order/**"
+      }
     ],
   },
-  transpilePackages: ["ui"],
 };
 
 module.exports = nextConfig;

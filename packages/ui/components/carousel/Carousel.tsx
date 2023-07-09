@@ -1,6 +1,6 @@
-import React from "react";
-import { AnimatedCarousel, AnimatedCarouselProps } from "./AnimatedCarousel";
+import { AnimatedCarousel, AnimatedCarouselProps, AnimatedCarouselItem } from "./AnimatedCarousel";
 
+export type CarouselItem = AnimatedCarouselItem;
 export interface CarouselProps extends AnimatedCarouselProps {}
 
 export const Carousel = ({ items }: CarouselProps) => {

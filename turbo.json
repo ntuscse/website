@@ -14,7 +14,15 @@
         "S3_SECRET_ACCESS_KEY",
         "AWS_REGION",
         "S3_BUCKET",
-        "FRONTEND_STAGING_DOMAIN"
+        "FRONTEND_STAGING_DOMAIN",
+        "PRODUCT_TABLE_NAME",
+        "ORDER_TABLE_NAME",
+        "ORDER_HOLD_TABLE_NAME",
+        "STRIPE_SECRET_KEY",
+        "ORDER_EXPIRY_TIME",
+        "NEXT_PUBLIC_MERCH_API_ORIGIN",
+        "NEXT_PUBLIC_FRONTEND_URL",
+        "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY"
       ]
     },
     "build": {
@@ -30,13 +38,34 @@
         "S3_SECRET_ACCESS_KEY",
         "AWS_REGION",
         "S3_BUCKET",
-        "FRONTEND_STAGING_DOMAIN"
+        "FRONTEND_STAGING_DOMAIN",
+        "PRODUCT_TABLE_NAME",
+        "ORDER_TABLE_NAME",
+        "CORS_ORIGIN",
+        "STRIPE_SECRET_KEY",
+        "ORDER_HOLD_TABLE_NAME",
+        "ORDER_EXPIRY_TIME",
+        "NEXT_PUBLIC_MERCH_API_ORIGIN",
+        "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY"
       ],
       "outputs": ["dist/**", "build/**", "out/**", ".next/**"]
+    },
+    "build:ci": {
+      "dependsOn": ["^build", "merch#start:ci", "^build:ci"],
+      "outputs": ["dist/**", "build/**", "out/**", ".next/**"]
+    },
+    "web#build:ci": {
+      "outputs": [".next/**"],
+      "dependsOn": ["^build", "merch#start:ci"]
     },
     "build-storybook": {
       "dependsOn": ["^build"],
       "outputs": ["storybook-static"]
+    },
+    "clean": {
+      "cache": false,
+      "dependsOn": [],
+      "outputs": []
     },
     "start": {
       "dependsOn": ["build"],
@@ -50,8 +79,21 @@
         "S3_SECRET_ACCESS_KEY",
         "AWS_REGION",
         "S3_BUCKET",
-        "FRONTEND_STAGING_DOMAIN"
+        "FRONTEND_STAGING_DOMAIN",
+        "PRODUCT_TABLE_NAME",
+        "ORDER_TABLE_NAME",
+        "CORS_ORIGIN",
+        "ORDER_HOLD_TABLE_NAME",
+        "STRIPE_SECRET_KEY",
+        "ORDER_EXPIRY_TIME",
+        "NEXT_PUBLIC_MERCH_API_ORIGIN",
+        "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY"
       ]
+    },
+    "start:ci":  {
+    },
+    "merch#start:ci": {
+      "dependsOn": ["merch#build"]
     },
     "serve": {
       "dependsOn": ["build"],
@@ -65,7 +107,15 @@
         "S3_SECRET_ACCESS_KEY",
         "AWS_REGION",
         "S3_BUCKET",
-        "FRONTEND_STAGING_DOMAIN"
+        "FRONTEND_STAGING_DOMAIN",
+        "PRODUCT_TABLE_NAME",
+        "ORDER_TABLE_NAME",
+        "CORS_ORIGIN",
+        "ORDER_HOLD_TABLE_NAME",
+        "STRIPE_SECRET_KEY",
+        "ORDER_EXPIRY_TIME",
+        "NEXT_PUBLIC_MERCH_API_ORIGIN",
+        "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY"
       ]
     },
     "lint": {

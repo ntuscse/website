@@ -1,8 +1,6 @@
-import { NavBar } from "../navbar";
-import { Footer } from "../footer";
 import React from "react";
-import { NavBarProps, FooterProps } from "ui";
 import { Box } from "@chakra-ui/react";
+import { NavBar, Footer, NavBarProps, FooterProps } from "ui";
 
 interface LayoutProps {
   navbarProps: NavBarProps;
@@ -13,7 +11,7 @@ interface LayoutProps {
 export const Layout = ({ navbarProps, footerProps, children }: LayoutProps) => {
   return (
     <>
-      <header>
+      <header> 
         <title>NTU School of Computer Science & Engineering</title>
         <link rel="icon" href="/"></link>
       </header>

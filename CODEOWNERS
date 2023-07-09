@@ -8,6 +8,8 @@
 /apps/cms/** @jamiegoh
 /apps/merch/** @chanbakjsd
 /apps/web/** @xJQx
+/apps/web/features/merch/** @chanbakjsd
+/apps/web/pages/merch/** @chanbakjsd
 
 /packages/eslint-custom-config/** @realdyllon
 /packages/nodelogger/** @realdyllon
@@ -18,4 +20,5 @@
 /packages/types/lib/cms.ts @jamiegoh
 /packages/types/lib/merch.ts @chanbakjsd
 /packages/ui/** @xJQx
+/packages/ui/merch/** @chanbakjsd
 

@@ -1,9 +1,15 @@
-import { Router } from "express"
+import { Request, Response } from "../lib/types";
 
-const router = Router()
+const genericInfo = {
+  github: "https://github.com/ntuscse/website",
+  website: "https://ntuscse.com",
+  service: "Merch",
+};
 
-router.get("/", (req, res) => {
-  res.json({ content: "Hello World" });
-})
+export const index = (req: Request, res: Response<typeof genericInfo>) => {
+  res.json(genericInfo);
+};
 
-export default router
+export const notFound = (req: Request, res: Response<never>) => {
+  res.status(404).json({ error: "NOT_FOUND" });
+};

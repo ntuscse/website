@@ -8,12 +8,14 @@ import {
 import { Image } from "../image";
 import Link from "next/link";
 
+export type AnimatedCarouselItem = {
+  imageSrc: string;
+  href: string;
+  altText: string;
+} 
+
 export interface AnimatedCarouselProps extends FlexProps {
-  items: Array<{
-    imageSrc: string;
-    href: string;
-    altText: string;
-  }>;
+  items: Array<AnimatedCarouselItem>;
 }
 
 const CarouselSlides = ({ items }: AnimatedCarouselProps) => {
