@@ -55,12 +55,39 @@ jobs:
             ghcr.io/${{ github.repository_owner }}/website/merch:${{ github.sha }}
             ghcr.io/${{ github.repository_owner }}/website/merch:latest
 
+
+  build-web:
+    name: Build Web next.js app
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: "yarn"
+
+      - name: Install dependencies
+        run: yarn install --prefer-offline --frozen-lockfile
+
+      - name: Build web
+        run: yarn turbo run build --filter=web
+
+      - name: Cache CD Staging workflow for dependent jobs
+        uses: actions/cache/save@v3
+        with:
+          path: .
+          key: CD-Staging-${{ runner.os }}-${{ github.ref }}-${{ github.run_id }}
+
   deploy-to-staging:
     name: Deploy To Staging
     runs-on: ubuntu-22.04
     needs:
       - build-cms
       - build-merch
+      - build-web
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -81,3 +108,33 @@ jobs:
             docker compose pull &&
             docker compose up -d
           '
+
+  deploy-to-vercel:
+    name: Deploy To Staging
+    runs-on: ubuntu-22.04
+    needs:
+      - build-cms
+      - build-merch
+      - build-web
+    steps:
+      - name: Get build cache
+        uses: actions/cache/restore@v3
+        with:
+          path: .
+          key: CD-Staging-${{ runner.os }}-${{ github.ref }}-${{ github.run_id }}
+          fail-on-cache-miss: true
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Copy Build Artifacts to .vercel dir
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy Project Artifacts to Vercel
+        id: deploy-to-vercel
+        run: |
+          DEPLOYMENT_URL=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})
+          vercel alias --token=${{ secrets.VERCEL_TOKEN }} set "$DEPLOYMENT_URL" dev.ntuscse.com
