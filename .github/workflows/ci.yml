@@ -96,7 +96,7 @@ jobs:
         uses: actions/cache/restore@v3
         with:
           path: .
-          key: CI-${{ runner.os }}-${{ github.run_id }}
+          key: CI-${{ runner.os }}-${{ github.ref }}-${{ github.run_id }}
           fail-on-cache-miss: true
 
       - name: Install Vercel CLI
@@ -138,13 +138,13 @@ jobs:
 #          comment_tag: execution
 #          mode: recreate
 
-      - name: Update deployment status (failure)
-        if: failure()
-        uses: chrnorm/deployment-status@v2
-        with:
-          token: '${{ github.token }}'
-          state: 'failure'
-          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+#      - name: Update deployment status (failure)
+#        if: failure()
+#        uses: chrnorm/deployment-status@v2
+#        with:
+#          token: '${{ github.token }}'
+#          state: 'failure'
+#          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
 
 
 
