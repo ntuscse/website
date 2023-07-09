@@ -56,30 +56,6 @@ jobs:
             ghcr.io/${{ github.repository_owner }}/website/merch:latest
 
 
-  build-web:
-    name: Build Web next.js app
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          cache: "yarn"
-
-      - name: Install dependencies
-        run: yarn install --prefer-offline --frozen-lockfile
-
-      - name: Build web
-        run: yarn turbo run build --filter=web
-
-      - name: Cache CD Staging workflow for dependent jobs
-        uses: actions/cache/save@v3
-        with:
-          path: .
-          key: CD-Staging-${{ runner.os }}-${{ github.ref }}-${{ github.run_id }}
 
   deploy-to-staging:
     name: Deploy To Staging
@@ -87,7 +63,6 @@ jobs:
     needs:
       - build-cms
       - build-merch
-      - build-web
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -109,12 +84,40 @@ jobs:
             docker compose up -d
           '
 
+  build-web:
+    name: Build Web next.js app
+    runs-on: ubuntu-22.04
+    needs:
+      - deploy-to-staging
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: "yarn"
+
+      - name: Install dependencies
+        run: yarn install --prefer-offline --frozen-lockfile
+
+      - name: Build web
+        run: yarn turbo run build --filter=web
+        env:
+          WORDPRESS_API_URL: 'https://clubs.ntu.edu.sg/csec/graphql'
+          NEXT_PUBLIC_MERCH_API_ORIGIN: 'https://merch.staging.ntuscse.com'
+
+      - name: Cache CD Staging workflow for dependent jobs
+        uses: actions/cache/save@v3
+        with:
+          path: .
+          key: CD-Staging-${{ runner.os }}-${{ github.ref }}-${{ github.run_id }}
+
   deploy-to-vercel:
     name: Deploy To Staging
     runs-on: ubuntu-22.04
     needs:
-      - build-cms
-      - build-merch
       - build-web
     steps:
       - name: Get build cache
