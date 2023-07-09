@@ -126,7 +126,7 @@ jobs:
         id: deployment
         with:
           token: '${{ github.token }}'
-          environment-url: http://my-app-url.com
+          environment-url: '${{ steps.deploy-to-vercel.outputs.deployment-url }}'
           environment: Preview
           task: website
 
