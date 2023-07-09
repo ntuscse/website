@@ -146,15 +146,27 @@ jobs:
           state: 'failure'
           deployment-id: ${{ steps.deployment.outputs.deployment_id }}
 
-#      - name: Comment PR with preview link
-#        uses: thollander/actions-comment-pull-request@v2
-#        env:
-#
-#        with:
-#          message: |
-#            Deployment preview link:
-#          comment_tag: execution
-#          mode: recreate
+      - name: Comment PR with preview link if success
+        if: success()
+        uses: thollander/actions-comment-pull-request@v2
+        env:
+          DEPLOYMENT_URL: ${{ steps.deploy-to-vercel.outputs.deployment-url }}
+        with:
+          message: |
+            Deployment preview link: ${{ env.DEPLOYMENT_URL }}
+          comment_tag: execution
+          mode: recreate
+
+      - name: Comment PR with preview link if fail
+        if: failure()
+        uses: thollander/actions-comment-pull-request@v2
+        env:
+          DEPLOYMENT_URL: ${{ steps.deploy-to-vercel.outputs.deployment-url }}
+        with:
+          message: |
+            Deployment preview link: ❌
+          comment_tag: execution
+          mode: recreate
 
 
 
