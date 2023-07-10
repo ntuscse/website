@@ -13,6 +13,7 @@ export interface Config {
     users: User;
     media: Media;
   };
+  // eslint-disable-next-line @typescript-eslint/ban-types
   globals: {};
 }
 export interface Category {
