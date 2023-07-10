@@ -1,4 +1,4 @@
-import { Product } from "types/lib/merch";
+import { Product } from "types";
 
 export const getQtyInStock = (
   product: Product,

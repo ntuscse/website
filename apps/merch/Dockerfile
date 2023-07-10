@@ -1,4 +1,4 @@
-FROM node:16-alpine AS builder
+FROM node:18-alpine AS builder
 
 RUN apk add --no-cache libc6-compat
 RUN apk update
@@ -11,7 +11,7 @@ RUN rm -rf **/node_modules **/build **/dist **/out **/.turbo
 RUN rm -rf **/.env
 RUN turbo prune --scope=merch --docker
 
-FROM node:16-alpine AS installer
+FROM node:18-alpine AS installer
 # Add lockfile and package.json's of isolated subworkspace
 RUN apk add --no-cache libc6-compat
 RUN apk update
@@ -28,7 +28,7 @@ COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
 RUN yarn turbo run build --filter=merch... --color
 
-FROM node:16-alpine AS runner
+FROM node:18-alpine AS runner
 
 WORKDIR /app
 
@@ -45,7 +45,7 @@ WORKDIR /app/apps/merch
 #ENV NODE_ENV=production
 
 #EXPOSE 80
-EXPOSE 3000
+EXPOSE 3002
 
 CMD ["node", "dist/index.js"]
 

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { CartEmptyView, Page } from "ui/components/merch";
 import { useCartStore } from "@/features/merch/context/cart";
 import { useEffect, useState } from "react";

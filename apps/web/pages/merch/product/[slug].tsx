@@ -23,7 +23,7 @@ import {
   SizeChartDialog,
   SizeOption,
 } from "ui/components/merch";
-import { Product } from "types/lib/merch";
+import { Product } from "types";
 import {
   CartAction,
   CartActionType,

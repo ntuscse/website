@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer, useMemo, useContext } from "react";
-import { CartState, CartItem } from "types/lib/merch";
+import { CartState, CartItem } from "types";
 
 type ContextType = {
   state: CartState;

@@ -68,6 +68,7 @@
       "outputs": []
     },
     "start": {
+      "cache": false,
       "dependsOn": ["build"],
       "env": [
         "PAYLOAD_SECRET",
@@ -91,11 +92,14 @@
       ]
     },
     "start:ci":  {
+      "cache": false
     },
     "merch#start:ci": {
+      "cache": false,
       "dependsOn": ["merch#build"]
     },
     "serve": {
+      "cache": false,
       "dependsOn": ["build"],
       "env": [
         "PAYLOAD_SECRET",
