@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Card, MerchListSkeleton, Page } from "ui/components/merch";
 import { QueryKeys } from "features/merch/constants";
 import { api } from "features/merch/services/api";
-import { Product } from "types/lib/merch";
+import { Product } from "types";
 import { isOutOfStock } from "features/merch/functions";
 
 const MerchandiseList = () => {

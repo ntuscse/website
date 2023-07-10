@@ -1,4 +1,4 @@
-import { CartItem } from "types/lib/merch";
+import { CartItem } from "types";
 
 export const getQtyInCart = (
   cartItems: CartItem[],
