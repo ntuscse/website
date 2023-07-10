@@ -1,37 +1,12 @@
 {
-  "extends": "tsconfig/node.json",
+  "extends": "tsconfig/node-package.json",
   "compilerOptions": {
     "outDir": "dist",
-    "rootDir": "src",
-    "module": "commonjs",
-    "target": "es2017",
-    "lib": [
-      "es2017",
-      "esnext.asynciterable"
-    ],
-    "sourceMap": true,
-    "declaration": true,
-    "strict": true,
-    "noImplicitAny": true,
-    "moduleResolution": "node",
-    "baseUrl": "./",
-    "paths": {
-      "*": [
-        "node_modules/*",
-        "src/types/*"
-      ]
-    },
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "rootDir": "src"
   },
   "include": [
     "src/**/*.ts"
   ],
-  "compilerOptions": {
-    "outDir": "dist",
-  },
   "exclude": [
     "dist",
     "build",

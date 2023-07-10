@@ -115,7 +115,7 @@ jobs:
           key: CD-Staging-${{ runner.os }}-${{ github.ref }}-${{ github.run_id }}
 
   deploy-to-vercel:
-    name: Deploy To Staging
+    name: Deploy To Vercel
     runs-on: ubuntu-22.04
     needs:
       - build-web
