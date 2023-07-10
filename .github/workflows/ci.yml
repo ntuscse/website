@@ -148,26 +148,25 @@ jobs:
           deployment-id: ${{ steps.deployment.outputs.deployment_id }}
 
       - name: Comment PR with preview link if success
-        if: success()
+        if: success() && github.event_name == 'pull_request'
         uses: thollander/actions-comment-pull-request@v2
         env:
           DEPLOYMENT_URL: ${{ steps.deploy-to-vercel.outputs.deployment-url }}
         with:
           message: |
             Deployment preview link: ${{ env.DEPLOYMENT_URL }}
-          comment_tag: execution
+          comment_tag: vercel-deploy-status-web
           mode: recreate
 
-
       - name: Comment PR with preview link if fail
-        if: failure()
+        if: failure() && github.event_name == 'pull_request'
         uses: thollander/actions-comment-pull-request@v2
         env:
           DEPLOYMENT_URL: ${{ steps.deploy-to-vercel.outputs.deployment-url }}
         with:
           message: |
             Deployment preview link: ❌
-          comment_tag: execution
+          comment_tag: vercel-deploy-status-web
           mode: recreate
 
 
