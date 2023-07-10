@@ -15,7 +15,7 @@ import {
   Center,
 } from "@chakra-ui/react";
 import { DeleteIcon, SmallCloseIcon } from "@chakra-ui/icons";
-import { CartItem, Product } from "types/lib/merch";
+import { CartItem, Product } from "types";
 import { displayPrice, getQtyInStock } from "web/features/merch/functions";
 import { routes } from "web/features/merch/constants";
 
