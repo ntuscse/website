@@ -1,4 +1,6 @@
+/* eslint-disable */
 /* eslint-disable @typescript-eslint/no-misused-promises */
+
 
 import React, { useRef, useState, FC, useEffect } from "react";
 import Link from "next/link";
