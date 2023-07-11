@@ -73,7 +73,7 @@ jobs:
           pwd
           ls
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          scp -o StrictHostKeyChecking=no -i private_key ./deployments/staging/docker-compose.yml ${USER_NAME}@${HOSTNAME}:/home/ubuntu/deployment
+          scp -o StrictHostKeyChecking=no -i private_key ./deployment/docker-compose.yml ${USER_NAME}@${HOSTNAME}:/home/ubuntu/deployment
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
             cd /home/ubuntu/deployment &&
             docker system prune --force &&
