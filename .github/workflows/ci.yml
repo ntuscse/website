@@ -113,7 +113,7 @@ jobs:
       - name: Get build cache
         uses: actions/cache/restore@v3
         with:
-          path: ${{ github.workspace }}
+          path: .
           key: CI-${{ runner.os }}-${{ github.ref }}-${{ github.run_id }}
           fail-on-cache-miss: true
 
