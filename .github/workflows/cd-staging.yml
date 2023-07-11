@@ -30,7 +30,6 @@ jobs:
             ghcr.io/${{ github.repository_owner }}/website/cms:${{ github.sha }}
             ghcr.io/${{ github.repository_owner }}/website/cms:latest
 
-
   build-merch:
     name: Build Merch Docker Image
     runs-on: ubuntu-22.04
@@ -54,8 +53,6 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository_owner }}/website/merch:${{ github.sha }}
             ghcr.io/${{ github.repository_owner }}/website/merch:latest
-
-
 
   deploy-to-staging:
     name: Deploy To Staging
@@ -88,7 +85,8 @@ jobs:
     name: Build Web next.js app
     runs-on: ubuntu-22.04
     needs:
-      - deploy-to-staging
+      - build-cms
+      - build-merch
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -101,6 +99,17 @@ jobs:
 
       - name: Install dependencies
         run: yarn install --prefer-offline --frozen-lockfile
+
+      - name: Cache next.js build
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ github.workspace }}/apps/web/.next/cache
+          # Generate a new cache whenever packages or source files change.
+          key: CD-Staging-${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**/*.[jt]s', '**/*.[jt]sx') }}
+          # If source files changed but packages didn't, rebuild from a prior cache.
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-
 
       - name: Build web
         run: yarn turbo run build --filter=web
@@ -118,6 +127,7 @@ jobs:
     name: Deploy To Vercel
     runs-on: ubuntu-22.04
     needs:
+      - deploy-to-staging
       - build-web
     permissions:
       deployments: write
@@ -146,14 +156,19 @@ jobs:
         id: deploy-to-vercel
         run: |
           DEPLOYMENT_URL=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})
-#          vercel alias --token=${{ secrets.VERCEL_TOKEN }} set "$DEPLOYMENT_URL" dev.ntuscse.com
+          echo "deployment-url=$DEPLOYMENT_URL" >> "$GITHUB_OUTPUT"
+
+      - name: Print Deployment URL
+        env:
+          DEPLOYMENT_URL: ${{ steps.deploy-to-vercel.outputs.deployment-url }}
+        run: echo $DEPLOYMENT_URL
 
       - uses: chrnorm/deployment-action@v2
         name: Create GitHub deployment
         id: deployment
         with:
           token: '${{ github.token }}'
-          environment-url: dev.ntuscse.com
+          environment-url: '${{ steps.deploy-to-vercel.outputs.deployment-url }}'
           environment: Staging - website
 
       - name: Update deployment status (success)
@@ -161,7 +176,7 @@ jobs:
         uses: chrnorm/deployment-status@v2
         with:
           token: '${{ github.token }}'
-          environment-url: dev.ntuscse.com
+          environment-url: '${{ steps.deploy-to-vercel.outputs.deployment-url }}'
           state: 'success'
           deployment-id: ${{ steps.deployment.outputs.deployment_id }}
 

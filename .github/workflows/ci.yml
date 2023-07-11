@@ -5,6 +5,7 @@ on:
     branches: ["main"]
   pull_request:
     types: [opened, synchronize]
+  workflow_dispatch:
 
 env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }} # remote caching
@@ -78,7 +79,9 @@ jobs:
       - name: Cache CI workflow for dependent jobs
         uses: actions/cache/save@v3
         with:
-          path: .
+          path: |
+            ${{ github.workspace }}
+            ${{ github.workspace }}/apps/web/.next/cache
           key: CI-${{ runner.os }}-${{ github.ref }}-${{ github.run_id }}
 
   preview:
@@ -95,6 +98,20 @@ jobs:
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_WEB }}
 
     steps:
+      - name: Create GitHub deployment
+        uses: chrnorm/deployment-action@v2
+        id: deployment
+        with:
+          token: '${{ github.token }}'
+          environment: Preview - website
+
+      - name: Set Github Deployment status to pending
+        uses: chrnorm/deployment-status@v2
+        with:
+          token: '${{ github.token }}'
+          state: 'pending'
+          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+
       - name: Get build cache
         uses: actions/cache/restore@v3
         with:
@@ -121,14 +138,6 @@ jobs:
         env:
           DEPLOYMENT_URL: ${{ steps.deploy-to-vercel.outputs.deployment-url }}
         run: echo $DEPLOYMENT_URL
-
-      - uses: chrnorm/deployment-action@v2
-        name: Create GitHub deployment
-        id: deployment
-        with:
-          token: '${{ github.token }}'
-          environment-url: '${{ steps.deploy-to-vercel.outputs.deployment-url }}'
-          environment: Preview - website
 
       - name: Update deployment status (success)
         if: success()
@@ -158,7 +167,6 @@ jobs:
           comment_tag: execution
           mode: recreate
 
-
       - name: Comment PR with preview link if fail
         if: failure()
         uses: thollander/actions-comment-pull-request@v2
@@ -169,8 +177,3 @@ jobs:
             Deployment preview link: ❌
           comment_tag: execution
           mode: recreate
-
-
-
-
-
