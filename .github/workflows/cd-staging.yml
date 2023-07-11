@@ -156,7 +156,6 @@ jobs:
         id: deploy-to-vercel
         run: |
           DEPLOYMENT_URL=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})
-#          vercel alias --token=${{ secrets.VERCEL_TOKEN }} set "$DEPLOYMENT_URL" dev.ntuscse.com
           echo "deployment-url=$DEPLOYMENT_URL" >> "$GITHUB_OUTPUT"
 
       - name: Print Deployment URL
