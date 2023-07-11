@@ -157,13 +157,19 @@ jobs:
         run: |
           DEPLOYMENT_URL=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})
 #          vercel alias --token=${{ secrets.VERCEL_TOKEN }} set "$DEPLOYMENT_URL" dev.ntuscse.com
+          echo "deployment-url=$DEPLOYMENT_URL" >> "$GITHUB_OUTPUT"
+
+      - name: Print Deployment URL
+        env:
+          DEPLOYMENT_URL: ${{ steps.deploy-to-vercel.outputs.deployment-url }}
+        run: echo $DEPLOYMENT_URL
 
       - uses: chrnorm/deployment-action@v2
         name: Create GitHub deployment
         id: deployment
         with:
           token: '${{ github.token }}'
-          environment-url: dev.ntuscse.com
+          environment-url: '${{ steps.deploy-to-vercel.outputs.deployment-url }}'
           environment: Staging - website
 
       - name: Update deployment status (success)
@@ -171,7 +177,7 @@ jobs:
         uses: chrnorm/deployment-status@v2
         with:
           token: '${{ github.token }}'
-          environment-url: dev.ntuscse.com
+          environment-url: '${{ steps.deploy-to-vercel.outputs.deployment-url }}'
           state: 'success'
           deployment-id: ${{ steps.deployment.outputs.deployment_id }}
 
