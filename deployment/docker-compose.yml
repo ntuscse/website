@@ -46,7 +46,7 @@ services:
       - mongo
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.cms.rule=Host(`cms.staging.ntuscse.com`)"
+      - "traefik.http.routers.cms.rule=Host(`$TRAEFIK_HTTP_CMS_HOST`)"
       - "traefik.http.routers.cms.entrypoints=websecure"
       - "traefik.http.routers.cms.tls.certresolver=myresolver"
   mongo:
@@ -72,7 +72,7 @@ services:
       - mongo
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.merch.rule=Host(`merch.staging.ntuscse.com`)"
+      - "traefik.http.routers.merch.rule=Host(`$TRAEFIK_HTTP_MERCH_HOST`)"
       - "traefik.http.routers.merch.entrypoints=websecure"
       - "traefik.http.routers.merch.tls.certresolver=myresolver"
 
@@ -90,7 +90,7 @@ services:
         max-size: 1g
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.uptime-kuma.rule=Host(`uptime.staging.ntuscse.com`)"
+      - "traefik.http.routers.uptime-kuma.rule=Host(`$TRAEFIK_HTTP_UPTIME_KUMA_HOST`)"
       - "traefik.http.routers.uptime-kuma.entrypoints=websecure"
       - "traefik.http.routers.uptime-kuma.tls.certresolver=myresolver"
       # - "traefik.http.services.uptime-kuma.loadbalancer.server.port=3001"
