@@ -78,7 +78,9 @@ jobs:
       - name: Cache CI workflow for dependent jobs
         uses: actions/cache/save@v3
         with:
-          path: .
+          path: |
+            ${{ github.workspace }}
+            ${{ github.workspace }}/apps/web/.next/cache
           key: CI-${{ runner.os }}-${{ github.ref }}-${{ github.run_id }}
 
   preview:
@@ -158,7 +160,6 @@ jobs:
           comment_tag: execution
           mode: recreate
 
-
       - name: Comment PR with preview link if fail
         if: failure()
         uses: thollander/actions-comment-pull-request@v2
@@ -169,8 +170,3 @@ jobs:
             Deployment preview link: ❌
           comment_tag: execution
           mode: recreate
-
-
-
-
-
