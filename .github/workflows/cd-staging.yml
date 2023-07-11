@@ -146,7 +146,7 @@ jobs:
         id: deploy-to-vercel
         run: |
           DEPLOYMENT_URL=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})
-          vercel alias --token=${{ secrets.VERCEL_TOKEN }} set "$DEPLOYMENT_URL" dev.ntuscse.com
+#          vercel alias --token=${{ secrets.VERCEL_TOKEN }} set "$DEPLOYMENT_URL" dev.ntuscse.com
 
       - uses: chrnorm/deployment-action@v2
         name: Create GitHub deployment
