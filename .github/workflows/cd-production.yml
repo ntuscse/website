@@ -1,8 +1,8 @@
-name: CD Staging
+name: CD Production
 
 on:
   push:
-    branches: [ main ]
+    branches: [ production ]
   workflow_dispatch:
 
 jobs:
@@ -54,8 +54,8 @@ jobs:
             ghcr.io/${{ github.repository_owner }}/website/merch:${{ github.sha }}
             ghcr.io/${{ github.repository_owner }}/website/merch:latest
 
-  deploy-to-staging:
-    name: Deploy To Staging
+  deploy-to-production:
+    name: Deploy To Production
     runs-on: ubuntu-22.04
     needs:
       - build-cms
@@ -66,9 +66,9 @@ jobs:
 
       - name: Deploy and run docker images
         env:
-          PRIVATE_KEY: ${{ secrets.STAGING_EC2_PRIVATE_KEY  }}
-          HOSTNAME: ${{ secrets.STAGING_EC2_HOSTNAME  }}
-          USER_NAME: ${{ secrets.STAGING_EC2_USERNAME  }}
+          PRIVATE_KEY: ${{ secrets.PROD_EC2_PRIVATE_KEY  }}
+          HOSTNAME: ${{ secrets.PROD_EC2_HOSTNAME  }}
+          USER_NAME: ${{ secrets.PROD_EC2_USERNAME  }}
         run: |
           pwd
           ls
@@ -106,7 +106,7 @@ jobs:
           path: |
             ${{ github.workspace }}/apps/web/.next/cache
           # Generate a new cache whenever packages or source files change.
-          key: CD-Staging-${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**/*.[jt]s', '**/*.[jt]sx') }}
+          key: CD-Production-${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**/*.[jt]s', '**/*.[jt]sx') }}
           # If source files changed but packages didn't, rebuild from a prior cache.
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-
@@ -115,19 +115,19 @@ jobs:
         run: yarn turbo run build --filter=web
         env:
           WORDPRESS_API_URL: 'https://clubs.ntu.edu.sg/csec/graphql'
-          NEXT_PUBLIC_MERCH_API_ORIGIN: 'https://merch.staging.ntuscse.com'
+          NEXT_PUBLIC_MERCH_API_ORIGIN: 'https://merch.ntuscse.com'
 
-      - name: Cache CD Staging workflow for dependent jobs
+      - name: Cache CD Production workflow for dependent jobs
         uses: actions/cache/save@v3
         with:
           path: .
-          key: CD-Staging-${{ runner.os }}-${{ github.ref }}-${{ github.run_id }}
+          key: CD-Production-${{ runner.os }}-${{ github.ref }}-${{ github.run_id }}
 
   deploy-to-vercel:
     name: Deploy To Vercel
     runs-on: ubuntu-22.04
     needs:
-      - deploy-to-staging
+      - deploy-to-production
       - build-web
     permissions:
       deployments: write
@@ -140,7 +140,7 @@ jobs:
         uses: actions/cache/restore@v3
         with:
           path: .
-          key: CD-Staging-${{ runner.os }}-${{ github.ref }}-${{ github.run_id }}
+          key: CD-Production-${{ runner.os }}-${{ github.ref }}-${{ github.run_id }}
           fail-on-cache-miss: true
 
       - name: Install Vercel CLI
@@ -169,7 +169,7 @@ jobs:
         with:
           token: '${{ github.token }}'
           environment-url: '${{ steps.deploy-to-vercel.outputs.deployment-url }}'
-          environment: Staging - website
+          environment: Production - website
 
       - name: Update deployment status (success)
         if: success()
