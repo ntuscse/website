@@ -103,7 +103,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            ./apps/web/.next/cache
+            ${{ github.workspace }}/apps/web/.next/cache
           # Generate a new cache whenever packages or source files change.
           key: CD-Staging-${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**/*.[jt]s', '**/*.[jt]sx') }}
           # If source files changed but packages didn't, rebuild from a prior cache.
