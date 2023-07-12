@@ -55,7 +55,7 @@ jobs:
             ghcr.io/${{ github.repository_owner }}/website/merch:latest
 
   deploy-to-staging:
-    name: Deploy To Staging
+    name: Deploy To Staging Server
     runs-on: ubuntu-22.04
     needs:
       - build-cms
@@ -85,8 +85,7 @@ jobs:
     name: Build Web next.js app
     runs-on: ubuntu-22.04
     needs:
-      - build-cms
-      - build-merch
+      - deploy-to-staging
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -127,7 +126,6 @@ jobs:
     name: Deploy To Vercel
     runs-on: ubuntu-22.04
     needs:
-      - deploy-to-staging
       - build-web
     permissions:
       deployments: write
