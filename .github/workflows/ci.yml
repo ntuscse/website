@@ -79,9 +79,7 @@ jobs:
       - name: Cache CI workflow for dependent jobs
         uses: actions/cache/save@v3
         with:
-          path: |
-            .
-            ./apps/web/.next/cache
+          path: .
           key: CI-${{ runner.os }}-${{ github.ref }}-${{ github.run_id }}
 
   preview:
@@ -115,9 +113,7 @@ jobs:
       - name: Get build cache
         uses: actions/cache/restore@v3
         with:
-          path: |
-            .
-            ./apps/web/.next/cache.
+          path: .
           key: CI-${{ runner.os }}-${{ github.ref }}-${{ github.run_id }}
           fail-on-cache-miss: true
 
