@@ -95,7 +95,7 @@ const OrderSummary: React.FC = () => {
         </Flex>
       </Flex>
 
-      <QRCode order={orderState}/>
+      <QRCode order={orderState?.id}/>
     </>
   );
   const renderSummaryPage = () => {

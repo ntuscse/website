@@ -1,9 +1,8 @@
 import React from 'react';
 import { Image, Flex, Text } from "@chakra-ui/react";
-import { Order } from "types";
 
 interface QRCodeProps {
-  order: Order | null;
+  order: string | undefined;
 }
 
 const QRCode: React.FC<QRCodeProps> = ({ order }) => (
@@ -19,7 +18,7 @@ const QRCode: React.FC<QRCodeProps> = ({ order }) => (
     <Image
       src={
         order
-          ? `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${ process.env.NEXT_PUBLIC_FRONTEND_URL ?? "http://localhost:3001"}/merch/orders/${order?.id}`
+          ? `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${ process.env.NEXT_PUBLIC_FRONTEND_URL ?? "http://localhost:3001"}/merch/orders/${order}`
           : ""
       }
       alt="QRCode"
