@@ -1,15 +1,8 @@
-import {
-  GetStaticPaths,
-  GetStaticPathsResult,
-  GetStaticProps,
-  GetStaticPropsContext,
-  GetStaticPropsResult,
-} from "next";
 import { Box, Heading, Text } from "@chakra-ui/react";
 import { getDisplayDate } from "@/lib/helpers/getDisplayDate";
 import Image from "next/image";
 import Link from "next/link";
-import { getAllBlogPostsSlugs, getBlogPost, GetBlogPostResponse } from "@/features/blogs";
+import { GetBlogPostResponse } from "@/features/blogs";
 
 type BlogPostProps = GetBlogPostResponse["post"];
 
@@ -53,23 +46,23 @@ const BlogPost = (props: BlogPostProps) => {
 export default BlogPost;
 
 // this function gets called at build time
-export const getStaticProps: GetStaticProps = async ({
-  params,
-}: GetStaticPropsContext) => {
-  const data = await getBlogPost(params?.slug as string);
-
-  return {
-    props: data,
-    revalidate: 10,
-  } as GetStaticPropsResult<BlogPostProps>;
-};
-
-// this function gets called at build time
-export const getStaticPaths: GetStaticPaths = async () => {
-  const data = await getAllBlogPostsSlugs();
-
-  return {
-    paths: data.edges.map((edge) => `/blog/${edge.node.slug}`),
-    fallback: true,
-  } as GetStaticPathsResult;
-};
+// export const getStaticProps: GetStaticProps = async ({
+//   params,
+// }: GetStaticPropsContext) => {
+//   const data = await getBlogPost(params?.slug as string);
+//
+//   return {
+//     props: data,
+//     revalidate: 10,
+//   } as GetStaticPropsResult<BlogPostProps>;
+// };
+//
+// // this function gets called at build time
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   const data = await getAllBlogPostsSlugs();
+//
+//   return {
+//     paths: data.edges.map((edge) => `/blog/${edge.node.slug}`),
+//     fallback: true,
+//   } as GetStaticPathsResult;
+// };
