@@ -27,7 +27,7 @@ Basic.args = {
     header: "For Students",
     links: [
       { label: "Academics", href: "/academics" },
-      { label: "Events", href: "/events" },
+      // { label: "Events", href: "/events" },
       { label: "Join a Subcommittee", href: "/join" },
       { label: "Learn", href: "/learn" },
       { label: "Feedback", href: "/contact" },
