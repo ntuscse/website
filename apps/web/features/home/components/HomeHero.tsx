@@ -114,7 +114,7 @@ export const HomeHero = () => {
           color="transparent"
           paddingY={["0px", "0px", "0px", "24px"]}
         >
-          <Link href="/events">
+          {/*<Link href="/events">*/}
             <Text
               textAlign="center"
               my={["8px", "8px", "8px", "0px"]}
@@ -122,7 +122,7 @@ export const HomeHero = () => {
             >
               10+ events yearly
             </Text>
-          </Link>
+          {/*</Link>*/}
 
           <Link href="/academics">
             <Text
