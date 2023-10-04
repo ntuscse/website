@@ -1,5 +1,5 @@
 import { HomeHero, HomeWhoRWe, UpcomingEventRibbon } from "@/features/home";
-import { HomeMemories } from "@/features/home";
+// import { HomeMemories } from "@/features/home";
 import { FooterSeparator } from "ui";
 import React from "react";
 
@@ -8,7 +8,7 @@ const Home = () => {
     <>
       <HomeHero />
       <HomeWhoRWe />
-      <HomeMemories />
+      {/*<HomeMemories />*/}
       <FooterSeparator />
       <UpcomingEventRibbon href={"/events"} />
     </>

@@ -1,13 +1,14 @@
 import { FramedText } from "ui";
 import { Text, Grid, GridItem, Box, Button, Flex } from "@chakra-ui/react";
 import Image from "next/image";
+import { whoWeAreCopy } from "../../../content/home";
 
 export const HomeWhoRWe = () => {
   return(
     <>
       {/*Heading*/}
       <Flex justifyContent='center' direction={"column"} alignItems={'center'} my={'3rem'}>
-        <FramedText text={'Who Are We'} textColor={'black'}/>
+        <FramedText text={'Who We Are'} textColor={'black'}/>
         <Grid gridTemplateAreas={{
           base: `'image image' 'content content'`,
           md: `'content image' 'content image'`
@@ -17,7 +18,9 @@ export const HomeWhoRWe = () => {
           {/* Who are we content with the button */}
           <GridItem area={'content'} >
             <Flex direction={'column'} gap={'1rem'} align={'flex-start'} justify={'center'} h='100%'>
-              <Text maxWidth={'600px'} fontSize={{ base: '16px', '2xl':'20px' }}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aperiam aspernatur commodi cupiditate eaque laboriosam maiores quibusdam similique sint sit, vel velit vitae. Amet aspernatur iste minus molestiae, obcaecati voluptates.</Text>
+              <Text maxWidth={'600px'} fontSize={{ base: '16px', '2xl':'20px' }}>
+                {whoWeAreCopy}
+              </Text>
               <Button variant={'red-scse'} size={'md'}>Learn More</Button>
             </Flex>
           </GridItem>
