@@ -11,7 +11,7 @@ export const WebLayout = ({ children }: WebLayoutProps) => {
     links: [
       { label: "Home", href: "/" },
       { label: "About", href: "/about" },
-      { label: "Events", href: "/events" },
+      // { label: "Events", href: "/events" },
       { label: "Academics", href: "/academics" },
       { label: "Learn", href: "/learn" },
       { label: "Sponsors", href: "/sponsors" },
