@@ -1,7 +1,7 @@
 import { Box, Flex, Icon, Text } from "@chakra-ui/react";
-import { FaArrowDown } from 'react-icons/fa';
+import { FaArrowDown } from "react-icons/fa";
 import Image from "next/image";
-import { keyframes } from '@emotion/react';
+import { keyframes } from "@emotion/react";
 import Link from "next/link";
 
 export const HomeHero = () => {
@@ -18,10 +18,8 @@ export const HomeHero = () => {
       overflow="hidden"
     >
       {/* Header */}
-      <Box
-        marginBottom={["0px", "0px", "0px", "32px"]}
-      >
-        <Link href="/" >
+      <Box marginTop={24} marginBottom={["0px", "0px", "0px", "32px"]}>
+        <Link href="/">
           <Text
             as="header"
             role="heading"
@@ -60,24 +58,26 @@ export const HomeHero = () => {
           color="transparent"
           paddingY={["0px", "0px", "0px", "24px"]}
         >
-          <Link href="/about">
-            <Text
-              textAlign="center"
-              my={["8px", "8px", "8px", "0px"]}
-              cursor="pointer"
-            >
-              10,000+<br />Undergraduates
-            </Text>
-          </Link>
-          <Link href="/join">
-            <Text
-              textAlign="center"
-              my={["8px", "8px", "8px", "0px"]}
-              cursor="pointer"
-            >
-              8 Sub-Committees
-            </Text>
-          </Link>
+          {/*<Link href="/about">*/}
+          <Text
+            textAlign="center"
+            my={["8px", "8px", "8px", "0px"]}
+            // cursor="pointer"
+          >
+            10,000+
+            <br />
+            Undergraduates
+          </Text>
+          {/*</Link>*/}
+          {/*<Link href="/join">*/}
+          <Text
+            textAlign="center"
+            my={["8px", "8px", "8px", "0px"]}
+            // cursor="pointer"
+          >
+            8 Sub-Committees
+          </Text>
+          {/*</Link>*/}
         </Flex>
 
         {/* Main Hero Image */}
@@ -115,20 +115,20 @@ export const HomeHero = () => {
           paddingY={["0px", "0px", "0px", "24px"]}
         >
           {/*<Link href="/events">*/}
-            <Text
-              textAlign="center"
-              my={["8px", "8px", "8px", "0px"]}
-              cursor="pointer"
-            >
-              10+ events yearly
-            </Text>
+          <Text
+            textAlign="center"
+            my={["8px", "8px", "8px", "0px"]}
+            // cursor="pointer"
+          >
+            10+ events yearly
+          </Text>
           {/*</Link>*/}
 
           <Link href="/academics">
             <Text
               textAlign="center"
               my={["8px", "8px", "8px", "0px"]}
-              cursor="pointer"
+              // cursor="pointer"
             >
               One-stop place for all your academic needs
             </Text>
@@ -141,7 +141,7 @@ export const HomeHero = () => {
         as={FaArrowDown}
         boxSize="30px"
         _hover={{
-          cursor: "pointer"
+          cursor: "pointer",
         }}
         position="absolute"
         bottom={["24px", "24px", "24px", "48px"]}
@@ -149,8 +149,8 @@ export const HomeHero = () => {
         onClick={() => {
           window.scrollTo({
             top: window.innerHeight - 100,
-            behavior: "smooth"
-          })
+            behavior: "smooth",
+          });
         }}
       />
 
@@ -193,7 +193,8 @@ export const HomeHero = () => {
   );
 };
 
-const linearGradientBrand = "linear-gradient(90deg, #254876 13.43%, #DD616B 87.61%)";
+const linearGradientBrand =
+  "linear-gradient(90deg, #254876 13.43%, #DD616B 87.61%)";
 
 const arrowAnimation = keyframes`
   0%   { transform: translateY(0px) }
