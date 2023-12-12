@@ -6,27 +6,25 @@ export const FaqSection = () => {
     heading: "Frequently Asked Questions",
     qnaList: [
       {
-        question: "What is the level required?",
+        question: "Who should I contact for admission-related enquiries?",
         answer:
-          "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. " +
-          "The passage is attributed to an unknown typesetter in the 15th century who is thought to have.",
+          "The email above is for Students' Computer Science & Engineering Club. " +
+          "For admission-related enquiries, you can contact the NTU administrative offices using the form at https://www.ntu.edu.sg/forms/enquiry-form.",
       },
       {
-        question: "Level required?",
-        answer: "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. " +
-          "The passage is attributed to an unknown typesetter in the 15th century who is thought to have.",
+        question: "Who should I contact for business opportunities?",
+        answer: "You may contact scse-business@e.ntu.edu.sg.",
       },
       {
-        question: "What is the level required?",
+        question:
+          "Who should I contact for vulnerabilities present on this website?",
         answer:
-          "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. " +
-          "The passage is attributed to an unknown typesetter in the 15th century who is thought to have.",
+          "Please send an email to scse-it@e.ntu.edu.sg with information of the vulnerability.",
       },
       {
-        question: "What is the level required?",
+        question: "Who should I contact for other questions related to the SCSE Club?",
         answer:
-          "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. " +
-          "The passage is attributed to an unknown typesetter in the 15th century who is thought to have.",
+          "Please send an email to scse-club@e.ntu.edu.sg. We will try our best to forward you to the relevant person.",
       },
     ],
   };
