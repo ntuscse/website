@@ -2,9 +2,25 @@ import express from "express";
 import payload from "payload";
 import * as dotenv from "dotenv";
 import path from "path";
+import orderRouter from "./orders.router";
+import mongoose from "mongoose";
 
 dotenv.config();
 const app = express();
+
+// connecting to mongodb
+// it ensures that values passed to a model's constructor that were not specified in the schema also gets saved to the database.
+mongoose.set('strictQuery', false)
+
+// attempt to connect to database
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => {
+    console.log('connected to MongoDB')
+  })
+  .catch((error) => {
+    console.log('error connecting to MongoDB:', error.message)
+  })
+
 
 // Redirect root to Admin panel
 app.get("/", (_, res) => {
@@ -25,6 +41,12 @@ void payload.init({
   },
 });
 
-// Add your own express routes here
+// use json
+app.use(express.json());
+
+
+// Add your own express routes here 
+// Routes are added into orders.router.ts
+app.use('/api/orders', orderRouter);
 
 app.listen(process.env.PAYLOAD_PUBLIC_SERVER_PORT);

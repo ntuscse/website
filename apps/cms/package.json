@@ -21,8 +21,10 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.262.0",
     "@payloadcms/plugin-cloud-storage": "^1.0.12",
+    "axios": "^1.6.3",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "mongoose": "^8.0.3",
     "payload": "^1.8.3",
     "react": "^18.0.0",
     "tsconfig": "*"
