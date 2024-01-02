@@ -1,15 +1,15 @@
-import { Link, Outlet } from "react-router-dom"
+import { Outlet } from "react-router-dom"
+import Logo from "../components/Logo"
+import NavBar from "../components/NavBar"
 
 const Layout = () => {
     return (
         <>
-            <nav>
-                <ul>
-                    <li> <Link to="/">Home</Link></li>
-                    <li> <Link to="/problems">Problems</Link></li>
-                    <li> <Link to="/profile">Profile</Link></li>
-                </ul>
-            </nav>
+            <NavBar logo={<Logo />} 
+            navLinks={[
+                { name: "Problems", route: "/problems"},
+                { name: "Profile", route: "/profile"}
+                ]} />
 
             {/* renders current route */}
             <Outlet />

@@ -4,12 +4,19 @@ import Layout from './pages/Layout'
 import Home from './pages/Home'
 import Problems from './pages/Problems'
 import Profile from './pages/Profile'
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider, extendTheme } from '@chakra-ui/react'
+
+
+const theme = extendTheme({
+  colors: {
+    primary: "#0F2B50"
+  }
+})
 
 function App() {
 
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
