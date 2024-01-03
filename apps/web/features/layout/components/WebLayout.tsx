@@ -1,14 +1,28 @@
 import React from "react";
 import { FooterProps, Layout, NavBarProps } from "ui";
 import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
+import { useRouter } from "next/router";
 
 interface WebLayoutProps {
   children: React.ReactNode;
 }
 
 export const WebLayout = ({ children }: WebLayoutProps) => {
-  const navbarProps: NavBarProps = {
-    links: [
+  const router = useRouter();
+  let links;
+
+  // Check for parent route
+  if (router.route.startsWith("/challenges")) {
+    // NavBar links for the Challenges website
+    links = [
+      { label: "Home", href: "/challenges/" },
+      { label: "Problems", href: "/challenges/problems" },
+      { label: "Profile", href: "/challenges/profile" }
+    ]
+  }
+  else {
+    // NavBar links for the main website
+    links = [
       { label: "Home", href: "/" },
       // { label: "About", href: "/about" },
       // { label: "Events", href: "/events" },
@@ -16,7 +30,12 @@ export const WebLayout = ({ children }: WebLayoutProps) => {
       // { label: "Learn", href: "/learn" },
       // { label: "Sponsors", href: "/sponsors" },
       // { label: "Merch", href: "/merch" },
-    ],
+      { label: "Challenges", href: "/challenges" }
+    ]
+  }
+
+  const navbarProps: NavBarProps = {
+    links: links,
     logoProps: {
       src: "/scse-logo/scse-logo-blue.png",
       alt: "scse logo",
