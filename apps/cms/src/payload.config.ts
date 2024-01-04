@@ -1,6 +1,7 @@
 import { buildConfig } from 'payload/config';
 import { cloudStorage } from '@payloadcms/plugin-cloud-storage';
 import { s3Adapter as createS3Adapter } from '@payloadcms/plugin-cloud-storage/s3';
+// import { mongooseAdapter } from '@payloadcms/db-mongodb';
 import path from 'path';
 
 import Categories from './collections/Categories';
@@ -8,6 +9,7 @@ import Posts from './collections/Posts';
 import Tags from './collections/Tags';
 import Users from './collections/Users';
 import Media from "./collections/Media";
+import Orders from "./collections/Orders";
 
 import AfterNavLinks from "./admin/components/AfterNavLinks";
 
@@ -62,11 +64,19 @@ export default buildConfig({
     Tags,
     Users,
     Media,
+    Orders,
   ],
+  // Configure the Mongoose adapter here
+  // db: mongooseAdapter({
+  //   // Mongoose-specific arguments go here.
+  //   // URL is required.
+  //   url: process.env.MONGODB_URI,
+  // }),
   csrf: [
     // whitelist of domains to allow cookie auth from
     process.env.PAYLOAD_PUBLIC_SERVER_URL,
   ],
+  // passing database adapter
   typescript: {
     // outputFile: path.resolve(__dirname, "payload-types.ts"),
     outputFile: path.resolve(__dirname, "../../../packages/types/src/lib/cms.ts"), // overridden by PAYLOAD_TS_OUTPUT_PATH env var
