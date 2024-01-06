@@ -17,6 +17,7 @@ export const WebLayout = ({ children }: WebLayoutProps) => {
     links = [
       { label: "Home", href: "/challenges/" },
       { label: "Problems", href: "/challenges/problems" },
+      { label: "Leaderboard", href: "/challenges/leaderboard" },
       { label: "Profile", href: "/challenges/profile" }
     ]
   }
