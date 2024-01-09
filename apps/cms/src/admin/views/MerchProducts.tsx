@@ -1,9 +1,63 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "payload/components/elements";
 import { AdminView } from "payload/config";
 import ViewTemplate from "./ViewTemplate";
+import { Column } from "payload/dist/admin/components/elements/Table/types";
+import { RenderCellFactory } from "../utils/RenderCellFactory";
+import SortedColumn from "../utils/SortedColumn";
+import { Table } from "payload/dist/admin/components/elements/Table";
+import { Product } from "../../@types/Product";
+import { IProduct } from "../../@types/IProduct";
+import ProductsApi from "../../apis/products.api";
 
 const MerchProducts: AdminView = ({ user, canAccessAdmin }) => {
+  // Get data from API
+  const [data, setData] = useState<IProduct[]>(null);
+  useEffect(() => {
+    ProductsApi.getProducts()
+      .then((res: IProduct[]) => setData(res))
+      .catch((error) => console.log(error));
+  }, []);
+
+  // Output human-readable table headers based on the attribute names from the API
+  function prettifyKey(str: string): string {
+    let res = "";
+    for (const i of str.split("_")) {
+      res += i.charAt(0).toUpperCase() + i.slice(1) + " ";
+    }
+    return res;
+  }
+
+  // Do not load table until we receive the data
+  if (data == null) {
+    return <div> Loading... </div>;
+  }
+
+  const tableCols = new Array<Column>();
+  for (const key of Object.keys(new Product())) {
+    const renderCell: React.FC<{ children?: React.ReactNode }> =
+      RenderCellFactory.get(data[0], key);
+
+    const col: Column = {
+      accessor: key,
+      components: {
+        Heading: (
+          <SortedColumn
+            label={prettifyKey(key)}
+            name={key}
+            data={data as never[]}
+          />
+        ),
+        renderCell: renderCell,
+      },
+      label: "",
+      name: "",
+      active: true,
+    };
+    tableCols.push(col);
+  }
+  console.log(tableCols);
+
   return (
     <ViewTemplate
       user={user}
@@ -12,13 +66,11 @@ const MerchProducts: AdminView = ({ user, canAccessAdmin }) => {
       keywords=""
       title="Merchandise Products"
     >
-      <p>
-        Here is a custom route that was added in the Payload config. It uses the
-        Default Template, so the sidebar is rendered.
-      </p>
       <Button el="link" to={"/admin"} buttonStyle="primary">
         Go to Main Admin View
       </Button>
+
+      <Table data={data} columns={tableCols} />
     </ViewTemplate>
   );
 };
