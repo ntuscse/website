@@ -6,8 +6,14 @@ const Order: CollectionConfig = {
     useAsTitle: "Order Person",
     group: "Merch",
   },
+  auth: {
+    useAPIKey: true,
+  },
   access: {
     read: () => true,
+    create: () => true,
+    update: () => true,
+    delete: () => true,
   },
   fields: [
     {

@@ -12,6 +12,7 @@ export interface Config {
     tags: Tag;
     users: User;
     media: Media;
+    orders: Order;
   };
   globals: {};
 }
@@ -78,6 +79,30 @@ export interface User {
   name?: string;
   updatedAt: string;
   createdAt: string;
+  email?: string;
+  resetPasswordToken?: string;
+  resetPasswordExpiration?: string;
+  salt?: string;
+  hash?: string;
+  loginAttempts?: number;
+  lockUntil?: string;
+  password?: string;
+}
+export interface Order {
+  id: string;
+  order_id: string;
+  date: string;
+  order_person: string;
+  image_url: string;
+  item: string;
+  qty: number;
+  size: string;
+  colour: string;
+  updatedAt: string;
+  createdAt: string;
+  enableAPIKey?: boolean;
+  apiKey?: string;
+  apiKeyIndex?: string;
   email?: string;
   resetPasswordToken?: string;
   resetPasswordExpiration?: string;
