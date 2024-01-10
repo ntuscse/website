@@ -100,15 +100,4 @@ export interface Order {
   colour: string;
   updatedAt: string;
   createdAt: string;
-  enableAPIKey?: boolean;
-  apiKey?: string;
-  apiKeyIndex?: string;
-  email?: string;
-  resetPasswordToken?: string;
-  resetPasswordExpiration?: string;
-  salt?: string;
-  hash?: string;
-  loginAttempts?: number;
-  lockUntil?: string;
-  password?: string;
 }
