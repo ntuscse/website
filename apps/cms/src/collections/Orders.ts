@@ -1,17 +1,17 @@
 import { CollectionConfig } from 'payload/types';
-
+import ImageCell from '../admin/components/ImageCell'
 const Order: CollectionConfig = {
   slug: 'orders',
   admin: {
     useAsTitle: "Order Person",
     group: "Merch",
   },
-  access: {
-    read: () => true,
-    create: () => true,
-    update: () => true,
-    delete: () => true,
-  },
+  // access: {
+  //   read: () => true,
+  //   create: () => true,
+  //   update: () => true,
+  //   delete: () => true,
+  // },
   fields: [
     {
       name: 'order_id',
@@ -29,9 +29,14 @@ const Order: CollectionConfig = {
       required: true,
     },
     {
-      name: 'image_url',
+      name: 'product_image_url',
       type: 'text',
       required: true,
+      admin: {
+        components: {
+          Cell: ImageCell
+        }
+      }
     },
     {
       name: 'item',

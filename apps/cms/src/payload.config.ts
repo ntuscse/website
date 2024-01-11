@@ -1,7 +1,7 @@
 import { buildConfig } from 'payload/config';
 import { cloudStorage } from '@payloadcms/plugin-cloud-storage';
 import { s3Adapter as createS3Adapter } from '@payloadcms/plugin-cloud-storage/s3';
-// import { mongooseAdapter } from '@payloadcms/db-mongodb';
+import { mongooseAdapter } from '@payloadcms/db-mongodb';
 import path from 'path';
 
 import Categories from './collections/Categories';
@@ -41,7 +41,7 @@ export default buildConfig({
       routes: [
         {
           path: "/merch/overview",
-          Component: MerchOverview,
+          Component: MerchOverview
         },
         {
           path: "/merch/sales",
@@ -50,12 +50,19 @@ export default buildConfig({
         {
           path: "/merch/products",
           Component: MerchProducts,
-        },
+        }
       ],
       beforeNavLinks: BeforeNavLinks,
       afterNavLinks: AfterNavLinks,
     },
     user: Users.slug,
+    autoLogin: process.env.PAYLOAD_PUBLIC_ENABLE_AUTOLOGIN === 'true'
+      ? {
+        email: 'dog@gmail.com',
+        password: '123',
+        prefillOnly: true,
+      }
+      : false,
     css: path.resolve(__dirname, "admin", "styles.scss"),
   },
   collections: [
@@ -66,12 +73,6 @@ export default buildConfig({
     Media,
     Orders,
   ],
-  // Configure the Mongoose adapter here
-  // db: mongooseAdapter({
-  //   // Mongoose-specific arguments go here.
-  //   // URL is required.
-  //   url: process.env.MONGODB_URI,
-  // }),
   csrf: [
     // whitelist of domains to allow cookie auth from
     process.env.PAYLOAD_PUBLIC_SERVER_URL,
