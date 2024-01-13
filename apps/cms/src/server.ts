@@ -2,8 +2,6 @@ import express from "express";
 import payload from "payload";
 import * as dotenv from "dotenv";
 import path from "path";
-import orderRouter from "./orders.router";
-import mongoose from "mongoose";
 import cors from "cors";
 
 dotenv.config();
