@@ -3,7 +3,7 @@ import ImageCell from '../admin/components/ImageCell'
 const Order: CollectionConfig = {
   slug: 'orders',
   admin: {
-    useAsTitle: "Order Person",
+    useAsTitle: "order_person",
     group: "Merch",
   },
   // access: {
