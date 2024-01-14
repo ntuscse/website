@@ -13,8 +13,8 @@ interface ChallengeDetail {
 }
 const Profile = () => {
     const user: Profile = { username: 'Eren Yeager', email: 'eren@aot.com', profilePicUrl: 'https://i.pinimg.com/474x/f8/6f/c4/f86fc4f39be083b5705a40de4c998b47.jpg' }
-    const challengesInProgressList: ChallengeDetail[] = [{ challengeId: 123, challengeName: "FizzBuzz" }, { challengeId: 123, challengeName: "FizzBuzz" }, { challengeId: 12, challengeName: "FizzBuzz" }]
-    const challengesDone: ChallengeDetail[] = [{challengeId: 456, challengeName: "Two Sum"}, {challengeId: 456, challengeName: "Two Sum"}, {challengeId: 456, challengeName: "Two Sum"}]
+    const challengesInProgressList: ChallengeDetail[] = [{ challengeId: 123, challengeName: "FizzBuzz" }, { challengeId: 124, challengeName: "FizzBuzz" }, { challengeId: 125, challengeName: "FizzBuzz" }]
+    const challengesDone: ChallengeDetail[] = [{challengeId: 223, challengeName: "Two Sum"}, {challengeId: 21, challengeName: "Two Sum"}, {challengeId: 12, challengeName: "Two Sum"}]
     function onResumeClick(challengeId: number) {
         // navigate to challenge page given id
         console.log(`challengeId: ${challengeId}`)
@@ -40,14 +40,14 @@ const Profile = () => {
             <Flex flexDirection="column" h={["50vh", "30vh"]} w={["100vw", "100%"]} alignItems={["center", "flex-start"]}>
                 <Text mb={2} fontSize="2xl">Challenges in Progress</Text>
                 {challengesInProgressList.map((challengeDetail) =>
-                    <ProfileChallengeLayout challengeId={challengeDetail.challengeId} challengeName={challengeDetail.challengeName} onClick={() => { onResumeClick(challengeDetail.challengeId) }} buttonText="Resume" />
+                    <ProfileChallengeLayout key={challengeDetail.challengeId} challengeId={challengeDetail.challengeId} challengeName={challengeDetail.challengeName} onClick={() => { onResumeClick(challengeDetail.challengeId) }} buttonText="Resume" />
                 )}
             </Flex>
 
             <Flex flexDirection="column" h={["50vh", "30vh"]} w={["100vw", "100%"]} alignItems={["center", "flex-start"]}>
                 <Text mb={2} fontSize="2xl">History</Text>
                 {challengesDone.map((challengeDetail) =>
-                    <ProfileChallengeLayout challengeId={challengeDetail.challengeId} challengeName={challengeDetail.challengeName} onClick={() => { onDetailClick(challengeDetail.challengeId) }} buttonText="Details" />
+                    <ProfileChallengeLayout key={challengeDetail.challengeId} challengeId={challengeDetail.challengeId} challengeName={challengeDetail.challengeName} onClick={() => { onDetailClick(challengeDetail.challengeId) }} buttonText="Details" />
                 )}
             </Flex>
 
