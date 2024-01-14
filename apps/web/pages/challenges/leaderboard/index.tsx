@@ -73,11 +73,11 @@ const Leaderboard = () => {
         flexDirection="column"
         justifyContent="center"
         alignItems="center">
-            <Select bg='#CBD5E0' borderColor='#CBD5E0' w="80vw" my={4} onChange={handleDataChange}>
+            <Select bg="gray.300" borderColor="gray.300" w="80vw" my={4} onChange={handleDataChange}>
                 <option value='season-id-1'>Current Season</option>
                 <option value='season-id-2'>Season 2</option>
             </Select>
-        <Box bg="#CBD5E0" w="80vw" px={8} py={4} minHeight="70vh" borderRadius="8">
+        <Box bg="gray.300" w="80vw" px={8} py={4} minHeight="70vh" borderRadius="8">
             {currentDisplayedData.sort().reverse().map((item, index) => {
                 return <LeaderboardEntry key={item.uuid} index={index+1} name={item.userId} points={item.points}/>
             })}
