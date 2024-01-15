@@ -1,5 +1,5 @@
 import ProfileChallengeLayout from "@/features/challenges/components/ProfileChallengeLayout"
-import { Avatar, Box, Button, Flex, Text } from "@chakra-ui/react"
+import { AbsoluteCenter, Avatar, Box, Button, Center, Flex, Text } from "@chakra-ui/react"
 import { useState } from "react"
 
 const user: Profile = { username: 'Eren Yeager', email: 'eren@aot.com', profilePicUrl: 'https://i.pinimg.com/474x/f8/6f/c4/f86fc4f39be083b5705a40de4c998b47.jpg' }
@@ -76,9 +76,14 @@ const Profile = () => {
         justifyContent="center"
         alignItems="center">
         <Flex px={4} flexDirection="column" justifyContent="center" alignItems="center" flex={1} minH="100vh">
-            <Avatar src={user.profilePicUrl} size={['xl', '2xl']} />
+        <Flex flexDirection="column" alignItems="center" w="80%">
+        <Avatar src={user.profilePicUrl} size={['xl', '2xl']} />
             <Text w={["100%", "50%"]} my={4}>Username: {user.username}</Text>
             <Text w={["100%", "50%"]}>NTU email: {user.email}</Text>
+        </Flex>
+           
+
+
         </Flex>
 
         <Flex flex={2} minH="100vh" justifyContent="center" alignItems="center" flexDirection="column">
