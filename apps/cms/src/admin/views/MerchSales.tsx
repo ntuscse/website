@@ -28,10 +28,6 @@ const MerchSales: AdminView = ({ user, canAccessAdmin }) => {
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   // Output human-readable table headers based on the attribute names from the API
   function prettifyKey(str: string): string {
     let res = "";
