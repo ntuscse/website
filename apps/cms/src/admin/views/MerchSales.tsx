@@ -19,15 +19,6 @@ const MerchSales: AdminView = ({ user, canAccessAdmin }) => {
       .catch((error) => console.log(error));
   }, []);
 
-  const fetchData = async () => {
-    try {
-      const res: IOrder[] = await OrdersApi.getOrders();
-      setData(res);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   // Output human-readable table headers based on the attribute names from the API
   function prettifyKey(str: string): string {
     let res = "";
