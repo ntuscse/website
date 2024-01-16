@@ -12,7 +12,12 @@ import { Table } from "payload/dist/admin/components/elements/Table";
 
 const MerchSales: AdminView = ({ user, canAccessAdmin }) => {
   // Get data from API
-  const [data, setData] = useState<IOrder[]>();
+  const [data, setData] = useState<IOrder[]>(null);
+  useEffect(() => {
+    OrdersApi.getOrders()
+      .then((res: IOrder[]) => setData(res))
+      .catch((error) => console.log(error));
+  }, []);
 
   const fetchData = async () => {
     try {
