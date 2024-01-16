@@ -13,10 +13,18 @@ import { Table } from "payload/dist/admin/components/elements/Table";
 const MerchSales: AdminView = ({ user, canAccessAdmin }) => {
   // Get data from API
   const [data, setData] = useState<IOrder[]>(null);
+
+  const fetchData = async () => {
+    try {
+      const res: IOrder[] = await OrdersApi.getOrders();
+      setData(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    OrdersApi.getOrders()
-      .then((res: IOrder[]) => setData(res))
-      .catch((error) => console.log(error));
+    fetchData();
   }, []);
 
   // Output human-readable table headers based on the attribute names from the API
@@ -35,8 +43,11 @@ const MerchSales: AdminView = ({ user, canAccessAdmin }) => {
 
   const tableCols = new Array<Column>();
   for (const key of Object.keys(new Order())) {
+    const renderCellComponent = RenderCellFactory.get(data[0], key);
     const renderCell: React.FC<{ children?: React.ReactNode }> =
-      RenderCellFactory.get(data[0], key);
+      renderCellComponent instanceof Promise
+        ? renderCellComponent
+        : renderCellComponent;
 
     const col: Column = {
       accessor: key,
@@ -87,12 +98,12 @@ const MerchSales: AdminView = ({ user, canAccessAdmin }) => {
 
   tableCols.push(deleteColumn);
 
-  const handleEdit = async (orderId: string) => {
-    console.log(`Dummy.`);
+  const handleEdit = (orderId: string) => {
+    console.log(`Dummy. Order ID: ${orderId}`);
   };
 
-  const handleDelete = async (orderId: string) => {
-    console.log(`Dummy.`);
+  const handleDelete = (orderId: string) => {
+    console.log(`Dummy. Order ID: ${orderId}`);
   };
 
   console.log(tableCols);
