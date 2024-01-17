@@ -1,11 +1,18 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import LeaderboardRouter from "./routes/leaderboard";
+import QuestionaireRouter from "./routes/questionaire";
+dotenv.config({ path: "../.env"});
 
-dotenv.config();
+// Database
+const connectDB = require('./config/db');
+connectDB();
+
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
+
+console.log(process.env.MONGO_URI)
 
 const nijika = `
 ⠀⠀⠀⢎⣰⡡⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⡀⠄⠀⠀⡜⠡⡀⠤⢀⡐⣠⡤⠲⠤⠐⢶⣬⣳⡄⠀⠀⠀⠀⢱⣂⣒⡼⠃⠀⠀⠀⠸⢄⣣⣆⠟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠀⠀⠀⠀⠀⠀⠀⠄⠠⠀⠀⠀⠀
@@ -56,8 +63,11 @@ app.get("/ping", (req: Request, res: Response) => {
 });
 
 app.use("/leaderboard", LeaderboardRouter);
+app.use('/api/question', QuestionaireRouter);
 
 app.listen(port, () => {
     console.log(nijika);
     console.log(`[server]: Server is running at http://localhost:${port}`);
 });
+
+export default app;
