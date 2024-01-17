@@ -16,7 +16,8 @@ export class RenderCellFactory {
 
     if (Array.isArray(element[key])) {
       if (
-        element[key].every((item: string) =>
+        (element[key] as string[]).every((item: string) =>
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
           isImageUrl.test((item as string).toString())
         )
       ) {
