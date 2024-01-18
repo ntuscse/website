@@ -9,7 +9,7 @@ const Question = require('../model/question');
 // @route   GET /api/question
 // @access  Public
 const getQuestions = asyncHandler(async (req: Request, res: Response) => {
-    const questions = await Question.find();
+    const questions = await Question.find({})
 
     res.status(200).json(questions)
 })
@@ -19,10 +19,34 @@ const getQuestions = asyncHandler(async (req: Request, res: Response) => {
 // @route   GET /api/activity/active
 // @access  Public
 const getActiveQuestions = asyncHandler(async (req: Request, res: Response) => {
-    const questions = await Question.find({"active": true }).populate("submission").populate("user");
+    const questions = await Question.find({"active": true })
 
     res.status(200).json(questions)
 })
+
+// @desc    Get question
+// @route   GET /api/question/:id
+// @access  Public
+const getQuestion = asyncHandler(async (req: Request, res: Response) => {
+    const questionId = req.params.id;
+
+    if (!isValidObjectId(questionId)) {
+        return res.status(400).json({ message: 'Invalid question ID' });
+    }
+
+    try {
+        const question = await Question.findById(questionId);
+
+        if (!question) {
+            return res.status(404).json({ message: 'Question not found' });
+        }
+
+        res.status(200).json(question);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
 
 
 // @desc    Set question
@@ -37,8 +61,10 @@ const setQuestion = asyncHandler(async (req: Request, res: Response) => {
         expiry: req.body.expiry,
         points: req.body.points,
         answer: req.body.answer,
+    }).catch((err: any) => {
+        console.log(err);
+        res.status(400).json(err);
     })
-    question = await question.populate("user")
 
     res.status(200).json(question)
 })
@@ -47,38 +73,65 @@ const setQuestion = asyncHandler(async (req: Request, res: Response) => {
 // @route   PUT /api/question/:id
 // @access  Private
 const updateQuestion = asyncHandler(async (req: Request, res: Response) => {
-    const question = await Question.findById(req.params.id)
-
-    if (!question) {
-        res.status(400)
-        throw new Error("Activity not found");
+    const questionId = req.params.id;
+    if (!isValidObjectId(questionId)) {
+        return res.status(400).json({ message: 'Invalid question ID' });
     }
+    try {
+        const question = await Question.findById(questionId);
 
-    const updatedQuestion = await Question.findByIdAndUpdate(req.params.id, req.body, { new: true, })
+        if (!question) {
+            return res.status(404).json({ message: 'Question not found' });
+        }
 
-    res.status(200).json(updatedQuestion)
-})
+        const updatedQuestion = await Question.findByIdAndUpdate(questionId, req.body, { new: true });
+
+        res.status(200).json(updatedQuestion);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
 
 // @desc    Delete question
 // @route   DELETE /api/question/:id
 // @access  Private
 const deleteQuestion = asyncHandler(async (req: Request, res: Response) => {
-    const question = await Question.findById(req.params.id)
+    const questionId = req.params.id;
 
-    if (!question) {
-        res.status(400)
+    if (!isValidObjectId(questionId)) {
+        return res.status(400).json({ message: 'Invalid question ID' });
     }
 
-    await question.remove()
+    try {
+        const question = await Question.findById(questionId);
 
-    res.status(200).json({ id: req.params.id })
-})
+        if (!question) {
+            return res.status(404).json({ message: 'Question not found' });
+        }
 
+        await question.remove()
 
-module.exports = {
+        res.status(200).json({message: 'Question deleted'});
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
+
+// Helper function to validate ObjectId
+function isValidObjectId(id: string): boolean {
+    const objectIdRegex = /^[0-9a-fA-F]{24}$/;
+    return objectIdRegex.test(id);
+}
+
+const QuestionController = {
+    getQuestion,
     getQuestions,
     getActiveQuestions,
     setQuestion,
     updateQuestion,
     deleteQuestion,
-}
+};
+
+export { QuestionController as default };

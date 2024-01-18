@@ -10,7 +10,7 @@ export interface QuestionModel {
     expiry: string;
     points: number;
     answer: string;
-    submissions: any[]; // Adjust the type based on your 'Submission' model
+    submissions: Array<typeof Submission>;
     active: boolean;
 }
 
@@ -52,6 +52,4 @@ const questionSchema: Schema<QuestionModel> = new Schema({
     timestamps: true
 });
 
-const Question = mongoose.model<QuestionModel>('Question', questionSchema);
-
-export default Question;
+module.exports = mongoose.model<QuestionModel>('Question', questionSchema);
