@@ -1,9 +1,9 @@
-import mongoose, { Schema, Document, model } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 
-interface SubmissionModel extends Document {
+export interface SubmissionModel {
     user: mongoose.Types.ObjectId;
     name: string;
-    response: string;
+    answer: string;
     correct?: boolean;
     question?: mongoose.Types.ObjectId;
 }
@@ -18,9 +18,9 @@ const submissionSchema: Schema<SubmissionModel> = new Schema({
         type: String,
         required: [true, 'Please add a name'],
     },
-    response: {
+    answer: {
         type: String,
-        required: [true, 'Please add a response'],
+        required: [true, 'Please add an answer'],
     },
     correct: {
         type: Boolean,
@@ -33,6 +33,4 @@ const submissionSchema: Schema<SubmissionModel> = new Schema({
     timestamps: true,
 });
 
-const Submission = model<SubmissionModel>('Submission', submissionSchema);
-
-export default Submission;
+module.exports = mongoose.model<SubmissionModel>('Submission', submissionSchema);

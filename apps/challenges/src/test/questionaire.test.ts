@@ -2,6 +2,7 @@ import request from 'supertest';
 import mongoose from 'mongoose';
 import app from '../index';
 const Question = require('../model/question');
+const Submission = require('../model/submission');
 
 // create question fixture
 function questionFixture(overrides = {}) {
@@ -10,7 +11,7 @@ function questionFixture(overrides = {}) {
         question_title: (Math.random() + 1).toString(36).substring(2),
         question_desc: (Math.random() + 1).toString(36).substring(2),
         question_date: "2022-05-01T00:00:00.000Z",
-        expiry: "2022-06-01T00:00:00.000Z",
+        expiry: "2040-06-01T00:00:00.000Z",
         points: 10,
         answer: (Math.random() + 1).toString(36).substring(2),
         submissions: [],
@@ -20,15 +21,24 @@ function questionFixture(overrides = {}) {
     return { ...defaultValues, ...overrides };
 }
 
-beforeAll(done => {
-    Question.deleteMany({})
-    done()
+function answerFixture(overrides = {}) {
+    var defaultValues = {
+        name: (Math.random() + 1).toString(36).substring(2),
+        answer: (Math.random() + 1).toString(36).substring(2),
+    };
+
+    return { ...defaultValues, ...overrides };
+};
+
+beforeAll(async () => {
+    await Question.deleteMany({})
+    await Submission.deleteMany({})
 })
   
-afterAll(done => {
-    Question.deleteMany({})
-    mongoose.connection.close()
-    done()
+afterAll(async () => {
+    await Question.deleteMany({})
+    await Submission.deleteMany({})
+    await mongoose.connection.close()
 })
 
 describe('List Questions: GET /api/question', () => {
@@ -41,7 +51,6 @@ describe('List Questions: GET /api/question', () => {
 
     it('should return all questions', async () => {
         const response = await request(app).get('/api/question');
-        console.log(response)
         expect(response.status).toBe(200);
         expect(response.body.length).toBe(3);
     });
@@ -89,11 +98,19 @@ describe('Create Questions: POST /api/question', () => {
     });
 
     it('should create a question', async () => {
+        const question = questionFixture();
         const response = await request(app)
             .post('/api/question')
-            .send(questionFixture());
-        expect(response.status).toBe(200);
-        expect(response.body.question_no).toBeDefined();
+            .send(question);
+        expect(response.status).toBe(201);
+        expect(response.body.question_no).toBe(question.question_no);
+        expect(response.body.question_title).toBe(question.question_title);
+        expect(response.body.question_desc).toBe(question.question_desc);
+        expect(response.body.question_date).toBe(question.question_date);
+        expect(response.body.expiry).toBe(question.expiry);
+        expect(response.body.points).toBe(question.points);
+        expect(response.body.answer).toBe(question.answer);
+        expect(response.body.active).toBe(question.active);
     });
 })
 
@@ -152,5 +169,58 @@ describe('Delete Questions: DELETE /api/question/:id', () => {
             .delete(`/api/question/${question._id}`);
         expect(response.status).toBe(200);
         expect(response.body.message).toBe("Question deleted");
+    })
+})
+
+describe('Submit Questions: POST /api/question/submit/:id', () => {
+    it('should not submit a question with invalid question id', async () => {
+        const response = await request(app)
+            .post('/api/question/submit/123456789012')
+            .send(answerFixture());
+        expect(response.status).toBe(400);
+        expect(response.body.message).toBe("Invalid question ID");
+    });
+
+    it('should not submit a question with non existing question id', async () => {
+        const response = await request(app)
+            .post(`/api/question/submit/65a8ba0b8c8139544b9955ac`)
+            .send(answerFixture());
+        expect(response.status).toBe(404);
+        expect(response.body.message).toBe("Question not found");
+    })
+
+    it('should not submit a question with inactive question', async () => {
+        const question = await Question.create(questionFixture({ active: false }));
+        const response = await request(app)
+            .post(`/api/question/submit/${question._id}`)
+            .send(answerFixture());
+        expect(response.status).toBe(400);
+        expect(response.body.message).toBe("Question is not active");
+    })
+
+    it('should not submit a question with expired question', async () => {
+        const question = await Question.create(questionFixture({ expiry: "2021-06-01T00:00:00.000Z" }));
+        const response = await request(app)
+            .post(`/api/question/submit/${question._id}`)
+            .send(answerFixture());
+        expect(response.status).toBe(400);
+        expect(response.body.message).toBe("Question has expired");
+    })
+
+    it('should submit an answer', async () => {
+        const question = await Question.create(questionFixture({ answer: "answer", points: 11}));
+        const response = await request(app)
+            .post(`/api/question/submit/${question._id}`)
+            .send(answerFixture({ answer: "answer" }));
+        expect(response.status).toBe(201);
+        expect(response.body.message).toBe("Answer submitted");
+
+        const submission = await Submission.findOne({ question: question._id });
+        expect(submission.answer).toBe("answer");
+        expect(submission.correct).toBe(true);
+
+        const updatedQuestion = await Question.findOne({ _id: question._id });
+        expect(updatedQuestion.submissions.length).toBe(1);
+        expect(updatedQuestion.submissions[0]).toEqual(submission._id);
     })
 })

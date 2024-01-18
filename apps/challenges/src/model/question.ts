@@ -1,5 +1,4 @@
 import mongoose, { Schema, Document } from 'mongoose';
-import Submission from './submission';
 
 export interface QuestionModel {
     _id: string;
@@ -10,7 +9,7 @@ export interface QuestionModel {
     expiry: string;
     points: number;
     answer: string;
-    submissions: Array<typeof Submission>;
+    submissions: Array<mongoose.Types.ObjectId>;
     active: boolean;
 }
 
@@ -43,7 +42,10 @@ const questionSchema: Schema<QuestionModel> = new Schema({
         type: String,
         required: [true, 'Please add an answer']
     },
-    submissions: Array<typeof Submission>,
+    submissions: {
+        type: [mongoose.Types.ObjectId],
+        ref: 'Submission'
+    },
     active: {
         type: Boolean,
         default: true
