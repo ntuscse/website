@@ -2,9 +2,10 @@ import mongoose, { Schema, model } from 'mongoose';
 
 export interface SubmissionModel {
     user: mongoose.Types.ObjectId;
-    name: string;
+    leaderboard: mongoose.Types.ObjectId;
     answer: string;
     correct?: boolean;
+    points_awarded?: number;
     question?: mongoose.Types.ObjectId;
 }
 
@@ -14,9 +15,10 @@ const submissionSchema: Schema<SubmissionModel> = new Schema({
         required: true,
         ref: 'User',
     },
-    name: {
-        type: String,
-        required: [true, 'Please add a name'],
+    leaderboard: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Leaderboard',
     },
     answer: {
         type: String,
@@ -24,6 +26,9 @@ const submissionSchema: Schema<SubmissionModel> = new Schema({
     },
     correct: {
         type: Boolean,
+    },
+    points_awarded: {
+        type: Number,
     },
     question: {
         type: mongoose.Schema.Types.ObjectId,

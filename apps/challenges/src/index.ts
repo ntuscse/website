@@ -8,26 +8,20 @@ dotenv.config({ path: "../.env"});
 const connectDB = require('./config/db');
 connectDB();
 
-
 const app: Express = express();
 const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
 
-app.get("/", (req: Request, res: Response) => {
-    res.status(200).send("Express + TypeScript Server");
-});
-
-app.get("/ping", (req: Request, res: Response) => {
-    res.status(200).send("pong");
-});
-
-app.use("/leaderboard", LeaderboardRouter);
+// Routes
+app.use("/api/leaderboard", LeaderboardRouter);
 app.use('/api/question', QuestionaireRouter);
 
-app.listen(port, () => {
-    console.log(`[server]: Server is running at http://localhost:${port}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+    app.listen(port, () => {
+        console.log(`[server]: Server is running at http://localhost:${port}`);
+    });
+}
 
 export default app;

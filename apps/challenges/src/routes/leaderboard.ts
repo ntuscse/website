@@ -3,10 +3,11 @@ import LeaderBoardController from "../controllers/leaderboard";
 
 const router = Express.Router();
 
-router.get("", LeaderBoardController.GetLeaderboard);
-router.post("", LeaderBoardController.StartLeaderboard);
+router.route('/').get(LeaderBoardController.getLeaderBoards).post(LeaderBoardController.setLeaderBoard);
+router.route('/active').get(LeaderBoardController.getActiveLeaderBoards);
+router.route('/:id').get(LeaderBoardController.getLeaderBoard).delete(LeaderBoardController.deleteLeaderBoard).put(LeaderBoardController.updateLeaderBoard);
 
-router.post("/current", LeaderBoardController.GetCurrnetLeaderboard);
+// Get leaderboard rankings
+router.route('/rankings/:id/:top').get(LeaderBoardController.getLeaderBoardRankings);
 
 export { router as default };
-// 

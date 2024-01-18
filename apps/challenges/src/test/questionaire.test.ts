@@ -3,41 +3,23 @@ import mongoose from 'mongoose';
 import app from '../index';
 const Question = require('../model/question');
 const Submission = require('../model/submission');
-
-// create question fixture
-function questionFixture(overrides = {}) {
-    var defaultValues = {
-        question_no: (Math.random() + 1).toString(36).substring(2),
-        question_title: (Math.random() + 1).toString(36).substring(2),
-        question_desc: (Math.random() + 1).toString(36).substring(2),
-        question_date: "2022-05-01T00:00:00.000Z",
-        expiry: "2040-06-01T00:00:00.000Z",
-        points: 10,
-        answer: (Math.random() + 1).toString(36).substring(2),
-        submissions: [],
-        active: true,
-    };
-
-    return { ...defaultValues, ...overrides };
-}
-
-function answerFixture(overrides = {}) {
-    var defaultValues = {
-        name: (Math.random() + 1).toString(36).substring(2),
-        answer: (Math.random() + 1).toString(36).substring(2),
-    };
-
-    return { ...defaultValues, ...overrides };
-};
+const User = require('../model/user');
+const Leaderboard = require('../model/leaderboard');
+import { userFixture, questionFixture, answerFixture, leaderboardFixture } from '../utils/fixtures';
+import { isValidObjectId } from '../utils/db';
 
 beforeAll(async () => {
+    await Leaderboard.deleteMany({})
     await Question.deleteMany({})
     await Submission.deleteMany({})
+    await User.deleteMany({})
 })
   
 afterAll(async () => {
+    await Leaderboard.deleteMany({})
     await Question.deleteMany({})
     await Submission.deleteMany({})
+    await User.deleteMany({})
     await mongoose.connection.close()
 })
 
@@ -82,8 +64,8 @@ describe('Get Questions: GET /api/question/:id', () => {
         expect(response.body.question_no).toBe(question.question_no);
         expect(response.body.question_title).toBe(question.question_title);
         expect(response.body.question_desc).toBe(question.question_desc);
-        expect(response.body.question_date).toBe(question.question_date);
-        expect(response.body.expiry).toBe(question.expiry);
+        expect(new Date(response.body.question_date)).toEqual(new Date(question.question_date));
+        expect(new Date(response.body.expiry)).toEqual(new Date(question.expiry));
         expect(response.body.points).toBe(question.points);
         expect(response.body.answer).toBe(question.answer);
     })
@@ -207,20 +189,89 @@ describe('Submit Questions: POST /api/question/submit/:id', () => {
         expect(response.body.message).toBe("Question has expired");
     })
 
-    it('should submit an answer', async () => {
-        const question = await Question.create(questionFixture({ answer: "answer", points: 11}));
+    it('should submit an incorrect answer', async () => {
+        const user = await User.create(userFixture());
+        const question = await Question.create(questionFixture({ answer: "answer", points: 12}));
+        const leaderboard = await Leaderboard.create(leaderboardFixture());
         const response = await request(app)
             .post(`/api/question/submit/${question._id}`)
-            .send(answerFixture({ answer: "answer" }));
+            .send(answerFixture({ answer: "incorrect answer", user: user._id, leaderboard: leaderboard._id}));
         expect(response.status).toBe(201);
         expect(response.body.message).toBe("Answer submitted");
 
-        const submission = await Submission.findOne({ question: question._id });
-        expect(submission.answer).toBe("answer");
-        expect(submission.correct).toBe(true);
+        // Submission should be created
+        const submission = await Submission.findOne({ question: question._id, user: user._id }).populate('user');
+        expect(submission.answer).toBe("incorrect answer");
+        expect(submission.correct).toBe(false);
+        expect(submission.points_awarded).toBe(0);
+        expect(submission.user.name).toBe(user.name);
 
+        // Question should have the submission in submissions array
         const updatedQuestion = await Question.findOne({ _id: question._id });
         expect(updatedQuestion.submissions.length).toBe(1);
         expect(updatedQuestion.submissions[0]).toEqual(submission._id);
+
+        // Leaderboard should have the user in rankings array
+        const updatedLeaderboard = await Leaderboard.findOne({ _id: leaderboard._id });
+        expect(updatedLeaderboard.rankings.length).toBe(1);
+        expect(updatedLeaderboard.rankings[0].user).toEqual(user._id);
+        expect(updatedLeaderboard.rankings[0].points).toEqual(0);
+    })
+
+    it('should submit an answer', async () => {
+        const user = await User.create(userFixture());
+        const question = await Question.create(questionFixture({ answer: "answer", points: 11}));
+        const leaderboard = await Leaderboard.create(leaderboardFixture());
+        const response = await request(app)
+            .post(`/api/question/submit/${question._id}`)
+            .send(answerFixture({ answer: "answer", user: user._id, leaderboard: leaderboard._id }));
+        expect(response.status).toBe(201);
+        expect(response.body.message).toBe("Answer submitted");
+
+        // Submission should be created
+        const submission = await Submission.findOne({ question: question._id }).populate('user');
+        expect(submission.answer).toBe("answer");
+        expect(submission.correct).toBe(true);
+        expect(submission.points_awarded).toBe(11);
+        expect(submission.user.name).toBe(user.name);
+
+        // Question should have the submission in submissions array
+        const updatedQuestion = await Question.findOne({ _id: question._id });
+        expect(updatedQuestion.submissions.length).toBe(1);
+        expect(updatedQuestion.submissions[0]).toEqual(submission._id);
+    })
+    
+    it('should submit an answer and update points if previously have a ranking', async () => {
+        const user = await User.create(userFixture());
+        const question = await Question.create(questionFixture({ answer: "answer", points: 11}));
+        const leaderboard = await Leaderboard.create(leaderboardFixture({ rankings: [{ user: user._id, points: 10 }]}));
+        const response = await request(app)
+            .post(`/api/question/submit/${question._id}`)
+            .send(answerFixture({ answer: "answer", user: user._id, leaderboard: leaderboard._id }));
+        expect(response.status).toBe(201);
+        expect(response.body.message).toBe("Answer submitted");
+
+        // Leaderboard should have the user in rankings array
+        const updatedLeaderboard = await Leaderboard.findOne({ _id: leaderboard._id });
+        expect(updatedLeaderboard.rankings.length).toBe(1);
+        expect(updatedLeaderboard.rankings[0].user).toEqual(user._id);
+        expect(updatedLeaderboard.rankings[0].points).toEqual(21);
+    })
+
+    it('should submit an answer and create a ranking if previously do not have a ranking', async () => {
+        const user = await User.create(userFixture());
+        const question = await Question.create(questionFixture({ answer: "answer", points: 11}));
+        const leaderboard = await Leaderboard.create(leaderboardFixture());
+        const response = await request(app)
+            .post(`/api/question/submit/${question._id}`)
+            .send(answerFixture({ answer: "answer", user: user._id, leaderboard: leaderboard._id }));
+        expect(response.status).toBe(201);
+        expect(response.body.message).toBe("Answer submitted");
+
+        // Leaderboard should have the user in rankings array
+        const updatedLeaderboard = await Leaderboard.findOne({ _id: leaderboard._id });
+        expect(updatedLeaderboard.rankings.length).toBe(1);
+        expect(updatedLeaderboard.rankings[0].user).toEqual(user._id);
+        expect(updatedLeaderboard.rankings[0].points).toEqual(11);
     })
 })

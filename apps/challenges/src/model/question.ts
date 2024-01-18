@@ -1,12 +1,11 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
 export interface QuestionModel {
-    _id: string;
     question_no: string;
     question_title: string;
     question_desc: string;
-    question_date: string;
-    expiry: string;
+    question_date: Date;
+    expiry: Date;
     points: number;
     answer: string;
     submissions: Array<mongoose.Types.ObjectId>;
@@ -27,11 +26,11 @@ const questionSchema: Schema<QuestionModel> = new Schema({
         required: [true, 'Please add a question desc']
     },
     question_date: {
-        type: String,
+        type: Date,
         required: [true, 'Please add a question date']
     },
     expiry: {
-        type: String,
+        type: Date,
         required: [true, 'Please add an expiry date']
     },
     points: {

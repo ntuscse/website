@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 const asyncHandler = require('express-async-handler');
-const mongoose = require('mongoose');
 const Question = require('../model/question');
 const Submission = require('../model/submission');
+const Leaderboard = require('../model/leaderboard');
+import { isValidObjectId } from "../utils/db";
 
 // @desc    Get questions
 // @route   GET /api/question
@@ -66,7 +67,7 @@ const setQuestion = asyncHandler(async (req: Request, res: Response) => {
         res.status(201).json(question);
     } catch (error) {
         if ((error as Error).name === 'ValidationError') {
-            return res.status(400).json({ message: 'Validation failed', errors: (error as Error) });
+            return res.status(400).json({ message: (error as Error).message });
         }
 
         res.status(500).json({ message: 'Internal Server Error' });
@@ -149,17 +150,27 @@ const submitAnswer = asyncHandler(async (req: Request, res: Response) => {
         }
 
         const submission = await Submission.create({
-            user: mongoose.Types.ObjectId(),
-            name: "PLACEHOLDER NAME",
+            user: req.body.user,
+            leaderboard: req.body.leaderboard,
             answer: req.body.answer,
             correct: req.body.answer === question.answer,
+            points_awarded: req.body.answer === question.answer ? question.points : 0,
             question: questionId
         });
 
-        // Update question submissions array
-        question.submissions.push(submission._id);
-        await Question.findByIdAndUpdate(questionId, question, { new: true });
-        
+        // Update question submissions array using $push
+        await Question.findByIdAndUpdate(questionId, { $push: { submissions: submission._id } }, { new: true });
+
+        // Retrieve user and update points of the entry in the leaderboard
+        const leaderboard = await Leaderboard.findOne({ _id: req.body.leaderboard });
+        const ranking = leaderboard.rankings.find((ranking: any) => ranking.user == req.body.user);
+        if (!ranking) {
+            await Leaderboard.findByIdAndUpdate(req.body.leaderboard, { $push: { rankings: { user: req.body.user, points: submission.points_awarded } } }, { new: true });
+        } else {
+            // Update points
+            await Leaderboard.findOneAndUpdate({ _id: req.body.leaderboard, 'rankings.user': req.body.user }, { $set: { 'rankings.$.points': ranking.points + submission.points_awarded } }, { new: true });
+        }
+
         res.status(201).json({ message: 'Answer submitted' });
 
     } catch (error) {
@@ -167,10 +178,8 @@ const submitAnswer = asyncHandler(async (req: Request, res: Response) => {
     }
 })
 
-// Helper function to validate ObjectId
-function isValidObjectId(id: string): boolean {
-    const objectIdRegex = /^[0-9a-fA-F]{24}$/;
-    return objectIdRegex.test(id);
+async function updateUserPoints() {
+
 }
 
 const QuestionController = {
