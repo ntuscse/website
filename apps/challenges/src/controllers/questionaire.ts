@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 const asyncHandler = require('express-async-handler');
 const Question = require('../model/question');
 const Submission = require('../model/submission');
-const Leaderboard = require('../model/leaderboard');
+import Season from "../model/season";
 import { isValidObjectId } from "../utils/db";
 
 // @desc    Get questions
@@ -127,6 +127,9 @@ const deleteQuestion = asyncHandler(async (req: Request, res: Response) => {
 // @desc    Submit answer
 // @route   POST /api/question/submit/:id
 // @access  Private
+
+// TODO: fix this
+/*
 const submitAnswer = asyncHandler(async (req: Request, res: Response) => {
     const questionId = req.params.id;
 
@@ -162,13 +165,13 @@ const submitAnswer = asyncHandler(async (req: Request, res: Response) => {
         await Question.findByIdAndUpdate(questionId, { $push: { submissions: submission._id } }, { new: true });
 
         // Retrieve user and update points of the entry in the leaderboard
-        const leaderboard = await Leaderboard.findOne({ _id: req.body.leaderboard });
-        const ranking = leaderboard.rankings.find((ranking: any) => ranking.user == req.body.user);
+        const season = await Season.findOne({ _id: req.body.leaderboard });
+        const ranking = season?.rankings.find((ranking: any) => ranking.user == req.body.user);
         if (!ranking) {
-            await Leaderboard.findByIdAndUpdate(req.body.leaderboard, { $push: { rankings: { user: req.body.user, points: submission.points_awarded } } }, { new: true });
-        } else {
+            await Season.findByIdAndUpdate(req.body.leaderboard, { $push: { rankings: { user: req.body.user, points: submission.points_awarded } } }, { new: true });
+        } else {Season
             // Update points
-            await Leaderboard.findOneAndUpdate({ _id: req.body.leaderboard, 'rankings.user': req.body.user }, { $set: { 'rankings.$.points': ranking.points + submission.points_awarded } }, { new: true });
+            await Season.findOneAndUpdate({ _id: req.body.leaderboard, 'rankings.user': req.body.user }, { $set: { 'rankings.$.points': ranking.points + submission.points_awarded } }, { new: true });
         }
 
         res.status(201).json({ message: 'Answer submitted' });
@@ -177,6 +180,7 @@ const submitAnswer = asyncHandler(async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 })
+*/
 
 async function updateUserPoints() {
 
@@ -189,7 +193,7 @@ const QuestionController = {
     setQuestion,
     updateQuestion,
     deleteQuestion,
-    submitAnswer
+    // submitAnswer
 };
 
 export { QuestionController as default };

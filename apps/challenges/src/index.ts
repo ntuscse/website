@@ -1,11 +1,12 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
-import LeaderboardRouter from "./routes/leaderboard";
+import SeasonRouter from "./routes/seasons";
 import QuestionaireRouter from "./routes/questionaire";
+import UserRouter from "./routes/user";
+import connectDB from "./config/db";
 dotenv.config({ path: "../.env"});
 
 // Database
-const connectDB = require('./config/db');
 connectDB();
 
 const app: Express = express();
@@ -15,8 +16,12 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 
 // Routes
-app.use("/api/leaderboard", LeaderboardRouter);
+app.get("/ping", (req: Request, res: Response) => {
+    res.status(200).json({ message: "pong" });
+});
+app.use("/api/seasons", SeasonRouter);
 app.use('/api/question', QuestionaireRouter);
+app.use('/api/user', UserRouter);
 
 if (process.env.NODE_ENV !== 'test') {
     app.listen(port, () => {

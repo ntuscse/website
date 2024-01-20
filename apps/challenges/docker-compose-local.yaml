@@ -1,0 +1,16 @@
+# this docker-compose file is for convenient setup of a local 
+# mongodb instance for local testing
+version: "3"
+services:
+  challenges-mongo:
+    image: mongo
+    container_name: challenges-mongo
+    restart: always
+    ports:
+      - "${MONGO_PORT}:27017"
+    env_file:
+     - ./.env
+    environment:
+      MONGO_INITDB_DATABASE: ${MONGO_DATABSE_NAME}
+    volumes:
+      - ./mock/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
