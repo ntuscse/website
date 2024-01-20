@@ -1,7 +1,6 @@
 import Season, { SeasonModel } from "../model/season";
-import mongoose, { Collection } from 'mongoose';
+import mongoose from 'mongoose';
 import Ranking, { RankingModel } from "../model/seasonRanking";
-
 
 const getSeasonsByDate = async(
     startDate: Date | null,
@@ -71,21 +70,12 @@ const getSeasonRankingsByPagination = async (
 const getUserSeasonRanking = async (
     seasonID: mongoose.Types.ObjectId,
     userID: mongoose.Types.ObjectId
-) => {
-    var rankingDocument;
-    var rank = 0;
-    const myCursor = Collection.find({
+): Promise<RankingModel | null> => {
+    const ranking = await Ranking.findOne({
         seasonID: seasonID,
         userID: userID
-    }).stream().on('data', function (doc) {
-        rank++;
-        rankingDocument = doc;
-    }).on('error', function (err) {
-        console.log(err)
-        }).on('close', function () {
-            console.log('done')
-            });
-    return { rank, rankingDocument };
+    });
+    return ranking;
 }
 
 const getUserAllSeasonRankings = async (
