@@ -111,10 +111,9 @@ const getUserSeasonRanking = asyncHandler(async (req: Request, res: Response) =>
         return;
     }
     try {
-        const { rank, rankingDocument } = await SeasonService.getUserSeasonRanking(seasonID, userID);
+        const ranking = await SeasonService.getUserSeasonRanking(seasonID, userID);
         res.status(200).json({
-            ranking: rankingDocument,
-            rank: rank
+            ranking: ranking
         });
     } catch (error) {
         const err = error as Error;
