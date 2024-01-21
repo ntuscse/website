@@ -16,6 +16,7 @@ import MerchOverview from "./admin/views/MerchOverview";
 import MerchProducts from "./admin/views/MerchProducts";
 import { SCSEIcon, SCSELogo } from "./admin/graphics/Logos";
 import BeforeNavLinks from "./admin/components/BeforeNavLinks";
+import Order from './collections/Orders';
 
 const adapter = createS3Adapter({
   config: {
@@ -62,6 +63,7 @@ export default buildConfig({
     Tags,
     Users,
     Media,
+    Order,
   ],
   csrf: [
     // whitelist of domains to allow cookie auth from

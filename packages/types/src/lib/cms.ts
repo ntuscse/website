@@ -12,6 +12,7 @@ export interface Config {
     tags: Tag;
     users: User;
     media: Media;
+    orders: Order;
   };
   globals: {};
 }
@@ -86,4 +87,14 @@ export interface User {
   loginAttempts?: number;
   lockUntil?: string;
   password?: string;
+}
+export interface Order {
+  id: string;
+  paymentGateway: string;
+  status: '1' | '2' | '3';
+  customerEmail: string;
+  transactionID: string;
+  orderDateTime: string;
+  updatedAt: string;
+  createdAt: string;
 }
