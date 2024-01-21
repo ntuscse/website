@@ -17,6 +17,8 @@ import MerchProducts from "./admin/views/MerchProducts";
 import { SCSEIcon, SCSELogo } from "./admin/graphics/Logos";
 import BeforeNavLinks from "./admin/components/BeforeNavLinks";
 import Order from './collections/Orders';
+import { isUsingCloudStore } from './utilities/cloud';
+
 
 const adapter = createS3Adapter({
   config: {
@@ -79,7 +81,7 @@ export default buildConfig({
       "../../../packages/schemas/lib/cms.graphql"
     ),
   },
-  plugins: [
+  plugins: isUsingCloudStore() ? [
     cloudStorage({
       collections: {
         media: {
@@ -87,5 +89,5 @@ export default buildConfig({
         }
       },
     }),
-  ],
+  ]: [],
 });
