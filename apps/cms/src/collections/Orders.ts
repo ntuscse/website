@@ -27,15 +27,15 @@ const Orders: CollectionConfig = {
       type: "select",
       options: [
         {
-          value: "1",
+          value: "pending",
           label: "Pending Payment",
         },
         {
-          value: "2",
+          value: "paid",
           label: "Payment Completed",
         },
         {
-          value: "3",
+          value: "delivered",
           label: "Order Completed",
         },
       ],

@@ -101,7 +101,7 @@ export interface User {
 export interface Order {
   id: string;
   paymentGateway: string;
-  status: '1' | '2' | '3';
+  status: 'pending' | 'paid' | 'delivered';
   customerEmail: string;
   transactionID: string;
   orderDateTime: string;
