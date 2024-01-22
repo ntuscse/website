@@ -48,7 +48,6 @@ const getQuestion = asyncHandler(async (req: Request, res: Response) => {
     }
 });
 
-
 // @desc    Set question
 // @route   POST /api/question
 // @access  Private
@@ -158,8 +157,11 @@ const submitAnswer = asyncHandler(async (req: Request, res: Response) => {
             question: questionId
         });
 
-        // Update question submissions array using $push
-        await Question.findByIdAndUpdate(questionId, { $push: { submissions: submission._id } }, { new: true });
+        // Update question submissions array using $push and $inc submission counts
+        await Question.findByIdAndUpdate(questionId, { 
+            $push: { submissions: submission._id },
+            $inc: { submissions_count: 1, correct_submissions_count: req.body.answer === question.answer ? 1 : 0 } },
+            { new: true });
 
         // Retrieve user and update points of the entry in the leaderboard
         const leaderboard = await Leaderboard.findOne({ _id: req.body.leaderboard });
@@ -177,10 +179,6 @@ const submitAnswer = asyncHandler(async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 })
-
-async function updateUserPoints() {
-
-}
 
 const QuestionController = {
     getQuestion,

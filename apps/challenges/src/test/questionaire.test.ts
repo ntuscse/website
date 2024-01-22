@@ -211,6 +211,9 @@ describe('Submit Questions: POST /api/question/submit/:id', () => {
         expect(updatedQuestion.submissions.length).toBe(1);
         expect(updatedQuestion.submissions[0]).toEqual(submission._id);
 
+        // Question should have the submission count incremented
+        expect(updatedQuestion.submissions_count).toBe(1);
+
         // Leaderboard should have the user in rankings array
         const updatedLeaderboard = await Leaderboard.findOne({ _id: leaderboard._id });
         expect(updatedLeaderboard.rankings.length).toBe(1);
@@ -239,6 +242,10 @@ describe('Submit Questions: POST /api/question/submit/:id', () => {
         const updatedQuestion = await Question.findOne({ _id: question._id });
         expect(updatedQuestion.submissions.length).toBe(1);
         expect(updatedQuestion.submissions[0]).toEqual(submission._id);
+
+        // Question should have the submission count incremented
+        expect(updatedQuestion.submissions_count).toBe(1);
+        expect(updatedQuestion.correct_submissions_count).toBe(1);
     })
     
     it('should submit an answer and update points if previously have a ranking', async () => {

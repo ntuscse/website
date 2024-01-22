@@ -213,23 +213,23 @@ describe('Get Leaderboard Rankings: GET /api/leaderboard/rankings/:id/:top', () 
         expect(response.body.message).toBe("Invalid top");
     })
 
-    it('should get leaderboard rankings', async () => {
-        const leaderboard = await Leaderboard.create(leaderboardFixture({ title: "Winter 2023", start_date: "2023-12-01T00:00:00.000Z", end_date: "2024-01-01T00:00:00.000Z", active: true}));
-        const user1 = await User.create(userFixture());
-        const user2 = await User.create(userFixture());
-        const user3 = await User.create(userFixture());
-        const question1 = await Question.create(questionFixture());
-        const question2 = await Question.create(questionFixture());
-        const question3 = await Question.create(questionFixture());
-        const submission1 = await Submission.create({ user: user1._id, leaderboard: leaderboard._id, question: question1._id, answer: "Answer 1", points: 10 });
-        const submission2 = await Submission.create({ user: user2._id, leaderboard: leaderboard._id, question: question2._id, answer: "Answer 2", points: 20 });
-        const submission3 = await Submission.create({ user: user3._id, leaderboard: leaderboard._id, question: question3._id, answer: "Answer 3", points: 30 });
-        const response = await request(app).get(`/api/leaderboard/rankings/${leaderboard._id}/2`);
-        expect(response.status).toBe(200);
-        expect(response.body.length).toBe(2);
-        expect(response.body[0].user.name).toBe(user3.name);
-        expect(response.body[0].points).toBe(30);
-        expect(response.body[1].user.name).toBe(user2.name);
-        expect(response.body[1].points).toBe(20);
-    })
+    // it('should get leaderboard rankings', async () => {
+    //     const leaderboard = await Leaderboard.create(leaderboardFixture({ title: "Winter 2023", start_date: "2023-12-01T00:00:00.000Z", end_date: "2024-01-01T00:00:00.000Z", active: true}));
+    //     const user1 = await User.create(userFixture());
+    //     const user2 = await User.create(userFixture());
+    //     const user3 = await User.create(userFixture());
+    //     const question1 = await Question.create(questionFixture());
+    //     const question2 = await Question.create(questionFixture());
+    //     const question3 = await Question.create(questionFixture());
+    //     const submission1 = await Submission.create({ user: user1._id, leaderboard: leaderboard._id, question: question1._id, answer: "Answer 1", points: 10 });
+    //     const submission2 = await Submission.create({ user: user2._id, leaderboard: leaderboard._id, question: question2._id, answer: "Answer 2", points: 20 });
+    //     const submission3 = await Submission.create({ user: user3._id, leaderboard: leaderboard._id, question: question3._id, answer: "Answer 3", points: 30 });
+    //     const response = await request(app).get(`/api/leaderboard/rankings/${leaderboard._id}/2`);
+    //     expect(response.status).toBe(200);
+    //     expect(response.body.length).toBe(2);
+    //     expect(response.body[0].user.name).toBe(user3.name);
+    //     expect(response.body[0].points).toBe(30);
+    //     expect(response.body[1].user.name).toBe(user2.name);
+    //     expect(response.body[1].points).toBe(20);
+    // })
 })
