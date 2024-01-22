@@ -1,15 +1,27 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
+import LeaderboardRouter from "./routes/leaderboard";
+import QuestionaireRouter from "./routes/questionaire";
+dotenv.config({ path: "../.env"});
 
-dotenv.config();
+// Database
+const connectDB = require('./config/db');
+connectDB();
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
 
-app.get("/", (req: Request, res: Response) => {
-    res.send("Express + TypeScript Server");
-});
+// Middleware
+app.use(express.json());
 
-app.listen(port, () => {
-    console.log(`[server]: Server is running at http://localhost:${port}`);
-});
+// Routes
+app.use("/api/leaderboard", LeaderboardRouter);
+app.use('/api/question', QuestionaireRouter);
+
+if (process.env.NODE_ENV !== 'test') {
+    app.listen(port, () => {
+        console.log(`[server]: Server is running at http://localhost:${port}`);
+    });
+}
+
+export default app;
