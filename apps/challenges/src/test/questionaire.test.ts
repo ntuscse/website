@@ -213,6 +213,7 @@ describe('Submit Questions: POST /api/question/submit/:id', () => {
 
         // Question should have the submission count incremented
         expect(updatedQuestion.submissions_count).toBe(1);
+        expect(updatedQuestion.correct_submissions_count).toBe(0);
 
         // Leaderboard should have the user in rankings array
         const updatedLeaderboard = await Leaderboard.findOne({ _id: leaderboard._id });
@@ -247,25 +248,8 @@ describe('Submit Questions: POST /api/question/submit/:id', () => {
         expect(updatedQuestion.submissions_count).toBe(1);
         expect(updatedQuestion.correct_submissions_count).toBe(1);
     })
-    
-    it('should submit an answer and update points if previously have a ranking', async () => {
-        const user = await User.create(userFixture());
-        const question = await Question.create(questionFixture({ answer: "answer", points: 11}));
-        const leaderboard = await Leaderboard.create(leaderboardFixture({ rankings: [{ user: user._id, points: 10 }]}));
-        const response = await request(app)
-            .post(`/api/question/submit/${question._id}`)
-            .send(answerFixture({ answer: "answer", user: user._id, leaderboard: leaderboard._id }));
-        expect(response.status).toBe(201);
-        expect(response.body.message).toBe("Answer submitted");
 
-        // Leaderboard should have the user in rankings array
-        const updatedLeaderboard = await Leaderboard.findOne({ _id: leaderboard._id });
-        expect(updatedLeaderboard.rankings.length).toBe(1);
-        expect(updatedLeaderboard.rankings[0].user).toEqual(user._id);
-        expect(updatedLeaderboard.rankings[0].points).toEqual(21);
-    })
-
-    it('should submit an answer and create a ranking if previously do not have a ranking', async () => {
+    it('should submit an correct answer and update leaderboard', async () => {
         const user = await User.create(userFixture());
         const question = await Question.create(questionFixture({ answer: "answer", points: 11}));
         const leaderboard = await Leaderboard.create(leaderboardFixture());
@@ -281,4 +265,83 @@ describe('Submit Questions: POST /api/question/submit/:id', () => {
         expect(updatedLeaderboard.rankings[0].user).toEqual(user._id);
         expect(updatedLeaderboard.rankings[0].points).toEqual(11);
     })
+
+    it('should submit an answer and ranking points should not stack even with multiple correct submissions', async () => {
+        const user = await User.create(userFixture());
+        const question = await Question.create(questionFixture({ answer: "answer", points: 11}));
+        const leaderboard = await Leaderboard.create(leaderboardFixture());
+        await request(app)
+            .post(`/api/question/submit/${question._id}`)
+            .send(answerFixture({ answer: "answer", user: user._id, leaderboard: leaderboard._id }));
+        await request(app)
+            .post(`/api/question/submit/${question._id}`)
+            .send(answerFixture({ answer: "answer", user: user._id, leaderboard: leaderboard._id }));
+
+        const updatedLeaderboard = await Leaderboard.findOne({ _id: leaderboard._id });
+        expect(updatedLeaderboard.rankings.length).toBe(1);
+        expect(updatedLeaderboard.rankings[0].user).toEqual(user._id);
+        expect(updatedLeaderboard.rankings[0].points).toEqual(11);
+    })
+
+    it('should submit an answer and ranking points should stack with multiple correct submissions for different questions', async () => {
+        const user = await User.create(userFixture());
+        const question1 = await Question.create(questionFixture({ answer: "answer", points: 34}));
+        const question2 = await Question.create(questionFixture({ answer: "answer", points: 35}));
+        const leaderboard = await Leaderboard.create(leaderboardFixture());
+        await request(app)
+            .post(`/api/question/submit/${question1._id}`)
+            .send(answerFixture({ answer: "answer", user: user._id, leaderboard: leaderboard._id }));
+        await request(app)
+            .post(`/api/question/submit/${question2._id}`)
+            .send(answerFixture({ answer: "answer", user: user._id, leaderboard: leaderboard._id }));
+
+        const updatedLeaderboard = await Leaderboard.findOne({ _id: leaderboard._id });
+        expect(updatedLeaderboard.rankings.length).toBe(1);
+        expect(updatedLeaderboard.rankings[0].user).toEqual(user._id);
+        expect(updatedLeaderboard.rankings[0].points).toEqual(69);
+    })
+
+    it('should submit an answer and get ranking points if the previous submission was incorrect', async () => {
+        const user = await User.create(userFixture());
+        const question = await Question.create(questionFixture({ answer: "answer", points: 11}));
+        const leaderboard = await Leaderboard.create(leaderboardFixture());
+        await request(app)
+            .post(`/api/question/submit/${question._id}`)
+            .send(answerFixture({ answer: "incorrect answer", user: user._id, leaderboard: leaderboard._id }));
+        await request(app)
+            .post(`/api/question/submit/${question._id}`)
+            .send(answerFixture({ answer: "incorrect answer2", user: user._id, leaderboard: leaderboard._id }));
+        await request(app)
+            .post(`/api/question/submit/${question._id}`)
+            .send(answerFixture({ answer: "answer", user: user._id, leaderboard: leaderboard._id }));
+
+        const updatedLeaderboard = await Leaderboard.findOne({ _id: leaderboard._id });
+        expect(updatedLeaderboard.rankings.length).toBe(1);
+        expect(updatedLeaderboard.rankings[0].user).toEqual(user._id);
+        expect(updatedLeaderboard.rankings[0].points).toEqual(11);
+    })
+
+    it('should submit an answer and get ranking points if the previous submission was incorrect and the new submission is correct', async () => {
+        const user = await User.create(userFixture());
+        const question = await Question.create(questionFixture({ answer: "answer", points: 11}));
+        const leaderboard = await Leaderboard.create(leaderboardFixture());
+        await request(app)
+            .post(`/api/question/submit/${question._id}`)
+            .send(answerFixture({ answer: "incorrect answer", user: user._id, leaderboard: leaderboard._id }));
+        await request(app)
+            .post(`/api/question/submit/${question._id}`)
+            .send(answerFixture({ answer: "incorrect answer2", user: user._id, leaderboard: leaderboard._id }));
+        await request(app)
+            .post(`/api/question/submit/${question._id}`)
+            .send(answerFixture({ answer: "answer", user: user._id, leaderboard: leaderboard._id }));
+        await request(app)
+            .post(`/api/question/submit/${question._id}`)
+            .send(answerFixture({ answer: "answer", user: user._id, leaderboard: leaderboard._id }));
+
+        const updatedLeaderboard = await Leaderboard.findOne({ _id: leaderboard._id });
+        expect(updatedLeaderboard.rankings.length).toBe(1);
+        expect(updatedLeaderboard.rankings[0].user).toEqual(user._id);
+        expect(updatedLeaderboard.rankings[0].points).toEqual(11);
+    })
 })
+

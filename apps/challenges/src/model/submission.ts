@@ -32,6 +32,7 @@ const submissionSchema: Schema<SubmissionModel> = new Schema({
     },
     question: {
         type: mongoose.Schema.Types.ObjectId,
+        required: true,
         ref: 'Question',
     },
 }, {

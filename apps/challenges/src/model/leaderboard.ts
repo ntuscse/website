@@ -33,7 +33,7 @@ const leaderboardSchema: Schema<Leaderboard> = new Schema({
             points: {
                 type: Number,
                 required: [true, 'Please add a points value'],
-            },
+            }
         }
     
     ],

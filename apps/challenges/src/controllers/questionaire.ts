@@ -123,71 +123,13 @@ const deleteQuestion = asyncHandler(async (req: Request, res: Response) => {
     }
 });
 
-// @desc    Submit answer
-// @route   POST /api/question/submit/:id
-// @access  Private
-const submitAnswer = asyncHandler(async (req: Request, res: Response) => {
-    const questionId = req.params.id;
-
-    if (!isValidObjectId(questionId)) {
-        return res.status(400).json({ message: 'Invalid question ID' });
-    }
-
-    try {
-        const question = await Question.findById(questionId);
-
-        if (!question) {
-            return res.status(404).json({ message: 'Question not found' });
-        }
-
-        if (!question.active) {
-            return res.status(400).json({ message: 'Question is not active' });
-        }
-
-        if (new Date(question.expiry) < new Date()) {
-            return res.status(400).json({ message: 'Question has expired' });
-        }
-
-        const submission = await Submission.create({
-            user: req.body.user,
-            leaderboard: req.body.leaderboard,
-            answer: req.body.answer,
-            correct: req.body.answer === question.answer,
-            points_awarded: req.body.answer === question.answer ? question.points : 0,
-            question: questionId
-        });
-
-        // Update question submissions array using $push and $inc submission counts
-        await Question.findByIdAndUpdate(questionId, { 
-            $push: { submissions: submission._id },
-            $inc: { submissions_count: 1, correct_submissions_count: req.body.answer === question.answer ? 1 : 0 } },
-            { new: true });
-
-        // Retrieve user and update points of the entry in the leaderboard
-        const leaderboard = await Leaderboard.findOne({ _id: req.body.leaderboard });
-        const ranking = leaderboard.rankings.find((ranking: any) => ranking.user == req.body.user);
-        if (!ranking) {
-            await Leaderboard.findByIdAndUpdate(req.body.leaderboard, { $push: { rankings: { user: req.body.user, points: submission.points_awarded } } }, { new: true });
-        } else {
-            // Update points
-            await Leaderboard.findOneAndUpdate({ _id: req.body.leaderboard, 'rankings.user': req.body.user }, { $set: { 'rankings.$.points': ranking.points + submission.points_awarded } }, { new: true });
-        }
-
-        res.status(201).json({ message: 'Answer submitted' });
-
-    } catch (error) {
-        res.status(500).json({ message: 'Internal Server Error' });
-    }
-})
-
 const QuestionController = {
     getQuestion,
     getQuestions,
     getActiveQuestions,
     setQuestion,
     updateQuestion,
-    deleteQuestion,
-    submitAnswer
+    deleteQuestion
 };
 
 export { QuestionController as default };
