@@ -56,6 +56,45 @@ const MerchProducts: AdminView = ({ user, canAccessAdmin }) => {
     };
     tableCols.push(col);
   }
+
+  const editColumn: Column = {
+    accessor: "edit",
+    components: {
+      Heading: <div>Edit</div>,
+      renderCell: ({ children }) => (
+        <Button onClick={() => handleEdit(children as string)}>Edit</Button>
+      ),
+    },
+    label: "Edit",
+    name: "edit",
+    active: true,
+  };
+
+  tableCols.push(editColumn);
+
+  const deleteColumn: Column = {
+    accessor: "delete",
+    components: {
+      Heading: <div>Delete</div>,
+      renderCell: ({ children }) => (
+        <Button onClick={() => handleDelete(children as string)}>Delete</Button>
+      ),
+    },
+    label: "Delete",
+    name: "delete",
+    active: true,
+  };
+
+  tableCols.push(deleteColumn);
+
+  const handleEdit = (orderId: string) => {
+    console.log(`Dummy. Order ID: ${orderId}`);
+  };
+
+  const handleDelete = (orderId: string) => {
+    console.log(`Dummy. Order ID: ${orderId}`);
+  };
+
   console.log(tableCols);
 
   return (
