@@ -56,11 +56,9 @@ const Challenges = () => {
       <Box flexDirection="row" justifyContent="space-between" p={4} mt={4}>
         <Text fontSize="70" display="flex" alignItems="center">
           Welcome
-          <span>
-            <Text className={styles.userName}>
-              &nbsp;{currentUserData.userId}
-            </Text>
-          </span>
+          <Text className={styles.userName}>
+            &nbsp;{currentUserData.userId}
+          </Text>
         </Text>
       </Box>
       <Box mt={4}>

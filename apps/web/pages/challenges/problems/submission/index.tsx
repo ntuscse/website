@@ -1,3 +1,4 @@
+import { CopyIcon } from "@chakra-ui/icons";
 import {
   Box,
   Flex,
@@ -7,30 +8,55 @@ import {
   FormErrorMessage,
   Input,
   Button,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalCloseButton,
+  ModalBody,
+  ModalHeader,
+  ModalFooter,
+  useToast,
 } from "@chakra-ui/react";
 import { SetStateAction, useState } from "react";
 
+type InputData = {
+  input: any;
+};
+
+const inputData: InputData = {
+  input: `2
+5
+30 40 20 20 100
+6
+1 2 3 4 5 6`,
+};
+
 const Profile = () => {
-  const [input, setInput] = useState("");
+  const [userInput, setUserInput] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isCorrect, setIsCorrect] = useState(false);
   const [isInvalid, setIsInvalid] = useState(false);
 
-  const handleInputChange = (event: {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const toast = useToast();
+
+  const handleUserInputChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
-    setInput(event.target.value);
+    setUserInput(event.target.value);
   };
 
   // validation placeholder
-  function validateAnswer(input: string | number) {
-    if (!input) {
+  function validateAnswer(userInput: string | number) {
+    if (!userInput) {
       setErrorMessage("input is required");
       setIsInvalid(true);
-    } else if (isNaN(Number(input))) {
+    } else if (isNaN(Number(userInput))) {
       setErrorMessage("numbers only");
       setIsInvalid(true);
-    } else if (input != 5) {
+    } else if (userInput != 5) {
       setErrorMessage("wrong answer, please try again");
       setIsInvalid(true);
     } else {
@@ -45,7 +71,17 @@ const Profile = () => {
     // Reset correctness state before validating
     setIsCorrect(false);
     setIsInvalid(false);
-    validateAnswer(input);
+    validateAnswer(userInput);
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(inputData.input);
+    toast({
+      title: "Input has been copied to clipboard!",
+      status: "success",
+      duration: 2000,
+      isClosable: true,
+    });
   };
 
   return (
@@ -59,7 +95,32 @@ const Profile = () => {
         flexDirection="column"
       >
         <Text>-- Cube Conundrum --</Text>
-        <Text color="#6AA8FA">[ Puzzle Input ]</Text>
+        <Button variant="link" color="#6AA8FA" onClick={onOpen}>
+          [ Puzzle Input ]
+        </Button>
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Your Input</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <Text whiteSpace="pre-wrap">{inputData.input}</Text>
+            </ModalBody>
+            <ModalFooter>
+              <Button onClick={onClose} size="sm" mr={3}>
+                Close
+              </Button>
+              <Button
+                onClick={handleCopy}
+                size="sm"
+                variant="outline"
+                rightIcon={<CopyIcon />}
+              >
+                Copy
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
         <Text>
           You're launched high into the atmosphere! The apex of your trajectory
           just barely reaches the surface of a large island floating in the sky.
@@ -112,8 +173,8 @@ const Profile = () => {
           <FormLabel>Answer:</FormLabel>
           <Input
             placeholder="input your answer"
-            value={input}
-            onChange={handleInputChange}
+            value={userInput}
+            onChange={handleUserInputChange}
           />
 
           {isCorrect ? (
