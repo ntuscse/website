@@ -7,6 +7,4 @@ router.route('/').get(QuestionController.getQuestions).post(QuestionController.s
 router.route('/active').get(QuestionController.getActiveQuestions);
 router.route('/:id').get(QuestionController.getQuestion).delete(QuestionController.deleteQuestion).put(QuestionController.updateQuestion);
 
-router.route('/submit/:id').post(SubmissionController.setSubmission);
-
 export { router as default };
