@@ -1,0 +1,7 @@
+.userName {
+    text-transform: uppercase;
+    background: linear-gradient(to bottom, #d09c4d 0%, #000000 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 550;
+  }
