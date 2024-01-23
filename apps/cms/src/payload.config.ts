@@ -1,12 +1,12 @@
-import { buildConfig } from 'payload/config';
-import { cloudStorage } from '@payloadcms/plugin-cloud-storage';
-import { s3Adapter as createS3Adapter } from '@payloadcms/plugin-cloud-storage/s3';
-import path from 'path';
+import { buildConfig } from "payload/config";
+import { cloudStorage } from "@payloadcms/plugin-cloud-storage";
+import { s3Adapter as createS3Adapter } from "@payloadcms/plugin-cloud-storage/s3";
+import path from "path";
 
-import Categories from './collections/Categories';
-import Posts from './collections/Posts';
-import Tags from './collections/Tags';
-import Users from './collections/Users';
+import Categories from "./collections/Categories";
+import Posts from "./collections/Posts";
+import Tags from "./collections/Tags";
+import Users from "./collections/Users";
 import Media from "./collections/Media";
 
 import AfterNavLinks from "./admin/components/AfterNavLinks";
@@ -16,6 +16,8 @@ import MerchOverview from "./admin/views/MerchOverview";
 import MerchProducts from "./admin/views/MerchProducts";
 import { SCSEIcon, SCSELogo } from "./admin/graphics/Logos";
 import BeforeNavLinks from "./admin/components/BeforeNavLinks";
+import Order from "./collections/Orders";
+import { isUsingCloudStore } from "./utilities/cloud";
 
 const adapter = createS3Adapter({
   config: {
@@ -56,20 +58,17 @@ export default buildConfig({
     user: Users.slug,
     css: path.resolve(__dirname, "admin", "styles.scss"),
   },
-  collections: [
-    Categories,
-    Posts,
-    Tags,
-    Users,
-    Media,
-  ],
+  collections: [Categories, Posts, Tags, Users, Media, Order],
   csrf: [
     // whitelist of domains to allow cookie auth from
     process.env.PAYLOAD_PUBLIC_SERVER_URL,
   ],
   typescript: {
     // outputFile: path.resolve(__dirname, "payload-types.ts"),
-    outputFile: path.resolve(__dirname, "../../../packages/types/src/lib/cms.ts"), // overridden by PAYLOAD_TS_OUTPUT_PATH env var
+    outputFile: path.resolve(
+      __dirname,
+      "../../../packages/types/src/lib/cms.ts"
+    ), // overridden by PAYLOAD_TS_OUTPUT_PATH env var
   },
   graphQL: {
     schemaOutputFile: path.resolve(
@@ -77,13 +76,15 @@ export default buildConfig({
       "../../../packages/schemas/lib/cms.graphql"
     ),
   },
-  plugins: [
-    cloudStorage({
-      collections: {
-        media: {
-          adapter: adapter,
-        }
-      },
-    }),
-  ],
+  plugins: isUsingCloudStore()
+    ? [
+      cloudStorage({
+        collections: {
+          media: {
+            adapter: adapter,
+          },
+        },
+      }),
+    ]
+    : [],
 });
