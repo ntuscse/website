@@ -85,7 +85,7 @@ export class RenderCellFactory {
           ))}
         </div>
       );
-      const ObjectComponentCell = (row, data) => (
+      const ObjectComponentCell = (row, data: string) => (
         <ObjectComponent data={data} />
       );
       return ObjectComponentCell;
