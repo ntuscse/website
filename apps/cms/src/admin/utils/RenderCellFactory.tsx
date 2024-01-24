@@ -3,7 +3,6 @@ import payload from "payload";
 
 export class RenderCellFactory {
   static get(element: unknown, key: string) {
-    console.log("key", key);
     if (element[key] == undefined) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
       payload.logger.error(
@@ -73,7 +72,25 @@ export class RenderCellFactory {
       );
       return ImageComponentCell;
     }
-
+    if (key === "stock") {
+      const ObjectComponent: React.FC<{ data: any }> = ({ data }) => (
+        <div>
+          {Object.entries(data).map(([subKey, value], index) => (
+            <div key={index}>
+              <strong>{subKey}:</strong>{" "}
+              <span>
+                {typeof value === 'object' ? JSON.stringify(value, null, 2) : String(value)}
+              </span>
+            </div>
+          ))}
+        </div>
+      );
+      const ObjectComponentCell = (row, data) => (
+        <ObjectComponent data={data} />
+      );
+      return ObjectComponentCell;
+      
+    }
     if (typeof element[key] == "object") {
       const DateComponent: React.FC<{ children?: React.ReactNode }> = ({
         children,
