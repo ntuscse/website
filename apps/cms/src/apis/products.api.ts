@@ -1,4 +1,3 @@
-import { IProduct } from "../@types/IProduct";
 import { Product } from "../@types/Product";
 // todo turn into real api
 class ProductsApi {

@@ -73,7 +73,7 @@ export class RenderCellFactory {
       return ImageComponentCell;
     }
     if (key === "stock") {
-      const ObjectComponent: React.FC<{ data: any }> = ({ data }) => (
+      const ObjectComponent: React.FC<{ data: string }> = ({ data }) => (
         <div>
           {Object.entries(data).map(([subKey, value], index) => (
             <div key={index}>

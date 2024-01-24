@@ -7,7 +7,6 @@ import { RenderCellFactory } from "../utils/RenderCellFactory";
 import SortedColumn from "../utils/SortedColumn";
 import { Table } from "payload/dist/admin/components/elements/Table";
 import { Product } from "../../@types/Product";
-import { IProduct } from "../../@types/IProduct";
 import ProductsApi from "../../apis/products.api";
 
 const MerchProducts: AdminView = ({ user, canAccessAdmin }) => {
