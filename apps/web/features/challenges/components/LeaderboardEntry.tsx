@@ -6,7 +6,7 @@ interface LeaderboardEntryProps {
     points: number
 }
 
-const LeaderboardEntry = ({ index, name, points }: LeaderboardEntryProps) => {
+export const LeaderboardEntry = ({ index, name, points }: LeaderboardEntryProps) => {
     return (<Flex justify="space-evenly" py={1} >
         <Flex justify="start" align="center" alignItems="center" w="80%">
             <Text w="10%" textAlign="center">{index}</Text>
@@ -19,5 +19,3 @@ const LeaderboardEntry = ({ index, name, points }: LeaderboardEntryProps) => {
     )
 
 }
-
-export default LeaderboardEntry

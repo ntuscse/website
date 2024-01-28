@@ -9,8 +9,8 @@ Pagination
 */
 
 
-import LeaderboardEntry from "@/features/challenges/components/LeaderboardEntry"
-import { Box, Button, Flex, Select } from "@chakra-ui/react"
+import { LeaderboardEntry, PaginationButton } from "@/features/challenges/components"
+import { Box, Flex, Select } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 
 const numOfItemsPerPage = 1
@@ -40,56 +40,19 @@ interface LeaderboardData {
     points: number
 }
 
-// button styling
-interface PaginationButtonProps {
-    onClick: () => void
-    variant?: string
-    text: string
-}
-
-const PaginationButton = ({ onClick, variant = 'primary-blue', text }: PaginationButtonProps) => {
-    return <Button onClick={onClick} variant={variant} size={['sm', 'md']} _hover={{ bg: variant }} mx={4}>{text}</Button>
-}
-
 function findSeason(seasonId: string, seasons: Season[]) {
     return seasons.find((ele) => ele._id == seasonId)
 }
 
 const Leaderboard = () => {
+    const [currentDisplayedData, setCurrentDisplayedData] = useState<LeaderboardData[]>()
     const [currentPage, setCurrentPage] = useState(0)
     const [numOfPages, setNumOfPages] = useState(0)
-    const [currentDisplayedData, setCurrentDisplayedData] = useState<LeaderboardData[]>()
     const [seasons, setSeasons] = useState<Season[]>()
     const [currentSeason, setCurrentSeason] = useState<Season>()
 
-    function handleDropdownChange(event: React.ChangeEvent<HTMLSelectElement>) {
-        // reset to first page when changing seasons
-        setCurrentPage(0)
-        if (seasons != undefined) {
-            setCurrentSeason(findSeason(event.target.value, seasons))
-            updateSeasonRanking(event.target.value)
-        }
-    }
-
-    // get different season rankimg
-    function updateSeasonRanking(seasonID: string) {
-        const url = `http://localhost:3000/api/seasons/${seasonID}/rankings?page=0&limit=${numOfItemsPerPage}`
-        fetch(url)
-            .then((res: Response) => {
-                return res.json()
-            })
-            .then((res: any) => {
-                console.log(res)
-                const currentSeasonData: LeaderboardData[] = res.rankings.map((ele: RankingResponse) => {
-                    return { "uuid": ele._id, "userId": ele.userID, "username": ele.username, "points": ele.points }
-                })
-                setNumOfPages(res._metaData.pageCount)
-                setCurrentDisplayedData(currentSeasonData)
-            })
-    }
-
-    // get paginated data
-    function setCurrentPageData(seasonID: string, index: number) {
+    // get different season / page ranking
+    function updateSeasonRanking(seasonID: string, index: number) {
         const url = `http://localhost:3000/api/seasons/${seasonID}/rankings?page=${index}&limit=${numOfItemsPerPage}`
         fetch(url)
             .then((res: Response) => {
@@ -102,13 +65,22 @@ const Leaderboard = () => {
                 })
                 setNumOfPages(res._metaData.pageCount)
                 setCurrentDisplayedData(currentSeasonData)
-                setCurrentPage(index)
             })
+    }  
+    
+    function handleDropdownChange(event: React.ChangeEvent<HTMLSelectElement>) {
+        // reset to first page when changing seasons
+        setCurrentPage(0)
+        if (seasons != undefined) {
+            setCurrentSeason(findSeason(event.target.value, seasons))
+            updateSeasonRanking(event.target.value, 0)
+        }
     }
 
-    function onPaginationButtonClick(index: number) {
+    function handlePaginationButtonClick(index: number) {
         if (currentSeason != undefined && index >= 0 && index <= (numOfPages - 1)) {
-            setCurrentPageData(currentSeason._id, index)
+            updateSeasonRanking(currentSeason._id, index)
+            setCurrentPage(index)
         }
     }
 
@@ -122,7 +94,7 @@ const Leaderboard = () => {
                 setSeasons(seasons)
                 setCurrentSeason(seasons[0])
                 // replace with active season
-                updateSeasonRanking(seasons[0]._id)
+                updateSeasonRanking(seasons[0]._id, 0)
             })
 
     }, [])
@@ -144,11 +116,11 @@ const Leaderboard = () => {
         </Box>
 
         <Flex justifyContent='center' w="60vw" align="center" py={8}>
-            <PaginationButton onClick={() => { onPaginationButtonClick(currentPage - 1) }} text="<" />
+            <PaginationButton onClick={() => { handlePaginationButtonClick(currentPage - 1) }} text="<" />
 
-            {Array.from(Array(numOfPages).keys()).map((index) => <PaginationButton key={index} onClick={() => { onPaginationButtonClick(index) }} variant={currentPage == index ? 'primary-black' : 'primary-blue'} text={(index + 1).toString()} />)}
+            {Array.from(Array(numOfPages).keys()).map((index) => <PaginationButton key={index} onClick={() => { handlePaginationButtonClick(index) }} variant={currentPage == index ? 'primary-black' : 'primary-blue'} text={(index + 1).toString()} />)}
 
-            <PaginationButton onClick={() => { onPaginationButtonClick(currentPage + 1) }} text=">" />
+            <PaginationButton onClick={() => { handlePaginationButtonClick(currentPage + 1) }} text=">" />
         </Flex>
 
     </Flex>)
