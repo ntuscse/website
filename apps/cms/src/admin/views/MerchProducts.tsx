@@ -6,7 +6,7 @@ import { Column } from "payload/dist/admin/components/elements/Table/types";
 import { RenderCellFactory } from "../utils/RenderCellFactory";
 import SortedColumn from "../utils/SortedColumn";
 import { Table } from "payload/dist/admin/components/elements/Table";
-import { Product } from "../../@types/Product";
+import { Product } from "types";
 import ProductsApi from "../../apis/products.api";
 
 const MerchProducts: AdminView = ({ user, canAccessAdmin }) => {

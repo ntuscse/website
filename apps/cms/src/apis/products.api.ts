@@ -1,4 +1,4 @@
-import { Product } from "../@types/Product";
+import { Product } from "types";
 // todo turn into real api
 class ProductsApi {
   // eslint-disable-next-line @typescript-eslint/require-await
