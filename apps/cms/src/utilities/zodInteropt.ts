@@ -26,7 +26,7 @@ function toPayloadZodField(name: string, zodType: z.ZodTypeAny): Field {
       ...field,
       type: "array",
       // convert nested type stored in array
-      fields: toPayloadZod((zodType as z.ZodArray<any>).element),
+      fields: toPayloadZod((zodType as z.ZodArray<z.ZodObject<z.ZodRawShape>>).element),
     };
   } else if (typeName === "ZodNativeEnum") {
     return {
@@ -36,7 +36,7 @@ function toPayloadZodField(name: string, zodType: z.ZodTypeAny): Field {
       // typescript encodes enums are encoded as bidirectional dictionary
       // with both entries from option -> value and value -> option
       // use zod parsing to select only the options -> value entries
-      options: Object.entries((zodType as z.ZodNativeEnum<any>).enum)
+      options: Object.entries((zodType as z.ZodNativeEnum<z.EnumLike>).enum)
         .filter(([_, right]) => zodType.safeParse(right).success)
         .map(([option, value]) => {
           return { label: option, value: `${value}` };
@@ -44,7 +44,7 @@ function toPayloadZodField(name: string, zodType: z.ZodTypeAny): Field {
     };
   } else if (typeName === "ZodOptional") {
     return {
-      ...toPayloadZodField(name, (zodType as z.ZodOptional<any>).unwrap()),
+      ...toPayloadZodField(name, (zodType as z.ZodOptional<z.ZodTypeAny>).unwrap()),
       // override nested field required true with false
       ...field,
     };
