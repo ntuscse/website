@@ -91,7 +91,7 @@ export interface User {
 export interface Order {
   id: string;
   items: {
-    id?: string;
+    id: string;
     name: string;
     image: string;
     color: string;

@@ -39,7 +39,7 @@ const OrderItem = z.object({
 });
 export type OrderItem = z.infer<typeof OrderItem>;
 
-const Order = z.object({
+export const OrderSchema = z.object({
   id: z.string(),
   items: z.array(OrderItem),
   transaction_id: z.string(),
@@ -48,8 +48,7 @@ const Order = z.object({
   customer_email: z.string(),
   status: OrderStatusSchema,
 });
-export type Order = z.infer<typeof Order>;
-export const OrderSchema = Order;
+export type Order = z.infer<typeof OrderSchema>;
 
 // Cart
 export type CartState = {
