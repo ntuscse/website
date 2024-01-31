@@ -11,14 +11,23 @@ const MerchandiseList = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [isMerchDisabled, setIsMerchDisabled] = useState<boolean | null>(false);
   const [disabledText, setDisabledText] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchMerchSaleStatus = async () => {
-      const { disabled, displayText } = await api.getMerchSaleStatus();
-      console.log(disabledText);
-      setDisabledText(displayText ?? "");
-      setIsMerchDisabled(disabled);
+      try {
+        // TODO: change to use query?
+        const { disabled, displayText } = await api.getMerchSaleStatus();
+        setDisabledText(displayText ?? "");
+        setIsMerchDisabled(disabled);
+        setLoading(false);
+      } catch (error) {
+        // TODO: display error
+        setLoading(false);
+      }
     };
+
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchMerchSaleStatus();
   }, []);
 
@@ -39,7 +48,7 @@ const MerchandiseList = () => {
     setSelectedCategory(event.target.value);
   };
 
-  if (isMerchDisabled === null) {
+  if (loading) {
     return (
       <>
         <MerchListSkeleton />

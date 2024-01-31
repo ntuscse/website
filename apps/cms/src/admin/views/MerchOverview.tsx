@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, ChangeEvent } from "react";
 import { Button } from "payload/components/elements";
 import { AdminView } from "payload/config";
 import ViewTemplate from "./ViewTemplate";
@@ -11,24 +11,38 @@ const MerchOverview: AdminView = ({ user, canAccessAdmin }) => {
   const [isStoreDisabled, setIsStoreDisabled] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(true);
 
+  const SHOW_DISPLAY_TEXT_INPUT = false;
+
   useEffect(() => {
     const fetchStoreStatus = async () => {
-      const { disabled } = await StoreApi.getStoreStatus();
-      setIsStoreDisabled(disabled);
-      setLoading(false);
+      try {
+        const { disabled } = await StoreApi.getStoreStatus();
+        setIsStoreDisabled(disabled);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
+      }
     };
+
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchStoreStatus();
   }, []);
 
   const disableStore = async () => {
     // TODO: Calls api to disable merch store
-    setLoading(true);
-    await StoreApi.setStoreStatus({
-      displayText,
-      disabled: !isStoreDisabled,
-    });
-    setIsStoreDisabled(!isStoreDisabled);
-    setLoading(false);
+    try {
+      setLoading(true);
+      await StoreApi.setStoreStatus({
+        displayText,
+        disabled: !isStoreDisabled,
+      });
+      setIsStoreDisabled(!isStoreDisabled);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
   };
   return (
     <ViewTemplate
@@ -48,14 +62,19 @@ const MerchOverview: AdminView = ({ user, canAccessAdmin }) => {
       <p style={{ paddingTop: 20 }}>{`Current state of merch store: ${
         loading ? "..." : isStoreDisabled ? "Disabled" : "Live"
       }`}</p>
-      {/* <textarea
-        value={displayText}
-        onChange={(e) => setDisplayText(e.target.value)}
-        placeholder="Enter display text"
-        rows={4}
-        cols={50}
-      /> */}
+      {SHOW_DISPLAY_TEXT_INPUT && (
+        <textarea
+          value={displayText}
+          onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+            setDisplayText(e.target.value)
+          }
+          placeholder="Enter display text"
+          rows={4}
+          cols={50}
+        />
+      )}
       <Button
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         onClick={disableStore}
         disabled={loading}
         buttonStyle="primary"
