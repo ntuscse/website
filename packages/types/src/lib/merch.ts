@@ -168,3 +168,8 @@ export type APIError = {
 export type OrderHoldEntry = {
   // todo: ???
 };
+
+export type MerchSaleStatus = {
+  disabled: boolean;
+  displayText?: string;
+};

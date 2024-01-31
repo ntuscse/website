@@ -3,6 +3,7 @@ import {
   Cart,
   CheckoutRequest,
   CheckoutResponse,
+  MerchSaleStatus,
   PricedCart,
   Product,
   ProductsResponse,
@@ -83,6 +84,20 @@ export class Api {
       ...cart,
       promoCode: promoCode,
       email,
+    });
+  }
+
+  async getMerchSaleStatus(): Promise<MerchSaleStatus> {
+    // fetch merch status from backend, either true: enabled, false: disabled
+    // Simulating fetching data from backend and admin panel
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({
+          disabled: true,
+          displayText:
+            "We are currently preparing for the next merch sale. Please look forward to our email!",
+        });
+      }, 1000);
     });
   }
 }
