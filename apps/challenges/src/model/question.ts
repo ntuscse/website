@@ -9,6 +9,8 @@ export interface QuestionModel {
     points: number;
     answer: string;
     submissions: Array<mongoose.Types.ObjectId>;
+    submissions_count: number;
+    correct_submissions_count: number;
     active: boolean;
 }
 
@@ -44,6 +46,14 @@ const questionSchema: Schema<QuestionModel> = new Schema({
     submissions: {
         type: [mongoose.Types.ObjectId],
         ref: 'Submission'
+    },
+    submissions_count: {
+        type: Number,
+        default: 0
+    },
+    correct_submissions_count: {
+        type: Number,
+        default: 0
     },
     active: {
         type: Boolean,

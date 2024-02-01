@@ -192,8 +192,8 @@ const QuestionController = {
     getActiveQuestions,
     setQuestion,
     updateQuestion,
-    deleteQuestion,
     // submitAnswer
+    deleteQuestion
 };
 
 export { QuestionController as default };

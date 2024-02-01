@@ -2,6 +2,7 @@ import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import SeasonRouter from "./routes/seasons";
 import QuestionaireRouter from "./routes/questionaire";
+import SubmissionRouter from "./routes/submission";
 import UserRouter from "./routes/user";
 import connectDB from "./config/db";
 dotenv.config({ path: "../.env"});
@@ -26,6 +27,7 @@ app.get("/ping", (req: Request, res: Response) => {
 });
 app.use("/api/seasons", SeasonRouter);
 app.use('/api/question', QuestionaireRouter);
+app.use('/api/submission', SubmissionRouter);
 app.use('/api/user', UserRouter);
 
 if (process.env.NODE_ENV !== 'test') {

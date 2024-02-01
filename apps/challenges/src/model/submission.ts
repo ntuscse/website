@@ -7,6 +7,7 @@ export interface SubmissionModel {
     correct?: boolean;
     points_awarded?: number;
     question?: mongoose.Types.ObjectId;
+    attempt?: number;
 }
 
 const submissionSchema: Schema<SubmissionModel> = new Schema({
@@ -32,7 +33,12 @@ const submissionSchema: Schema<SubmissionModel> = new Schema({
     },
     question: {
         type: mongoose.Schema.Types.ObjectId,
+        required: true,
         ref: 'Question',
+    },
+    attempt: {
+        type: Number,
+        default: 1,
     },
 }, {
     timestamps: true,

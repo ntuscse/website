@@ -1,8 +1,14 @@
 import mongoose from 'mongoose';
+import { z } from 'zod';
 
 // Helper function to validate ObjectId
 function isValidObjectId(id: string): boolean {
     return mongoose.Types.ObjectId.isValid(id);
 }
 
-export { isValidObjectId };
+// Helper zod function to validate ObjectId
+const paramsSchema = z.string().refine((val) => {
+    return mongoose.Types.ObjectId.isValid(val);
+});
+
+export { isValidObjectId, paramsSchema };
