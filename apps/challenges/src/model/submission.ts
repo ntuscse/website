@@ -2,7 +2,7 @@ import mongoose, { Schema, model } from 'mongoose';
 
 export interface SubmissionModel {
     user: mongoose.Types.ObjectId;
-    leaderboard: mongoose.Types.ObjectId;
+    seasonID: mongoose.Types.ObjectId;
     answer: string;
     correct?: boolean;
     points_awarded?: number;
@@ -16,7 +16,7 @@ const submissionSchema: Schema<SubmissionModel> = new Schema({
         required: true,
         ref: 'User',
     },
-    leaderboard: {
+    seasonID: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'Leaderboard',
@@ -44,4 +44,6 @@ const submissionSchema: Schema<SubmissionModel> = new Schema({
     timestamps: true,
 });
 
-module.exports = mongoose.model<SubmissionModel>('Submission', submissionSchema);
+const Submission = mongoose.model<SubmissionModel>('Submission', submissionSchema);
+
+export { Submission as default }

@@ -5,6 +5,7 @@ import { isValidObjectId, paramsSchema } from "../utils/db";
 import SeasonService from "../service/seasonService";
 import isValidDate from "../utils/checkObjectProperties";
 import { z } from "zod";
+import mongoose from 'mongoose';
 
 interface CreateSeasonRequest {
     title: string;
@@ -143,16 +144,28 @@ const getUserAllSeasonRankings = asyncHandler(async (req: Request, res: Response
 // @access  Public
 const getSeasonRankings = asyncHandler(async (req: Request, res: Response) => {
     try {
-        const seasonID = paramsSchema.parse(req.params);
+        const seasonID = paramsSchema.parse(req.params.seasonID);
         const querySchema = z.object({
-            page: z.number().int().min(0).optional(),
-            limit: z.number().int().min(1).optional()
+            page: z.coerce.number().int().min(0).optional(),
+            limit: z.coerce.number().int().min(1).optional()
         }).refine(
-            data => (data.page && data.limit) && (!data.page && !data.limit),
+            data => ((data.page || data.page === 0) && data.limit) || ((!data.page && data.page !== 0)&& !data.limit),
             { message: "Invalid request" }
         );
         const { page, limit } = querySchema.parse(req.query);
+        const season = await SeasonService.getSeasonByID(seasonID);
+        if(!season){
+            res.status(404).json({ message: 'Season not found' });
+            return;
+        }
 
+        if(!limit){
+            const rankings = await SeasonService.getSeasonRankings(seasonID);
+            res.status(200).json({
+                rankings: rankings,
+            });
+            return;
+        }
         const { rankings, rankingsCount } = await SeasonService.getSeasonRankingsByPagination(seasonID, page!, limit!);
         const metaData = {
             page: page,
