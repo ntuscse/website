@@ -31,13 +31,13 @@ type SeasonData = {
 const seasonData: SeasonData[] = [
   {
     uuid: 1001,
-    seasonName: "season 1",
+    seasonName: "season1",
     seasonDescription:
       "this is the first ever chanllenge held by SCSE, problems vary from easy to hard mode. Everyone is welcome to join!",
   },
   {
     uuid: 1002,
-    seasonName: "season 2",
+    seasonName: "season2",
     seasonDescription:
       "2nd season of challenge!! We added a few interesting problems. Come join the challenge to find out more!",
   },
@@ -48,7 +48,11 @@ const Challenges = () => {
 
   // TODO: jump to the selected season
   const handleJoinClick = (seasonName: string) => {
-    router.push("/challenges/problems");
+    console.log(seasonName);
+    router.push({
+      pathname: "/challenges/problems",
+      query: { season: seasonName },
+    });
   };
 
   return (

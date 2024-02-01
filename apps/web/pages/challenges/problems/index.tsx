@@ -3,7 +3,8 @@ import * as React from "react";
 import { createColumnHelper } from "@tanstack/react-table";
 import { ProblemListTable } from "@/features/challenges/components/ProblemListingTable";
 import Link from "next/link";
-import { useState, SetStateAction } from "react";
+import { useState, SetStateAction, useEffect } from "react";
+import { useRouter } from "next/router";
 
 type ProblemListData = {
   uuid: number;
@@ -84,11 +85,19 @@ const columns = [
 
 const Problems = () => {
   const [option, setOption] = useState("");
+  const router = useRouter();
+
+  useEffect(() => {
+    const { season } = router.query;
+    if (season) setOption(season as string);
+  }, [router.query]);
 
   const handleOptionChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
-    setOption(event.target.value);
+    const selectedOption = event.target.value;
+    setOption(selectedOption);
+    router.push(`/challenges/problems?season=${selectedOption}`);
   };
 
   const selectedSeasonData = seasonsData[option] || [];
@@ -107,6 +116,7 @@ const Problems = () => {
         my={4}
         bg="#CBD5F0"
         onChange={handleOptionChange}
+        value={option}
       >
         {Object.keys(seasonsData).map((season) => (
           <option key={season} value={season}>
