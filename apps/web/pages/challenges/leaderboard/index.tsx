@@ -1,71 +1,103 @@
-import LeaderboardEntry from "@/features/challenges/components/LeaderboardEntry"
-import { Box, Button, Flex, Select, Spacer, Text } from "@chakra-ui/react"
-import { useState } from "react"
-import { Pagination } from "react-bootstrap"
+/*
+TODO
+Pagination
+-----------------
+[x] Fetch season data when dropdown is selected
+[x] Get next page when PaginationButton is clicked
+[ ] Fetch active season
+[ ] Display correct ranking 
+*/
 
-// placeholder for API Response
-let currentSeasonData: LeaderboardData[] = [
-    { uuid: 1000, userId: "alex200", points: 100 },
-    { uuid: 1001, userId: "johndoe010", points: 200 },
-    { uuid: 1002, userId: "fwqdqw", points: 350 },
-    { uuid: 1003, userId: "cwcqw", points: 350 },
-    { uuid: 1004, userId: "dqwdq", points: 350 },
-    { uuid: 1005, userId: "wqcqw", points: 350 },
-    { uuid: 1006, userId: "cwqc", points: 350 },
-]
+
+import { LeaderboardEntry, PaginationButton } from "@/features/challenges/components"
+import { Box, Flex, Select } from "@chakra-ui/react"
+import { useEffect, useState } from "react"
+
+const numOfItemsPerPage = 1
+
+interface Season {
+    _id: string,
+    title: string,
+    start_date: Date,
+    end_date: Date
+}
+
+interface RankingResponse {
+    _id: string,
+    seasonID: string,
+    userID: string,
+    username: string,
+    __v: number,
+    createdAt: string,
+    points: number,
+    updatedAt: string
+}
 
 interface LeaderboardData {
-    uuid: number,
+    uuid: string,
     userId: string,
+    username: string,
     points: number
 }
 
-function paginateData(data: LeaderboardData[], numItemsPerPage: number) : LeaderboardData[][] {
-    const data2D : LeaderboardData[][] = []
-    for (var i = 0; i < data.length; i += numItemsPerPage) {
-        data2D.push(data.slice(i, i + numItemsPerPage))
-    }
-    return data2D
+function findSeason(seasonId: string, seasons: Season[]) {
+    return seasons.find((ele) => ele._id == seasonId)
 }
-
-interface PaginationButtonProps {
-    onClick : () => void
-    variant?: string
-    text: string
-}
-const PaginationButton = ({onClick, variant = 'primary-blue', text} : PaginationButtonProps) => {
-    
-    return <Button onClick={onClick} variant={variant} size={['sm','md']} _hover={{bg: variant}} mx={4}>{text}</Button>
-}
-
-const numOfItemsPerPage = 3
-
-const numOfPages = Math.ceil(currentSeasonData.length / numOfItemsPerPage)
-const paginatedCurrentSeasonData = paginateData(currentSeasonData, numOfItemsPerPage)
 
 const Leaderboard = () => {
+    const [currentDisplayedData, setCurrentDisplayedData] = useState<LeaderboardData[]>()
     const [currentPage, setCurrentPage] = useState(0)
+    const [numOfPages, setNumOfPages] = useState(0)
+    const [seasons, setSeasons] = useState<Season[]>()
+    const [currentSeason, setCurrentSeason] = useState<Season>()
+
+    // get different season / page ranking
+    function updateSeasonRanking(seasonID: string, index: number) {
+        const url = `http://localhost:3000/api/seasons/${seasonID}/rankings?page=${index}&limit=${numOfItemsPerPage}`
+        fetch(url)
+            .then((res: Response) => {
+                return res.json()
+            })
+            .then((res: any) => {
+                console.log(res)
+                const currentSeasonData: LeaderboardData[] = res.rankings.map((ele: RankingResponse) => {
+                    return { "uuid": ele._id, "userId": ele.userID, "username": ele.username, "points": ele.points }
+                })
+                setNumOfPages(res._metaData.pageCount)
+                setCurrentDisplayedData(currentSeasonData)
+            })
+    }  
     
-    const [currentDisplayedData, setCurrentDisplayedData] = useState(paginatedCurrentSeasonData[currentPage])
-    function handleDataChange(event: React.ChangeEvent<HTMLSelectElement>) {
-        // fetch and update leaderboard
+    function handleDropdownChange(event: React.ChangeEvent<HTMLSelectElement>) {
+        // reset to first page when changing seasons
         setCurrentPage(0)
-        switch (event.target.value) {
-            case 'season-id-1':
-                setCurrentDisplayedData(paginatedCurrentSeasonData[currentPage])
-                break
+        if (seasons != undefined) {
+            setCurrentSeason(findSeason(event.target.value, seasons))
+            updateSeasonRanking(event.target.value, 0)
         }
-    
     }
-    
-     function goToPage(index: number) {
-        let toSet = index
-        if (index < 0) toSet = 0
-        else if (index > numOfPages-1) toSet = numOfPages - 1
-        console.log(`toSet: ${toSet}`)
-        setCurrentPage(toSet)
-        setCurrentDisplayedData(paginatedCurrentSeasonData[toSet])
-     }
+
+    function handlePaginationButtonClick(index: number) {
+        if (currentSeason != undefined && index >= 0 && index <= (numOfPages - 1)) {
+            updateSeasonRanking(currentSeason._id, index)
+            setCurrentPage(index)
+        }
+    }
+
+    useEffect(() => {
+        fetch("http://localhost:3000/api/seasons/")
+            .then((res: Response) => {
+                return res.json()
+            })
+            .then((res: any) => {
+                let seasons: Season[] = res.seasons
+                setSeasons(seasons)
+                setCurrentSeason(seasons[0])
+                // replace with active season
+                updateSeasonRanking(seasons[0]._id, 0)
+            })
+
+    }, [])
 
     return (<Flex
         minH="100vh"
@@ -73,26 +105,25 @@ const Leaderboard = () => {
         flexDirection="column"
         justifyContent="center"
         alignItems="center">
-            <Select bg="gray.300" borderColor="gray.300" w="80vw" my={4} onChange={handleDataChange}>
-                <option value='season-id-1'>Current Season</option>
-                <option value='season-id-2'>Season 2</option>
-            </Select>
+        <Select bg="gray.300" borderColor="gray.300" w="80vw" my={4} onChange={handleDropdownChange}>
+            {seasons?.map((season) => { return <option key={season._id} value={season._id}>{season.title}</option> })}
+        </Select>
+
         <Box bg="gray.300" w="80vw" px={8} py={4} minHeight="70vh" borderRadius="8">
-            {currentDisplayedData.sort().reverse().map((item, index) => {
-                return <LeaderboardEntry key={item.uuid} index={index+1} name={item.userId} points={item.points}/>
+            {currentDisplayedData && currentDisplayedData.sort().reverse().map((item, index) => {
+                return <LeaderboardEntry key={item.uuid} index={index + 1} name={item.username} points={item.points} />
             })}
         </Box>
+
         <Flex justifyContent='center' w="60vw" align="center" py={8}>
-            <PaginationButton onClick={() =>{goToPage(currentPage - 1)}} text="<"/>
-      
-            {Array.from(Array(numOfPages).keys()).map((index) => <PaginationButton onClick={() => {goToPage(index)}}  variant={currentPage == index ? 'primary-black' : 'primary-blue'} text={(index+1).toString()}/>)}
-            
-            <PaginationButton onClick={() =>{goToPage(currentPage + 1)}} text=">"/>
-            
+            <PaginationButton onClick={() => { handlePaginationButtonClick(currentPage - 1) }} text="<" />
+
+            {Array.from(Array(numOfPages).keys()).map((index) => <PaginationButton key={index} onClick={() => { handlePaginationButtonClick(index) }} variant={currentPage == index ? 'primary-black' : 'primary-blue'} text={(index + 1).toString()} />)}
+
+            <PaginationButton onClick={() => { handlePaginationButtonClick(currentPage + 1) }} text=">" />
         </Flex>
+
     </Flex>)
 }
-
-
 
 export default Leaderboard
