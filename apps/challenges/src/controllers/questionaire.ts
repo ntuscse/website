@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 const asyncHandler = require('express-async-handler');
 const Question = require('../model/question');
 const Submission = require('../model/submission');
-const Leaderboard = require('../model/leaderboard');
+import Season from "../model/season";
 import { isValidObjectId } from "../utils/db";
 
 // @desc    Get questions

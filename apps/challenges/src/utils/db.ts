@@ -1,7 +1,14 @@
+import mongoose from 'mongoose';
+import { z } from 'zod';
+
 // Helper function to validate ObjectId
 function isValidObjectId(id: string): boolean {
-    const objectIdRegex = /^[0-9a-fA-F]{24}$/;
-    return objectIdRegex.test(id);
+    return mongoose.Types.ObjectId.isValid(id);
 }
 
-export { isValidObjectId };
+// Helper zod function to validate ObjectId
+const paramsSchema = z.string().refine((val) => {
+    return mongoose.Types.ObjectId.isValid(val);
+});
+
+export { isValidObjectId, paramsSchema };
