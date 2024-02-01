@@ -63,4 +63,6 @@ const questionSchema: Schema<QuestionModel> = new Schema({
     timestamps: true
 });
 
-module.exports = mongoose.model<QuestionModel>('Question', questionSchema);
+const Question = mongoose.model<QuestionModel>('Question', questionSchema);
+
+export { Question as default };
