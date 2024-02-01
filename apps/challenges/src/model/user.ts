@@ -1,9 +1,12 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
 export interface UserModel {
+    _id: mongoose.Types.ObjectId;
     name: string;
     email: string;
     active: boolean;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 const questionSchema: Schema<UserModel> = new Schema({
@@ -23,4 +26,6 @@ const questionSchema: Schema<UserModel> = new Schema({
     timestamps: true
 });
 
-module.exports = mongoose.model<UserModel>('User', questionSchema);
+const User = mongoose.model<UserModel>('User', questionSchema);
+
+export { User as default };
