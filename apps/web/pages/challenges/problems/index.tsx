@@ -3,7 +3,7 @@ import * as React from "react";
 import { createColumnHelper } from "@tanstack/react-table";
 import { ProblemListTable } from "@/features/challenges/components/ProblemListingTable";
 import Link from "next/link";
-import { useState, SetStateAction, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
 type ProblemListData = {
@@ -92,12 +92,10 @@ const Problems = () => {
     if (season) setOption(season as string);
   }, [router.query]);
 
-  const handleOptionChange = (event: {
-    target: { value: SetStateAction<string> };
-  }) => {
+  const handleOptionChange = (event: { target: { value: string } }) => {
     const selectedOption = event.target.value;
     setOption(selectedOption);
-    router.push(`/challenges/problems?season=${selectedOption}`);
+    router.push(`/challenges/problems?season=${String(selectedOption)}`);
   };
 
   const selectedSeasonData = seasonsData[option] || [];

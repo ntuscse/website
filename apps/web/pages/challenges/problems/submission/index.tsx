@@ -18,18 +18,14 @@ import {
   ModalFooter,
   useToast,
 } from "@chakra-ui/react";
-import { SetStateAction, useState } from "react";
+import { useState } from "react";
 
 type InputData = {
-  input: any;
+  input: string;
 };
 
 const inputData: InputData = {
-  input: `2
-5
-30 40 20 20 100
-6
-1 2 3 4 5 6`,
+  input: "2\n5\n30 40 20 20 100\n6\n1 2 3 4 5 6",
 };
 
 const Profile = () => {
@@ -42,9 +38,7 @@ const Profile = () => {
 
   const toast = useToast();
 
-  const handleUserInputChange = (event: {
-    target: { value: SetStateAction<string> };
-  }) => {
+  const handleUserInputChange = (event: { target: { value: string } }) => {
     setUserInput(event.target.value);
   };
 
@@ -57,6 +51,7 @@ const Profile = () => {
       setErrorMessage("numbers only");
       setIsInvalid(true);
     } else if (userInput != 5) {
+      // just a dummy hardcoded answer here
       setErrorMessage("wrong answer, please try again");
       setIsInvalid(true);
     } else {
@@ -122,26 +117,29 @@ const Profile = () => {
           </ModalContent>
         </Modal>
         <Text>
-          You're launched high into the atmosphere! The apex of your trajectory
-          just barely reaches the surface of a large island floating in the sky.
-          You gently land in a fluffy pile of leaves. It's quite cold, but you
-          don't see much snow. An Elf runs over to greet you. <br /> <br />
-          The Elf explains that you've arrived at Snow Island and apologizes for
-          the lack of snow. He'll be happy to explain the situation, but it's a
-          bit of a walk, so you have some time. They don't get many visitors up
-          here; would you like to play a game in the meantime? <br /> <br />
+          You&apos;re launched high into the atmosphere! The apex of your
+          trajectory just barely reaches the surface of a large island floating
+          in the sky. You gently land in a fluffy pile of leaves. It&apos;s
+          quite cold, but you don&apos;t see much snow. An Elf runs over to
+          greet you. <br /> <br />
+          The Elf explains that you&apos;ve arrived at Snow Island and
+          apologizes for the lack of snow. He&apos;ll be happy to explain the
+          situation, but it&apos;s a bit of a walk, so you have some time. They
+          don&apos;t get many visitors up here; would you like to play a game in
+          the meantime?
+          <br /> <br />
           As you walk, the Elf shows you a small bag and some cubes which are
           either red, green, or blue. Each time you play this game, he will hide
           a secret number of cubes of each color in the bag, and your goal is to
           figure out information about the number of cubes. <br /> <br />
           To get information, once a bag has been loaded with cubes, the Elf
           will reach into the bag, grab a handful of random cubes, show them to
-          you, and then put them back in the bag. He'll do this a few times per
-          game. <br /> <br />
+          you, and then put them back in the bag. He&apos;ll do this a few times
+          per game. <br /> <br />
           You play several games and record the information from each game (your
           puzzle input). Each game is listed with its ID number (like the 11 in
           Game 11: ...) followed by a semicolon-separated list of subsets of
-          cubes that were revealed from the bag (like 3 red, 5 green, 4 blue).{" "}
+          cubes that were revealed from the bag (like 3 red, 5 green, 4 blue).
           <br /> <br />
           For example, the record of a few games might look like this: <br />
           Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green Game 2: 1 blue,
@@ -161,7 +159,7 @@ const Profile = () => {
           have been impossible because at one point the Elf showed you 20 red
           cubes at once; similarly, game 4 would also have been impossible
           because the Elf showed you 15 blue cubes at once. If you add up the
-          IDs of the games that would have been possible, you get 8. <br />{" "}
+          IDs of the games that would have been possible, you get 8. <br />
           <br />
           Determine which games would have been possible if the bag had been
           loaded with only 12 red cubes, 13 green cubes, and 14 blue cubes. What
@@ -179,7 +177,7 @@ const Profile = () => {
 
           {isCorrect ? (
             <Text color="green" mt={2}>
-              "Hooray! Your answer is correct."
+              Hooray! Your answer is correct.
             </Text>
           ) : (
             <FormErrorMessage>{errorMessage}</FormErrorMessage>
