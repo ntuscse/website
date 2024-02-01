@@ -4,6 +4,7 @@ export interface RankingModel {
     _id: mongoose.Types.ObjectId;
     userID: mongoose.Types.ObjectId;
     seasonID: mongoose.Types.ObjectId;
+    username: string;
     points: number;
     createdAt: Date;
     updatedAt: Date;
