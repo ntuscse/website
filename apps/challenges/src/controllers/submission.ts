@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 const asyncHandler = require('express-async-handler');
 const Question = require('../model/question');
 const Submission = require('../model/submission');
-const Leaderboard = require('../model/leaderboard');
+import Season from "../model/season";
 import { isValidObjectId } from "../utils/db";
 
 
@@ -41,6 +41,7 @@ const getSubmission = asyncHandler(async (req: Request, res: Response) => {
 // @desc    Set submission
 // @route   POST /api/submission
 // @access  Private
+
 const setSubmission = asyncHandler(async (req: Request, res: Response) => {
     const questionId = req.body.question;
 
@@ -85,22 +86,24 @@ const setSubmission = asyncHandler(async (req: Request, res: Response) => {
             { new: true });
 
         // Retrieve user and update points of the entry in the leaderboard
-        const leaderboard = await Leaderboard.findOne({ _id: req.body.leaderboard });
-        const ranking = leaderboard.rankings.find((ranking: any) => ranking.user == req.body.user);
+        const leaderboard = await Season.findOne({ _id: req.body.leaderboard });
+        // TODO: Update leaderboard rankings
+        /*
+        const ranking = leaderboard?.rankings.find((ranking: any) => ranking.user == req.body.user);
         if (!ranking) {
-            await Leaderboard.findByIdAndUpdate(req.body.leaderboard, { $push: { rankings: { user: req.body.user, points: submission.points_awarded } } }, { new: true });
+            await Season.findByIdAndUpdate(req.body.leaderboard, { $push: { rankings: { user: req.body.user, points: submission.points_awarded } } }, { new: true });
         } else {
             // if there is previous submission for the same question, remove the points from the previous submission and add the points from the new submission
             const prevSubmission = await Submission.find({ user: req.body.user, question: questionId, _id: { $ne: submission._id } });
             if (prevSubmission.length > 0) {
                 // get the highest points awarded for the question
                 const highestPoints = Math.max(...prevSubmission.map((submission: any) => submission.points_awarded));
-                await Leaderboard.findByIdAndUpdate(req.body.leaderboard, { $set: { 'rankings.$[elem].points': ranking.points - highestPoints + submission.points_awarded } }, { arrayFilters: [{ 'elem.user': req.body.user }], new: true });
+                await Season.findByIdAndUpdate(req.body.leaderboard, { $set: { 'rankings.$[elem].points': ranking.points - highestPoints + submission.points_awarded } }, { arrayFilters: [{ 'elem.user': req.body.user }], new: true });
             } else {
-                await Leaderboard.findByIdAndUpdate(req.body.leaderboard, { $set: { 'rankings.$[elem].points': ranking.points + submission.points_awarded } }, { arrayFilters: [{ 'elem.user': req.body.user }], new: true });
+                await Season.findByIdAndUpdate(req.body.leaderboard, { $set: { 'rankings.$[elem].points': ranking.points + submission.points_awarded } }, { arrayFilters: [{ 'elem.user': req.body.user }], new: true });
             }
         }
-
+        */
         res.status(201).json({ message: 'Answer submitted' });
 
     } catch (error) {

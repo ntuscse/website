@@ -5,7 +5,7 @@ const Question = require('../model/question');
 const Submission = require('../model/submission');
 const User = require('../model/user');
 const Leaderboard = require('../model/leaderboard');
-import { userFixture, questionFixture, answerFixture, leaderboardFixture } from '../utils/fixtures';
+import { userFixture, questionFixture, answerFixture, leaderboardFixture } from '../utils/fixtures/fixtures';
 import { isValidObjectId } from '../utils/db';
 
 beforeAll(async () => {
