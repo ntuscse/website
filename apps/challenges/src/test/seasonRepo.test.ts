@@ -24,7 +24,7 @@ afterAll(async () => {
     await mongoose.connection.close()
 })
 
-describe('getSeasonRankings', () => {
+describe('calculateSeasonRankings', () => {
     afterEach(async () => {
         await Season.deleteMany({})
         await Question.deleteMany({})
@@ -44,12 +44,14 @@ describe('getSeasonRankings', () => {
             _id: userID,
             name: name
         }));
-        const rankings = await SeasonRepo.getSeasonRankings(seasonID);
+        const rankings = await SeasonRepo.calculateSeasonRankings(seasonID);
         expect(rankings).toHaveLength(1);
         expect(rankings).toContainEqual({
             points: 10,
-            userID: userID,
-            name: name
+            user: {
+                userID: userID,
+                name: name
+            }
         });
     })
 
@@ -79,21 +81,25 @@ describe('getSeasonRankings', () => {
             _id: userID2,
             name: name2
         }));
-        const rankings = await SeasonRepo.getSeasonRankings(seasonID);
+        const rankings = await SeasonRepo.calculateSeasonRankings(seasonID);
         expect(rankings).toHaveLength(2);
         expect(rankings).toContainEqual({
             points: 60,
-            userID: userID,
-            name: name
+            user: {
+                userID: userID,
+                name: name
+            }
         });
         expect(rankings).toContainEqual({
             points: 80,
-            userID: userID2,
-            name: name2
+            user: {
+                userID: userID2,
+                name: name2
+            }
         });
     })
 
-    it('should return only the users that have submission', async () => {
+    it('should return only the users that have submission (user with no submission should not be in leaderboard)', async () => {
         const seasonID = new mongoose.Types.ObjectId();
         const userID = new mongoose.Types.ObjectId();
         const userID2 = new mongoose.Types.ObjectId();
@@ -113,12 +119,14 @@ describe('getSeasonRankings', () => {
             _id: userID2,
             name: name2
         }));
-        const rankings = await SeasonRepo.getSeasonRankings(seasonID);
+        const rankings = await SeasonRepo.calculateSeasonRankings(seasonID);
         expect(rankings).toHaveLength(1);
         expect(rankings).toContainEqual({
             points: 80,
-            userID: userID,
-            name: name
+            user: {
+                userID: userID,
+                name: name
+            }
         });
     })
 })

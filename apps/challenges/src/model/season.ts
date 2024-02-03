@@ -1,4 +1,4 @@
-import mongoose, {Schema} from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
 export interface SeasonModel {
     _id: mongoose.Types.ObjectId;
