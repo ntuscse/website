@@ -1,9 +1,10 @@
 import Season, { SeasonModel } from "../model/season";
 import mongoose from 'mongoose';
-import Ranking, { RankingModel, UserRanking } from "../model/rankingScore";
+
+import { UserRanking } from "../model/rankingScore";
 import Submission from "../model/submission";
 import { rankingsMap } from "../tasks/rankingCalculation";
-import { array } from "zod";
+import { paginateArray } from "../utils/pagination";
 
 const getSeasonsByDate = async(
     startDate: Date | null,
@@ -74,8 +75,10 @@ const calculateSeasonRankings = async(
         {
             $project: {
                 _id: 0,
-                userID: "$user._id",
-                name: "$user.name",
+                user: {
+                    userID: "$user._id",
+                    name: "$user.name",
+                },
                 points: 1
             }
         }
@@ -99,51 +102,8 @@ const getSeasonRankingsByPagination = async (
     if(!rankings){
         return { rankings: [] , rankingsCount: 0 };
     }
-    return { rankings: paginate(rankings, limit, page), rankingsCount: rankings.length };
+    return { rankings: paginateArray(rankings, limit, page), rankingsCount: rankings.length };
 }
-
-const paginate = (array: any[], page_size: number, page_number: number) => {
-    // human-readable page numbers usually start with 1, so we reduce 1 in the first argument
-    return array.slice((page_number - 1) * page_size, page_number * page_size);
-}
-
-const getUserSeasonRanking = async (
-    seasonID: mongoose.Types.ObjectId,
-    userID: mongoose.Types.ObjectId
-): Promise<RankingModel | null> => {
-    const ranking = await Ranking.findOne({
-        seasonID: seasonID,
-        userID: userID
-    });
-    return ranking;
-}
-
-const getUserAllSeasonRankings = async (
-    userID: mongoose.Types.ObjectId
-): Promise<RankingModel[] | null> => {
-    const rankings = await Ranking.find({
-        userID: userID
-    });
-    return rankings;
-}
-
-const updateSeasonRankings = async (
-    seasonID: mongoose.Types.ObjectId,
-    userID: mongoose.Types.ObjectId,
-    points: number
-): Promise<RankingModel | null> => {
-    const ranking = await Ranking.findOneAndUpdate({
-        seasonID: seasonID,
-        userID: userID
-    }, {
-        points: points
-    }, {
-        new: true,
-        upsert: true
-    });
-    return ranking;
-}
-
 
 const SeasonRepo = {
     getSeasonsByDate,
@@ -151,9 +111,6 @@ const SeasonRepo = {
     createSeason,
     getSeasonRankings,
     getSeasonRankingsByPagination,
-    getUserSeasonRanking,
-    getUserAllSeasonRankings,
-    updateSeasonRankings,
     calculateSeasonRankings
 }
 

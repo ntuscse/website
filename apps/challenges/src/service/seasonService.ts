@@ -57,6 +57,7 @@ const getSeasonRankingsByPagination = async(
     return await SeasonRepo.getSeasonRankingsByPagination(_id, page, limit);
 }
 
+/*
 const getUserSeasonRanking = async(
     seasonID: string,
     userID: string
@@ -80,23 +81,7 @@ const getUserAllSeasonRankings = async(
     const rankings = await SeasonRepo.getUserAllSeasonRankings(_userID);
     return rankings;
 }
-
-const updateSeasonRankings = async(
-    seasonID: string,
-    userID: string,
-    points: number
-) => {
-    const user = await UserService.getUserByID(userID);
-    if (user == null) {
-        throw new Error('Invalid user ID');
-    }
-    const season = await getSeasonByID(seasonID);
-    if(season == null){
-        throw new Error('Invalid season ID');
-    }
-    const ranking = await SeasonRepo.updateSeasonRankings(season._id, user._id, points);
-    return ranking;
-}
+*/
 
 const calculateSeasonRankings = async(
     seasonID: string
@@ -115,9 +100,8 @@ const SeasonService = {
     createSeason,
     getSeasonRankings,
     getSeasonRankingsByPagination,
-    getUserSeasonRanking,
-    getUserAllSeasonRankings,
-    updateSeasonRankings,
+    // getUserSeasonRanking,
+    // getUserAllSeasonRankings,
     calculateSeasonRankings
 }
 

@@ -1,42 +1,8 @@
 import request from 'supertest';
 import mongoose from 'mongoose';
 import app from '../index';
-import SeasonController from '../controllers/season';
 import SeasonService from '../service/seasonService';
-
-describe('getLinks', () => {
-    it('should return correct links when rankingsCount is 0', () => {
-        const seasonID = '123';
-        const page = 0;
-        const limit = 10;
-        const rankingsCount = 0;
-        const links = {
-            self: `/api/seasons/${seasonID}/rankings?page=0&limit=${limit}`,
-            first: `/api/seasons/${seasonID}/rankings?page=0&limit=${limit}`,
-            previous: null,
-            next: null,
-            last: `/api/seasons/${seasonID}/rankings?page=0&limit=${limit}`
-        }
-        expect(SeasonController.getLinks(seasonID, page, limit, rankingsCount)).toEqual(links);
-    });
-
-    /*
-    it('should return correct links when page is 0', () => {
-        const seasonID = '123';
-        const page = 0;
-        const limit = 10;
-        const rankingsCount = 100;
-        const links = {
-            self: `/api/seasons/${seasonID}/rankings?page=${page}&limit=${limit}`,
-            first: `/api/seasons/${seasonID}/rankings?page=0&limit=${limit}`,
-            previous: null,
-            next: `/api/seasons/${seasonID}/rankings?page=${page + 1}&limit=${limit}`,
-            last: `/api/seasons/${seasonID}/rankings?page=${Math.ceil(rankingsCount / limit) - 1}&limit=${limit}`
-        }
-        expect(SeasonController.getLinks(seasonID, page, limit, rankingsCount)).toEqual(links);
-    });
-    */
-})
+import { UserRanking } from '../model/rankingScore';
 
 describe('getSeasonRankings', () => {
     // test getSeasonRankings with correct request
@@ -114,16 +80,16 @@ describe('getSeasonRankings', () => {
 
     it('should return 200 OK even without page and limit', async () => {
         const seasonID = '5f8b2a9f9b6f0c2f1c1d8e4a';
+        const userID = new mongoose.Types.ObjectId()
         const mockRankings = [
             {
-                _id: new mongoose.Types.ObjectId('5f8b2a9f9b6f0c2f1c1d8e4c'),
-                seasonID: new mongoose.Types.ObjectId(seasonID),
-                userID: new mongoose.Types.ObjectId('5f8b2a9f9b6f0c2f1c1d8e4b'),
-                points: 100,
-                createdAt: new Date(),
-                updatedAt: new Date()
+                user: {
+                    userID: userID.toString(),
+                    name: 'Test User'
+                },
+                points: 123
             }
-        ];
+        ] as UserRanking[];
         mockGetSeasonByID.mockResolvedValueOnce({
             _id: new mongoose.Types.ObjectId(seasonID),
             title: 'Test Season',
@@ -141,39 +107,31 @@ describe('getSeasonRankings', () => {
         expect(mockGetSeasonRankingsByPagination).toHaveBeenCalledTimes(0);
         expect(res.status).toEqual(200);
         expect(res.body).toEqual({
-            rankings: mockRankings.map(ranking => {
-                return {
-                    _id: ranking._id.toString(),
-                    seasonID: ranking.seasonID.toString(),
-                    userID: ranking.userID.toString(),
-                    points: ranking.points,
-                    createdAt: ranking.createdAt.toISOString(),
-                    updatedAt: ranking.updatedAt.toISOString()
-                }
-            })
+            seasonID: seasonID,
+            rankings: mockRankings
         });
     });
 
     it('should return 200 OK with correct pagination links', async () => {
         const seasonID = '5f8b2a9f9b6f0c2f1c1d8e4a';
+        const userID = new mongoose.Types.ObjectId();
+        const userID2 = new mongoose.Types.ObjectId()
         const mockRankings = [
             {
-                _id: new mongoose.Types.ObjectId('5f8b2a9f9b6f0c2f1c1d8e4c'),
-                seasonID: new mongoose.Types.ObjectId(seasonID),
-                userID: new mongoose.Types.ObjectId('5f8b2a9f9b6f0c2f1c1d8e4b'),
-                points: 100,
-                createdAt: new Date(),
-                updatedAt: new Date()
+                user: {
+                    userID: userID.toString(),
+                    name: 'Test User'
+                },
+                points: 123
             },
             {
-                _id: new mongoose.Types.ObjectId('5f8b2a9f9b6f0c2f1c1d8e4d'),
-                seasonID: new mongoose.Types.ObjectId(seasonID),
-                userID: new mongoose.Types.ObjectId('5f8b2a9f9b6f0c2f1c1d8e4e'),
-                points: 90,
-                createdAt: new Date(),
-                updatedAt: new Date()
-            },
-        ];
+                user: {
+                    userID: userID2.toString(),
+                    name: 'Test User 2'
+                },
+                points: 456
+            }
+        ] as UserRanking[];
         const page = 0;
         const limit = 2;
         const mockRankingsCount = 4;
@@ -198,16 +156,8 @@ describe('getSeasonRankings', () => {
         expect(mockGetSeasonRankingsByPagination.mock.calls[0][2]).toBe(limit);
         expect(res.status).toEqual(200);
         expect(res.body).toEqual({
-            rankings: mockRankings.map(ranking => {
-                return {
-                    _id: ranking._id.toString(),
-                    seasonID: ranking.seasonID.toString(),
-                    userID: ranking.userID.toString(),
-                    points: ranking.points,
-                    createdAt: ranking.createdAt.toISOString(),
-                    updatedAt: ranking.updatedAt.toISOString()
-                }
-            }),
+            seasonID: seasonID,
+            rankings: mockRankings,
             _metaData: {
                 page: 0,
                 limit: 2,

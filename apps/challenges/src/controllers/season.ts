@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
-
-import { isValidObjectId, paramsSchema } from "../utils/db";
-import SeasonService from "../service/seasonService";
-import isValidDate from "../utils/checkObjectProperties";
 import { z } from "zod";
-import mongoose from 'mongoose';
+
+import { isValidObjectId } from "../utils/db";
+import SeasonService from "../service/seasonService";
+import { isNonNegativeInteger, isValidDate, zodIsValidObjectId } from "../utils/validator";
+import { generatePaginationMetaData } from "../utils/pagination";
 
 interface CreateSeasonRequest {
     title: string;
@@ -105,6 +105,7 @@ const createSeason = asyncHandler(async (req: Request, res: Response) => {
     }
 });
 
+/*
 const getUserSeasonRanking = asyncHandler(async (req: Request, res: Response) => {
     const { seasonID, userID } = req.params;
 
@@ -138,48 +139,38 @@ const getUserAllSeasonRankings = asyncHandler(async (req: Request, res: Response
         res.status(500).json({ message: err.message });
     }
 });
+*/
 
 // @desc    Get season rankings
 // @route   GET /api/seasons/:seasonID/rankings
 // @access  Public
 const getSeasonRankings = asyncHandler(async (req: Request, res: Response) => {
+    let seasonID, page, limit;
     try {
-        const seasonID = paramsSchema.parse(req.params.seasonID);
-        const querySchema = z.object({
+        seasonID = zodIsValidObjectId.parse(req.params.seasonID);
+        const queryIsValid = z.object({
             page: z.coerce.number().int().min(0).optional(),
             limit: z.coerce.number().int().min(1).optional()
         }).refine(
             data => ((data.page || data.page === 0) && data.limit) || ((!data.page && data.page !== 0)&& !data.limit),
             { message: "Invalid request" }
         );
-        const { page, limit } = querySchema.parse(req.query);
+        page = queryIsValid.parse(req.query).page;
+        limit = queryIsValid.parse(req.query).limit;
         const season = await SeasonService.getSeasonByID(seasonID);
         if(!season){
             res.status(404).json({ message: 'Season not found' });
             return;
         }
 
-        if(!limit){
+        if(!limit && !page){
             const rankings = await SeasonService.getSeasonRankings(seasonID);
             res.status(200).json({
+                seasonID: seasonID,
                 rankings: rankings,
             });
             return;
         }
-        const { rankings, rankingsCount } = await SeasonService.getSeasonRankingsByPagination(seasonID, page!, limit!);
-        const metaData = {
-            page: page,
-            limit: limit,
-            pageCount: Math.ceil(rankingsCount / limit!) || 0,
-            itemCount: rankingsCount || 0,
-            links: getLinks(seasonID, page!, limit!, rankingsCount)
-        }
-        res.setHeader("access-control-expose-headers", "pagination");
-        res.setHeader("pagination", JSON.stringify(metaData));
-        res.status(200).json({
-            rankings: rankings,
-            _metaData: metaData
-        });
     } catch (err) {
         if(err instanceof z.ZodError){
             res.status(400).json({ message: 'Invalid request' });
@@ -187,65 +178,20 @@ const getSeasonRankings = asyncHandler(async (req: Request, res: Response) => {
             res.status(500).json({ message: 'Internal Server Error' });
         }
     }
-});
 
-const getLinks = (seasonID: string, page: number, limit: number, rankingsCount: number) => {
-    var links;
-    if(page < 0 || page > Math.ceil(rankingsCount / limit) - 1){
-        links = {
-            self: `/api/seasons/${seasonID}/rankings?page=${page}&limit=${limit}`,
-            first: `/api/seasons/${seasonID}/rankings?page=0&limit=${limit}`,
-            previous: null,
-            next: null,
-            last: `/api/seasons/${seasonID}/rankings?page=${Math.ceil(rankingsCount / limit) - 1}&limit=${limit}`
-        } 
-    }else if(page == 0){
-        links = {
-            self: `/api/seasons/${seasonID}/rankings?page=${page}&limit=${limit}`,
-            first: `/api/seasons/${seasonID}/rankings?page=0&limit=${limit}`,
-            previous: null,
-            next: `/api/seasons/${seasonID}/rankings?page=${page + 1}&limit=${limit}`,
-            last: `/api/seasons/${seasonID}/rankings?page=${Math.ceil(rankingsCount / limit) - 1}&limit=${limit}`
-        }
-    }else if (page == Math.ceil(rankingsCount / limit) - 1){
-        links = {
-            self: `/api/seasons/${seasonID}/rankings?page=${page}&limit=${limit}`,
-            first: `/api/seasons/${seasonID}/rankings?page=0&limit=${limit}`,
-            previous: `/api/seasons/${seasonID}/rankings?page=${page - 1}&limit=${limit}`,
-            next: null,
-            last: `/api/seasons/${seasonID}/rankings?page=${Math.ceil(rankingsCount / limit) - 1}&limit=${limit}`
-        }
-    }else{
-        links = {
-            self: `/api/seasons/${seasonID}/rankings?page=${page}&limit=${limit}`,
-            first: `/api/seasons/${seasonID}/rankings?page=0&limit=${limit}`,
-            previous: `/api/seasons/${seasonID}/rankings?page=${page - 1}&limit=${limit}`,
-            next: `/api/seasons/${seasonID}/rankings?page=${page + 1}&limit=${limit}`,
-            last: `/api/seasons/${seasonID}/rankings?page=${Math.ceil(rankingsCount / limit) - 1}&limit=${limit}`
-        }
-    }
-    
-    return links;
-}
-
-const updateSeasonRankings = asyncHandler(async (req: Request, res: Response) => {
-    const { seasonID, userID } = req.params;
-    const { points } = req.body;
-
-    if (!isValidObjectId(seasonID) || !isValidObjectId(userID)) {
-        res.status(400).json({ message: 'Invalid request' });
-        return;
-    }
-    if(points == null || typeof points !== "number"){
-        res.status(400).json({ message: 'Invalid request' });
-        return;
-    }
-    try {
-        const season = await SeasonService.updateSeasonRankings(seasonID, userID, points);
-        res.status(200).json(season);
-    } catch (error) {
-        const err = error as Error;
-        res.status(500).json({ message: err.message });
+    try{
+        const { rankings, rankingsCount } = await SeasonService.getSeasonRankingsByPagination(seasonID, page!, limit!);
+        isNonNegativeInteger.parse(rankingsCount);
+        const metaData = generatePaginationMetaData(`/api/seasons/${seasonID}/rankings`, page!, limit!, Math.ceil(rankingsCount / limit) - 1);
+        res.setHeader("access-control-expose-headers", "pagination");
+        res.setHeader("pagination", JSON.stringify(metaData));
+        res.status(200).json({
+            seasonID: seasonID,
+            rankings: rankings,
+            _metaData: metaData
+        });
+    }catch(e){
+        res.status(500).json({ message: 'Internal Server Error' });
     }
 });
 
@@ -255,10 +201,8 @@ const SeasonController = {
     getSeasonByID,
     createSeason,
     getSeasonRankings,
-    getUserSeasonRanking,
-    getUserAllSeasonRankings,
-    updateSeasonRankings,
-    getLinks
+    // getUserSeasonRanking,
+    // getUserAllSeasonRankings,
 };
 
 export { SeasonController as default };
