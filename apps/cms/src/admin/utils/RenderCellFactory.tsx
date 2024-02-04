@@ -72,25 +72,37 @@ export class RenderCellFactory {
       );
       return ImageComponentCell;
     }
+
     if (key === "stock") {
-      const ObjectComponent: React.FC<{ data: string }> = ({ data }) => (
-        <div>
-          {Object.entries(data).map(([subKey, value], index) => (
-            <div key={index}>
-              <strong>{subKey}:</strong>{" "}
-              <span>
-                {typeof value === 'object' ? JSON.stringify(value, null, 2) : String(value)}
-              </span>
+      const StockTableComponent: React.FC<{ data: StockData }> = ({ data }) => (
+        <div className="stock-container">
+          {Object.entries(data).map(([color, sizes], index) => (
+            <div key={index} className="stock-item">
+              <strong>{color}</strong>
+              <div>
+                {Object.entries(sizes).map(([size, quantity], sizeIndex) => (
+                  <span key={sizeIndex}>
+                    {size}: {quantity} {sizeIndex % 2 !== 0 && <br />}{" "}
+                    {/* Add line break after every two sizes */}
+                  </span>
+                ))}
+              </div>
             </div>
           ))}
         </div>
       );
-      const ObjectComponentCell = (row, data: string) => (
-        <ObjectComponent data={data} />
+      const StockTableComponentCell = (row, data: StockData) => (
+        <StockTableComponent data={data} />
       );
-      return ObjectComponentCell;
-      
+      return StockTableComponentCell;
     }
+
+    interface StockData {
+      [color: string]: {
+        [size: string]: number;
+      };
+    }
+
     if (typeof element[key] == "object") {
       const DateComponent: React.FC<{ children?: React.ReactNode }> = ({
         children,
