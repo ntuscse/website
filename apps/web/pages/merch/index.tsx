@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Flex, Divider, Select, Heading, Grid } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, MerchListSkeleton, Page } from "ui/components/merch";
@@ -9,33 +9,21 @@ import { isOutOfStock } from "features/merch/functions";
 
 const MerchandiseList = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
-  const [isMerchDisabled, setIsMerchDisabled] = useState<boolean | null>(false);
-  const [disabledText, setDisabledText] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(true);
 
-  useEffect(() => {
-    const fetchMerchSaleStatus = async () => {
-      try {
-        // TODO: change to use query?
-        const { disabled, displayText } = await api.getMerchSaleStatus();
-        setDisabledText(displayText ?? "");
-        setIsMerchDisabled(disabled);
-        setLoading(false);
-      } catch (error) {
-        // TODO: display error
-        setLoading(false);
-      }
-    };
-
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    fetchMerchSaleStatus();
-  }, []);
-
-  const { data: products, isLoading } = useQuery(
+  const { data: products, isLoading: isProductsLoading } = useQuery(
     [QueryKeys.PRODUCTS],
     () => api.getProducts(),
     {}
   );
+
+  const { data: status, isLoading: isStatusLoading } = useQuery(
+    [QueryKeys.STATUS],
+    () => api.getMerchSaleStatus(),
+    {}
+  );
+
+  const displayText = status?.displayText;
+  const disabled = status?.disabled;
 
   const categories = products?.map((product: Product) => product?.category);
   const uniqueCategories = categories
@@ -48,20 +36,20 @@ const MerchandiseList = () => {
     setSelectedCategory(event.target.value);
   };
 
-  if (loading) {
+  if (isStatusLoading) {
     return (
-      <>
+      <Page>
         <MerchListSkeleton />
-      </>
+      </Page>
     );
   }
 
   return (
     <Page>
-      {isMerchDisabled ? (
+      {disabled ? (
         <Flex justifyContent="center" alignItems="center" height="85vh">
           <Heading textAlign="center" maxWidth="1260px">
-            {disabledText}
+            {displayText}
           </Heading>
         </Flex>
       ) : (
@@ -80,7 +68,7 @@ const MerchandiseList = () => {
               alignSelf="center"
               placeholder="All Product Type"
               size="sm"
-              disabled={isLoading}
+              disabled={isProductsLoading}
               value={selectedCategory}
               onChange={handleCategoryChange}
             >
@@ -92,7 +80,7 @@ const MerchandiseList = () => {
             </Select>
           </Flex>
           <Divider borderColor="blackAlpha.500" mt={[5, 10]} />
-          {isLoading ? (
+          {isProductsLoading ? (
             <MerchListSkeleton />
           ) : (
             <Grid
