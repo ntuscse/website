@@ -2,8 +2,7 @@ import { Button, Flex, FormControl, FormLabel, Heading, Input, Spacer, Text } fr
 
 const Login = () => {
     return (<Flex minH="100vh" pt={24} flexDirection="column" alignItems="center" justifyContent="center">
-        <Flex w="50vw" h="50vh" p={8} flexDirection="column" alignItems="center" borderRadius={8} justifyContent="center"
-        >
+        <Flex w={["100vw", "30vw"]} h="50vh" p={8} flexDirection="column" alignItems="center" borderRadius={8} justifyContent="center" boxShadow={["", "lg"]}>
         <Heading>LOGIN</Heading>
         <Text>Don't have an account? Sign up</Text>
         <FormControl>
