@@ -93,6 +93,16 @@ const calculateSeasonRankings = async(
     return await SeasonRepo.calculateSeasonRankings(_seasonID);
 }
 
+const getSeasonQuestions = async(
+    seasonID: string
+) => {
+    if (!mongoose.isValidObjectId(seasonID)) {
+        throw new Error('Invalid season ID');
+    }
+    const _seasonID = new mongoose.Types.ObjectId(seasonID);
+    return await SeasonRepo.getSeasonQuestions(_seasonID);
+}
+
 const SeasonService = {
     getSeasonsByDate,
     getActiveSeasons,
@@ -102,7 +112,8 @@ const SeasonService = {
     getSeasonRankingsByPagination,
     // getUserSeasonRanking,
     // getUserAllSeasonRankings,
-    calculateSeasonRankings
+    calculateSeasonRankings,
+    getSeasonQuestions,
 }
 
 export { SeasonService as default }
