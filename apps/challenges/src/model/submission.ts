@@ -1,13 +1,18 @@
 import mongoose, { Schema, model } from 'mongoose';
 
+export interface CreateSubmissionReq {
+    user: mongoose.Types.ObjectId;
+    question: mongoose.Types.ObjectId;
+    answer: string;
+}
+
 export interface SubmissionModel {
     user: mongoose.Types.ObjectId;
     seasonID: mongoose.Types.ObjectId;
+    question: mongoose.Types.ObjectId;
     answer: string;
     correct?: boolean;
     points_awarded?: number;
-    question?: mongoose.Types.ObjectId;
-    attempt?: number;
 }
 
 const submissionSchema: Schema<SubmissionModel> = new Schema({
@@ -19,7 +24,12 @@ const submissionSchema: Schema<SubmissionModel> = new Schema({
     seasonID: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'Leaderboard',
+        ref: 'Season',
+    },
+    question: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Question',
     },
     answer: {
         type: String,
@@ -30,15 +40,6 @@ const submissionSchema: Schema<SubmissionModel> = new Schema({
     },
     points_awarded: {
         type: Number,
-    },
-    question: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'Question',
-    },
-    attempt: {
-        type: Number,
-        default: 1,
     },
 }, {
     timestamps: true,

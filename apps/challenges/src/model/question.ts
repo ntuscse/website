@@ -5,6 +5,7 @@ export interface QuestionModel {
     question_title: string;
     question_desc: string;
     question_date: Date;
+    seasonID: mongoose.Types.ObjectId;
     expiry: Date;
     points: number;
     answer: string;
@@ -30,6 +31,11 @@ const questionSchema: Schema<QuestionModel> = new Schema({
     question_date: {
         type: Date,
         required: [true, 'Please add a question date']
+    },
+    seasonID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Season',
+        required: [true, 'Please add a season ID']
     },
     expiry: {
         type: Date,

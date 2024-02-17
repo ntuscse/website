@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 const asyncHandler = require('express-async-handler');
-const Question = require('../model/question');
-const Submission = require('../model/submission');
+import Question from '../model/question';
+import Submission from '../model/submission';
 import Season from "../model/season";
 import { isValidObjectId } from "../utils/db";
 
@@ -59,6 +59,7 @@ const setQuestion = asyncHandler(async (req: Request, res: Response) => {
             question_title: req.body.question_title,
             question_desc: req.body.question_desc,
             question_date: req.body.question_date,
+            seasonID: req.body.season_id,
             expiry: req.body.expiry,
             points: req.body.points,
             answer: req.body.answer,
