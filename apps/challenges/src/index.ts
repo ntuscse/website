@@ -4,7 +4,7 @@ import SeasonRouter from "./routes/seasons";
 import QuestionaireRouter from "./routes/questionaire";
 import SubmissionRouter from "./routes/submission";
 import UserRouter from "./routes/user";
-import connectDB from "./config/db";
+import { connectDB } from "./config/db";
 import { CronJob } from "cron";
 import { rankingCalculation } from "./tasks/rankingCalculation";
 dotenv.config({ path: "../.env"});

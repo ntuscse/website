@@ -11,6 +11,12 @@ export const zodIsValidObjectId = z.string().refine(
     { message: 'Invalid ObjectId' }
 );
 
+export const isValidCreateSubmissionRequest = z.object({
+    user: zodIsValidObjectId,
+    question: zodIsValidObjectId,
+    answer: z.string(),
+});
+
 export const isPositiveInteger = z.number().int().min(1);
 
 export const isNonNegativeInteger = z.number().int().min(0);

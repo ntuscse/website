@@ -7,9 +7,10 @@ describe('generatePaginationMetaData', () => {
         const pageIndex = -1;
         const limit = 10;
         const maxPageIndex = 0;
+        const itemCount = 2;
 
         expect(
-            () => {generatePaginationMetaData(baseUrl, pageIndex, limit, maxPageIndex)}
+            () => {generatePaginationMetaData(baseUrl, pageIndex, limit, maxPageIndex, itemCount)}
         )
             .toThrow(z.ZodError)
     });
@@ -19,9 +20,10 @@ describe('generatePaginationMetaData', () => {
         const pageIndex = 0;
         const limit = 10;
         const maxPageIndex = -1;
+        const itemCount = 2;
 
         expect(
-            () => { generatePaginationMetaData(baseUrl, pageIndex, limit, maxPageIndex) }
+            () => { generatePaginationMetaData(baseUrl, pageIndex, limit, maxPageIndex, itemCount) }
         )
             .toThrow(z.ZodError)
     });
@@ -31,18 +33,33 @@ describe('generatePaginationMetaData', () => {
         const pageIndex = 0;
         const limit = 0;
         const maxPageIndex = 0;
+        const itemCount = 2;
 
         expect(
-            () => { generatePaginationMetaData(baseUrl, pageIndex, limit, maxPageIndex) }
+            () => { generatePaginationMetaData(baseUrl, pageIndex, limit, maxPageIndex, itemCount) }
         )
             .toThrow(z.ZodError)
     });
 
-    it('should return correct links (boundary value check -> all input is exactly one step away from being invalid input)', () => {
+    it('should return error if itemCount < 0', () => {
         const baseUrl = '/api/seasons/123/rankings';
         const pageIndex = 0;
         const limit = 1;
         const maxPageIndex = 0;
+        const itemCount = -1;
+
+        expect(
+            () => { generatePaginationMetaData(baseUrl, pageIndex, limit, maxPageIndex, itemCount) }
+        )
+            .toThrow(z.ZodError)
+    });
+
+    it('should return correct links even if itemCount is 0', () => {
+        const baseUrl = '/api/seasons/123/rankings';
+        const pageIndex = 0;
+        const limit = 1;
+        const maxPageIndex = 0;
+        const itemCount = 0;
 
         const links = {
             self: `${baseUrl}?page=0&limit=${limit}`,
@@ -51,7 +68,41 @@ describe('generatePaginationMetaData', () => {
             next: null,
             last: `${baseUrl}?page=0&limit=${limit}`
         }
-        expect(generatePaginationMetaData(baseUrl, pageIndex, limit, maxPageIndex)).toEqual(links);
+
+        const metaData = {
+            itemCount: 0,
+            limit: 1,
+            pageCount: 0,
+            page: 0,
+            links: links
+        }
+        expect(generatePaginationMetaData(baseUrl, pageIndex, limit, maxPageIndex, itemCount)).toEqual(metaData);
+    });
+
+    it('should return correct links (boundary value check -> all input is exactly one step away from being invalid input)', () => {
+        const baseUrl = '/api/seasons/123/rankings';
+        const pageIndex = 0;
+        const limit = 1;
+        const maxPageIndex = 0;
+        const itemCount = 1;
+
+        const links = {
+            self: `${baseUrl}?page=0&limit=${limit}`,
+            first: `${baseUrl}?page=0&limit=${limit}`,
+            previous: null,
+            next: null,
+            last: `${baseUrl}?page=0&limit=${limit}`
+        }
+
+        const metaData = {
+            itemCount: 1,
+            limit: 1,
+            pageCount: 1,
+            page: 0,
+            links: links
+        }
+
+        expect(generatePaginationMetaData(baseUrl, pageIndex, limit, maxPageIndex, itemCount)).toEqual(metaData);
     });
 
     it('should return correct links when the page is in the middle', () => {
@@ -59,6 +110,7 @@ describe('generatePaginationMetaData', () => {
         const pageIndex = 1;
         const limit = 1;
         const maxPageIndex = 2;
+        const itemCount = 3;
 
         const links = {
             self: `${baseUrl}?page=1&limit=${limit}`,
@@ -67,7 +119,16 @@ describe('generatePaginationMetaData', () => {
             next: `${baseUrl}?page=2&limit=${limit}`,
             last: `${baseUrl}?page=2&limit=${limit}`
         }
-        expect(generatePaginationMetaData(baseUrl, pageIndex, limit, maxPageIndex)).toEqual(links);
+
+        const metaData = {
+            itemCount: 3,
+            limit: 1,
+            pageCount: 3,
+            page: 1,
+            links: links
+        }
+
+        expect(generatePaginationMetaData(baseUrl, pageIndex, limit, maxPageIndex, itemCount)).toEqual(metaData);
     });
 
     it('should all links should be unique when they should be', () => {
@@ -75,6 +136,7 @@ describe('generatePaginationMetaData', () => {
         const pageIndex = 2;
         const limit = 1;
         const maxPageIndex = 4;
+        const itemCount = 5;
 
         const links = {
             self: `${baseUrl}?page=2&limit=${limit}`,
@@ -83,7 +145,16 @@ describe('generatePaginationMetaData', () => {
             next: `${baseUrl}?page=3&limit=${limit}`,
             last: `${baseUrl}?page=4&limit=${limit}`
         }
-        expect(generatePaginationMetaData(baseUrl, pageIndex, limit, maxPageIndex)).toEqual(links);
+
+        const metaData = {
+            itemCount: 5,
+            limit: 1,
+            pageCount: 5,
+            page: 2,
+            links: links
+        }
+
+        expect(generatePaginationMetaData(baseUrl, pageIndex, limit, maxPageIndex, itemCount)).toEqual(metaData);
     });
 
     it('should return correct links even if pageIndex > maxPageIndex', () => {
@@ -91,6 +162,7 @@ describe('generatePaginationMetaData', () => {
         const pageIndex = 6;
         const limit = 1;
         const maxPageIndex = 5;
+        const itemCount = 6;
 
         const links = {
             self: `${baseUrl}?page=${pageIndex}&limit=${limit}`,
@@ -99,7 +171,15 @@ describe('generatePaginationMetaData', () => {
             next: null,
             last: `${baseUrl}?page=${maxPageIndex}&limit=${limit}`
         }
-        expect(generatePaginationMetaData(baseUrl, pageIndex, limit, maxPageIndex)).toEqual(links);
+
+        const metaData = {
+            itemCount: 6,
+            limit: limit,
+            pageCount: 6,
+            page: 6,
+            links: links
+        }
+        expect(generatePaginationMetaData(baseUrl, pageIndex, limit, maxPageIndex, itemCount)).toEqual(metaData);
     });
 })
 
