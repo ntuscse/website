@@ -2,9 +2,7 @@
   "name": "types",
   "version": "0.0.1",
   "private": true,
-  "main": "./dist/index.js",
-  "source": "./src/index.ts",
-  "types": "./dist/index.d.ts",
+  "main": "./src/index.ts",
   "files": [
     "dist/**"
   ],

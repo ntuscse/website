@@ -19,21 +19,36 @@ export interface Product {
 }
 
 // Order
+// use zod to define order types to allow runtime reflection of type structure.
+// by default, typescript types lose type information time at compile time.
 export enum OrderStatus {
   PENDING_PAYMENT = 1,
   PAYMENT_COMPLETED = 2,
   ORDER_COMPLETED = 3,
 }
+const OrderStatusSchema = z.nativeEnum(OrderStatus);
 
-export interface Order {
-  id: string;
-  items: OrderItem[];
-  transaction_id: string;
-  transaction_time: string | null;
-  payment_method: string;
-  customer_email: string;
-  status: OrderStatus;
-}
+const OrderItem = z.object({
+  id: z.string(),
+  name: z.string(),
+  image: z.string().optional(),
+  color: z.string(),
+  size: z.string(),
+  price: z.number(),
+  quantity: z.number(),
+});
+export type OrderItem = z.infer<typeof OrderItem>;
+
+export const OrderSchema = z.object({
+  id: z.string(),
+  items: z.array(OrderItem),
+  transaction_id: z.string(),
+  transaction_time: z.string().optional(),
+  payment_method: z.string(),
+  customer_email: z.string(),
+  status: OrderStatusSchema,
+});
+export type Order = z.infer<typeof OrderSchema>;
 
 // Cart
 export type CartState = {
@@ -58,16 +73,6 @@ export type Cart = z.infer<typeof Cart>;
 export type CartItem = z.infer<typeof CartItem>;
 
 // Promotion
-export interface OrderItem {
-  id: string;
-  name: string;
-  image?: string;
-  color: string;
-  size: string;
-  price: number;
-  quantity: number;
-}
-
 export interface Promotion {
   promoCode: string;
   maxRedemptions: number;
