@@ -165,5 +165,5 @@ dist
 
 # Ignore code-workspaces
 *.code-workspace
-
+src/media/*
 # End of https://www.toptal.com/developers/gitignore/api/node,visualstudiocode

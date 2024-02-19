@@ -8,6 +8,7 @@ import Posts from "./collections/Posts";
 import Tags from "./collections/Tags";
 import Users from "./collections/Users";
 import Media from "./collections/Media";
+import NavItems from "./collections/NavItems"
 
 import AfterNavLinks from "./admin/components/AfterNavLinks";
 
@@ -58,7 +59,7 @@ export default buildConfig({
     user: Users.slug,
     css: path.resolve(__dirname, "admin", "styles.scss"),
   },
-  collections: [Categories, Posts, Tags, Users, Media, Order],
+  collections: [Categories, Posts, Tags, Users, Media, Order, NavItems],
   csrf: [
     // whitelist of domains to allow cookie auth from
     process.env.PAYLOAD_PUBLIC_SERVER_URL,

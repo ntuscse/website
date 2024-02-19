@@ -46,7 +46,7 @@ const Posts: CollectionConfig = {
       minRows: 1,
       blocks: [
         ContentBlock,
-        MediaBlock,
+        MediaBlock
       ]
     },
     // sidebar stuff
