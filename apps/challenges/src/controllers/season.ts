@@ -33,6 +33,7 @@ const getSeasons = asyncHandler(async (req: Request, res: Response) => {
 
     try {
         const seasons = await SeasonService.getSeasonsByDate(_startDate, _endDate);
+
         res.status(200).json({
             seasons: seasons,
         });
@@ -165,9 +166,15 @@ const getSeasonRankings = asyncHandler(async (req: Request, res: Response) => {
 const getSeasonQuestions = asyncHandler(async (req: Request, res: Response) => {
     try {
         const seasonID = zodIsValidObjectId.parse(req.params.seasonID);
+        
+        const season = await SeasonService.getSeasonByID(seasonID);
+        if (!season) {
+            res.status(404).json({ message: 'Season not found' });
+            return;
+        }
 
         const questions = await SeasonService.getSeasonQuestions(seasonID);
-
+        
         res.status(200).json(questions);
     } catch (err) {
         if (err instanceof z.ZodError) {

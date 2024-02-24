@@ -1,4 +1,13 @@
 import mongoose, { Schema } from 'mongoose';
+import { QuestionModel } from './question';
+
+export interface GetSeasonResp {
+    id: mongoose.Types.ObjectId;
+    title: string;
+    startDate: Date;
+    endDate: Date;
+    questions: QuestionModel[];
+}
 
 export interface SeasonModel {
     _id: mongoose.Types.ObjectId;
