@@ -1,6 +1,29 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
+export interface CreateQuestionReq {
+    question_no: string;
+    question_title: string;
+    question_desc: string;
+    question_date: Date;
+    season_id: string;
+    expiry: Date;
+    points: number;
+    validation_function: string;
+}
+
+export interface GetUserQuestionResp {
+    id: string;
+    question_no: string;
+    question_title: string;
+    question_desc: string;
+    question_date: Date;
+    seasonID: string;
+    expiry: Date;
+    points: number;
+}
+
 export interface QuestionModel {
+    _id: mongoose.Types.ObjectId;
     question_no: string;
     question_title: string;
     question_desc: string;
@@ -8,11 +31,11 @@ export interface QuestionModel {
     seasonID: mongoose.Types.ObjectId;
     expiry: Date;
     points: number;
-    answer: string;
     submissions: Array<mongoose.Types.ObjectId>;
     submissions_count: number;
     correct_submissions_count: number;
     active: boolean;
+    validation_function : string;
 }
 
 const questionSchema: Schema<QuestionModel> = new Schema({
@@ -45,10 +68,6 @@ const questionSchema: Schema<QuestionModel> = new Schema({
         type: Number,
         required: [true, 'Please add a points value']
     },
-    answer: {
-        type: String,
-        required: [true, 'Please add an answer']
-    },
     submissions: {
         type: [mongoose.Types.ObjectId],
         ref: 'Submission'
@@ -65,6 +84,10 @@ const questionSchema: Schema<QuestionModel> = new Schema({
         type: Boolean,
         default: true
     },
+    validation_function: {
+        type: String,
+        required: [true, 'Please add a validation function']
+    }
 }, {
     timestamps: true
 });

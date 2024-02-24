@@ -11,10 +11,26 @@ export const zodIsValidObjectId = z.string().refine(
     { message: 'Invalid ObjectId' }
 );
 
+export const zodIsValidRFC3339 = z.string().refine(
+    (val) =>  new Date(val).toISOString() === val,
+    { message: 'Invalid RFC3339 date' }
+);
+
 export const isValidCreateSubmissionRequest = z.object({
     user: zodIsValidObjectId,
     question: zodIsValidObjectId,
     answer: z.string(),
+});
+
+export const isValidCreateQuestionRequest = z.object({
+    question_no: z.string(),
+    question_title: z.string(),
+    question_desc: z.string(),
+    question_date: zodIsValidRFC3339,
+    season_id: zodIsValidObjectId,
+    expiry: zodIsValidRFC3339,
+    points: z.number().int(),
+    validation_function: z.string(),
 });
 
 export const isPositiveInteger = z.number().int().min(1);

@@ -2,6 +2,7 @@ import { CreateSubmissionReq, SubmissionModel } from "../model/submission";
 import SubmissionRepo from "../repo/submissionRepo";
 import QuestionService from "./questionService";
 import { GeneralResp } from "../model/response";
+import ValidationService from "./validationService";
 
 const createSubmission = async (
     submission: CreateSubmissionReq
@@ -28,14 +29,21 @@ const createSubmission = async (
         }
     }
 
+    let isCorrect = false;
+    try {
+        isCorrect = await ValidationService.validateAnswer(submission.question.toString(), submission.answer);
+    } catch (err) {
+        console.log("submissionService createSubmission fail to validate answer: ", err);
+    }
+
     try {
         const dbSubmission = {
             user: submission.user,
             seasonID: question.seasonID,
             question: submission.question,
             answer: submission.answer,
-            correct: submission.answer === question.answer,
-            points_awarded: submission.answer === question.answer ? question.points : 0
+            correct: isCorrect,
+            points_awarded: isCorrect ? question.points : 0
         }
         const result = await SubmissionRepo.createSubmission(dbSubmission);
 
@@ -43,7 +51,7 @@ const createSubmission = async (
         question = await QuestionService.updateQuestionSubmissions(
             submission.question.toString(), 
             result._id.toString(),
-            submission.answer === question.answer
+            isCorrect
         );
 
         if (!question) {
@@ -62,6 +70,8 @@ const createSubmission = async (
         }
     }
 }
+
+
 
 const SubmissionService = {
     createSubmission,

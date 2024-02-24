@@ -1,4 +1,4 @@
-import Question, { QuestionModel } from "../model/question"
+import Question, { CreateQuestionReq, QuestionModel } from "../model/question"
 import mongoose from 'mongoose';
 
 const getQuestionByID = async (
@@ -7,6 +7,32 @@ const getQuestionByID = async (
     const question = await Question.findOne({
         _id: questionID
     });
+    return question;
+}
+
+const createQuestionByReq = async (
+    req: CreateQuestionReq
+): Promise<QuestionModel | null> => {
+    const questionModel = {
+        _id: new mongoose.Types.ObjectId(),
+        question_no: req.question_no,
+        question_title: req.question_title,
+        question_desc: req.question_desc,
+        question_date: req.question_date,
+        seasonID: new mongoose.Types.ObjectId(req.season_id),
+        expiry: req.expiry,
+        points: req.points,
+        submissions: [],
+        submissions_count: 0,
+        correct_submissions_count: 0,
+        active: true,
+        validation_function: req.validation_function
+    }
+
+    const question = await Question.create(questionModel);
+
+    await question.save();
+
     return question;
 }
 
@@ -39,6 +65,7 @@ const updateQuestionSubmissions = async (
 
 const QuestionRepo = {
     getQuestionByID,
+    createQuestionByReq,
     updateQuestionByID,
     updateQuestionSubmissions
 }

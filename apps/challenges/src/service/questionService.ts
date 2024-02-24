@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
 import QuestionRepo from '../repo/questionRepo';
+import { CreateQuestionReq } from '../model/question';
+import ValidationService from './validationService';
+import { GeneralResp } from '../model/response';
 
 const getQuestionByID = async(
     questionID: string,
@@ -10,6 +13,27 @@ const getQuestionByID = async(
     const _id = new mongoose.Types.ObjectId(questionID);
     const question = await QuestionRepo.getQuestionByID(_id);
     return question;
+}
+
+const createQuestion = async (
+    req: CreateQuestionReq,
+): Promise<GeneralResp> => {
+    if (!ValidationService.getValidationFunction(req.validation_function)){
+        console.log('Invalid validation function');
+        return {
+            status: 400,
+            message: 'Invalid validation function',
+            data: null,
+        };
+    }
+    
+    const question = await QuestionRepo.createQuestionByReq(req);
+
+    return {
+        status: 201,
+        message: 'Question created',
+        data: question,
+    };
 }
 
 const updateQuestionSubmissions = async(
@@ -28,7 +52,8 @@ const updateQuestionSubmissions = async(
 
 const QuestionService = {
     getQuestionByID,
-    updateQuestionSubmissions
+    updateQuestionSubmissions,
+    createQuestion
 }
 
 export { QuestionService as default } 
