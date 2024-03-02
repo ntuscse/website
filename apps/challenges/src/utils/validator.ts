@@ -1,6 +1,10 @@
 import mongoose from 'mongoose';
 import { z } from 'zod';
 
+export const getEmailPrefix = (email: string) => {
+    return email.replace(/@.*$/, "");
+}
+
 export const isValidDate = (d: Date) => {
     return d instanceof Date && !isNaN(d.valueOf())
 }
@@ -21,6 +25,8 @@ export const isValidCreateSubmissionRequest = z.object({
     question: zodIsValidObjectId,
     answer: z.string(),
 });
+
+export const isValidEmail = z.string().min(1).email();
 
 export const isValidCreateQuestionRequest = z.object({
     question_no: z.string(),

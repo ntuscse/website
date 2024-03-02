@@ -1,7 +1,7 @@
 import { CreateSubmissionReq, SubmissionModel } from "../model/submission";
 import SubmissionRepo from "../repo/submissionRepo";
+import { GeneralResp } from "../types/types";
 import QuestionService from "./questionService";
-import { GeneralResp } from "../model/response";
 import ValidationService from "./validationService";
 
 const createSubmission = async (

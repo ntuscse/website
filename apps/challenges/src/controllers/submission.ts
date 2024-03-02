@@ -15,7 +15,7 @@ import mongoose from 'mongoose';
 // @access  Public
 const getSubmissions = asyncHandler(async (req: Request, res: Response) => {
     const submissions = await Submission.find({})
-    res.status(200).json(submissions)  
+    res.status(200).json(submissions)
 })
 
 // @desc    Get submission

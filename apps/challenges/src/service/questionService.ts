@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import QuestionRepo from '../repo/questionRepo';
 import { CreateQuestionReq } from '../model/question';
 import ValidationService from './validationService';
-import { GeneralResp } from '../model/response';
+import { GeneralResp } from '../types/types';
 
 const getQuestionByID = async(
     questionID: string,

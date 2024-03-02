@@ -4,13 +4,16 @@ import SeasonRouter from "./routes/seasons";
 import QuestionaireRouter from "./routes/questionaire";
 import SubmissionRouter from "./routes/submission";
 import UserRouter from "./routes/user";
+import AuthRouter from "./routes/auth";
 import { connectDB } from "./config/db";
 import { CronJob } from "cron";
 import { rankingCalculation } from "./tasks/rankingCalculation";
+import { SupabaseService } from "./utils/supabase";
 dotenv.config({ path: "../.env"});
 
 // Database
 connectDB();
+SupabaseService.initClient();
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
@@ -31,7 +34,10 @@ app.use("/api/seasons", SeasonRouter);
 app.use('/api/question', QuestionaireRouter);
 app.use('/api/submission', SubmissionRouter);
 app.use('/api/user', UserRouter);
+app.use('/api/auth', AuthRouter);
 
+// the check is needed for testing
+// refer to https://stackoverflow.com/a/63299022
 if (process.env.NODE_ENV !== 'test') {
     app.listen(port, () => {
         console.log(`[server]: Server is running at http://localhost:${port}`);

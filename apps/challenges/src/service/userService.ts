@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 import UserRepo from '../repo/userRepo';
+import { z } from 'zod';
+import { isValidEmail } from '../utils/validator';
 
 const getUserByID = async (id: string) => {
     if (!mongoose.isValidObjectId(id)) {
@@ -7,6 +9,14 @@ const getUserByID = async (id: string) => {
     }
     const _id = new mongoose.Types.ObjectId(id);
     const user = await UserRepo.getUserByID(_id);
+    return user;
+}
+
+const getUserByEmail = async (email: string) => {
+    const _email = isValidEmail.parse(email);
+
+    const user = await UserRepo.getUserByEmail(_email);
+
     return user;
 }
 
@@ -20,7 +30,8 @@ const createUser = async (
 
 const UserService = {
     getUserByID,
-    createUser
+    getUserByEmail,
+    createUser,
 }
 
 export { UserService as default };

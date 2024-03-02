@@ -9,6 +9,13 @@ const getUserByID = async (id: mongoose.Types.ObjectId) => {
     return user;
 }
 
+const getUserByEmail = async (email: string) => {
+    const user = await User.findOne({
+        email: email
+    });
+    return user;
+}
+
 const createUser = async (
     name: string,
     email: string,
@@ -23,7 +30,8 @@ const createUser = async (
 
 const UserRepo = {
     getUserByID,
-    createUser
+    getUserByEmail,
+    createUser,
 }
 
 export { UserRepo as default };
