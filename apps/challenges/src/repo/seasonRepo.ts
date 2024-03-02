@@ -5,8 +5,9 @@ import { UserRanking } from "../model/rankingScore";
 import Submission from "../model/submission";
 import { rankingsMap } from "../tasks/rankingCalculation";
 import { paginateArray } from "../utils/pagination";
+import Question, { QuestionModel } from "../model/question";
 
-const getSeasonsByDate = async(
+const getSeasonsByDate = async (
     startDate: Date | null,
     endDate: Date | null,
 ): Promise<SeasonModel[] | null> => {
@@ -41,7 +42,32 @@ const createSeason = async (
     return season;
 }
 
-const calculateSeasonRankings = async(
+/*
+const chatgptCalculateSeasonRankings = async (
+    seasonID: mongoose.Types.ObjectId,
+) => {
+    const submissions = await Submission.find({
+        seasonID: seasonID
+    });
+    const rankings = submissions.reduce((acc, submission) => {
+        const user = submission.user;
+        if (!acc[user.toString()]) {
+            acc[user.toString()] = {
+                points: 0,
+                user: user.toString()
+            }
+        }
+        acc[user.toString()].points += submission.points_awarded;
+        return acc;
+    }, {} as { [key: string]: UserRanking });
+    const rankingsArray = Object.values(rankings);
+    rankingsArray.sort((a, b) => b.points - a.points);
+    rankingsMap[seasonID.toString()] = rankingsArray;
+    return rankingsArray;
+}
+*/
+
+const calculateSeasonRankings = async (
     seasonID: mongoose.Types.ObjectId,
 ) => {
     const rankings = await Submission.aggregate([
@@ -52,7 +78,19 @@ const calculateSeasonRankings = async(
         },
         {
             $group: {
-                _id: "$user",
+                _id: {
+                    "user": "$user",
+                    "question": "$question",
+                },
+                points_awarded: { $max: "$points_awarded" }
+            }
+        },
+        { $match: { points_awarded: { $exists: true, $ne: null } } },
+        {
+            $group: {
+                _id: {
+                    "user": "$_id.user",
+                },
                 points: { $sum: "$points_awarded" }
             }
         },
@@ -64,7 +102,7 @@ const calculateSeasonRankings = async(
         {
             $lookup: {
                 from: "users",
-                localField: "_id",
+                localField: "_id.user",
                 foreignField: "_id",
                 as: "user"
             }
@@ -83,6 +121,7 @@ const calculateSeasonRankings = async(
             }
         }
     ]);
+    console.log(rankings)
     return rankings;
 }
 
@@ -97,12 +136,25 @@ const getSeasonRankingsByPagination = async (
     seasonID: mongoose.Types.ObjectId,
     page: number,
     limit: number,
-): Promise<{ rankings: UserRanking[], rankingsCount: number}> => {
+): Promise<{ rankings: UserRanking[], rankingsCount: number }> => {
     const rankings = rankingsMap[seasonID.toString()];
-    if(!rankings){
-        return { rankings: [] , rankingsCount: 0 };
+    if (!rankings) {
+        return { rankings: [], rankingsCount: 0 };
     }
     return { rankings: paginateArray(rankings, limit, page), rankingsCount: rankings.length };
+}
+
+const getSeasonQuestions = async (
+    seasonID: mongoose.Types.ObjectId,
+): Promise<QuestionModel[] | null> => {
+    const questions = await Question.aggregate([
+        {
+            $match: {
+                seasonID: seasonID
+            }
+        },
+    ]);
+    return questions;
 }
 
 const SeasonRepo = {
@@ -111,7 +163,8 @@ const SeasonRepo = {
     createSeason,
     getSeasonRankings,
     getSeasonRankingsByPagination,
-    calculateSeasonRankings
+    calculateSeasonRankings,
+    getSeasonQuestions
 }
 
 export { SeasonRepo as default }

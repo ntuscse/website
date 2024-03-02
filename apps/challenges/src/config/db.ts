@@ -3,7 +3,7 @@ import * as dotenv from "dotenv";
 import { ConnectionOptions } from "tls";
 dotenv.config();
 
-const connectDB = async () => {
+export const connectDB = async () => {
     try {
         const mongoURL = process.env.MONGO_URI || 'mongodb://localhost:27017';
         const conn = await moongose.connect(mongoURL, { 
@@ -17,4 +17,16 @@ const connectDB = async () => {
     }
 }
 
-export { connectDB as default };
+export const connectTestDB = async () => {
+    try {
+        const mongoURL = process.env.MONGO_URI || 'mongodb://localhost:27017';
+        const conn = await moongose.connect(mongoURL, {
+            useNewUrlParser: true,
+            dbName: process.env.MONGO_TEST_DATABSE_NAME || 'test',
+        } as ConnectionOptions);
+        console.log(`MongoDB Connected: ${mongoURL}`);
+    } catch (error) {
+        console.log(error);
+        process.exit(1)
+    }
+}

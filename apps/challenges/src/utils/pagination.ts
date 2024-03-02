@@ -1,10 +1,11 @@
 import { z } from 'zod';
 import { isNonNegativeInteger, isPositiveInteger } from './validator';
 
-export const generatePaginationMetaData = (baseUrl: string, pageIndex: number, limit: number, maxPageIndex: number) => {
+export const generatePaginationMetaData = (baseUrl: string, pageIndex: number, limit: number, maxPageIndex: number, itemCount: number) => {
     isPositiveInteger.parse(limit);
     isNonNegativeInteger.parse(pageIndex);
     isNonNegativeInteger.parse(maxPageIndex);
+    isNonNegativeInteger.parse(itemCount);
 
     let self = `${baseUrl}?page=${pageIndex}&limit=${limit}`
     let first = `${baseUrl}?page=0&limit=${limit}`
@@ -32,9 +33,9 @@ export const generatePaginationMetaData = (baseUrl: string, pageIndex: number, l
     }
 
     let metaData = {
-        itemCount: (maxPageIndex + 1) * limit,
+        itemCount: itemCount,
         limit: limit,
-        pageCount: maxPageIndex + 1,
+        pageCount: Math.ceil(itemCount / limit),
         page: pageIndex,
         links: links
     }

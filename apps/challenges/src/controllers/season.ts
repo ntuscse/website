@@ -33,6 +33,7 @@ const getSeasons = asyncHandler(async (req: Request, res: Response) => {
 
     try {
         const seasons = await SeasonService.getSeasonsByDate(_startDate, _endDate);
+
         res.status(200).json({
             seasons: seasons,
         });
@@ -105,42 +106,6 @@ const createSeason = asyncHandler(async (req: Request, res: Response) => {
     }
 });
 
-/*
-const getUserSeasonRanking = asyncHandler(async (req: Request, res: Response) => {
-    const { seasonID, userID } = req.params;
-
-    if (!isValidObjectId(seasonID) || !isValidObjectId(userID)) {
-        res.status(400).json({ message: 'Invalid request' });
-        return;
-    }
-    try {
-        const ranking = await SeasonService.getUserSeasonRanking(seasonID, userID);
-        res.status(200).json({
-            ranking: ranking
-        });
-    } catch (error) {
-        const err = error as Error;
-        res.status(500).json({ message: err.message });
-    }
-});
-
-const getUserAllSeasonRankings = asyncHandler(async (req: Request, res: Response) => {
-    const { userID } = req.params;
-
-    if (!isValidObjectId(userID)) {
-        res.status(400).json({ message: 'Invalid request' });
-        return;
-    }
-    try {
-        const rankings = await SeasonService.getUserAllSeasonRankings(userID);
-        res.status(200).json(rankings);
-    } catch (error) {
-        const err = error as Error;
-        res.status(500).json({ message: err.message });
-    }
-});
-*/
-
 // @desc    Get season rankings
 // @route   GET /api/seasons/:seasonID/rankings
 // @access  Public
@@ -181,8 +146,11 @@ const getSeasonRankings = asyncHandler(async (req: Request, res: Response) => {
 
     try{
         const { rankings, rankingsCount } = await SeasonService.getSeasonRankingsByPagination(seasonID, page!, limit!);
+        
         isNonNegativeInteger.parse(rankingsCount);
-        const metaData = generatePaginationMetaData(`/api/seasons/${seasonID}/rankings`, page!, limit!, Math.ceil(rankingsCount / limit) - 1);
+        const maxPageIndex = rankingsCount == 0 ? 0 : Math.ceil(rankingsCount / limit) - 1
+        
+        const metaData = generatePaginationMetaData(`/api/seasons/${seasonID}/rankings`, page!, limit!, maxPageIndex, rankingsCount);
         res.setHeader("access-control-expose-headers", "pagination");
         res.setHeader("pagination", JSON.stringify(metaData));
         res.status(200).json({
@@ -195,14 +163,35 @@ const getSeasonRankings = asyncHandler(async (req: Request, res: Response) => {
     }
 });
 
+const getSeasonQuestions = asyncHandler(async (req: Request, res: Response) => {
+    try {
+        const seasonID = zodIsValidObjectId.parse(req.params.seasonID);
+        
+        const season = await SeasonService.getSeasonByID(seasonID);
+        if (!season) {
+            res.status(404).json({ message: 'Season not found' });
+            return;
+        }
+
+        const questions = await SeasonService.getSeasonQuestions(seasonID);
+        
+        res.status(200).json(questions);
+    } catch (err) {
+        if (err instanceof z.ZodError) {
+            res.status(400).json({ message: 'Invalid request' });
+        } else {
+            res.status(500).json({ message: 'Internal Server Error' });
+        }
+    }
+});
+
 const SeasonController = {
     getSeasons,
     getActiveSeasons,
     getSeasonByID,
     createSeason,
     getSeasonRankings,
-    // getUserSeasonRanking,
-    // getUserAllSeasonRankings,
+    getSeasonQuestions,
 };
 
 export { SeasonController as default };
