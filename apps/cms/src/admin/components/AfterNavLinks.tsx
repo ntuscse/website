@@ -19,6 +19,11 @@ const merchRoutes = [
     label: "Products",
     href: "/admin/merch/products",
   },
+  {
+    id: "merch_promotions",
+    label: "Promotions",
+    href: "/admin/merch/promotions",
+  },
 ];
 
 const MerchLinks: React.FC = () => {
