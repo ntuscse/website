@@ -98,6 +98,10 @@ const MerchPromotion: AdminView = ({ user, canAccessAdmin }) => {
     console.log(`Dummy. Promotion ID: ${promotionID}`);
   };
 
+  const handleCreatePromotion = () => {
+    console.log("Creating a new promotion...");
+  };
+
   console.log(tableCols);
 
   return (
@@ -108,9 +112,22 @@ const MerchPromotion: AdminView = ({ user, canAccessAdmin }) => {
       keywords=""
       title="Merchandise Promotion"
     >
-      <Button el="link" to={"/admin"} buttonStyle="primary">
-        Go to Main Admin View
-      </Button>
+      <div style={{ position: "relative" }}>
+        <Button el="link" to={"/admin"} buttonStyle="primary">
+          Go to Main Admin View
+        </Button>
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            right: 0,
+          }}
+        >
+          <Button onClick={handleCreatePromotion} buttonStyle="primary">
+            Create Promotion
+          </Button>
+        </div>
+      </div>
 
       <Table data={data} columns={tableCols} />
     </ViewTemplate>
