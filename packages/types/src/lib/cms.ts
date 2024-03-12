@@ -5,16 +5,6 @@
  * and re-run `payload generate:types` to regenerate this file.
  */
 
-export type OrderItem = {
-  image?: string | Media;
-  quantity: number;
-  size: string;
-  price: number;
-  name: string;
-  colorway: string;
-  id?: string;
-}[];
-
 export interface Config {
   collections: {
     categories: Category;
@@ -100,12 +90,20 @@ export interface User {
 }
 export interface Order {
   id: string;
-  paymentGateway: string;
-  status: 'pending' | 'paid' | 'delivered';
-  customerEmail: string;
-  transactionID: string;
-  orderDateTime: string;
-  orderItems?: OrderItem;
+  items: {
+    id: string;
+    name: string;
+    image: string;
+    color: string;
+    size: string;
+    price: number;
+    quantity: number;
+  }[];
+  transaction_id: string;
+  transaction_time: string;
+  payment_method: string;
+  customer_email: string;
+  status: '1' | '2' | '3';
   updatedAt: string;
   createdAt: string;
 }

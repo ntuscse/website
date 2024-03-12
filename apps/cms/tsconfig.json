@@ -12,8 +12,9 @@
     "jsx": "react",
     "allowSyntheticDefaultImports": true,
     "paths": {
+      // Ensure this matches the path to your typescript outputFile
       "payload/generated-types": [
-        "../../packages/types/lib/cms.ts" // Ensure this matches the path to your typescript outputFile
+        "../../packages/types/src/index.ts"
       ]
     }
   },
