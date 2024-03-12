@@ -19,7 +19,6 @@ import {
   EmptyProductView,
   MerchCarousel,
   MerchDetailSkeleton,
-  Page,
   SizeChartDialog,
   SizeOption,
 } from "ui/components/merch";
