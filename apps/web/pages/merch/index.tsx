@@ -6,6 +6,7 @@ import { QueryKeys } from "features/merch/constants";
 import { api } from "features/merch/services/api";
 import { Product } from "types";
 import { isOutOfStock } from "features/merch/functions";
+import { MerchLayout } from "@/features/layout/components";
 
 const MerchandiseList = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
@@ -15,15 +16,6 @@ const MerchandiseList = () => {
     () => api.getProducts(),
     {}
   );
-
-  const { data: status, isLoading: isStatusLoading } = useQuery(
-    [QueryKeys.STATUS],
-    () => api.getMerchSaleStatus(),
-    {}
-  );
-
-  const displayText = status?.displayText;
-  const disabled = status?.disabled;
 
   const categories = products?.map((product: Product) => product?.category);
   const uniqueCategories = categories
@@ -36,86 +28,70 @@ const MerchandiseList = () => {
     setSelectedCategory(event.target.value);
   };
 
-  if (isStatusLoading) {
-    return (
-      <Page>
-        <MerchListSkeleton />
-      </Page>
-    );
-  }
-
   return (
-    <Page>
-      {disabled ? (
-        <Flex justifyContent="center" alignItems="center" height="85vh">
-          <Heading textAlign="center" maxWidth="1260px">
-            {displayText}
+    <MerchLayout>
+      <Page>
+        <Flex justifyContent="space-between" alignItems="center">
+          <Heading
+            fontSize={["md", "2xl"]}
+            textColor={["primary.600", "black"]}
+          >
+            New Drop
           </Heading>
+          <Select
+            bgColor={["white", "gray.100"]}
+            w="fit-content"
+            textAlign="center"
+            alignSelf="center"
+            placeholder="All Product Type"
+            size="sm"
+            disabled={isProductsLoading}
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+          >
+            {uniqueCategories?.map((category, idx) => (
+              <option key={idx.toString()} value={category}>
+                {category}
+              </option>
+            ))}
+          </Select>
         </Flex>
-      ) : (
-        <>
-          <Flex justifyContent="space-between" alignItems="center">
-            <Heading
-              fontSize={["md", "2xl"]}
-              textColor={["primary.600", "black"]}
-            >
-              New Drop
-            </Heading>
-            <Select
-              bgColor={["white", "gray.100"]}
-              w="fit-content"
-              textAlign="center"
-              alignSelf="center"
-              placeholder="All Product Type"
-              size="sm"
-              disabled={isProductsLoading}
-              value={selectedCategory}
-              onChange={handleCategoryChange}
-            >
-              {uniqueCategories?.map((category, idx) => (
-                <option key={idx.toString()} value={category}>
-                  {category}
-                </option>
+        <Divider borderColor="blackAlpha.500" mt={[5, 10]} />
+        {isProductsLoading ? (
+          <MerchListSkeleton />
+        ) : (
+          <Grid
+            templateColumns={{
+              base: "repeat(2, 1fr)",
+              md: "repeat(3, 1fr)",
+              lg: "repeat(4, 1fr)",
+            }}
+            columnGap={4}
+            rowGap={2}
+          >
+            {products
+              ?.filter((product: Product) => {
+                if (!product?.is_available) return false;
+                if (selectedCategory === "") return true;
+                return product?.category === selectedCategory;
+              })
+              ?.map((item: Product, idx: number) => (
+                <Card
+                  _productId={item.id}
+                  key={idx.toString()}
+                  text={item?.name}
+                  price={item?.price}
+                  imgSrc={item?.images?.[0]}
+                  sizeRange={`${item?.sizes?.[0]} - ${
+                    item.sizes?.[item.sizes.length - 1]
+                  }`}
+                  isOutOfStock={isOutOfStock(item)}
+                />
               ))}
-            </Select>
-          </Flex>
-          <Divider borderColor="blackAlpha.500" mt={[5, 10]} />
-          {isProductsLoading ? (
-            <MerchListSkeleton />
-          ) : (
-            <Grid
-              templateColumns={{
-                base: "repeat(2, 1fr)",
-                md: "repeat(3, 1fr)",
-                lg: "repeat(4, 1fr)",
-              }}
-              columnGap={4}
-              rowGap={2}
-            >
-              {products
-                ?.filter((product: Product) => {
-                  if (!product?.is_available) return false;
-                  if (selectedCategory === "") return true;
-                  return product?.category === selectedCategory;
-                })
-                ?.map((item: Product, idx: number) => (
-                  <Card
-                    _productId={item.id}
-                    key={idx.toString()}
-                    text={item?.name}
-                    price={item?.price}
-                    imgSrc={item?.images?.[0]}
-                    sizeRange={`${item?.sizes?.[0]} - ${
-                      item.sizes?.[item.sizes.length - 1]
-                    }`}
-                    isOutOfStock={isOutOfStock(item)}
-                  />
-                ))}
-            </Grid>
-          )}
-        </>
-      )}
-    </Page>
+          </Grid>
+        )}
+      </Page>
+    </MerchLayout>
   );
 };
 

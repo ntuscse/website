@@ -1,20 +1,31 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import { Image, Badge, Button, Divider, Flex, Heading, Text, useBreakpointValue } from "@chakra-ui/react";
+import {
+  Image,
+  Badge,
+  Button,
+  Divider,
+  Flex,
+  Heading,
+  Text,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import {  Page } from "ui/components/merch";
+import { Page } from "ui/components/merch";
 import { Order, OrderStatus } from "types";
 import { api } from "features/merch/services/api";
 import { routes } from "features/merch/constants/routes";
 import { QueryKeys } from "features/merch/constants/queryKeys";
 import { displayPrice } from "features/merch/functions/currency";
-import Link from "next/link"
+import Link from "next/link";
 import LoadingScreen from "ui/components/merch/skeleton/LoadingScreen";
 import { getOrderStatusColor, renderOrderStatus } from "merch-helpers";
 import OrderItem from "ui/components/merch/OrderItem";
+import { MerchLayout } from "@/features/layout/components";
 const OrderSummary: React.FC = () => {
-// Check if break point hit. KIV
-  const isMobile: boolean = useBreakpointValue({ base: true, md: false }) || false;
+  // Check if break point hit. KIV
+  const isMobile: boolean =
+    useBreakpointValue({ base: true, md: false }) || false;
   const router = useRouter();
   const orderSlug = router.query.slug as string | undefined;
 
@@ -66,20 +77,25 @@ const OrderSummary: React.FC = () => {
         flexDir="column"
       >
         <div>
-          <Flex display= { { base: "flex", md: "none" } } justifyContent="space-between">
+          <Flex
+            display={{ base: "flex", md: "none" }}
+            justifyContent="space-between"
+          >
             <Flex flexDir="column" w="100%">
               <Badge
                 width="fit-content"
                 fontSize="sm"
                 mb={2}
-                color={getOrderStatusColor(orderState?.status ?? OrderStatus.PENDING_PAYMENT)}
+                color={getOrderStatusColor(
+                  orderState?.status ?? OrderStatus.PENDING_PAYMENT
+                )}
               >
-                {renderOrderStatus(orderState?.status ?? OrderStatus.PENDING_PAYMENT)}
+                {renderOrderStatus(
+                  orderState?.status ?? OrderStatus.PENDING_PAYMENT
+                )}
               </Badge>
               <Heading size="md">Order Number</Heading>
-              <Heading size="lg">
-                {orderState?.id.split("-")[0]}
-              </Heading>
+              <Heading size="lg">{orderState?.id.split("-")[0]}</Heading>
               <Flex alignItems="center" mb={2}>
                 <Text fontSize="sm">{orderState?.id}</Text>
               </Flex>
@@ -87,8 +103,8 @@ const OrderSummary: React.FC = () => {
                 Order date:{" "}
                 {orderState?.transaction_time
                   ? new Date(`${orderState.transaction_time}`).toLocaleString(
-                    "en-sg"
-                  )
+                      "en-sg"
+                    )
                   : ""}
               </Text>
               {/*<Text>Last update: {orderState?.lastUpdate}</Text>*/}
@@ -96,16 +112,23 @@ const OrderSummary: React.FC = () => {
           </Flex>
         </div>
         <div>
-          <Flex display= { { base: "none", md: "flex" } } justifyContent="space-between">
+          <Flex
+            display={{ base: "none", md: "flex" }}
+            justifyContent="space-between"
+          >
             <Flex flexDir="column">
               <Flex alignItems="center" gap={6}>
                 <Heading size="md">Order Number</Heading>
                 <Badge
                   width="fit-content"
                   fontSize="sm"
-                  color={getOrderStatusColor(orderState?.status ?? OrderStatus.PENDING_PAYMENT)}
+                  color={getOrderStatusColor(
+                    orderState?.status ?? OrderStatus.PENDING_PAYMENT
+                  )}
                 >
-                  {renderOrderStatus(orderState?.status ?? OrderStatus.PENDING_PAYMENT)}
+                  {renderOrderStatus(
+                    orderState?.status ?? OrderStatus.PENDING_PAYMENT
+                  )}
                 </Badge>
               </Flex>
               <Heading size="lg" mb={2}>
@@ -120,8 +143,8 @@ const OrderSummary: React.FC = () => {
                 Order date:{" "}
                 {orderState?.transaction_time
                   ? new Date(`${orderState.transaction_time}`).toLocaleString(
-                    "en-sg"
-                  )
+                      "en-sg"
+                    )
                   : ""}
               </Text>
               {/*<Text>Last update: {orderState?.lastUpdate}</Text>*/}
@@ -133,8 +156,11 @@ const OrderSummary: React.FC = () => {
         {/*  <OrderItem data={item} isMobile={isMobile} />*/}
         {/*))}*/}
 
-        {orderState? <OrderItem  isMobile={isMobile} orderData={orderState}/>: <Text>Order Not Found</Text>}
-
+        {orderState ? (
+          <OrderItem isMobile={isMobile} orderData={orderState} />
+        ) : (
+          <Text>Order Not Found</Text>
+        )}
 
         <Flex alignItems="end" flexDirection="row" gap={1} mt={4}>
           <Flex flexDir="column" flex={1} textAlign="end" fontWeight={500}>
@@ -144,12 +170,11 @@ const OrderSummary: React.FC = () => {
           </Flex>
           <Flex flexDir="column" textAlign="end">
             <Text fontSize="md"> {displayPrice(total)}</Text>
-            <Text fontSize="md"> 
+            <Text fontSize="md">
               {/*{displayPrice( TODO*/}
               {/*  (orderState?.billing?.subtotal ?? 0) -*/}
               {/*  (orderState?.billing?.total ?? 0)*/}
-              {/*)}*/}
-              0
+              {/*)}*/}0
             </Text>
             <Text fontSize="md">{displayPrice(total)}</Text>
           </Flex>
@@ -169,7 +194,10 @@ const OrderSummary: React.FC = () => {
         <Image
           src={
             orderState
-              ? `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${ process.env.NEXT_PUBLIC_FRONTEND_URL ?? "http://localhost:3001"}/merch/orders/${orderState?.id}`
+              ? `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${
+                  process.env.NEXT_PUBLIC_FRONTEND_URL ??
+                  "http://localhost:3001"
+                }/merch/orders/${orderState?.id}`
               : ""
           }
           alt="QRCode"
@@ -178,8 +206,8 @@ const OrderSummary: React.FC = () => {
           sizes="(max-width: 768px)"
         />
         <Text fontWeight="bold">
-          Please screenshot this QR code and show it at SCSE Lounge to collect your order.
-          Alternatively, show the email receipt you have received.
+          Please screenshot this QR code and show it at SCSE Lounge to collect
+          your order. Alternatively, show the email receipt you have received.
         </Text>
         <Text>
           For any assistance, please contact our email address:
@@ -191,9 +219,15 @@ const OrderSummary: React.FC = () => {
   const renderSummaryPage = () => {
     if (isLoading) return <LoadingScreen text="Fetching order detail" />;
     //rmb to change this v
-    if (orderState === undefined || orderState === null){return <LoadingScreen text="Order Does Not Exist" />;}
+    if (orderState === undefined || orderState === null) {
+      return <LoadingScreen text="Order Does Not Exist" />;
+    }
     return renderOrderSummary();
   };
-  return <Page>{renderSummaryPage()}</Page>;
-}
-export default OrderSummary
+  return (
+    <MerchLayout>
+      <Page>{renderSummaryPage()}</Page>
+    </MerchLayout>
+  );
+};
+export default OrderSummary;

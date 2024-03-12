@@ -33,7 +33,9 @@ import { QueryKeys, routes } from "features/merch/constants";
 import {
   displayPrice,
   displayQtyInCart,
-  displayStock, getDefaultColor, getDefaultSize,
+  displayStock,
+  getDefaultColor,
+  getDefaultSize,
   getQtyInCart,
   getQtyInStock,
   isColorAvailable,
@@ -43,6 +45,7 @@ import {
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/features/merch/services/api";
+import { MerchLayout } from "@/features/layout/components";
 
 interface GroupTitleProps {
   children: React.ReactNode;
@@ -54,7 +57,9 @@ const GroupTitle = ({ children }: GroupTitleProps) => (
   </Heading>
 );
 
-const MerchDetail = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
+const MerchDetail = (
+  _props: InferGetStaticPropsType<typeof getStaticProps>
+) => {
   // Context hook.
   const { state: cartState, dispatch: cartDispatch } = useCartStore();
   const router = useRouter();
@@ -412,7 +417,7 @@ const MerchDetail = (_props: InferGetStaticPropsType<typeof getStaticProps>) => 
     return renderMerchDetails();
   };
 
-  return <Page>{renderMerchPage()}</Page>;
+  return <MerchLayout>{renderMerchPage()}</MerchLayout>;
 };
 
 export default MerchDetail;
@@ -423,6 +428,17 @@ export const getStaticProps: GetStaticProps<{
 }> = async ({ params }) => {
   console.log("generating static props for /merch/product/[slug]");
   console.log("params", JSON.stringify(params));
+
+  // Had to call this twice
+  const { disabled: merchDisabled } = await api.getMerchSaleStatus();
+  if (merchDisabled) {
+    return {
+      redirect: {
+        destination: "/merch",
+        permanent: false,
+      },
+    };
+  }
 
   // TODO: replace this with trpc/react-query call
   if (!process.env.NEXT_PUBLIC_MERCH_API_ORIGIN) {
@@ -450,6 +466,14 @@ export const getStaticProps: GetStaticProps<{
 // eslint-disable-next-line @typescript-eslint/require-await
 export const getStaticPaths: GetStaticPaths = async () => {
   console.log("generating static paths for /merch/product/[slug]");
+
+  const { disabled: merchDisabled } = await api.getMerchSaleStatus();
+  if (merchDisabled) {
+    return {
+      paths: [],
+      fallback: "blocking",
+    };
+  }
 
   // TODO: replace this with trpc/react-query call
   if (!process.env.NEXT_PUBLIC_MERCH_API_ORIGIN) {
