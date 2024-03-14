@@ -4,7 +4,7 @@ export interface GeneralResp {
     data?: any;
 }
 
-class StatusCodeError extends Error {
+export class StatusCodeError extends Error {
     status: number;
     constructor(status: number, message: string) {
         super(message);
@@ -16,5 +16,3 @@ export interface OauthcallbackResp {
     accessToken: string;
     refreshToken: string;
 }
-
-export default { StatusCodeError }

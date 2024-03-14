@@ -9,11 +9,12 @@ export interface GetSeasonResp {
     questions: QuestionModel[];
 }
 
+// TODO: season should store simple question model for faster retrieval
 export interface SeasonModel {
     _id: mongoose.Types.ObjectId;
-    title: string; 
-    startDate: Date; 
-    endDate: Date; 
+    title: string;
+    startDate: Date;
+    endDate: Date;
     createdAt: Date;
     updatedAt: Date;
 }

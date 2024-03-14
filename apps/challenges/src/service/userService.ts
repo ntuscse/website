@@ -1,14 +1,31 @@
 import mongoose from 'mongoose';
 import UserRepo from '../repo/userRepo';
 import { z } from 'zod';
-import { isValidEmail } from '../utils/validator';
+import { isValidEmail, zodIsValidObjectId } from '../utils/validator';
+import { StatusCodeError } from '../types/types';
+import { UserModel } from '../model/user';
 
 const getUserByID = async (id: string) => {
-    if (!mongoose.isValidObjectId(id)) {
-        throw new Error('Invalid user ID');
+    let _id: string
+    let user: UserModel | null
+    try {
+        _id = zodIsValidObjectId.parse(id);
+    } catch (err) {
+        throw new StatusCodeError(400, "Invalid id");
     }
-    const _id = new mongoose.Types.ObjectId(id);
-    const user = await UserRepo.getUserByID(_id);
+    
+    const mongoUserID = new mongoose.Types.ObjectId(_id);
+
+    try {
+        user = await UserRepo.getUserByID(mongoUserID);    
+    } catch (err) {
+        throw new StatusCodeError(500, "Internal Server Error")
+    }
+    
+    if (!user) {
+        throw new StatusCodeError(404, "User not found")
+    }
+
     return user;
 }
 

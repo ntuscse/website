@@ -9,6 +9,7 @@ import { connectDB } from "./config/db";
 import { CronJob } from "cron";
 import { rankingCalculation } from "./tasks/rankingCalculation";
 import { SupabaseService } from "./utils/supabase";
+import cookieParser from "cookie-parser";
 dotenv.config({ path: "../.env"});
 
 // Database
@@ -17,7 +18,7 @@ SupabaseService.initClient();
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
-
+const cookieSecret = process.env.COOKIE_SECRET || "";
 // Middleware
 app.use(express.json());
 app.use(function(req, res, next) {
@@ -26,6 +27,8 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "*");
     next();
   });
+app.use(cookieParser(cookieSecret));
+
 // Routes
 app.get("/ping", (req: Request, res: Response) => {
     res.status(200).json({ message: "pong" });

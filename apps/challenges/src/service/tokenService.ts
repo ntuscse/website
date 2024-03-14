@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
-
-const minuteInSeconds = 60;
+import { accessTokenMaxAgeSeconds, refreshCookieMaxAgeSeconds } from "../model/constants";
 
 const generateAccessToken = async (
     id: string,
@@ -8,7 +7,7 @@ const generateAccessToken = async (
 ) => {
     const secret = process.env.JWT_SECRET || "";
     const token = jwt.sign({ id, email }, secret, {
-        expiresIn: 10 * minuteInSeconds
+        expiresIn: accessTokenMaxAgeSeconds
     });
     return token;
 }
@@ -19,7 +18,7 @@ const generateRefreshToken = async (
 ) => {
     const secret = process.env.JWT_SECRET || "";
     const token = jwt.sign({ id, email }, secret, {
-        expiresIn: "7d"
+        expiresIn: refreshCookieMaxAgeSeconds
     });
     return token;
 }
