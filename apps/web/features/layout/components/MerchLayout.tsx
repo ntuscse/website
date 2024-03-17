@@ -20,11 +20,7 @@ export const MerchLayout = ({ children }: MerchLayoutProps) => {
   const disabled = status?.disabled;
 
   if (isStatusLoading) {
-    return (
-      <Page>
-        <MerchListSkeleton />
-      </Page>
-    );
+    return <Page>{<MerchListSkeleton /> ?? <></>}</Page>;
   }
 
   return (
