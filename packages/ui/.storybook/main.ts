@@ -1,10 +1,10 @@
-import {StorybookConfig} from "@storybook/nextjs";
+import { StorybookConfig } from "@storybook/nextjs";
 
 const config: StorybookConfig = {
   stories: [
-    "../components/**/*.stories.mdx",
+    "../components/**/*.mdx",
     "../components/**/*.stories.@(js|jsx|ts|tsx)",
-    "../stories/**/*.stories.mdx",
+    "../stories/**/*.mdx",
     "../stories/**/*.stories.@(js|jsx|ts|tsx)"
   ],
   addons: [
@@ -12,7 +12,8 @@ const config: StorybookConfig = {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
-    "@storybook/addon-mdx-gfm"],
+    "@storybook/addon-mdx-gfm",
+  ],
   framework: {
     name: "@storybook/nextjs",
     options: {
@@ -21,9 +22,6 @@ const config: StorybookConfig = {
   },
   features: {
     // emotionAlias: false
-  },
-  typescript: {
-    reactDocgen: "react-docgen"
   },
   staticDirs: ["../assets"],
   docs: {

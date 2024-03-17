@@ -21,11 +21,10 @@
     "winston": "^3.8.2"
   },
   "devDependencies": {
+    "@types/morgan": "^1.9.4",
     "eslint": "^7.32.0",
     "eslint-config-custom": "*",
     "tsconfig": "*",
-    "typescript": "^4.5.2",
-    "@types/morgan": "^1.9.4",
-    "@types/winston": "^2.4.4"
+    "typescript": "^4.5.2"
   }
 }
