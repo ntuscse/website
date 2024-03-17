@@ -91,7 +91,7 @@ export interface PromoInfo {
   name: string;
   discount_percentage: string;
   category: string;
-};
+}
 
 export type PricedCart = {
   promoCode?: string;
