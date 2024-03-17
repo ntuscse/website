@@ -3,8 +3,7 @@ import { Button } from "payload/components/elements";
 import { AdminView } from "payload/config";
 import ViewTemplate from "./ViewTemplate";
 import { Column } from "payload/dist/admin/components/elements/Table/types";
-import { Promotion } from "../../@types/Promotion";
-import { IPromotion } from "../../@types/IPromotion";
+import { PromoInfo } from "types";
 import PromotionsApi from "../../apis/promotions.api";
 import { RenderCellFactory } from "../utils/RenderCellFactory";
 import SortedColumn from "../utils/SortedColumn";
@@ -12,10 +11,10 @@ import { Table } from "payload/dist/admin/components/elements/Table";
 
 const MerchPromotion: AdminView = ({ user, canAccessAdmin }) => {
   // Get data from API
-  const [data, setData] = useState<IPromotion[]>(null);
+  const [data, setData] = useState<PromoInfo[]>(null);
   useEffect(() => {
     PromotionsApi.getPromotions()
-      .then((res: IPromotion[]) => setData(res))
+      .then((res: PromoInfo[]) => setData(res))
       .catch((error) => console.log(error));
   }, []);
 
@@ -34,7 +33,9 @@ const MerchPromotion: AdminView = ({ user, canAccessAdmin }) => {
   }
 
   const tableCols = new Array<Column>();
-  for (const key of Object.keys(new Promotion())) {
+  const samplePromo = data[0];
+  const keys = Object.keys(samplePromo);
+  for (const key of keys) {
     const renderCellComponent = RenderCellFactory.get(data[0], key);
     const renderCell: React.FC<{ children?: React.ReactNode }> =
       renderCellComponent instanceof Promise
@@ -118,9 +119,7 @@ const MerchPromotion: AdminView = ({ user, canAccessAdmin }) => {
         </Button>
         <div
           style={{
-            position: "absolute",
-            top: 0,
-            right: 0,
+            position: "relative",
           }}
         >
           <Button onClick={handleCreatePromotion} buttonStyle="primary">

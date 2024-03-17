@@ -85,6 +85,14 @@ export interface Promotion {
   }>;
 }
 
+export interface PromoInfo {
+  
+  promotion_id: string;
+  name: string;
+  discount_percentage: string;
+  category: string;
+};
+
 export type PricedCart = {
   promoCode?: string;
   subtotal: number;

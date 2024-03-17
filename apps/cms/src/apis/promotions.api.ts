@@ -1,11 +1,10 @@
-import { IPromotion } from "../@types/IPromotion";
-
+import { PromoInfo } from "types";
 // todo turn into real api
 class OrdersApi {
   // eslint-disable-next-line @typescript-eslint/require-await
-  async getPromotions(): Promise<IPromotion[]> {
-    const res: IPromotion[] = [];
-    const item1: IPromotion = {
+  async getPromotions(): Promise<PromoInfo[]> {
+    const res: PromoInfo[] = [];
+    const item1: PromoInfo = {
       promotion_id: "1",
       name: "March Sales",
       discount_percentage: "10%",
@@ -13,7 +12,7 @@ class OrdersApi {
     };
     res.push(item1);
 
-    const item2: IPromotion = {
+    const item2: PromoInfo = {
       promotion_id: "2",
       name: "Summer Sales",
       discount_percentage: "10%",
