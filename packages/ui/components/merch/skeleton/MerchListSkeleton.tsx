@@ -8,15 +8,12 @@ export const MerchListSkeleton: React.FC = () => {
       columnGap={4}
       rowGap={2}
     >
-      {new Array(8)
-        .fill(null)
-        .map((_, i: number) => (
-          <GridItem role="group" cursor="pointer" mt={4} key={i}>
-            <Skeleton h={{ base: 250 }} width="100%" />
-            <SkeletonText mt={4} noOfLines={2} spacing="4" />
-          </GridItem>
-        ))
-        .filter(Boolean)}
+      {Array.from({ length: 8 }, (_, i) => (
+        <GridItem role="group" cursor="pointer" mt={4} key={i}>
+          <Skeleton h={{ base: 250 }} width="100%" />
+          <SkeletonText mt={4} noOfLines={2} spacing="4" />
+        </GridItem>
+      ))}
     </Grid>
   );
 };
