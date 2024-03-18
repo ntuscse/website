@@ -28,7 +28,7 @@ const CheckoutSkeleton: React.FC = () => {
           <Skeleton width="50%" height={6} />
           <Skeleton width="65%" height={8} mt={2} mb={4} />
           <ItemSkeleton />
-          <ItemSkeleton />
+          <ItemSkeleton /> as JSX.Element
           <ItemSkeleton />
         </Box>
       </GridItem>
