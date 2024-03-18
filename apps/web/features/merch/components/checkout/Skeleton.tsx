@@ -8,7 +8,7 @@ import {
   Flex,
 } from "@chakra-ui/react";
 
-const ItemSkeleton: React.FC = (): JSX.Element => {
+const ItemSkeleton: React.FC = (): React.ReactElement => {
   return (
     <Flex mt={4} alignItems="center" gap={2}>
       <Skeleton h={10} w={10} />
