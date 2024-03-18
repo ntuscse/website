@@ -27,7 +27,7 @@ const CheckoutSkeleton: React.FC = () => {
         <Box borderWidth={1} borderRadius="lg" p={[4, 6]} boxShadow="md">
           <Skeleton width="50%" height={6} />
           <Skeleton width="65%" height={8} mt={2} mb={4} />
-          <ItemSkeleton />
+          <ItemSkeleton /> as JSX.Element
           <ItemSkeleton /> as JSX.Element
           <ItemSkeleton />
         </Box>
