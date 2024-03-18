@@ -32,7 +32,7 @@ export type CartAction =
   | { type: CartActionType.UPDATE_NAME; payload: string }
   | { type: CartActionType.UPDATE_BILLING_EMAIL; payload: string };
 
-const CartContext = React.createContext<ContextType>(null);
+const CartContext = React.createContext<ContextType | null>(null);
 
 const initState: CartState = {
   cart: {
