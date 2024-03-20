@@ -1,1 +1,2 @@
-export { WebLayout } from './WebLayout';
+export { WebLayout } from "./WebLayout";
+export { MerchLayout } from "./MerchLayout";
