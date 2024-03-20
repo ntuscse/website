@@ -14,6 +14,7 @@ import AfterNavLinks from "./admin/components/AfterNavLinks";
 import MerchSales from "./admin/views/MerchSales";
 import MerchOverview from "./admin/views/MerchOverview";
 import MerchProducts from "./admin/views/MerchProducts";
+import MerchPromotion from "./admin/views/MerchPromotion";
 import { SCSEIcon, SCSELogo } from "./admin/graphics/Logos";
 import BeforeNavLinks from "./admin/components/BeforeNavLinks";
 import Order from "./collections/Orders";
@@ -51,6 +52,10 @@ export default buildConfig({
           path: "/merch/products",
           Component: MerchProducts,
         },
+        {
+          path: "/merch/promotions",
+          Component: MerchPromotion,
+        },
       ],
       beforeNavLinks: BeforeNavLinks,
       afterNavLinks: AfterNavLinks,
@@ -78,13 +83,13 @@ export default buildConfig({
   },
   plugins: isUsingCloudStore()
     ? [
-      cloudStorage({
-        collections: {
-          media: {
-            adapter: adapter,
+        cloudStorage({
+          collections: {
+            media: {
+              adapter: adapter,
+            },
           },
-        },
-      }),
-    ]
+        }),
+      ]
     : [],
 });

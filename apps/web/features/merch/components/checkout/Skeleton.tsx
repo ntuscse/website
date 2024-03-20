@@ -16,6 +16,7 @@ const ItemSkeleton: React.FC = () => {
     </Flex>
   );
 };
+
 const CheckoutSkeleton: React.FC = () => {
   return (
     <Grid
