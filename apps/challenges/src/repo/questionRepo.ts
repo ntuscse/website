@@ -1,5 +1,6 @@
 import Question, { CreateQuestionReq, QuestionModel } from "../model/question"
 import mongoose from 'mongoose';
+import QuestionInput, { QuestionInputModel } from "../model/questionInput";
 
 const getQuestionByID = async (
     questionID: mongoose.Types.ObjectId,
@@ -55,7 +56,7 @@ const updateQuestionSubmissions = async (
         _id: questionID
     }, {
         $push: { submissions: submissionID },
-        $inc: { 
+        $inc: {
             submissions_count: 1,
             correct_submissions_count: isCorrect ? 1 : 0
         }
@@ -63,11 +64,25 @@ const updateQuestionSubmissions = async (
     return question;
 }
 
+const getQuestionInput = async (
+    userID: mongoose.Types.ObjectId,
+    seasonID: mongoose.Types.ObjectId,
+    questionID: mongoose.Types.ObjectId,
+): Promise<QuestionInputModel | null> => {
+    const question = await QuestionInput.findOne({
+        userID: userID,
+        seasonID: seasonID,
+        questionID: questionID,
+    });
+    return question;
+}
+
 const QuestionRepo = {
     getQuestionByID,
     createQuestionByReq,
     updateQuestionByID,
-    updateQuestionSubmissions
+    updateQuestionSubmissions,
+    getQuestionInput
 }
 
 export { QuestionRepo as default }

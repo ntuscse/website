@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { accessTokenMaxAgeSeconds, refreshCookieMaxAgeSeconds } from "../model/constants";
+import { isValidObjectId } from "../utils/db";
 
 const generateAccessToken = async (
     id: string,
@@ -18,10 +19,11 @@ const generateRefreshToken = async (
 ) => {
     const secret = process.env.JWT_SECRET || "";
     const token = jwt.sign({ id, email }, secret, {
-        expiresIn: refreshCookieMaxAgeSeconds
+        expiresIn: refreshCookieMaxAgeSeconds,
     });
     return token;
 }
+
 
 const TokenService = {
     generateAccessToken,

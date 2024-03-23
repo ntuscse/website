@@ -13,8 +13,8 @@ const getRefreshToken = async (userID: mongoose.Types.ObjectId): Promise<TokenMo
 const saveRefreshToken = async (
     token: TokenModel
 ): Promise<TokenModel | null> => {
-    const dbToken = await Token.create(token);
-    await dbToken.save();
+    const dbToken = new Token(token);
+    dbToken.save();
     return dbToken;
 }
 

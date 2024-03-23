@@ -15,6 +15,12 @@ export const zodIsValidObjectId = z.string().refine(
     { message: 'Invalid ObjectId' }
 );
 
+// Helper zod function to validate ObjectId
+export const zodGetValidObjectId = z.string().refine(
+    (val) => mongoose.Types.ObjectId.isValid(val),
+    { message: 'Invalid ObjectId' }
+).transform((val) => new mongoose.Types.ObjectId(val));
+
 export const zodIsValidRFC3339 = z.string().refine(
     (val) =>  new Date(val).toISOString() === val,
     { message: 'Invalid RFC3339 date' }
@@ -37,6 +43,7 @@ export const isValidCreateQuestionRequest = z.object({
     expiry: zodIsValidRFC3339,
     points: z.number().int(),
     validation_function: z.string(),
+    generate_input_function: z.string(),
 });
 
 export const isPositiveInteger = z.number().int().min(1);

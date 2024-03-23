@@ -36,18 +36,59 @@ const validateAnswer = async (
         throw new Error('Validation function not found');
     }
 
-    try{
+    try {
         const isCorrect = invokeFunction(submission);
         return isCorrect;
-    }catch (e) {
+    } catch (e) {
         console.log(`validationService validateAnswer fail to validate answer: ${e}`)
         return false;
+    }
+}
+
+const generateOneTwo = (): string[] => {
+    return ["1", "2", "1, 2"];
+}
+
+// DO NOT EXPOSE this map. Add new validation function by directly adding to the map
+const generateInputFunctionMap: Map<string, Function> = new Map<string, Function>([
+    ['generateOneTwo', generateOneTwo],
+]);
+
+const getGenerateInputFunction = (functionName: string) => {
+    if (generateInputFunctionMap.has(functionName)) {
+        return generateInputFunctionMap.get(functionName);
+    }
+    return null;
+}
+
+const generateInput = async (
+    questionID: string,
+): Promise<string[]> => {
+    const question = await QuestionService.getQuestionByID(questionID);
+    if (!question) {
+        throw new Error('Question not found');
+    }
+
+    //check if validation function exists as keys
+    const invokeFunction = getGenerateInputFunction(question.validation_function);
+    if (!invokeFunction) {
+        throw new Error('Validation function not found');
+    }
+
+    try {
+        const input = invokeFunction();
+        return input;
+    } catch (e) {
+        console.log(`validationService validateAnswer fail to validate answer: ${e}`)
+        throw new Error('fail to generate input');
     }
 }
 
 const ValidationService = {
     validateAnswer,
     getValidationFunction,
+    generateInput,
+    getGenerateInputFunction,
 }
 
 export { ValidationService as default }

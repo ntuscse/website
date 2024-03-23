@@ -21,6 +21,8 @@ const tokenSchema: Schema<TokenModel> = new Schema({
         ref: 'User',
         required: [true, 'Please add a user ID']
     },
+}, {
+    timestamps: true
 })
 
 const Token = mongoose.model<TokenModel>('Token', tokenSchema);

@@ -9,15 +9,17 @@ export interface CreateQuestionReq {
     expiry: Date;
     points: number;
     validation_function: string;
+    generate_input_function: string;
 }
 
-export interface GetUserQuestionResp {
+export interface GetUserSpecificQuestionResp {
     id: string;
     question_no: string;
     question_title: string;
     question_desc: string;
     question_date: Date;
     seasonID: string;
+    question_input: string[];
     expiry: Date;
     points: number;
 }
@@ -35,7 +37,8 @@ export interface QuestionModel {
     submissions_count: number;
     correct_submissions_count: number;
     active: boolean;
-    validation_function : string;
+    validation_function: string;
+    generate_input_function: string;
 }
 
 const questionSchema: Schema<QuestionModel> = new Schema({
@@ -87,6 +90,10 @@ const questionSchema: Schema<QuestionModel> = new Schema({
     validation_function: {
         type: String,
         required: [true, 'Please add a validation function']
+    },
+    generate_input_function: {
+        type: String,
+        required: [true, 'Please add a generate input function']
     }
 }, {
     timestamps: true
