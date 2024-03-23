@@ -3,6 +3,6 @@ const router = express.Router();
 import SubmissionController from "../controllers/submission";
 
 router.route('/').get(SubmissionController.getSubmissions).post(SubmissionController.setSubmission);
-router.route('/:id').get(SubmissionController.getSubmission).delete(SubmissionController.deleteSubmission).put(SubmissionController.updateSubmission);
+router.route('/:id').get(SubmissionController.getSubmission);
 
 export { router as default };

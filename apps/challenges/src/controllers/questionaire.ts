@@ -1,9 +1,12 @@
 import { Request, Response } from "express";
 const asyncHandler = require('express-async-handler');
-import Question from '../model/question';
+import Question, { CreateQuestionReq } from '../model/question';
 import Submission from '../model/submission';
 import Season from "../model/season";
 import { isValidObjectId } from "../utils/db";
+import QuestionService from "../service/questionService";
+import { isValidCreateQuestionRequest } from "../utils/validator";
+import { z } from "zod";
 
 // @desc    Get questions
 // @route   GET /api/question
@@ -35,7 +38,7 @@ const getQuestion = asyncHandler(async (req: Request, res: Response) => {
     }
 
     try {
-        const question = await Question.findById(questionId);
+        const question = await QuestionService.getQuestionByID(questionId);
 
         if (!question) {
             return res.status(404).json({ message: 'Question not found' });
@@ -54,21 +57,20 @@ const getQuestion = asyncHandler(async (req: Request, res: Response) => {
 // @access  Private
 const setQuestion = asyncHandler(async (req: Request, res: Response) => {
     try {
-        const question = await Question.create({
-            question_no: req.body.question_no,
-            question_title: req.body.question_title,
-            question_desc: req.body.question_desc,
-            question_date: req.body.question_date,
-            seasonID: req.body.season_id,
-            expiry: req.body.expiry,
-            points: req.body.points,
-            answer: req.body.answer,
-        });
+        const question = isValidCreateQuestionRequest.parse(req.body);
 
-        res.status(201).json(question);
-    } catch (error) {
-        if ((error as Error).name === 'ValidationError') {
-            return res.status(400).json({ message: (error as Error).message });
+        const createQuestionReq: CreateQuestionReq = {
+            ...question,
+            question_date: new Date(question.question_date),
+            expiry: new Date(question.expiry),
+        }
+
+        const resp = await QuestionService.createQuestion(createQuestionReq);
+
+        res.status(resp.status).json(resp);
+    } catch (err) {
+        if (err instanceof z.ZodError) {
+            return res.status(400).json({ message: (err as Error).message });
         }
 
         res.status(500).json({ message: 'Internal Server Error' });

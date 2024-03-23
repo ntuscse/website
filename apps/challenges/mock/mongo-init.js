@@ -3,3 +3,4 @@ db.createCollection("rankings");
 db.createCollection("questions");
 db.createCollection("submissions");
 db.createCollection("users");
+db.createCollection("tokens");
