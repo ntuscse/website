@@ -11,21 +11,36 @@ import {
 } from "@chakra-ui/react";
 import styles from "./index.module.css";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { string } from "zod";
 
 type UserData = {
   uuid: number;
   userId: string;
 };
 
-const currentUserData: UserData = {
-  uuid: 2001,
-  userId: "Eren Yeager",
-};
-
 type SeasonData = {
   uuid: number;
   seasonName: string;
   seasonDescription: string;
+};
+
+interface Season {
+  _id: string;
+  title: string;
+  startDate: Date;
+  endDate: Date;
+}
+
+interface SeasonApiResponse {
+  seasons: Season[];
+}
+
+/////// dummy data
+
+const currentUserData: UserData = {
+  uuid: 2001,
+  userId: "Eren Yeager",
 };
 
 const seasonData: SeasonData[] = [
@@ -43,10 +58,19 @@ const seasonData: SeasonData[] = [
   },
 ];
 
+///////////////
+
+function parseDate(stringDate: String) {
+  const date = stringDate.slice(0, 10);
+  const time = stringDate.slice(11, 19);
+  return date + "  " + time;
+}
+
 const Challenges = () => {
   const router = useRouter();
+  const [seasons, setSeasons] = useState<Season[]>([]);
 
-  // TODO: jump to the selected season
+  // jump to the selected season
   const handleJoinClick = (seasonName: string) => {
     console.log(seasonName);
     router.push({
@@ -54,6 +78,28 @@ const Challenges = () => {
       query: { season: seasonName },
     });
   };
+
+  useEffect(() => {
+    fetch("http://localhost:3000/api/seasons/")
+      .then((res: Response) => {
+        return res.json();
+      })
+      .then((res: SeasonApiResponse) => {
+        console.log("API Response:", res);
+
+        if (res.seasons && Array.isArray(res.seasons)) {
+          let seasons: Season[] = res.seasons;
+          setSeasons(seasons);
+        } else {
+          console.error(
+            "Invalid API response format: 'seasons' property not found or not an array."
+          );
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching seasons:", error);
+      });
+  }, []);
 
   return (
     <Flex minH="100vh" pt={24} flexDirection="column" alignItems="center">
@@ -69,34 +115,41 @@ const Challenges = () => {
         </Text>
       </Box>
       <Box flexDirection="column" mb={10}>
-        {seasonData.map((season) => (
-          <Box
-            key={season.uuid}
-            mt={10}
-            flexDirection="row"
-            justifyContent="space-between"
-          >
-            <Card>
-              <CardBody>
-                <Stack>
-                  <Heading>{season.seasonName}</Heading>
-                  <Text>{season.seasonDescription}</Text>
-                </Stack>
-                <Divider my={3} />
-                <Flex justifyContent="flex-end">
-                  <Button
-                    variant="outline"
-                    colorScheme="blue"
-                    size="sm"
-                    onClick={() => handleJoinClick(season.seasonName)}
-                  >
-                    Join
-                  </Button>
-                </Flex>
-              </CardBody>
-            </Card>
-          </Box>
-        ))}
+        {seasons ? (
+          seasons.map((season) => (
+            <Box
+              key={String(season._id)}
+              mt={10}
+              flexDirection="row"
+              justifyContent="space-between"
+            >
+              <Card>
+                <CardBody>
+                  <Stack>
+                    <Heading>{season.title}</Heading>
+                    <Text>
+                      Start Date: {parseDate(String(season.startDate))}
+                    </Text>
+                    <Text>End Date: {parseDate(String(season.endDate))}</Text>
+                  </Stack>
+                  <Divider my={3} />
+                  <Flex justifyContent="flex-end">
+                    <Button
+                      variant="outline"
+                      colorScheme="blue"
+                      size="sm"
+                      onClick={() => handleJoinClick(season.title)}
+                    >
+                      Join
+                    </Button>
+                  </Flex>
+                </CardBody>
+              </Card>
+            </Box>
+          ))
+        ) : (
+          <Text>No season found</Text>
+        )}
       </Box>
     </Flex>
   );
