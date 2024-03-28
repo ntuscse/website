@@ -19,6 +19,9 @@ import { SCSEIcon, SCSELogo } from "./admin/graphics/Logos";
 import BeforeNavLinks from "./admin/components/BeforeNavLinks";
 import Order from "./collections/Orders";
 import { isUsingCloudStore } from "./utilities/cloud";
+import NavbarView from "./admin/views/NavbarView";
+
+import '../tailwind.css'
 
 const adapter = createS3Adapter({
   config: {
@@ -34,6 +37,21 @@ const adapter = createS3Adapter({
 export default buildConfig({
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL,
   admin: {
+    webpack: (config) => {
+      return {
+        ...config,
+        module: {
+          ...config.module,
+          rules: [
+            ...config.module.rules,
+            {
+              test: /\tailwind.css$/i,
+              use: ['css-loader', 'postcss-loader'],
+            }
+          ]
+        }
+      }
+    },
     components: {
       graphics: {
         Logo: SCSELogo,
@@ -52,6 +70,10 @@ export default buildConfig({
           path: "/merch/products",
           Component: MerchProducts,
         },
+        {
+          path: "/navbars",
+          Component: NavbarView,
+        }
       ],
       beforeNavLinks: BeforeNavLinks,
       afterNavLinks: AfterNavLinks,

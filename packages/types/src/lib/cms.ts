@@ -23,6 +23,7 @@ export interface Config {
     users: User;
     media: Media;
     orders: Order;
+    navbars: Navbar;
   };
   globals: {};
 }
@@ -108,4 +109,24 @@ export interface Order {
   orderItems?: OrderItem;
   updatedAt: string;
   createdAt: string;
+}
+export interface Navbar {
+  id: string;
+  logo?: string | Media;
+  NavItems?: {
+    label?: string;
+    description?: string;
+    url?: string;
+    subnavItems?: {
+      subnavTitle?: string;
+      url?: string;
+      id?: string;
+    }[];
+    id?: string;
+  }[];
+  status?: 'draft' | 'published';
+  slug?: string;
+  updatedAt: string;
+  createdAt: string;
+  _status?: 'draft' | 'published';
 }
