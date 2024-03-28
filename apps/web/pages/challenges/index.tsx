@@ -12,6 +12,7 @@ import {
 import styles from "./index.module.css";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { string } from "zod";
 
 type UserData = {
   uuid: number;
@@ -27,8 +28,8 @@ type SeasonData = {
 interface Season {
   _id: string;
   title: string;
-  start_date: Date;
-  end_date: Date;
+  startDate: Date;
+  endDate: Date;
 }
 
 interface SeasonApiResponse {
@@ -58,6 +59,12 @@ const seasonData: SeasonData[] = [
 ];
 
 ///////////////
+
+function parseDate(stringDate: String) {
+  const date = stringDate.slice(0, 10);
+  const time = stringDate.slice(11, 19);
+  return date + "  " + time;
+}
 
 const Challenges = () => {
   const router = useRouter();
@@ -120,8 +127,10 @@ const Challenges = () => {
                 <CardBody>
                   <Stack>
                     <Heading>{season.title}</Heading>
-                    <Text>Start Date: {String(season.start_date)}</Text>
-                    <Text>End Date: {new Date(season.end_date).getDate()}</Text>
+                    <Text>
+                      Start Date: {parseDate(String(season.startDate))}
+                    </Text>
+                    <Text>End Date: {parseDate(String(season.endDate))}</Text>
                   </Stack>
                   <Divider my={3} />
                   <Flex justifyContent="flex-end">
