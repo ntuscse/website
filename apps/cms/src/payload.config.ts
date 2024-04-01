@@ -57,6 +57,18 @@ export default buildConfig({
     },
     user: Users.slug,
     css: path.resolve(__dirname, "admin", "styles.scss"),
+    webpack: (config) => {
+      // Workaround for PayloadCMS issue: https://github.com/payloadcms/payload/issues/4215
+      // PayloadCMS imports Node libraries which does not resolve correctly.
+      // TODO: Check if this is still necessary after upgrading to Payload 2.
+      config.resolve.fallback = {
+        "crypto": false,
+        "fs": false,
+        "os": false,
+        "querystring": require.resolve("querystring-es3"),
+      }
+      return config
+    },
   },
   collections: [Categories, Posts, Tags, Users, Media, Order],
   csrf: [

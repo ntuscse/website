@@ -1,7 +1,6 @@
-import React from "react";
 import { Grid, Skeleton, SkeletonText, GridItem } from "@chakra-ui/react";
 
-export const MerchListSkeleton: React.FC = () => {
+export const MerchListSkeleton: () => JSX.Element = () => {
   return (
     <Grid
       templateColumns={{ base: "repeat(2, 1fr)", lg: "repeat(4, 1fr)" }}
