@@ -1,14 +1,13 @@
-import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { type Meta, type StoryFn } from "@storybook/react";
 import { Hero } from "./Hero";
 
 export default {
   title: "Components/Hero",
   component: Hero,
   argTypes: {},
-} as ComponentMeta<typeof Hero>;
+} as Meta<typeof Hero>;
 
-const Template: ComponentStory<typeof Hero> = (args) => <Hero {...args} />;
+const Template: StoryFn<typeof Hero> = (args) => <Hero {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
@@ -20,13 +19,13 @@ Default.args = {
     {
       label: "LEARN MORE",
       href: "/learn",
-      buttonType: "primary.blue",
+      variant: "primary-blue",
       size: "lg",
     },
     {
       label: "CONTACT US",
       href: "/contact",
-      buttonType: "primary.black",
+      variant: "primary-black",
       size: "lg",
     },
   ],

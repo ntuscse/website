@@ -1,14 +1,13 @@
-import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { type Meta, type StoryFn } from "@storybook/react";
 import { Faq } from "./Faq";
 
 export default {
   title: "Components/Faq",
   component: Faq,
   argTypes: {},
-} as ComponentMeta<typeof Faq>;
+} as Meta<typeof Faq>;
 
-const Template: ComponentStory<typeof Faq> = (args) => <Faq {...args} />;
+const Template: StoryFn<typeof Faq> = (args) => <Faq {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {

@@ -1,5 +1,4 @@
-import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { type Meta, type StoryFn } from "@storybook/react";
 
 import { ButtonLink } from "./ButtonLink";
 
@@ -8,9 +7,9 @@ export default {
   component: ButtonLink,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},
-} as ComponentMeta<typeof ButtonLink>;
+} as Meta<typeof ButtonLink>;
 
-const Template: ComponentStory<typeof ButtonLink> = (args) => <ButtonLink {...args} />;
+const Template: StoryFn<typeof ButtonLink> = (args) => <ButtonLink {...args} />;
 
 export const PrimaryBlue = Template.bind({});
 PrimaryBlue.args = {

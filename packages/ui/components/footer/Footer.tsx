@@ -1,7 +1,6 @@
 import { Flex, VStack, Box, Text, Stack, Link, Icon } from "@chakra-ui/react";
 import { FooterLinkGroup, FooterLinkGroupProps } from "./FooterLink";
 import { Image, VercelPowered, VercelPoweredProps } from "ui";
-import React from "react";
 import { LogoProps } from "../navbar/Logo";
 
 export interface FooterProps {

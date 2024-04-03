@@ -1,5 +1,4 @@
-import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { type Meta, type StoryFn } from "@storybook/react";
 
 import { Footer } from "./Footer";
 import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
@@ -8,9 +7,9 @@ export default {
   title: "Components/Footer",
   component: Footer,
   argTypes: {},
-} as ComponentMeta<typeof Footer>;
+} as Meta<typeof Footer>;
 
-const Template: ComponentStory<typeof Footer> = (args) => <Footer {...args} />;
+const Template: StoryFn<typeof Footer> = (args) => <Footer {...args} />;
 
 export const Basic = Template.bind({});
 Basic.args = {
