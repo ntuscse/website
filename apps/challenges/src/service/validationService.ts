@@ -70,7 +70,7 @@ const generateInput = async (
     }
 
     //check if validation function exists as keys
-    const invokeFunction = getGenerateInputFunction(question.validation_function);
+    const invokeFunction = getGenerateInputFunction(question.generate_input_function);
     if (!invokeFunction) {
         throw new Error('Validation function not found');
     }

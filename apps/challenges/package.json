@@ -38,7 +38,7 @@
     "typescript": "^5.3.3"
   },
   "scripts": {
-    "start": "nodemon src/index.ts",
+    "dev": "nodemon src/index.ts",
     "test": "cross-env NODE_ENV=test jest --testTimeout=5000 --forceExit --maxWorkers=1",
     "setup": "docker-compose -f ./docker-compose-local.yaml up -d"
   }

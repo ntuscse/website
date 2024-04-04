@@ -5,7 +5,7 @@ import TokenRepo from "../repo/tokenRepo";
 import { refreshCookieMaxAgeSeconds, secondInMilliseconds } from "../model/constants";
 
 const jwtRefreshMiddleware = (req: Request, res: Response, next: NextFunction) => {
-    const token = req.signedCookies.refreshToken; 
+    const token = req.headers.authorization;
 
     if (token == null) {
         return res.sendStatus(401);

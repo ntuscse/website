@@ -7,5 +7,6 @@ const router = Express.Router();
 router.post("/refresh", jwtRefreshMiddleware, AuthController.refreshToken);
 
 router.post("/oauth/signin", AuthController.oauthSignIn);
+router.post("/signin", AuthController.signIn);
 
 export { router as default };

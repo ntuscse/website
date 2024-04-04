@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
-const asyncHandler = require('express-async-handler');
+import asyncHandler from "express-async-handler";
 import Question, { CreateQuestionReq } from '../model/question';
-import Submission from '../model/submission';
-import Season from "../model/season";
 import { isValidObjectId } from "../utils/db";
 import QuestionService from "../service/questionService";
 import { isValidCreateQuestionRequest } from "../utils/validator";
@@ -22,7 +20,7 @@ const getQuestions = asyncHandler(async (req: Request, res: Response) => {
 // @route   GET /api/activity/active
 // @access  Public
 const getActiveQuestions = asyncHandler(async (req: Request, res: Response) => {
-    const questions = await Question.find({"active": true })
+    const questions = await Question.find({ "active": true })
 
     res.status(200).json(questions)
 })
@@ -34,14 +32,16 @@ const getQuestion = asyncHandler(async (req: Request, res: Response) => {
     const questionId = req.params.id;
 
     if (!isValidObjectId(questionId)) {
-        return res.status(400).json({ message: 'Invalid question ID' });
+        res.status(400).json({ message: 'Invalid question ID' });
+        return;
     }
 
     try {
         const question = await QuestionService.getQuestionByID(questionId);
 
         if (!question) {
-            return res.status(404).json({ message: 'Question not found' });
+            res.status(404).json({ message: 'Question not found' });
+            return;
         }
 
         res.status(200).json(question);
@@ -50,6 +50,25 @@ const getQuestion = asyncHandler(async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 });
+
+const getUserSpecificQuestion = asyncHandler(async (req: Request, res: Response) => {
+    const { userID } = req.params;
+    const questionId = req.params.id;
+
+    try {
+        const question = await QuestionService.getUserSpecificQuestion(userID, questionId);
+
+        if (!question) {
+            res.status(404).json({ message: 'Question not found' });
+            return;
+        }
+
+        res.status(200).json(question);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+})
 
 
 // @desc    Set question
@@ -69,8 +88,11 @@ const setQuestion = asyncHandler(async (req: Request, res: Response) => {
 
         res.status(resp.status).json(resp);
     } catch (err) {
+        console.error(err);
         if (err instanceof z.ZodError) {
-            return res.status(400).json({ message: (err as Error).message });
+            const message = err.issues.map((issue) => issue.message).join(", ");
+            res.status(400).json({ message });
+            return;
         }
 
         res.status(500).json({ message: 'Internal Server Error' });
@@ -83,13 +105,15 @@ const setQuestion = asyncHandler(async (req: Request, res: Response) => {
 const updateQuestion = asyncHandler(async (req: Request, res: Response) => {
     const questionId = req.params.id;
     if (!isValidObjectId(questionId)) {
-        return res.status(400).json({ message: 'Invalid question ID' });
+        res.status(400).json({ message: 'Invalid question ID' });
+        return;
     }
     try {
         const question = await Question.findById(questionId);
 
         if (!question) {
-            return res.status(404).json({ message: 'Question not found' });
+            res.status(404).json({ message: 'Question not found' });
+            return;
         }
 
         const updatedQuestion = await Question.findByIdAndUpdate(questionId, req.body, { new: true });
@@ -108,19 +132,21 @@ const deleteQuestion = asyncHandler(async (req: Request, res: Response) => {
     const questionId = req.params.id;
 
     if (!isValidObjectId(questionId)) {
-        return res.status(400).json({ message: 'Invalid question ID' });
+        res.status(400).json({ message: 'Invalid question ID' });
+        return;
     }
 
     try {
         const question = await Question.findById(questionId);
 
         if (!question) {
-            return res.status(404).json({ message: 'Question not found' });
+            res.status(404).json({ message: 'Question not found' });
+            return;
         }
 
         await question.remove()
 
-        res.status(200).json({message: 'Question deleted'});
+        res.status(200).json({ message: 'Question deleted' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error' });
@@ -129,6 +155,7 @@ const deleteQuestion = asyncHandler(async (req: Request, res: Response) => {
 
 const QuestionController = {
     getQuestion,
+    getUserSpecificQuestion,
     getQuestions,
     getActiveQuestions,
     setQuestion,
