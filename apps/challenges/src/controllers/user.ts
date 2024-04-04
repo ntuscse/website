@@ -15,7 +15,6 @@ const getUser = asyncHandler(async (req: Request, res: Response) => {
         } else {
             res.status(500).json({ message: "Internal Server Error" })
         }
-
     }
 });
 

@@ -3,6 +3,7 @@ import QuestionRepo from '../repo/questionRepo';
 import { CreateQuestionReq, GetUserSpecificQuestionResp } from '../model/question';
 import ValidationService from './validationService';
 import { GeneralResp, StatusCodeError } from '../types/types';
+import { QuestionInputModel } from '../model/questionInput';
 
 const getQuestionByID = async (
     questionID: string,
@@ -58,12 +59,30 @@ const updateQuestionSubmissions = async (
     return await QuestionRepo.updateQuestionSubmissions(_questionID, _submissionID, isCorrect);
 }
 
-const getUserSpecificQuestion = async (
+const saveQuestionInput = async (
     userID: string,
     seasonID: string,
     questionID: string,
+    input: string[]
+) => {
+    const _userID = new mongoose.Types.ObjectId(userID);
+    const _seasonID = new mongoose.Types.ObjectId(seasonID);
+    const _questionID = new mongoose.Types.ObjectId(questionID);
+
+    const questionInput = {
+        userID: _userID,
+        seasonID: _seasonID,
+        questionID: _questionID,
+        input: input,
+    } as QuestionInputModel
+    return await QuestionRepo.saveQuestionInput(questionInput);
+}
+
+const getUserSpecificQuestion = async (
+    userID: string,
+    questionID: string,
 ): Promise<GetUserSpecificQuestionResp | null> => {
-    if (!mongoose.isValidObjectId(userID) || !mongoose.isValidObjectId(seasonID) || !mongoose.isValidObjectId(questionID)) {
+    if (!mongoose.isValidObjectId(userID) || !mongoose.isValidObjectId(questionID)) {
         throw new Error('Invalid user, question or season ID');
     }
 
@@ -72,6 +91,7 @@ const getUserSpecificQuestion = async (
         throw new StatusCodeError(404, 'Question not found');
     }
 
+    const seasonID = question.seasonID.toString();
     const _userID = new mongoose.Types.ObjectId(userID);
     const _seasonID = new mongoose.Types.ObjectId(seasonID);
     const _questionID = new mongoose.Types.ObjectId(questionID);
@@ -80,13 +100,18 @@ const getUserSpecificQuestion = async (
     let input = questionInput?.input
     if (!input) {
         input = await ValidationService.generateInput(questionID)
+        await saveQuestionInput(userID, seasonID, questionID, input);
     }
     const resp: GetUserSpecificQuestionResp = {
-        ...question,
-        ...questionInput,
         id: question._id.toString(),
+        question_no: question.question_no,
+        question_title: question.question_title,
+        question_desc: question.question_desc,
+        question_date: question.question_date,
         seasonID: questionInput!.seasonID.toString(),
-        question_input: input
+        question_input: input,
+        expiry: question.expiry,
+        points: question.points
     }
     return resp
 }

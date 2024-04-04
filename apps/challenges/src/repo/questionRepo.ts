@@ -27,7 +27,8 @@ const createQuestionByReq = async (
         submissions_count: 0,
         correct_submissions_count: 0,
         active: true,
-        validation_function: req.validation_function
+        validation_function: req.validation_function,
+        generate_input_function: req.generate_input_function,
     }
 
     const question = await Question.create(questionModel);
@@ -77,12 +78,21 @@ const getQuestionInput = async (
     return question;
 }
 
+const saveQuestionInput = async (
+    questionInput: QuestionInputModel
+): Promise<QuestionInputModel | null> => {
+    const dbQuestionInput = new QuestionInput(questionInput);
+    dbQuestionInput.save();
+    return dbQuestionInput;
+}
+
 const QuestionRepo = {
     getQuestionByID,
     createQuestionByReq,
     updateQuestionByID,
     updateQuestionSubmissions,
-    getQuestionInput
+    getQuestionInput,
+    saveQuestionInput,
 }
 
 export { QuestionRepo as default }
