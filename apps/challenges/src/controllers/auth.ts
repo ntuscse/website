@@ -3,26 +3,6 @@ import { Request, Response } from "express";
 import AuthService from "../service/authService";
 import TokenService from "../service/tokenService";
 
-// TODO: remove this when deployed, only for local use now
-const signIn = asyncHandler(async (req: Request, res: Response) => {
-    const url = process.env.BASE_URL || null;
-    if (!url?.includes("localhost")) {
-        res.status(404);
-        return;
-    }
-    try {
-        const accessToken = await TokenService.generateAccessToken("65d0479b3f6a9f5986e68ce3", "test@gmail.com");
-        const refreshToken = await TokenService.generateRefreshToken("65d0479b3f6a9f5986e68ce3", "test@gmail.com");
-        res.status(200).json({
-            "access_token": accessToken,
-            "refresh_token": refreshToken
-        })
-    } catch (error) {
-        console.log("AuthService.oauthSignIn", error);
-        res.status(500).json({ message: 'Internal Server Error' });
-    }
-});
-
 const oauthSignIn = asyncHandler(async (req: Request, res: Response) => {
     const { access_token } = req.body;
 
@@ -50,7 +30,6 @@ const refreshToken = asyncHandler(async (req: Request, res: Response) => {
 })
 
 const AuthController = {
-    signIn,
     oauthSignIn,
     refreshToken,
 }
