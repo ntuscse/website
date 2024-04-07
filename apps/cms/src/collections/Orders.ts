@@ -16,9 +16,77 @@ const Orders: CollectionConfig = {
   },
   fields: [
     // by default, payload generates an 'id' field each order automatically
+    // order items
     {
-      name: "paymentGateway",
+      name: "items",
+      type: "array",
+      fields: [
+        // by default, payload generates an 'id' field each order automatically
+        {
+          name: "name",
+          type: "text",
+          required: true,
+        },
+        {
+          name: "image",
+          type: "text",
+        },
+        {
+          name: "color",
+          type: "text",
+          required: true,
+        },
+        {
+          name: "size",
+          type: "text",
+          required: true,
+        },
+        {
+          name: "price",
+          type: "number",
+          required: true,
+        },
+        {
+          name: "quantity",
+          type: "number",
+          required: true,
+        },
+      ],
+      // direct paylaod to generate a OrderItem type
+      interfaceName: "OrderItem",
+      // validate: orders should not be empty
+      minRows: 1,
+    },
+    {
+      name: "transaction_id",
+      label: "Transaction ID",
+      admin: {
+        description: "Transaction ID provided by Payment Gateway",
+      },
       type: "text",
+      required: true,
+    },
+    {
+      name: "transaction_time",
+      label: "Transaction Time",
+      type: "date",
+      admin: {
+        date: {
+          pickerAppearance: "dayAndTime",
+        },
+      },
+      required: true,
+    },
+    {
+      name: "payment_method",
+      label: "Payment Method",
+      type: "text",
+      required: true,
+    },
+    {
+      name: "customerEmail",
+      label: "Customer Email",
+      type: "email",
       required: true,
     },
     {
@@ -40,76 +108,6 @@ const Orders: CollectionConfig = {
         },
       ],
       required: true,
-    },
-    {
-      name: "customerEmail",
-      type: "email",
-      required: true,
-    },
-    {
-      name: "transactionID",
-      label: "Transaction ID",
-      admin: {
-        description: "Transaction ID provided by Payment Gateway",
-      },
-      type: "text",
-      required: true,
-    },
-    {
-      name: "orderDateTime",
-      label: "Ordered On",
-      type: "date",
-      admin: {
-        date: {
-          pickerAppearance: "dayAndTime",
-        },
-      },
-      required: true,
-    },
-    // ordered items for this order
-    {
-      name: "orderItems",
-      type: "array",
-      fields: [
-        {
-          name: "image",
-          type: "upload",
-          relationTo: Media.slug,
-          // validation: only allow image filetypes
-          filterOptions: {
-            mimeType: { contains: "image" },
-          },
-        },
-        {
-          name: "quantity",
-          type: "number",
-          required: true,
-        },
-        {
-          name: "size",
-          type: "text",
-          required: true,
-        },
-        {
-          name: "price",
-          type: "number",
-          required: true,
-        },
-        {
-          name: "name",
-          type: "text",
-          required: true,
-        },
-        {
-          name: "colorway",
-          type: "text",
-          required: true,
-        },
-      ],
-      // direct paylaod to generate a OrderItem type
-      interfaceName: "OrderItem",
-      // validate: orders should not be empty
-      minRows: 1,
     },
   ],
 };

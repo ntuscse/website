@@ -7,12 +7,12 @@
  */
 
 export type OrderItem = {
-  image?: string | Media;
-  quantity: number;
+  name: string;
+  image?: string;
+  color: string;
   size: string;
   price: number;
-  name: string;
-  colorway: string;
+  quantity: number;
   id?: string;
 }[];
 
@@ -101,12 +101,12 @@ export interface User {
 }
 export interface Order {
   id: string;
-  paymentGateway: string;
-  status: 'pending' | 'paid' | 'delivered';
+  items?: OrderItem;
+  transaction_id: string;
+  transaction_time: string;
+  payment_method: string;
   customerEmail: string;
-  transactionID: string;
-  orderDateTime: string;
-  orderItems?: OrderItem;
+  status: 'pending' | 'paid' | 'delivered';
   updatedAt: string;
   createdAt: string;
 }
