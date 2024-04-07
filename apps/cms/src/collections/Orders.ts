@@ -1,5 +1,4 @@
 import { CollectionConfig } from "payload/types";
-import Media from "./Media";
 
 /** Orders collection stores merch orders from users. */
 const Orders: CollectionConfig = {
