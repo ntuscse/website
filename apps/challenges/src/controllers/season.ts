@@ -146,7 +146,8 @@ const getSeasonRankings = asyncHandler(async (req: Request, res: Response) => {
     try {
         // Limit and page must either both exist or both not exist, since both not exist is checked above, now it must be both exist
         // This is just a redundant check added for eslint
-        if (!limit || !page) { 
+        if (limit === undefined || page === undefined) { 
+            console.log(limit, page);
             res.status(500).json({ message: "Internal Server Error" })
             return;
         }
