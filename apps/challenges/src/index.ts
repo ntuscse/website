@@ -9,13 +9,14 @@ import { connectDB } from "./config/db";
 import { CronJob } from "cron";
 import { rankingCalculation } from "./tasks/rankingCalculation";
 import { SupabaseService } from "./utils/supabase";
-dotenv.config({ path: "../.env"});
+dotenv.config({ path: "../.env" });
 
 // Database
-connectDB();
+void connectDB();
 SupabaseService.initClient();
 
 const app: Express = express();
+// eslint-disable-next-line turbo/no-undeclared-env-vars
 const port = process.env.PORT || 3000;
 // Middleware
 app.use(express.json());
@@ -45,7 +46,7 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 if (process.env.NODE_ENV !== 'test' && process.env.DO_RANKING_CALCULATION){
-    const job = new CronJob(
+    new CronJob(
         '*/15 * * * * *',
         (async () => await rankingCalculation()),
         null,

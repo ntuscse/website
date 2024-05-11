@@ -34,7 +34,7 @@ export const isValidCreateSubmissionRequest = z.object({
 
 export const isValidEmail = z.string().min(1).email();
 
-export const isValidCreateQuestionRequest = z.object({
+export const isValidQuestionRequest = z.object({
     question_no: z.string(),
     question_title: z.string(),
     question_desc: z.string(),

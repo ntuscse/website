@@ -1,5 +1,5 @@
-const express = require('express');
-const router = express.Router();
+import Express from "express";
+const router = Express.Router();
 import QuestionController from "../controllers/questionaire";
 import jwtMiddleware from "../middleware/jwtMiddleware";
 

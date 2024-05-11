@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import QuestionRepo from '../repo/questionRepo';
-import { CreateQuestionReq, GetUserSpecificQuestionResp } from '../model/question';
+import { QuestionReq, GetUserSpecificQuestionResp } from '../model/question';
 import ValidationService from './validationService';
 import { GeneralResp, StatusCodeError } from '../types/types';
 import { QuestionInputModel } from '../model/questionInput';
@@ -17,7 +17,7 @@ const getQuestionByID = async (
 }
 
 const createQuestion = async (
-    req: CreateQuestionReq,
+    req: QuestionReq,
 ): Promise<GeneralResp> => {
     if (!ValidationService.getValidationFunction(req.validation_function)) {
         console.log('Invalid validation function');
@@ -95,20 +95,23 @@ const getUserSpecificQuestion = async (
     const _userID = new mongoose.Types.ObjectId(userID);
     const _seasonID = new mongoose.Types.ObjectId(seasonID);
     const _questionID = new mongoose.Types.ObjectId(questionID);
-
+    let input: string[] = []
     const questionInput = await QuestionRepo.getQuestionInput(_userID, _seasonID, _questionID)
-    let input = questionInput?.input
-    if (!input) {
+
+    if (!questionInput) {
         input = await ValidationService.generateInput(questionID)
         await saveQuestionInput(userID, seasonID, questionID, input);
+    } else {
+        input = questionInput.input
     }
+
     const resp: GetUserSpecificQuestionResp = {
         id: question._id.toString(),
         question_no: question.question_no,
         question_title: question.question_title,
         question_desc: question.question_desc,
         question_date: question.question_date,
-        seasonID: questionInput!.seasonID.toString(),
+        seasonID: seasonID,
         question_input: input,
         expiry: question.expiry,
         points: question.points

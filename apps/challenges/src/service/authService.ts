@@ -1,12 +1,8 @@
-import { SupabaseService } from '../utils/supabase';
 import mongoose from 'mongoose';
-import { jwtDecode } from "jwt-decode";
 import UserService from "../service/userService";
 import { isValidEmail, getEmailPrefix, zodIsValidObjectId } from "../utils/validator";
 import supabase from "../utils/supabase";
-import { z } from 'zod';
 import TokenService from './tokenService';
-import { GeneralResp, OauthcallbackResp } from '../types/types';
 import TokenRepo from '../repo/tokenRepo';
 import { StatusCodeError } from "../types/types"
 import jwt from "jsonwebtoken";
@@ -38,8 +34,8 @@ const oauthSignIn = async (
     // console.log(decodedJWTObj);
 
     const email = isValidEmail.parse(resp.data.user.email);
-    
-    var createNewUser: boolean = false;
+
+    let createNewUser = false;
     let user = await UserService.getUserByEmail(email);
 
     if (!user) {
@@ -48,8 +44,8 @@ const oauthSignIn = async (
         createNewUser = true;
     }
 
-    const accessToken = await TokenService.generateAccessToken(user._id.toString(), user.email);
-    const refreshToken = await TokenService.generateRefreshToken(user._id.toString(), user.email);
+    const accessToken = TokenService.generateAccessToken(user._id.toString(), user.email);
+    const refreshToken = TokenService.generateRefreshToken(user._id.toString(), user.email);
     const now = new Date();
     const newExpiry = new Date(now.getTime() + refreshCookieMaxAgeSeconds * secondInMilliseconds);
 
@@ -80,8 +76,8 @@ const refreshToken = async (userID: string) => {
         throw new StatusCodeError(500, "Token not found")
     }
 
-    // verify jwt token 
-    const decoded = jwt.verify(token.jwt, process.env.JWT_SECRET || "")
+    // verify jwt token, throw error if verify failed
+    jwt.verify(token.jwt, process.env.CHALLENGES_JWT_SECRET || "")
     const user = await UserRepo.getUserByID(mongoUserID);
 
     if (!user) {

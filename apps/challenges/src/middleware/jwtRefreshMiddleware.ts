@@ -11,14 +11,14 @@ const jwtRefreshMiddleware = (req: Request, res: Response, next: NextFunction) =
         return res.sendStatus(401);
     }
 
-    jwt.verify(token, process.env.JWT_SECRET || "", (err, tokenContent: any) => {
+    jwt.verify(token, process.env.CHALLENGES_JWT_SECRET || "", (err, tokenContent: any) => {
         if (err) {
             return res.sendStatus(401);
         }
 
         const token = TokenRepo.extendRefreshToken(tokenContent.id)
         if (token == null) {
-            res.status(401).json({message: "Invalid refresh token"})
+            res.status(401).json({ message: "Invalid refresh token" })
             return;
         }
 

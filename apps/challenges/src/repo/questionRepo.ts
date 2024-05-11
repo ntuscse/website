@@ -1,4 +1,4 @@
-import Question, { CreateQuestionReq, QuestionModel } from "../model/question"
+import Question, { QuestionReq, QuestionModel } from "../model/question"
 import mongoose from 'mongoose';
 import QuestionInput, { QuestionInputModel } from "../model/questionInput";
 
@@ -12,7 +12,7 @@ const getQuestionByID = async (
 }
 
 const createQuestionByReq = async (
-    req: CreateQuestionReq
+    req: QuestionReq
 ): Promise<QuestionModel | null> => {
     const questionModel = {
         _id: new mongoose.Types.ObjectId(),
@@ -82,7 +82,7 @@ const saveQuestionInput = async (
     questionInput: QuestionInputModel
 ): Promise<QuestionInputModel | null> => {
     const dbQuestionInput = new QuestionInput(questionInput);
-    dbQuestionInput.save();
+    await dbQuestionInput.save();
     return dbQuestionInput;
 }
 

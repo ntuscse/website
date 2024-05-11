@@ -1,23 +1,22 @@
 import jwt from "jsonwebtoken";
 import { accessTokenMaxAgeSeconds, refreshCookieMaxAgeSeconds } from "../model/constants";
-import { isValidObjectId } from "../utils/db";
 
-const generateAccessToken = async (
+const generateAccessToken = (
     id: string,
     email: string
 ) => {
-    const secret = process.env.JWT_SECRET || "";
+    const secret = process.env.CHALLENGES_JWT_SECRET || "";
     const token = jwt.sign({ id, email }, secret, {
         expiresIn: accessTokenMaxAgeSeconds
     });
     return token;
 }
 
-const generateRefreshToken = async (
+const generateRefreshToken = (
     id: string,
     email: string
 ) => {
-    const secret = process.env.JWT_SECRET || "";
+    const secret = process.env.CHALLENGES_JWT_SECRET || "";
     const token = jwt.sign({ id, email }, secret, {
         expiresIn: refreshCookieMaxAgeSeconds,
     });

@@ -9,7 +9,7 @@ const isHello = (input: any) => {
 }
 
 // DO NOT EXPOSE this map. Add new validation function by directly adding to the map
-const validationFunctionMap: Map<string, Function> = new Map<string, Function>([
+const validationFunctionMap: Map<string, (input: any) => boolean> = new Map<string, (input: any) => boolean>([
     ['isHello', isHello],
 ]);
 
@@ -39,8 +39,8 @@ const validateAnswer = async (
     try {
         const isCorrect = invokeFunction(submission);
         return isCorrect;
-    } catch (e) {
-        console.log(`validationService validateAnswer fail to validate answer: ${e}`)
+    } catch (err) {
+        console.log(`validationService validateAnswer fail to validate answer`, err)
         return false;
     }
 }
@@ -50,7 +50,7 @@ const generateOneTwo = (): string[] => {
 }
 
 // DO NOT EXPOSE this map. Add new validation function by directly adding to the map
-const generateInputFunctionMap: Map<string, Function> = new Map<string, Function>([
+const generateInputFunctionMap: Map<string, () => string[]> = new Map<string, () => string[]>([
     ['generateOneTwo', generateOneTwo],
 ]);
 
@@ -79,7 +79,7 @@ const generateInput = async (
         const input = invokeFunction();
         return input;
     } catch (e) {
-        console.log(`validationService validateAnswer fail to validate answer: ${e}`)
+        console.log(`validationService validateAnswer fail to validate answer`, e)
         throw new Error('fail to generate input');
     }
 }

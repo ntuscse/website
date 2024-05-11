@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 export const submissionFixture = (overrides = {}) => {
-    var defaultValues = {
+    const defaultValues = {
         user: new mongoose.Types.ObjectId(),
         seasonID: new mongoose.Types.ObjectId(),
         answer: (Math.random() + 1).toString(36).substring(2),

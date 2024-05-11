@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
-import Question, { CreateQuestionReq } from '../model/question';
+import Question, { QuestionReq } from '../model/question';
 import { isValidObjectId } from "../utils/db";
 import QuestionService from "../service/questionService";
-import { isValidCreateQuestionRequest } from "../utils/validator";
+import { isValidQuestionRequest } from "../utils/validator";
 import { z } from "zod";
 
 // @desc    Get questions
@@ -76,9 +76,9 @@ const getUserSpecificQuestion = asyncHandler(async (req: Request, res: Response)
 // @access  Private
 const setQuestion = asyncHandler(async (req: Request, res: Response) => {
     try {
-        const question = isValidCreateQuestionRequest.parse(req.body);
+        const question = isValidQuestionRequest.parse(req.body);
 
-        const createQuestionReq: CreateQuestionReq = {
+        const createQuestionReq: QuestionReq = {
             ...question,
             question_date: new Date(question.question_date),
             expiry: new Date(question.expiry),
@@ -116,7 +116,15 @@ const updateQuestion = asyncHandler(async (req: Request, res: Response) => {
             return;
         }
 
-        const updatedQuestion = await Question.findByIdAndUpdate(questionId, req.body, { new: true });
+        const toBeUpdateQuestion = isValidQuestionRequest.parse(req.body);
+
+        const updateQuestionReq: QuestionReq = {
+            ...toBeUpdateQuestion,
+            question_date: new Date(question.question_date),
+            expiry: new Date(question.expiry),
+        }
+
+        const updatedQuestion = await Question.findByIdAndUpdate(questionId, updateQuestionReq, { new: true });
 
         res.status(200).json(updatedQuestion);
     } catch (error) {

@@ -1,4 +1,5 @@
-import { CreateSubmissionReq, SubmissionModel } from "../model/submission";
+import { QuestionModel } from "../model/question";
+import { CreateSubmissionReq } from "../model/submission";
 import SubmissionRepo from "../repo/submissionRepo";
 import { GeneralResp } from "../types/types";
 import QuestionService from "./questionService";
@@ -7,7 +8,7 @@ import ValidationService from "./validationService";
 const createSubmission = async (
     submission: CreateSubmissionReq
 ): Promise<GeneralResp> => {
-    var question;
+    let question: QuestionModel | null;
     try {
         question = await QuestionService.getQuestionByID(submission.question.toString());
 

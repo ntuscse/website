@@ -1,5 +1,5 @@
 function userFixture(overrides = {}) {
-    var defaultValues = {
+    const defaultValues = {
         name: (Math.random() + 1).toString(36).substring(2),
         email: (Math.random() + 1).toString(36).substring(2),
         active: true,
@@ -9,7 +9,7 @@ function userFixture(overrides = {}) {
 }
 
 function questionFixture(overrides = {}) {
-    var defaultValues = {
+    const defaultValues = {
         question_no: (Math.random() + 1).toString(36).substring(2),
         question_title: (Math.random() + 1).toString(36).substring(2),
         question_desc: (Math.random() + 1).toString(36).substring(2),
@@ -25,16 +25,16 @@ function questionFixture(overrides = {}) {
 }
 
 function answerFixture(overrides = {}) {
-    var defaultValues = {
+    const defaultValues = {
         name: (Math.random() + 1).toString(36).substring(2),
         answer: (Math.random() + 1).toString(36).substring(2),
     };
 
     return { ...defaultValues, ...overrides };
-};
+}
 
 function leaderboardFixture(overrides = {}) {
-    var defaultValues = {
+    const defaultValues = {
         title: (Math.random() + 1).toString(36).substring(2),
         start_date: "2023-05-01T00:00:00.000Z",
         end_date: "2040-06-01T00:00:00.000Z",

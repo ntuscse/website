@@ -94,6 +94,23 @@ services:
       - "traefik.http.routers.uptime-kuma.entrypoints=websecure"
       - "traefik.http.routers.uptime-kuma.tls.certresolver=myresolver"
       # - "traefik.http.services.uptime-kuma.loadbalancer.server.port=3001"
+  
+  challenges:
+    container_name: challenges
+    image: ghcr.io/ntuscse/website/challenges:latest
+    networks:
+      cms_network:
+        ipv4_address: 10.5.0.5
+    env_file:
+      - challenges.env
+    depends_on:
+      - mongo
+    restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.merch.rule=Host(`$TRAEFIK_HTTP_CHALLENGES_HOST`)"
+      - "traefik.http.routers.merch.entrypoints=websecure"
+      - "traefik.http.routers.merch.tls.certresolver=myresolver"
 
 networks:
   default:

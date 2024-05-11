@@ -1,10 +1,13 @@
 import asyncHandler from "express-async-handler";
 import { Request, Response } from "express";
 import AuthService from "../service/authService";
-import TokenService from "../service/tokenService";
+
+interface OauthSignInReq {
+    access_token: string
+}
 
 const oauthSignIn = asyncHandler(async (req: Request, res: Response) => {
-    const { access_token } = req.body;
+    const { access_token } = req.body as OauthSignInReq;
 
     try {
         const { accessToken, refreshToken, createNewUser } = await AuthService.oauthSignIn(access_token);

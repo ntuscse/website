@@ -1,7 +1,5 @@
 import SeasonRepo from "../repo/seasonRepo"
 import mongoose from 'mongoose';
-import UserService from "./userService";
-import { get } from "http";
 
 const getSeasonsByDate = async(
     startDate: Date | null,
@@ -34,18 +32,18 @@ const createSeason = async(
     return season;
 }
 
-const getSeasonRankings = async(
+const getSeasonRankings = (
     seasonID: string,
 ) => {
     if (!mongoose.isValidObjectId(seasonID)) {
         throw new Error('Invalid season ID');
     }
     const _id = new mongoose.Types.ObjectId(seasonID);
-    const rankings = await SeasonRepo.getSeasonRankings(_id);
+    const rankings = SeasonRepo.getSeasonRankings(_id);
     return rankings;
 }
 
-const getSeasonRankingsByPagination = async(
+const getSeasonRankingsByPagination = (
     seasonID: string,
     page: number,
     limit: number,
@@ -54,7 +52,7 @@ const getSeasonRankingsByPagination = async(
         throw new Error('Invalid season ID');
     }
     const _id = new mongoose.Types.ObjectId(seasonID);
-    return await SeasonRepo.getSeasonRankingsByPagination(_id, page, limit);
+    return SeasonRepo.getSeasonRankingsByPagination(_id, page, limit);
 }
 
 /*

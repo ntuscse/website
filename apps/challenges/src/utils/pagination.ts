@@ -1,4 +1,3 @@
-import { z } from 'zod';
 import { isNonNegativeInteger, isPositiveInteger } from './validator';
 
 export const generatePaginationMetaData = (baseUrl: string, pageIndex: number, limit: number, maxPageIndex: number, itemCount: number) => {
@@ -7,10 +6,10 @@ export const generatePaginationMetaData = (baseUrl: string, pageIndex: number, l
     isNonNegativeInteger.parse(maxPageIndex);
     isNonNegativeInteger.parse(itemCount);
 
-    let self = `${baseUrl}?page=${pageIndex}&limit=${limit}`
-    let first = `${baseUrl}?page=0&limit=${limit}`
-    let last = `${baseUrl}?page=${maxPageIndex}&limit=${limit}`
-    let previous, next;
+    const self = `${baseUrl}?page=${pageIndex}&limit=${limit}`
+    const first = `${baseUrl}?page=0&limit=${limit}`
+    const last = `${baseUrl}?page=${maxPageIndex}&limit=${limit}`
+    let previous: string | null, next: string | null;
 
     if (pageIndex <= 0 || pageIndex > maxPageIndex){
         previous = null;
@@ -24,7 +23,7 @@ export const generatePaginationMetaData = (baseUrl: string, pageIndex: number, l
         next = `${baseUrl}?page=${pageIndex +1}&limit=${limit}`
     }
 
-    let links = {
+    const links = {
         self: self,
         first: first,
         previous: previous,
@@ -32,7 +31,7 @@ export const generatePaginationMetaData = (baseUrl: string, pageIndex: number, l
         last: last
     }
 
-    let metaData = {
+    const metaData = {
         itemCount: itemCount,
         limit: limit,
         pageCount: Math.ceil(itemCount / limit),
@@ -46,6 +45,6 @@ export const generatePaginationMetaData = (baseUrl: string, pageIndex: number, l
 // do note that while page number being negative do work, 
 // in Session getSeasonRankingsByPagination, 
 // we do not accept negative page number
-export const paginateArray = (array: any[], pageSize: number, pageIndex: number) => {
+export const paginateArray = (array: unknown[], pageSize: number, pageIndex: number) => {
     return array.slice((pageIndex) * pageSize, (pageIndex + 1) * pageSize);
 }

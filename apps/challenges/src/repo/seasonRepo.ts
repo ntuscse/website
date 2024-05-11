@@ -121,27 +121,26 @@ const calculateSeasonRankings = async (
             }
         }
     ]);
-    console.log(rankings)
-    return rankings;
+    return rankings as UserRanking[];
 }
 
-const getSeasonRankings = async (
+const getSeasonRankings = (
     seasonID: mongoose.Types.ObjectId,
-): Promise<UserRanking[] | null> => {
+): UserRanking[] | null => {
     return rankingsMap[seasonID.toString()];
 }
 
 
-const getSeasonRankingsByPagination = async (
+const getSeasonRankingsByPagination =  (
     seasonID: mongoose.Types.ObjectId,
     page: number,
     limit: number,
-): Promise<{ rankings: UserRanking[], rankingsCount: number }> => {
+): { rankings: UserRanking[], rankingsCount: number } => {
     const rankings = rankingsMap[seasonID.toString()];
     if (!rankings) {
         return { rankings: [], rankingsCount: 0 };
     }
-    return { rankings: paginateArray(rankings, limit, page), rankingsCount: rankings.length };
+    return { rankings: paginateArray(rankings, limit, page) as UserRanking[], rankingsCount: rankings.length };
 }
 
 const getSeasonQuestions = async (
@@ -154,7 +153,7 @@ const getSeasonQuestions = async (
             }
         },
     ]);
-    return questions;
+    return questions as QuestionModel[];
 }
 
 const SeasonRepo = {

@@ -14,7 +14,7 @@ const saveRefreshToken = async (
     token: TokenModel
 ): Promise<TokenModel | null> => {
     const dbToken = new Token(token);
-    dbToken.save();
+    await dbToken.save();
     return dbToken;
 }
 

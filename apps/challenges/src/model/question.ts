@@ -1,6 +1,6 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
-export interface CreateQuestionReq {
+export interface QuestionReq {
     question_no: string;
     question_title: string;
     question_desc: string;

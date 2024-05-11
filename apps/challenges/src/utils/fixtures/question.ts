@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 export const questionFixture = (overrides = {}) => {
-    var defaultValues = {
+    const defaultValues = {
         question_no: Math.floor(Math.random() * 100).toString(),
         question_title: (Math.random() + 1).toString(36).substring(2),
         question_desc: (Math.random() + 1).toString(36).substring(2),

@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import UserRepo from '../repo/userRepo';
-import { z } from 'zod';
 import { isValidEmail, zodIsValidObjectId } from '../utils/validator';
 import { StatusCodeError } from '../types/types';
 import { UserModel } from '../model/user';

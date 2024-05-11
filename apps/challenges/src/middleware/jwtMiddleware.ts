@@ -2,6 +2,10 @@
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 
+interface JWTAcessTokenContent {
+    id: string;
+    email: string;
+}
 const jwtMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const token = req.headers.authorization;
 
@@ -9,15 +13,15 @@ const jwtMiddleware = (req: Request, res: Response, next: NextFunction) => {
         return res.sendStatus(401);
     }
 
-    jwt.verify(token, process.env.JWT_SECRET || "", (err, tokenContent: any) => {
+    jwt.verify(token, process.env.CHALLENGES_JWT_SECRET || "", (err, tokenContent: unknown) => {
         if (err) {
             return res.sendStatus(401);
         }
+        const jwtAccessToken = tokenContent as JWTAcessTokenContent;
 
-        req.params.userID = tokenContent.id;
-        req.params.email = tokenContent.email;
+        req.params.userID = jwtAccessToken.id;
+        req.params.email = jwtAccessToken.email;
 
-        
         next();
     });
 }
