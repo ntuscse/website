@@ -13,6 +13,7 @@ import "ui/fonts/styles.css"; // for custom fonts not available on @fontsource
 import { WebLayout } from "@/features/layout";
 import { CartProvider } from "@/features/merch/context/cart";
 import { CheckoutProvider } from "@/features/merch/context/checkout";
+import { ChallengesAuthProvider } from "@/features/challenges/context/AuthContext";
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { refetchOnWindowFocus: false } },
@@ -24,9 +25,11 @@ const App: AppType = ({ Component, pageProps }: AppProps) => {
       <ChakraProvider theme={theme}>
         <CartProvider>
           <CheckoutProvider>
+            <ChallengesAuthProvider>
             <WebLayout>
               <Component {...pageProps} />
             </WebLayout>
+            </ChallengesAuthProvider>
           </CheckoutProvider>
         </CartProvider>
       </ChakraProvider>
