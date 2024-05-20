@@ -79,7 +79,7 @@ export default buildConfig({
     // outputFile: path.resolve(__dirname, "payload-types.ts"),
     outputFile: path.resolve(
       __dirname,
-      "../../../packages/types/src/lib/cms.ts"
+      "types.ts"
     ), // overridden by PAYLOAD_TS_OUTPUT_PATH env var
   },
   graphQL: {
