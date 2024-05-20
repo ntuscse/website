@@ -18,7 +18,6 @@
 /packages/schemas/lib/cms.graphql @jack-thant
 /packages/tsconfig/** @chanbakjsd
 /packages/types/** @chanbakjsd
-/packages/types/lib/cms.ts @jack-thant
 /packages/types/lib/merch.ts @chanbakjsd
 /packages/ui/** @chanbakjsd
 
