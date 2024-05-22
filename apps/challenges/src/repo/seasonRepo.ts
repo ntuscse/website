@@ -1,5 +1,5 @@
 import Season, { SeasonModel } from "../model/season";
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 import { UserRanking } from "../model/rankingScore";
 import Submission from "../model/submission";
@@ -8,39 +8,41 @@ import { paginateArray } from "../utils/pagination";
 import Question, { QuestionModel } from "../model/question";
 
 const getSeasonsByDate = async (
-    startDate: Date | null,
-    endDate: Date | null,
+  startDate: Date | null,
+  endDate: Date | null
 ): Promise<SeasonModel[] | null> => {
-    console.log(startDate, endDate)
-    const seasons = await Season.find({
-        $and: [
-            startDate != null ? { endDate: { $gte: startDate } } : {},
-            endDate != null ? { startDate: { $lte: endDate } } : {}
-        ]
-    });
-    return seasons;
-}
+  console.log(startDate, endDate);
+  const seasons = await Season.find({
+    $and: [
+      startDate != null ? { endDate: { $gte: startDate } } : {},
+      endDate != null ? { startDate: { $lte: endDate } } : {},
+    ],
+  });
+  return seasons;
+};
 
-const getSeasonByID = async (id: mongoose.Types.ObjectId): Promise<SeasonModel | null> => {
-    const season = await Season.findOne({
-        _id: id
-    });
-    return season;
-}
+const getSeasonByID = async (
+  id: mongoose.Types.ObjectId
+): Promise<SeasonModel | null> => {
+  const season = await Season.findOne({
+    _id: id,
+  });
+  return season;
+};
 
 const createSeason = async (
-    title: string,
-    startDate: Date,
-    endDate: Date,
+  title: string,
+  startDate: Date,
+  endDate: Date
 ): Promise<SeasonModel | null> => {
-    const season = await Season.create({
-        title,
-        startDate: startDate,
-        endDate: endDate
-    });
-    await season.save();
-    return season;
-}
+  const season = await Season.create({
+    title,
+    startDate: startDate,
+    endDate: endDate,
+  });
+  await season.save();
+  return season;
+};
 
 /*
 const chatgptCalculateSeasonRankings = async (
@@ -67,103 +69,103 @@ const chatgptCalculateSeasonRankings = async (
 }
 */
 
-const calculateSeasonRankings = async (
-    seasonID: mongoose.Types.ObjectId,
-) => {
-    const rankings = await Submission.aggregate([
-        {
-            $match: {
-                seasonID: seasonID
-            }
+const calculateSeasonRankings = async (seasonID: mongoose.Types.ObjectId) => {
+  const rankings = await Submission.aggregate([
+    {
+      $match: {
+        seasonID: seasonID,
+      },
+    },
+    {
+      $group: {
+        _id: {
+          user: "$user",
+          question: "$question",
         },
-        {
-            $group: {
-                _id: {
-                    "user": "$user",
-                    "question": "$question",
-                },
-                points_awarded: { $max: "$points_awarded" }
-            }
+        points_awarded: { $max: "$points_awarded" },
+      },
+    },
+    { $match: { points_awarded: { $exists: true, $ne: null } } },
+    {
+      $group: {
+        _id: {
+          user: "$_id.user",
         },
-        { $match: { points_awarded: { $exists: true, $ne: null } } },
-        {
-            $group: {
-                _id: {
-                    "user": "$_id.user",
-                },
-                points: { $sum: "$points_awarded" }
-            }
+        points: { $sum: "$points_awarded" },
+      },
+    },
+    {
+      $sort: {
+        points: -1,
+      },
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "_id.user",
+        foreignField: "_id",
+        as: "user",
+      },
+    },
+    {
+      $unwind: "$user",
+    },
+    {
+      $project: {
+        _id: 0,
+        user: {
+          userID: "$user._id",
+          name: "$user.name",
         },
-        {
-            $sort: {
-                points: -1
-            }
-        },
-        {
-            $lookup: {
-                from: "users",
-                localField: "_id.user",
-                foreignField: "_id",
-                as: "user"
-            }
-        },
-        {
-            $unwind: "$user"
-        },
-        {
-            $project: {
-                _id: 0,
-                user: {
-                    userID: "$user._id",
-                    name: "$user.name",
-                },
-                points: 1
-            }
-        }
-    ]);
-    return rankings as UserRanking[];
-}
+        points: 1,
+      },
+    },
+  ]);
+  return rankings as UserRanking[];
+};
 
 const getSeasonRankings = (
-    seasonID: mongoose.Types.ObjectId,
+  seasonID: mongoose.Types.ObjectId
 ): UserRanking[] | null => {
-    return rankingsMap[seasonID.toString()];
-}
+  return rankingsMap[seasonID.toString()];
+};
 
-
-const getSeasonRankingsByPagination =  (
-    seasonID: mongoose.Types.ObjectId,
-    page: number,
-    limit: number,
-): { rankings: UserRanking[], rankingsCount: number } => {
-    const rankings = rankingsMap[seasonID.toString()];
-    if (!rankings) {
-        return { rankings: [], rankingsCount: 0 };
-    }
-    return { rankings: paginateArray(rankings, limit, page) as UserRanking[], rankingsCount: rankings.length };
-}
+const getSeasonRankingsByPagination = (
+  seasonID: mongoose.Types.ObjectId,
+  page: number,
+  limit: number
+): { rankings: UserRanking[]; rankingsCount: number } => {
+  const rankings = rankingsMap[seasonID.toString()];
+  if (!rankings) {
+    return { rankings: [], rankingsCount: 0 };
+  }
+  return {
+    rankings: paginateArray(rankings, limit, page) as UserRanking[],
+    rankingsCount: rankings.length,
+  };
+};
 
 const getSeasonQuestions = async (
-    seasonID: mongoose.Types.ObjectId,
+  seasonID: mongoose.Types.ObjectId
 ): Promise<QuestionModel[] | null> => {
-    const questions = await Question.aggregate([
-        {
-            $match: {
-                seasonID: seasonID
-            }
-        },
-    ]);
-    return questions as QuestionModel[];
-}
+  const questions = await Question.aggregate([
+    {
+      $match: {
+        seasonID: seasonID,
+      },
+    },
+  ]);
+  return questions as QuestionModel[];
+};
 
 const SeasonRepo = {
-    getSeasonsByDate,
-    getSeasonByID,
-    createSeason,
-    getSeasonRankings,
-    getSeasonRankingsByPagination,
-    calculateSeasonRankings,
-    getSeasonQuestions
-}
+  getSeasonsByDate,
+  getSeasonByID,
+  createSeason,
+  getSeasonRankings,
+  getSeasonRankingsByPagination,
+  calculateSeasonRankings,
+  getSeasonQuestions,
+};
 
-export { SeasonRepo as default }
+export { SeasonRepo as default };

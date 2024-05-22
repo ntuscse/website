@@ -1,50 +1,56 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Schema } from "mongoose";
 
 export interface CreateSubmissionReq {
-    user: mongoose.Types.ObjectId;
-    question: mongoose.Types.ObjectId;
-    answer: string;
+  user: mongoose.Types.ObjectId;
+  question: mongoose.Types.ObjectId;
+  answer: string;
 }
 
 export interface SubmissionModel {
-    user: mongoose.Types.ObjectId;
-    seasonID: mongoose.Types.ObjectId;
-    question: mongoose.Types.ObjectId;
-    answer: string;
-    correct?: boolean;
-    points_awarded?: number;
+  user: mongoose.Types.ObjectId;
+  seasonID: mongoose.Types.ObjectId;
+  question: mongoose.Types.ObjectId;
+  answer: string;
+  correct?: boolean;
+  points_awarded?: number;
 }
 
-const submissionSchema: Schema<SubmissionModel> = new Schema({
+const submissionSchema: Schema<SubmissionModel> = new Schema(
+  {
     user: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'User',
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
     },
     seasonID: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'Season',
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Season",
     },
     question: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'Question',
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Question",
     },
     answer: {
-        type: String,
-        required: [true, 'Please add an answer'],
+      type: String,
+      required: [true, "Please add an answer"],
     },
     correct: {
-        type: Boolean,
+      type: Boolean,
     },
     points_awarded: {
-        type: Number,
+      type: Number,
     },
-}, {
+  },
+  {
     timestamps: true,
-});
+  }
+);
 
-const Submission = mongoose.model<SubmissionModel>('Submission', submissionSchema);
+const Submission = mongoose.model<SubmissionModel>(
+  "Submission",
+  submissionSchema
+);
 
-export { Submission as default }
+export { Submission as default };
