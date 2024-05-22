@@ -13,7 +13,7 @@ interface JWTRefreshTokenContent {
   id: string;
   email: string;
 }
-const jwtRefreshMiddleware = async (
+const jwtRefreshMiddleware = (
   req: Request,
   res: Response,
   next: NextFunction
@@ -32,31 +32,30 @@ const jwtRefreshMiddleware = async (
     return res.sendStatus(401);
   }
 
-  let tokenModel: TokenModel | null;
-  try {
-    tokenModel = await TokenService.extendRefreshToken(jwtRefreshToken.id);
-  } catch (err) {
-    if (err instanceof z.ZodError) {
-      res.status(400).json({ message: "Invalid request" });
-    }
-    return;
-  }
+  TokenService.extendRefreshToken(jwtRefreshToken.id)
+    .then((tokenModel: TokenModel | null) => {
+      if (tokenModel == null) {
+        res.status(401).json({ message: "Invalid refresh token" });
+        return;
+      }
 
-  if (tokenModel == null) {
-    res.status(401).json({ message: "Invalid refresh token" });
-    return;
-  }
+      res.cookie("refresh_token", tokenModel, {
+        httpOnly: true,
+        maxAge: refreshCookieMaxAgeSeconds * secondInMilliseconds,
+        signed: true,
+      });
 
-  res.cookie("refresh_token", tokenModel, {
-    httpOnly: true,
-    maxAge: refreshCookieMaxAgeSeconds * secondInMilliseconds,
-    signed: true,
-  });
+      req.params.userID = jwtRefreshToken.id;
+      req.params.email = jwtRefreshToken.email;
 
-  req.params.userID = jwtRefreshToken.id;
-  req.params.email = jwtRefreshToken.email;
-
-  next();
+      next();
+    })
+    .catch((err) => {
+      if (err instanceof z.ZodError) {
+        res.status(400).json({ message: "Invalid request" });
+      }
+      return;
+    });
 };
 
 export default jwtRefreshMiddleware;
