@@ -14,7 +14,7 @@ interface Season {
 }
 
 type ProblemListData = {
-  uuid: number;
+  uuid: string;
   problem: string;
   title: string;
   point: number;
@@ -31,7 +31,7 @@ const columns = [
   columnHelper.accessor("title", {
     cell: (prop) => (
       <span>
-        <Link href={"/challenges/problems/submission"}>{prop.getValue()}</Link>
+        <Link href={`/challenges/problems/submission?id=${prop.row.original.uuid}`}>{prop.getValue()}</Link>
       </span>
     ),
     header: "Title",
