@@ -14,9 +14,11 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { string } from "zod";
 import { createClient } from "@supabase/supabase-js";
+import { useChallengesAuth } from "@/features/challenges/context/AuthContext";
 
 const supabase_url = process.env.NEXT_PUBLIC_SUPABASE_URL ? process.env.NEXT_PUBLIC_SUPABASE_URL : "default"
 const anon_key =  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY : "default"
+const supabase = createClient(supabase_url, anon_key)
 
 type UserData = {
   uuid: number;
@@ -71,7 +73,6 @@ function parseDate(stringDate: String) {
 }
 
 async function signInWithAzure() {
-  const supabase = createClient(supabase_url, anon_key)
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'azure',
       options: {
@@ -83,7 +84,7 @@ async function signInWithAzure() {
 
 const Challenges = () => {
   const router = useRouter();
-  const [isLogin, setIsLogin] = useState(false)
+  const {isLogin, setIsLogin} = useChallengesAuth();
   const [seasons, setSeasons] = useState<Season[]>([]);
 
   useEffect(() => {
@@ -105,6 +106,13 @@ const Challenges = () => {
     });
   };
 
+  const handleLogOut = async () => {
+    const { error } = await supabase.auth.signOut()
+    if (error) console.log(error)
+    document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    window.location.href="/challenges"
+    
+  }
   useEffect(() => {
     fetch("http://localhost:3000/api/seasons/")
       .then((res: Response) => {
@@ -141,6 +149,7 @@ const Challenges = () => {
           Explore the ongoing challenges!
         </Text>
       </Box>
+      <Button onClick={handleLogOut}>Log Out</Button>
       <Box flexDirection="column" mb={10}>
         {seasons ? (
           seasons.map((season) => (

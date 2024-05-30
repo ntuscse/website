@@ -1,4 +1,5 @@
 import ProfileChallengeLayout from "@/features/challenges/components/ProfileChallengeLayout"
+import { useChallengesAuth } from "@/features/challenges/context/AuthContext"
 import { AbsoluteCenter, Avatar, Box, Button, Center, Flex, Text } from "@chakra-ui/react"
 import { useState } from "react"
 
@@ -38,6 +39,7 @@ const numOfChallengesInProgressPages = Math.ceil(challengesInProgressList.length
 const paginatedChallengesInProgress = paginateData(challengesInProgressList, numOfItemsPerPage)
 const paginatedHistory = paginateData(challengesDone, numOfItemsPerPage)
 const Profile = () => {
+    const { isLogin } = useChallengesAuth()
     const [currentChallengeInProgressPage, setCurrentChallengeInProgressPage] = useState(0)
     const [currentDisplayedChallengesInProgress, setCurrentDisplayedChallengeInProgress] = useState(paginatedChallengesInProgress[currentChallengeInProgressPage])
 
@@ -70,7 +72,7 @@ const Profile = () => {
         setCurrentDisplayedHistoryPage(paginatedChallengesInProgress[toSet])
     }
 
-    return (<Flex
+    return ( isLogin ? <Flex
         minH="100vh"
         flexDir={['column', 'row']}
         justifyContent="center"
@@ -81,9 +83,6 @@ const Profile = () => {
             <Text w={["100%", "50%"]} my={4}>Username: {user.username}</Text>
             <Text w={["100%", "50%"]}>NTU email: {user.email}</Text>
         </Flex>
-           
-
-
         </Flex>
 
         <Flex flex={2} minH="100vh" justifyContent="center" alignItems="center" flexDirection="column">
@@ -128,7 +127,11 @@ const Profile = () => {
             </Flex>
 
         </Flex>
-    </Flex>)
+    </Flex> : <Flex
+        minH="100vh"
+        flexDir={['column', 'row']}
+        justifyContent="center"
+        alignItems="center">Not Logged In</Flex>)
 }
 
 export default Profile
