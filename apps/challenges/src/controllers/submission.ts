@@ -5,6 +5,7 @@ import { isValidObjectId } from "../utils/db";
 import SubmissionService from "../service/submissionService";
 import { isValidCreateSubmissionRequest } from "../utils/validator";
 import mongoose from "mongoose";
+import { Logger } from "nodelogger";
 
 // @desc    Get submissions
 // @route   GET /api/submission
@@ -35,7 +36,7 @@ const getSubmission = asyncHandler(async (req: Request, res: Response) => {
 
     res.status(200).json(submission);
   } catch (error) {
-    console.error(error);
+    Logger.error("SubmissionController.GetSubmission error", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
@@ -66,6 +67,7 @@ const setSubmission = asyncHandler(async (req: Request, res: Response) => {
 
     res.status(resp.status).json(resp);
   } catch (error) {
+    Logger.error("SubmissionController.SetSubmission error", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 });

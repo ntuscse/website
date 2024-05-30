@@ -11,7 +11,7 @@ export const clearRankingsMap = () => {
 };
 
 export const rankingCalculation = async () => {
-  console.log("Calculating rankings...");
+  
   let activeSeasons: SeasonModel[] | null;
   try {
     activeSeasons = await SeasonService.getActiveSeasons();

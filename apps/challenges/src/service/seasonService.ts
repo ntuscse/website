@@ -1,5 +1,21 @@
 import SeasonRepo from "../repo/seasonRepo";
 import mongoose from "mongoose";
+import { StatusCodeError } from "../types/types";
+import { zodGetValidObjectId } from "../utils/validator";
+
+const GetSeasons = async (start: unknown, end: unknown) => {
+  if (start != null && typeof start !== "string") {
+    throw new StatusCodeError(400, "invalid start date");
+  }
+  if (end != null && typeof end !== "string") {
+    throw new StatusCodeError(400, "invalid end date");
+  }
+
+  const _startDate = start != null ? new Date(parseInt(start)) : null;
+  const _endDate = end != null ? new Date(parseInt(end)) : null;
+
+  return await getSeasonsByDate(_startDate, _endDate);
+};
 
 const getSeasonsByDate = async (
   startDate: Date | null,
@@ -15,10 +31,7 @@ const getActiveSeasons = async () => {
 };
 
 const getSeasonByID = async (id: string) => {
-  if (!mongoose.isValidObjectId(id)) {
-    throw new Error("Invalid season ID");
-  }
-  const _id = new mongoose.Types.ObjectId(id);
+  const _id = zodGetValidObjectId.parse(id);
   const season = await SeasonRepo.getSeasonByID(_id);
   return season;
 };
@@ -92,6 +105,7 @@ const getSeasonQuestions = async (seasonID: string) => {
 };
 
 const SeasonService = {
+  GetSeasons,
   getSeasonsByDate,
   getActiveSeasons,
   getSeasonByID,

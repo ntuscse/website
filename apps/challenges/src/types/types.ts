@@ -16,3 +16,7 @@ export interface OauthcallbackResp {
   accessToken: string;
   refreshToken: string;
 }
+
+export interface GetQuestionsFilter {
+  isActive?: boolean;
+}

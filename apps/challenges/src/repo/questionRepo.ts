@@ -1,6 +1,17 @@
 import Question, { QuestionReq, QuestionModel } from "../model/question";
 import mongoose from "mongoose";
 import QuestionInput, { QuestionInputModel } from "../model/questionInput";
+import { GetQuestionsFilter } from "../types/types";
+
+const GetQuestions = async (
+  filter: GetQuestionsFilter
+): Promise<QuestionModel[] | null> => {
+  const queryFilter: mongoose.FilterQuery<QuestionModel> = {};
+  if (filter.isActive) {
+    queryFilter.active = filter.isActive;
+  }
+  return await Question.find(queryFilter);
+};
 
 const getQuestionByID = async (
   questionID: mongoose.Types.ObjectId
@@ -95,6 +106,7 @@ const saveQuestionInput = async (
 };
 
 const QuestionRepo = {
+  GetQuestions,
   getQuestionByID,
   createQuestionByReq,
   updateQuestionByID,

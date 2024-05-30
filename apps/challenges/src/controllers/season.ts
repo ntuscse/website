@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import asyncHandler from "express-async-handler";
 import { z } from "zod";
 
@@ -10,7 +10,7 @@ import {
   zodIsValidObjectId,
 } from "../utils/validator";
 import { generatePaginationMetaData } from "../utils/pagination";
-
+import { Logger } from "nodelogger";
 interface CreateSeasonRequest {
   title: string;
   startDate: number;
@@ -19,28 +19,18 @@ interface CreateSeasonRequest {
 // @desc    Get season
 // @route   GET /api/seasons
 // @access  Public
-const getSeasons = asyncHandler(async (req: Request, res: Response) => {
+const getSeasons = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
   const { start, end } = req.query;
-  if (start != null && typeof start !== "string") {
-    res.status(400).json({ message: "Invalid request" });
-    return;
-  }
-  if (end != null && typeof end !== "string") {
-    res.status(400).json({ message: "Invalid request" });
-    return;
-  }
-
-  const _startDate = start != null ? new Date(parseInt(start)) : null;
-  const _endDate = end != null ? new Date(parseInt(end)) : null;
 
   try {
-    const seasons = await SeasonService.getSeasonsByDate(_startDate, _endDate);
+    const seasons = await SeasonService.GetSeasons(start, end);
 
     res.status(200).json({
       seasons: seasons,
     });
-  } catch {
-    res.status(500).json({ message: "Internal Server Error" });
+  } catch (error) {
+    Logger.error("SeasonController.GetSeasons error", error);
+    next(error);
   }
 });
 
@@ -52,6 +42,7 @@ const getActiveSeasons = asyncHandler(async (req: Request, res: Response) => {
     const seasons = await SeasonService.getActiveSeasons();
     res.status(200).json(seasons);
   } catch (error) {
+    Logger.error("SeasonController.GetActiveSeasons error", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
@@ -70,6 +61,7 @@ const getSeasonByID = asyncHandler(async (req: Request, res: Response) => {
     const season = await SeasonService.getSeasonByID(seasonID);
     res.status(200).json(season);
   } catch (error) {
+    Logger.error("SeasonController.GetSeasonById error", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 });

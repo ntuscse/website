@@ -1,6 +1,7 @@
 import moongose from "mongoose";
 import * as dotenv from "dotenv";
 import { ConnectionOptions } from "tls";
+import { Logger } from "nodelogger";
 dotenv.config();
 
 export const connectDB = async () => {
@@ -10,9 +11,9 @@ export const connectDB = async () => {
       useNewUrlParser: true,
       dbName: process.env.CHALLENGES_MONGO_DATABSE_NAME || "challenges",
     } as ConnectionOptions);
-    console.log(`MongoDB Connected: ${mongoURL}`);
+    Logger.info(`MongoDB Connected: ${mongoURL}`);
   } catch (error) {
-    console.log(error);
+    Logger.error(error);
     process.exit(1);
   }
 };
@@ -25,9 +26,9 @@ export const connectTestDB = async () => {
       // eslint-disable-next-line turbo/no-undeclared-env-vars
       dbName: process.env.MONGO_TEST_DATABSE_NAME || "test",
     } as ConnectionOptions);
-    console.log(`MongoDB Connected: ${mongoURL}`);
+    Logger.info(`MongoDB Connected: ${mongoURL}`);
   } catch (error) {
-    console.log(error);
+    Logger.error(error);
     process.exit(1);
   }
 };

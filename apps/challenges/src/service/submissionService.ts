@@ -4,6 +4,7 @@ import SubmissionRepo from "../repo/submissionRepo";
 import { GeneralResp } from "../types/types";
 import QuestionService from "./questionService";
 import ValidationService from "./validationService";
+import { Logger } from "nodelogger";
 
 const createSubmission = async (
   submission: CreateSubmissionReq
@@ -26,6 +27,7 @@ const createSubmission = async (
       throw new Error("Question has expired");
     }
   } catch (err) {
+    Logger.error("SubmissionService.CreateSubmission validation error", err);
     return {
       status: 400,
       message: (err as Error).message,
@@ -39,8 +41,8 @@ const createSubmission = async (
       submission.answer
     );
   } catch (err) {
-    console.log(
-      "submissionService createSubmission fail to validate answer: ",
+    Logger.error(
+      "SubmissionService.CreateSubmission validate answer error",
       err
     );
   }
@@ -66,13 +68,16 @@ const createSubmission = async (
     if (!question) {
       throw new Error("Failed to update question submissions");
     }
-
+    Logger.info(
+      `SubmissionService.CreateSubmission user ${submission.user.toString()} successfully created submission at season ${question.seasonID.toString()} and question ${submission.question.toString()}`
+    );
     return {
       status: 201,
       message: "Answer submitted",
       data: result,
     };
   } catch (err) {
+    Logger.error("SubmissionService.CreateSubmission create submission error", err);
     return {
       status: 500,
       message: (err as Error).message,

@@ -2,15 +2,23 @@ import mongoose from "mongoose";
 import QuestionRepo from "../repo/questionRepo";
 import { QuestionReq, GetUserSpecificQuestionResp } from "../model/question";
 import ValidationService from "./validationService";
-import { GeneralResp, StatusCodeError } from "../types/types";
+import { GeneralResp, GetQuestionsFilter, StatusCodeError } from "../types/types";
 import { QuestionInputModel } from "../model/questionInput";
+
+const GetQuestions = async (filter: GetQuestionsFilter) => {
+  return await QuestionRepo.GetQuestions(filter);
+};
 
 const getQuestionByID = async (questionID: string) => {
   if (!mongoose.isValidObjectId(questionID)) {
-    throw new Error("Invalid question ID");
+    throw new StatusCodeError(400, "Invalid question ID");
   }
   const _id = new mongoose.Types.ObjectId(questionID);
   const question = await QuestionRepo.getQuestionByID(_id);
+
+  if (!question) {
+    throw new StatusCodeError(404, "Question not found")
+  }
   return question;
 };
 
@@ -131,6 +139,7 @@ const getUserSpecificQuestion = async (
   return resp;
 };
 const QuestionService = {
+  GetQuestions,
   getQuestionByID,
   updateQuestionSubmissions,
   createQuestion,

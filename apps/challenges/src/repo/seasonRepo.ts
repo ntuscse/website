@@ -11,7 +11,6 @@ const getSeasonsByDate = async (
   startDate: Date | null,
   endDate: Date | null
 ): Promise<SeasonModel[] | null> => {
-  console.log(startDate, endDate);
   const seasons = await Season.find({
     $and: [
       startDate != null ? { endDate: { $gte: startDate } } : {},
