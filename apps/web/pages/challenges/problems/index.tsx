@@ -6,56 +6,19 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
+interface Season {
+  _id: string,
+  title: string,
+  start_date: Date,
+  end_date: Date
+}
+
 type ProblemListData = {
-  uuid: number;
+  uuid: string;
   problem: string;
   title: string;
   point: number;
   solved: number;
-};
-
-// dummy data for multiple season
-const seasonsData: Record<string, ProblemListData[]> = {
-  season1: [
-    {
-      uuid: 1001,
-      problem: "A",
-      title: "longest substring",
-      point: 500,
-      solved: 10,
-    },
-    {
-      uuid: 1002,
-      problem: "B",
-      title: "3 sum",
-      point: 300,
-      solved: 15,
-    },
-    {
-      uuid: 1003,
-      problem: "C",
-      title: "minimum spanning tree",
-      point: 400,
-      solved: 30,
-    },
-  ],
-
-  season2: [
-    {
-      uuid: 1004,
-      problem: "A",
-      title: "binary tree",
-      point: 200,
-      solved: 100,
-    },
-    {
-      uuid: 1005,
-      problem: "B",
-      title: "panlindrome",
-      point: 100,
-      solved: 1500,
-    },
-  ],
 };
 
 const columnHelper = createColumnHelper<ProblemListData>();
@@ -68,7 +31,7 @@ const columns = [
   columnHelper.accessor("title", {
     cell: (prop) => (
       <span>
-        <Link href={"/challenges/problems/submission"}>{prop.getValue()}</Link>
+        <Link href={`/challenges/problems/submission?id=${prop.row.original.uuid}`}>{prop.getValue()}</Link>
       </span>
     ),
     header: "Title",
@@ -86,19 +49,42 @@ const columns = [
 const Problems = () => {
   const [option, setOption] = useState("");
   const router = useRouter();
+  const [data, setData] = useState<ProblemListData[]>([])
+  const [seasons, setSeasons] = useState<Season[]>([])
+
+  function updateSeasonProblems(seasonID: string) {
+    const url = `http://localhost:3000/api/seasons/${seasonID}/questions`
+    fetch(url)
+      .then((res: Response) => {
+        return res.json()})
+    .then((res: any) => {
+      let probs: ProblemListData[] = res.map((ele: any) => { 
+        return {uuid: ele._id, problem: ele.question_no, title: ele.question_title, point: ele.points, solved: ele.correct_submissions_count } as ProblemListData}
+        )
+        setData(probs)
+      })
+
+  }
 
   useEffect(() => {
-    const { season } = router.query;
-    if (season) setOption(season as string);
-  }, [router.query]);
+    fetch("http://localhost:3000/api/seasons/")
+    .then((res: Response) => {
+      return res.json()
+    })
+    .then((res: any) => {
+      let seasons: Season[] = res.seasons
+      setSeasons(seasons)
+      updateSeasonProblems(seasons[0]._id)
+    })
+   
+  }, []);
 
   const handleOptionChange = (event: { target: { value: string } }) => {
     const selectedOption = event.target.value;
     setOption(selectedOption);
-    router.push(`/challenges/problems?season=${String(selectedOption)}`);
+    updateSeasonProblems(selectedOption)
   };
 
-  const selectedSeasonData = seasonsData[option] || [];
 
   return (
     <Flex
@@ -109,16 +95,15 @@ const Problems = () => {
       alignItems="center"
     >
       <Select
-        placeholder="Select Season"
         w="80vw"
         my={4}
         bg="#CBD5F0"
         onChange={handleOptionChange}
         value={option}
       >
-        {Object.keys(seasonsData).map((season) => (
-          <option key={season} value={season}>
-            {season}
+        {seasons.map((season: Season) => (
+          <option key={season._id} value={season._id}>
+            {season.title}
           </option>
         ))}
       </Select>
@@ -131,7 +116,7 @@ const Problems = () => {
         minHeight="70vh"
         borderRadius="8"
       >
-        <ProblemListTable columns={columns} data={selectedSeasonData} />
+        <ProblemListTable columns={columns} data={data} />
       </Box>
     </Flex>
   );
