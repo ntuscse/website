@@ -1,17 +1,17 @@
 import { z } from "zod";
 import QuestionService from "./questionService";
 
-const isHello = (input: any) => {
+const isHello = (input: unknown) => {
   // use zod to confirm input is string
-  z.string().parse(input);
+  const parsedInput = z.string().parse(input);
 
-  return input === "hello";
+  return parsedInput === "hello";
 };
 
 // DO NOT EXPOSE this map. Add new validation function by directly adding to the map
-const validationFunctionMap: Map<string, (input: any) => boolean> = new Map<
+const validationFunctionMap: Map<string, (input: unknown) => boolean> = new Map<
   string,
-  (input: any) => boolean
+  (input: unknown) => boolean
 >([["isHello", isHello]]);
 
 const getValidationFunction = (functionName: string) => {
@@ -23,7 +23,7 @@ const getValidationFunction = (functionName: string) => {
 
 const validateAnswer = async (
   questionID: string,
-  submission: any
+  submission: unknown
 ): Promise<boolean> => {
   const question = await QuestionService.getQuestionByID(questionID);
   if (!question) {
