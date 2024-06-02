@@ -98,7 +98,7 @@ describe('getSeasonRankings', () => {
             createdAt: new Date(),
             updatedAt: new Date()
         });
-        mockGetSeasonRankings.mockResolvedValueOnce(mockRankings);
+        mockGetSeasonRankings.mockResolvedValueOnce(mockRankings as never);
         const res = await request(app).get(`/api/seasons/${seasonID}/rankings`);
         expect(mockGetSeasonByID).toHaveBeenCalledTimes(1);
         expect(mockGetSeasonByID.mock.calls[0][0]).toBe(seasonID);
@@ -146,7 +146,7 @@ describe('getSeasonRankings', () => {
         mockGetSeasonRankingsByPagination.mockResolvedValueOnce({
             rankings: mockRankings,
             rankingsCount: mockRankingsCount
-        });
+        } as never);
         const res = await request(app).get(`/api/seasons/${seasonID}/rankings?page=${page}&limit=${limit}`);
         expect(mockGetSeasonByID).toHaveBeenCalledTimes(1);
         expect(mockGetSeasonByID.mock.calls[0][0]).toBe(seasonID);

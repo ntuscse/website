@@ -1,35 +1,37 @@
-import mongoose, {Schema} from 'mongoose';
+import mongoose, { Schema } from "mongoose";
 
 export interface RankingModel {
-    _id: mongoose.Types.ObjectId;
-    userID: mongoose.Types.ObjectId;
-    seasonID: mongoose.Types.ObjectId;
-    username: string;
-    points: number;
-    createdAt: Date;
-    updatedAt: Date;
+  _id: mongoose.Types.ObjectId;
+  userID: mongoose.Types.ObjectId;
+  seasonID: mongoose.Types.ObjectId;
+  username: string;
+  points: number;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-const seasonSchema: Schema<RankingModel> = new Schema({
+const seasonSchema: Schema<RankingModel> = new Schema(
+  {
     userID: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'User'
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
     },
     seasonID: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'Season'
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Season",
     },
     points: {
-        type: Number,
-        required: [true, 'Please add a points value']
-    }
-}, {
-    timestamps: true
-});
+      type: Number,
+      required: [true, "Please add a points value"],
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
+const Ranking = mongoose.model<RankingModel>("Ranking", seasonSchema);
 
-const Ranking = mongoose.model<RankingModel>('Ranking', seasonSchema);
-
-export { Ranking as default }
+export { Ranking as default };

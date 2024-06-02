@@ -11,6 +11,6 @@ services:
     env_file:
      - ./.env
     environment:
-      MONGO_INITDB_DATABASE: ${MONGO_DATABSE_NAME}
+      MONGO_INITDB_DATABASE: ${CHALLENGES_MONGO_DATABSE_NAME}
     volumes:
       - ./mock/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
