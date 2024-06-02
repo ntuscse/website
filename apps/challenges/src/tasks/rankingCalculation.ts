@@ -1,3 +1,4 @@
+import { Logger } from "nodelogger";
 import { UserRanking } from "../model/rankingScore";
 import { SeasonModel } from "../model/season";
 import SeasonService from "../service/seasonService";
@@ -11,17 +12,22 @@ export const clearRankingsMap = () => {
 };
 
 export const rankingCalculation = async () => {
-  
   let activeSeasons: SeasonModel[] | null;
   try {
     activeSeasons = await SeasonService.getActiveSeasons();
   } catch (err) {
-    console.log(err);
+    let errorReason = "unknown error";
+    if (err instanceof Error) {
+      errorReason = err.message;
+    }
+    Logger.error(
+      `rankingCalculation cronjob: getActiveSeasons error ${errorReason}`
+    );
     return;
   }
 
   if (!activeSeasons) {
-    console.log("rankingCalculation: no season found");
+    Logger.info("rankingCalculation cronjob: no season found");
     return;
   }
 
@@ -35,6 +41,12 @@ export const rankingCalculation = async () => {
       }
     }
   } catch (err) {
-    console.log(err);
+    let errorReason = "unknown error";
+    if (err instanceof Error) {
+      errorReason = err.message;
+    }
+    Logger.error(
+      `rankingCalculation cronjob: calculateSeasonRankings error ${errorReason}`
+    );
   }
 };
