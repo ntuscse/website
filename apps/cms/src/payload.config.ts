@@ -16,8 +16,9 @@ import MerchOverview from "./admin/views/MerchOverview";
 import MerchProducts from "./admin/views/MerchProducts";
 import { SCSEIcon, SCSELogo } from "./admin/graphics/Logos";
 import BeforeNavLinks from "./admin/components/BeforeNavLinks";
-import Order from "./collections/Orders";
+import Orders from "./collections/Orders";
 import { isUsingCloudStore } from "./utilities/cloud";
+import Products from "./collections/Products";
 
 const adapter = createS3Adapter({
   config: {
@@ -70,7 +71,7 @@ export default buildConfig({
       return config
     },
   },
-  collections: [Categories, Posts, Tags, Users, Media, Order],
+  collections: [Categories, Posts, Tags, Users, Media, Orders, Products],
   csrf: [
     // whitelist of domains to allow cookie auth from
     process.env.PAYLOAD_PUBLIC_SERVER_URL,
@@ -100,3 +101,5 @@ export default buildConfig({
     ]
     : [],
 });
+
+
