@@ -87,15 +87,38 @@ const Challenges = () => {
   const {isLogin, setIsLogin} = useChallengesAuth();
   const [seasons, setSeasons] = useState<Season[]>([]);
 
+  async function fetchToken(token: string) {
+    let body = {
+      "access_token": token
+    }
+    let headers = {
+      "Access-Control-Allow-Origin" : "*",
+      "Content-Type": "application/json"
+    }
+    console.log(body)
+    fetch("http://localhost:3000/api/auth/oauth/signin", {method: "POST", body: JSON.stringify(body), headers: headers})
+    .then((res: Response) => {
+      return res.json()
+    })
+    .then((res: any) => {
+      let accessToken = res["access_token"]
+      let refreshToken = res["refresh_token"]
+      document.cookie = `access_token=${accessToken}`
+      document.cookie = `refresh_token=${refreshToken}`
+      setIsLogin(true)
+    })
+  }
   useEffect(() => {
     if (window.location.hash) {
-      let accessToken = window.location.hash.split("=")[1]
+      let accessToken = window.location.hash.split("=")[1].split("&")[0]
       document.cookie = `access_token=${accessToken}`
+      fetchToken(accessToken)
     }
+
     if (document.cookie.includes("access_token")) {
       setIsLogin(true)
     }
-  })
+  }, [])
  
   // TODO: jump to the selected season
   const handleJoinClick = (seasonName: string) => {
