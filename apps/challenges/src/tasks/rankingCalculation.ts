@@ -1,44 +1,25 @@
 import { Logger } from "nodelogger";
-import { UserRanking } from "../model/rankingScore";
-import { SeasonModel } from "../model/season";
 import SeasonService from "../service/seasonService";
-
-export const rankingsMap: { [id: string]: UserRanking[] } = {};
-
-export const clearRankingsMap = () => {
-  for (const key in rankingsMap) {
-    delete rankingsMap[key];
-  }
-};
+import SubmissionService from "../service/submissionService";
+import RankingService from "../service/rankingService";
 
 export const rankingCalculation = async () => {
-  let activeSeasons: SeasonModel[] | null;
-  try {
-    activeSeasons = await SeasonService.getActiveSeasons();
-  } catch (err) {
-    let errorReason = "unknown error";
-    if (err instanceof Error) {
-      errorReason = err.message;
-    }
-    Logger.error(
-      `rankingCalculation cronjob: getActiveSeasons error ${errorReason}`
-    );
-    return;
+  const submissionModels =
+    await SubmissionService.GetToBeCalculatedSubmissions();
+  const activeSeasonIDs: string[] = [];
+  for (const submission of submissionModels) {
+    activeSeasonIDs.push(submission.seasonID.toString());
   }
-
-  if (!activeSeasons) {
-    Logger.info("rankingCalculation cronjob: no season found");
-    return;
-  }
-
-  const activeSeasonIDs: string[] = activeSeasons.map((a) => a._id.toString());
+  Logger.info(
+    `rankingCalculation cronjob: calculate these season rankings: ${JSON.stringify(
+      activeSeasonIDs
+    )}`
+  );
 
   try {
     for (const seasonID of activeSeasonIDs) {
-      const rankings = await SeasonService.calculateSeasonRankings(seasonID);
-      if (rankings && rankings.length > 0) {
-        rankingsMap[seasonID] = rankings;
-      }
+      const ranking = await SeasonService.calculateSeasonRankings(seasonID);
+      await RankingService.UpsertRankingsBySeasonID(ranking);
     }
   } catch (err) {
     let errorReason = "unknown error";
@@ -46,7 +27,23 @@ export const rankingCalculation = async () => {
       errorReason = err.message;
     }
     Logger.error(
-      `rankingCalculation cronjob: calculateSeasonRankings error ${errorReason}`
+      `rankingCalculation cronjob: calculateSeasonRankings then UpsertRankingsBySeasonID error: ${errorReason}`
     );
   }
+
+  try {
+      await SubmissionService.SetSubmissionsToCalculated(submissionModels);
+  } catch (err) {
+    let errorReason = "unknown error";
+    if (err instanceof Error) {
+      errorReason = err.message;
+    }
+    Logger.error(
+      `rankingCalculation cronjob: SetSubmissionsToCalculated error: ${errorReason}`
+    );
+  }
+
+  Logger.info(
+    `rankingCalculation cronjob: finish cronjob, exiting gracefully!`
+  );
 };

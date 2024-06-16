@@ -1,12 +1,27 @@
 import { isNonNegativeInteger, isPositiveInteger } from "./validator";
 
+export interface PaginateData {
+  itemCount: number;
+  limit: number;
+  pageCount: number;
+  page: number;
+  links: {
+    self: string;
+    first: string;
+    previous: string | null;
+    next: string | null;
+    last: string;
+  };
+}
+
 export const generatePaginationMetaData = (
   baseUrl: string,
   pageIndex: number,
   limit: number,
-  maxPageIndex: number,
   itemCount: number
-) => {
+): PaginateData => {
+  const maxPageIndex = itemCount == 0 ? 0 : Math.ceil(itemCount / limit) - 1;
+
   isPositiveInteger.parse(limit);
   isNonNegativeInteger.parse(pageIndex);
   isNonNegativeInteger.parse(maxPageIndex);

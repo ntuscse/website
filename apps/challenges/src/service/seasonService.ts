@@ -41,27 +41,6 @@ const createSeason = async (title: string, startDate: Date, endDate: Date) => {
   return season;
 };
 
-const getSeasonRankings = (seasonID: string) => {
-  if (!mongoose.isValidObjectId(seasonID)) {
-    throw new Error("Invalid season ID");
-  }
-  const _id = new mongoose.Types.ObjectId(seasonID);
-  const rankings = SeasonRepo.getSeasonRankings(_id);
-  return rankings;
-};
-
-const getSeasonRankingsByPagination = (
-  seasonID: string,
-  page: number,
-  limit: number
-) => {
-  if (!mongoose.isValidObjectId(seasonID)) {
-    throw new Error("Invalid season ID");
-  }
-  const _id = new mongoose.Types.ObjectId(seasonID);
-  return SeasonRepo.getSeasonRankingsByPagination(_id, page, limit);
-};
-
 /*
 const getUserSeasonRanking = async(
     seasonID: string,
@@ -110,8 +89,6 @@ const SeasonService = {
   getActiveSeasons,
   getSeasonByID,
   createSeason,
-  getSeasonRankings,
-  getSeasonRankingsByPagination,
   // getUserSeasonRanking,
   // getUserAllSeasonRankings,
   calculateSeasonRankings,

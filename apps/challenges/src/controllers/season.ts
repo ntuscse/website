@@ -4,13 +4,10 @@ import { z } from "zod";
 
 import { isValidObjectId } from "../utils/db";
 import SeasonService from "../service/seasonService";
-import {
-  isNonNegativeInteger,
-  isValidDate,
-  zodIsValidObjectId,
-} from "../utils/validator";
-import { generatePaginationMetaData } from "../utils/pagination";
+import { isValidDate, zodIsValidObjectId } from "../utils/validator";
 import { Logger } from "nodelogger";
+import RankingService from "../service/rankingService";
+import { StatusCodeError } from "../types/types";
 interface CreateSeasonRequest {
   title: string;
   startDate: number;
@@ -19,20 +16,22 @@ interface CreateSeasonRequest {
 // @desc    Get season
 // @route   GET /api/seasons
 // @access  Public
-const getSeasons = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-  const { start, end } = req.query;
+const getSeasons = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { start, end } = req.query;
 
-  try {
-    const seasons = await SeasonService.GetSeasons(start, end);
+    try {
+      const seasons = await SeasonService.GetSeasons(start, end);
 
-    res.status(200).json({
-      seasons: seasons,
-    });
-  } catch (error) {
-    Logger.error("SeasonController.GetSeasons error", error);
-    next(error);
+      res.status(200).json({
+        seasons: seasons,
+      });
+    } catch (error) {
+      Logger.error("SeasonController.GetSeasons error", error);
+      next(error);
+    }
   }
-});
+);
 
 // @desc    Getc active season
 // @route   GET /api/seasons/active
@@ -122,60 +121,30 @@ const getSeasonRankings = asyncHandler(async (req: Request, res: Response) => {
       );
     page = queryIsValid.parse(req.query).page;
     limit = queryIsValid.parse(req.query).limit;
-    const season = await SeasonService.getSeasonByID(seasonID);
-    if (!season) {
-      res.status(404).json({ message: "Season not found" });
-      return;
+    const ranking = await RankingService.GetRankingBySeasonID(
+      seasonID,
+      page,
+      limit
+    );
+    if (ranking._metaData) {
+      res.setHeader("access-control-expose-headers", "pagination");
+      res.setHeader("pagination", JSON.stringify(ranking._metaData));
     }
 
-    if (!limit && !page) {
-      const rankings = SeasonService.getSeasonRankings(seasonID);
-      res.status(200).json({
-        seasonID: seasonID,
-        rankings: rankings,
-      });
-      return;
-    }
+    res.status(200).json(ranking);
   } catch (err) {
+    Logger.error(
+      `SeasonController.getSeasonRankings error: ${JSON.stringify(
+        err
+      )}, err stack: ${JSON.stringify((err as Error).stack)}`
+    );
     if (err instanceof z.ZodError) {
       res.status(400).json({ message: "Invalid request" });
+    } else if (err instanceof StatusCodeError) {
+      res.status(err.status).json({ message: err.message });
     } else {
       res.status(500).json({ message: "Internal Server Error" });
     }
-  }
-
-  try {
-    // Limit and page must either both exist or both not exist, since both not exist is checked above, now it must be both exist
-    // This is just a redundant check added for eslint
-    if (limit === undefined || page === undefined) {
-      console.log(limit, page);
-      res.status(500).json({ message: "Internal Server Error" });
-      return;
-    }
-
-    const { rankings, rankingsCount } =
-      SeasonService.getSeasonRankingsByPagination(seasonID, page, limit);
-
-    isNonNegativeInteger.parse(rankingsCount);
-    const maxPageIndex =
-      rankingsCount == 0 ? 0 : Math.ceil(rankingsCount / limit) - 1;
-
-    const metaData = generatePaginationMetaData(
-      `/api/seasons/${seasonID}/rankings`,
-      page,
-      limit,
-      maxPageIndex,
-      rankingsCount
-    );
-    res.setHeader("access-control-expose-headers", "pagination");
-    res.setHeader("pagination", JSON.stringify(metaData));
-    res.status(200).json({
-      seasonID: seasonID,
-      rankings: rankings,
-      _metaData: metaData,
-    });
-  } catch (e) {
-    res.status(500).json({ message: "Internal Server Error" });
   }
 });
 

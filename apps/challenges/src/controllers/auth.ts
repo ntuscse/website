@@ -1,13 +1,14 @@
 import asyncHandler from "express-async-handler";
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import AuthService from "../service/authService";
 import { Logger } from "nodelogger";
+import { ErrorHandling } from "../middleware/errorHandler";
 
 interface OauthSignInReq {
   access_token: string;
 }
 
-const oauthSignIn = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+const oauthSignIn = asyncHandler(async (req: Request, res: Response) => {
   const { access_token } = req.body as OauthSignInReq;
 
   try {
@@ -19,22 +20,20 @@ const oauthSignIn = asyncHandler(async (req: Request, res: Response, next: NextF
     });
   } catch (error) {
     Logger.error("AuthController.oauthSignIn error", error);
-    next(error)
+    ErrorHandling(error, res);
   }
 });
 
-const refreshToken = asyncHandler(
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const userID = req.params.userID;
-      const token = await AuthService.refreshToken(userID);
-      res.status(200).json(token);
-    } catch (err) {
-      Logger.error("AuthController.refreshToken error", err);
-      next(err);
-    }
+const refreshToken = asyncHandler(async (req: Request, res: Response) => {
+  try {
+    const userID = req.params.userID;
+    const token = await AuthService.refreshToken(userID);
+    res.status(200).json(token);
+  } catch (err) {
+    Logger.error("AuthController.refreshToken error", err);
+    ErrorHandling(err, res);
   }
-);
+});
 
 const AuthController = {
   oauthSignIn,

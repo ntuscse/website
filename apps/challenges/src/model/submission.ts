@@ -7,12 +7,14 @@ export interface CreateSubmissionReq {
 }
 
 export interface SubmissionModel {
+  _id: mongoose.Types.ObjectId;
   user: mongoose.Types.ObjectId;
   seasonID: mongoose.Types.ObjectId;
   question: mongoose.Types.ObjectId;
   answer: string;
   correct?: boolean;
   points_awarded?: number;
+  ranking_is_calculated?: boolean;
 }
 
 const submissionSchema: Schema<SubmissionModel> = new Schema(
@@ -41,6 +43,9 @@ const submissionSchema: Schema<SubmissionModel> = new Schema(
     },
     points_awarded: {
       type: Number,
+    },
+    ranking_is_calculated: {
+      type: Boolean,
     },
   },
   {

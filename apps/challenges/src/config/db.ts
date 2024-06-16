@@ -11,6 +11,7 @@ export const connectDB = async () => {
       useNewUrlParser: true,
       dbName: process.env.CHALLENGES_MONGO_DATABSE_NAME || "challenges",
     } as ConnectionOptions);
+
     Logger.info(`[server]: MongoDB Connected: ${mongoURL}`);
   } catch (error) {
     let errorReason = "unknown error";

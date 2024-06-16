@@ -4,7 +4,9 @@ import { z } from "zod";
 
 // ExpressErrorHandler define a default error handling middleware
 // which return error responses based on the error type forwarded from controllers.
-// All controllers should pass the error to this middleware instead of returning the error response themselves.
+// This middleware is only for catching uncaught errors, and errors should still be caught in controller layer and response in controller layer if possible.
+// This is as we should handle the error as closer to the error as possible
+// The reason for this can refer to 
 export const ExpressErrorHandler = (
   err: unknown,
   req: Request,
@@ -19,6 +21,11 @@ export const ExpressErrorHandler = (
   }
   // We check the error status type, and return a default error response based on it
   // Refers to https://stackoverflow.com/a/54286277
+  ErrorHandling(err, res);
+};
+
+// ErrorHandling consists of a common logic that 
+export const ErrorHandling = (err: unknown, res: Response) => {
   switch (true) {
     case err instanceof StatusCodeError:
       res

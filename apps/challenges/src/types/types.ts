@@ -1,3 +1,4 @@
+import { ClientSession } from "mongoose";
 export interface GeneralResp {
   status: number;
   message: string;
@@ -19,4 +20,11 @@ export interface OauthcallbackResp {
 
 export interface GetQuestionsFilter {
   isActive?: boolean;
+}
+
+export interface GetRankingFilter {
+  order?: "asc" | "desc";
+  limit?: number;
+  offset?: number;
+  transaction?: ClientSession;
 }
