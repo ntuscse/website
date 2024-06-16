@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import styles from "./index.module.css";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { string } from "zod";
 import { createClient } from "@supabase/supabase-js";
 import { useChallengesAuth } from "@/features/challenges/context/AuthContext";
@@ -85,9 +85,11 @@ async function signInWithAzure() {
 const Challenges = () => {
   const router = useRouter();
   const {isLogin, setIsLogin} = useChallengesAuth();
+  const hasRunRef = useRef(false)
   const [seasons, setSeasons] = useState<Season[]>([]);
 
   async function fetchToken(token: string) {
+   
     let body = {
       "access_token": token
     }
@@ -104,11 +106,11 @@ const Challenges = () => {
       let refreshToken = res["refresh_token"]
       document.cookie = `access_token=${accessToken}`
       document.cookie = `refresh_token=${refreshToken}`
-      console.log(`acc ${accessToken}`)
       setIsLogin(true)
     })
   }
   useEffect(() => {
+    if (hasRunRef.current) return
     if (window.location.hash) {
       let accessToken = window.location.hash.split("=")[1].split("&")[0]
       document.cookie = `access_token=${accessToken}`
@@ -118,6 +120,8 @@ const Challenges = () => {
     if (document.cookie.includes("access_token")) {
       setIsLogin(true)
     }
+    hasRunRef.current = true
+
   }, [])
  
   // TODO: jump to the selected season
