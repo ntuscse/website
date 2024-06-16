@@ -1,9 +1,10 @@
 import UserService from "../service/userService";
 import asyncHandler from "express-async-handler";
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { Logger } from "nodelogger";
+import { ErrorHandling } from "../middleware/errorHandler";
 
-const getUser = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+const getUser = asyncHandler(async (req: Request, res: Response) => {
   const { userID } = req.params;
 
   try {
@@ -11,7 +12,7 @@ const getUser = asyncHandler(async (req: Request, res: Response, next: NextFunct
     res.status(200).json(user);
   } catch (err) {
     Logger.error("UserController.GetUser error", err);
-    next(err);
+    ErrorHandling(err, res);
   }
 });
 

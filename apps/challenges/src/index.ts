@@ -12,6 +12,7 @@ import { rankingCalculation } from "./tasks/rankingCalculation";
 import { SupabaseService } from "./utils/supabase";
 import { Logger, nodeloggerMiddleware } from "nodelogger";
 import { ExpressErrorHandler } from "./middleware/errorHandler";
+import { getCronjobConfig } from "./tasks/init";
 dotenv.config({ path: "../.env" });
 
 // Database
@@ -50,12 +51,25 @@ if (process.env.NODE_ENV !== "test") {
   });
 }
 
-if (process.env.NODE_ENV !== "test" && process.env.DO_RANKING_CALCULATION) {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-misused-promises
-  cron.schedule("*/15 * * * * *", async () => {
-    Logger.info("Calculating rankings...");
-    await rankingCalculation();
-  });
+// Run rankingCalculation cronjob
+// this check is added to prevent cronjob from running when supertest is running
+if (process.env.NODE_ENV !== "test") {
+  const result = getCronjobConfig(
+    process.env.RANKING_CALCULATON_INTERVAL_SECONDS,
+    60
+  );
+  Logger.info(
+    `[server]: Server setting ranking calculation interval to ${result.intervalInSeconds} second(s), cronScheduleString: ${result.cronString}`
+  );
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+  cron.schedule(
+    result.cronString,
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    async () => {
+      Logger.info("Calculating rankings...");
+      await rankingCalculation();
+    }
+  );
 }
 
 export default app;

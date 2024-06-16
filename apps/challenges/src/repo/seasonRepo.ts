@@ -1,11 +1,9 @@
 import Season, { SeasonModel } from "../model/season";
 import mongoose from "mongoose";
 
-import { UserRanking } from "../model/rankingScore";
 import Submission from "../model/submission";
-import { rankingsMap } from "../tasks/rankingCalculation";
-import { paginateArray } from "../utils/pagination";
 import Question, { QuestionModel } from "../model/question";
+import { RankingModel } from "../model/ranking";
 
 const getSeasonsByDate = async (
   startDate: Date | null,
@@ -68,8 +66,13 @@ const chatgptCalculateSeasonRankings = async (
 }
 */
 
-const calculateSeasonRankings = async (seasonID: mongoose.Types.ObjectId) => {
-  const rankings = await Submission.aggregate([
+const calculateSeasonRankings = async (
+  seasonID: mongoose.Types.ObjectId
+): Promise<Omit<RankingModel, "_id">[]> => {
+  const rankings: Omit<
+    RankingModel,
+    "_id" | "ranking" | "createdAt" | "updatedAt" | "seasonID"
+  >[] = await Submission.aggregate([
     {
       $match: {
         seasonID: seasonID,
@@ -112,36 +115,24 @@ const calculateSeasonRankings = async (seasonID: mongoose.Types.ObjectId) => {
     {
       $project: {
         _id: 0,
-        user: {
-          userID: "$user._id",
-          name: "$user.name",
-        },
+        userID: "$user._id",
+        name: "$user.name",
         points: 1,
       },
     },
   ]);
-  return rankings as UserRanking[];
-};
-
-const getSeasonRankings = (
-  seasonID: mongoose.Types.ObjectId
-): UserRanking[] | null => {
-  return rankingsMap[seasonID.toString()];
-};
-
-const getSeasonRankingsByPagination = (
-  seasonID: mongoose.Types.ObjectId,
-  page: number,
-  limit: number
-): { rankings: UserRanking[]; rankingsCount: number } => {
-  const rankings = rankingsMap[seasonID.toString()];
-  if (!rankings) {
-    return { rankings: [], rankingsCount: 0 };
-  }
-  return {
-    rankings: paginateArray(rankings, limit, page) as UserRanking[],
-    rankingsCount: rankings.length,
-  };
+  let ranking = 0;
+  const rankingDate = new Date();
+  return rankings.map((r) => {
+    ranking += 1;
+    return {
+      ...r,
+      ranking: ranking,
+      seasonID: seasonID,
+      createdAt: rankingDate,
+      updatedAt: rankingDate,
+    };
+  });
 };
 
 const getSeasonQuestions = async (
@@ -161,8 +152,6 @@ const SeasonRepo = {
   getSeasonsByDate,
   getSeasonByID,
   createSeason,
-  getSeasonRankings,
-  getSeasonRankingsByPagination,
   calculateSeasonRankings,
   getSeasonQuestions,
 };

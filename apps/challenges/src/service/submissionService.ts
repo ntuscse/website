@@ -1,5 +1,5 @@
 import { QuestionModel } from "../model/question";
-import { CreateSubmissionReq } from "../model/submission";
+import { CreateSubmissionReq, SubmissionModel } from "../model/submission";
 import SubmissionRepo from "../repo/submissionRepo";
 import { GeneralResp } from "../types/types";
 import QuestionService from "./questionService";
@@ -77,7 +77,10 @@ const createSubmission = async (
       data: result,
     };
   } catch (err) {
-    Logger.error("SubmissionService.CreateSubmission create submission error", err);
+    Logger.error(
+      "SubmissionService.CreateSubmission create submission error",
+      err
+    );
     return {
       status: 500,
       message: (err as Error).message,
@@ -85,8 +88,17 @@ const createSubmission = async (
   }
 };
 
+const GetToBeCalculatedSubmissions = async () => {
+  return await SubmissionRepo.GetToBeCalculatedSubmissions();
+};
+
+const SetSubmissionsToCalculated = async (submissions: SubmissionModel[]) => {
+  return await SubmissionRepo.SetSubmissionsToCalculated(submissions);
+};
 const SubmissionService = {
   createSubmission,
+  GetToBeCalculatedSubmissions,
+  SetSubmissionsToCalculated,
 };
 
 export default SubmissionService;
