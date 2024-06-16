@@ -10,6 +10,7 @@ module.exports = {
     "**/.next/*",
     "**/storybook-static/*",
     "**/node_modules/*",
+    "**/coverage/*"
   ],
   extends: [
     "eslint:recommended",
