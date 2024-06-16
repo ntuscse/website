@@ -92,7 +92,6 @@ const Challenges = () => {
       "access_token": token
     }
     let headers = {
-      "Access-Control-Allow-Origin" : "*",
       "Content-Type": "application/json"
     }
     console.log(body)
@@ -100,11 +99,12 @@ const Challenges = () => {
     .then((res: Response) => {
       return res.json()
     })
-    .then((res: any) => {
+    .then((res: any) => { 
       let accessToken = res["access_token"]
       let refreshToken = res["refresh_token"]
       document.cookie = `access_token=${accessToken}`
       document.cookie = `refresh_token=${refreshToken}`
+      console.log(`acc ${accessToken}`)
       setIsLogin(true)
     })
   }
