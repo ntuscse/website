@@ -8,6 +8,7 @@ import Posts from "./collections/Posts";
 import Tags from "./collections/Tags";
 import Users from "./collections/Users";
 import Media from "./collections/Media";
+import Pages from "./collections/Pages";
 
 import AfterNavLinks from "./admin/components/AfterNavLinks";
 
@@ -70,7 +71,7 @@ export default buildConfig({
       return config
     },
   },
-  collections: [Categories, Posts, Tags, Users, Media, Order],
+  collections: [Categories, Posts, Tags, Users, Media, Order, Pages],
   csrf: [
     // whitelist of domains to allow cookie auth from
     process.env.PAYLOAD_PUBLIC_SERVER_URL,

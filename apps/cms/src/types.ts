@@ -24,6 +24,7 @@ export interface Config {
     users: User;
     media: Media;
     orders: Order;
+    pages: Page;
   };
   globals: {};
 }
@@ -109,4 +110,88 @@ export interface Order {
   status: 'pending' | 'paid' | 'delivered';
   updatedAt: string;
   createdAt: string;
+}
+export interface Page {
+  id: string;
+  title: string;
+  layout?: (
+    | {
+        title: string;
+        subtitle?: string;
+        image: string | Media;
+        caption: string;
+        id?: string;
+        blockName?: string;
+        blockType: 'card';
+      }
+    | {
+        title: string;
+        description?: string;
+        fields?: {
+          label: string;
+          name: string;
+          type: 'text' | 'textarea' | 'select' | 'checkbox';
+          required?: boolean;
+          id?: string;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'form';
+      }
+    | {
+        title: string;
+        subtitle?: string;
+        images?: {
+          image: string | Media;
+          caption: string;
+          id?: string;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'photo-gallery';
+      }
+    | {
+        title: string;
+        layout: 'one-column' | 'two-columns' | 'three-columns' | 'four-columns';
+        cards?: {
+          title: string;
+          subtitle?: string;
+          image: string | Media;
+          caption: string;
+          id?: string;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'grid';
+      }
+    | {
+        title: string;
+        image: string | Media;
+        description: string;
+        id?: string;
+        blockName?: string;
+        blockType: 'hero';
+      }
+    | {
+        title: string;
+        description?: string;
+        items?: {
+          title: string;
+          description: string;
+          image: string | Media;
+          id?: string;
+        }[];
+        layout: 'default' | 'reverse';
+        id?: string;
+        blockName?: string;
+        blockType: 'two-columns';
+      }
+  )[];
+  slug?: string;
+  status?: 'draft' | 'published';
+  author?: string | User;
+  publishedDate?: string;
+  updatedAt: string;
+  createdAt: string;
+  _status?: 'draft' | 'published';
 }
