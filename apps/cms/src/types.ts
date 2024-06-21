@@ -186,6 +186,36 @@ export interface Page {
         blockName?: string;
         blockType: 'two-columns';
       }
+    | {
+        logo: string | Media;
+        navItems?: {
+          label: string;
+          subnavItems?: {
+            subnavTitle: string;
+            url: string;
+            id?: string;
+          }[];
+          id?: string;
+        }[];
+        status?: 'draft' | 'published';
+        id?: string;
+        blockName?: string;
+        blockType: 'navbar';
+      }
+    | {
+        sections?: {
+          sectionTitle: string;
+          links?: {
+            linkName: string;
+            url: string;
+            id?: string;
+          }[];
+          id?: string;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'footer';
+      }
   )[];
   slug?: string;
   status?: 'draft' | 'published';
