@@ -6,24 +6,6 @@ import { PhotoGalleryBlock } from "../blocks/Gallery";
 import GridBlock from "../blocks/Grid";
 import { HeroBlock } from "../blocks/Hero";
 import { TwoColumnsBlock } from "../blocks/TwoColumn";
-import NavbarBlock from "../blocks/NavBar";
-import FooterBlock from "../blocks/Footer";
-
-const uniqueBlocks = (value, { siblingData }) => {
-    const navbars = siblingData?.layout?.filter(block => block.blockType === 'navbar') || [];
-    const footers = siblingData?.layout?.filter(block => block.blockType === 'footer') || [];
-    
-    if (navbars.length > 1) {
-        return 'Only one Navbar block is allowed';
-      }
-    
-      if (footers.length > 1) {
-        return 'Only one Footer block is allowed';
-      }
-    
-      return true;
-};
-
 
 const Pages: CollectionConfig = {
   slug: "pages",
@@ -56,16 +38,13 @@ const Pages: CollectionConfig = {
       label: "Page Layout",
       type: "blocks",
       minRows: 1,
-      validate: uniqueBlocks,
       blocks: [
         CardBlock,
         FormBlock,
         PhotoGalleryBlock,
         GridBlock,
         HeroBlock,
-        TwoColumnsBlock,
-        NavbarBlock,
-        FooterBlock
+        TwoColumnsBlock
       ],
     },
     {

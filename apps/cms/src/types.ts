@@ -25,6 +25,7 @@ export interface Config {
     media: Media;
     orders: Order;
     pages: Page;
+    navigation: Navigation;
   };
   globals: {};
 }
@@ -186,6 +187,19 @@ export interface Page {
         blockName?: string;
         blockType: 'two-columns';
       }
+  )[];
+  slug?: string;
+  status?: 'draft' | 'published';
+  author?: string | User;
+  publishedDate?: string;
+  updatedAt: string;
+  createdAt: string;
+  _status?: 'draft' | 'published';
+}
+export interface Navigation {
+  id: string;
+  title: string;
+  layout?: (
     | {
         logo: string | Media;
         navItems?: {
