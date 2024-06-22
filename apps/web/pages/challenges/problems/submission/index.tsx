@@ -52,7 +52,6 @@ const Profile = () => {
     setUserInput(event.target.value);
   };
 
-  // validation placeholder
   function validateAnswer(userInput: string | number) {
     if (!userInput) {
       setErrorMessage("input is required");
@@ -88,14 +87,6 @@ const Profile = () => {
       setIsInvalid(true);
       }
     })
-    // else if (userInput != problem?.answer) {
-    //   // just a dummy hardcoded answer here
-    //   setErrorMessage("wrong answer, please try again");
-    //   setIsInvalid(true);
-    // } else {
-    //   setErrorMessage("");
-    //   setIsCorrect(true);
-    // }
 
     return;
   }
@@ -138,13 +129,13 @@ const Profile = () => {
   const parsePuzzleInput = (input: string[]) => {
     let parsedInput = ""
     input.forEach((ele) => {
-      parsedInput += ele += "\n"
+      parsedInput += ele + "\n"
     })
     return parsedInput
   }
 
   useEffect(() => {
-    const questionUrl = document.cookie.includes("access_token") ? `http://localhost:3000/api/question/${router.query.id}/user` :  `http://localhost:3000/api/question/${router.query.id}`
+    const questionUrl = `http://localhost:3000/api/question/${router.query.id}` + (document.cookie.includes("access_token") ? "/user" : "")
     const headers = {"Authorization": document.cookie.includes("access_token") ?  retrieveCookie("access_token") : ""}
     fetch(questionUrl, {headers: headers})
     .then((res: Response) => {
@@ -158,7 +149,7 @@ const Profile = () => {
         problemInput: res.question_input
       }
       setProblem(resProbem)
-      setPuzzleInput(parsePuzzleInput(resProbem.problemInput))
+      if (document.cookie.includes("access_token")) setPuzzleInput(parsePuzzleInput(resProbem.problemInput))
     })
   }, [])
 
@@ -204,6 +195,7 @@ const Profile = () => {
         </Text>
       </Box>
       <Box w="40vw" px={4} my={40} mx={10} flexDirection="column">
+        {document.cookie.includes("access_token") ? 
         <FormControl isInvalid={isInvalid}>
           <FormLabel>Answer:</FormLabel>
           <Input
@@ -230,6 +222,8 @@ const Profile = () => {
             Submit
           </Button>
         </FormControl>
+        : <></>}
+        
       </Box>
     </Flex>
   );
