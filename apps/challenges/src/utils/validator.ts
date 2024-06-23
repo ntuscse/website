@@ -30,8 +30,7 @@ export const zodIsValidRFC3339 = z
     message: "Invalid RFC3339 date",
   });
 
-export const isValidCreateSubmissionRequest = z.object({
-  user: zodIsValidObjectId,
+export const isValidCreateSubmissionRequestBody = z.object({
   question: zodIsValidObjectId,
   answer: z.string(),
 });

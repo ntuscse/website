@@ -9,7 +9,7 @@ import AuthRouter from "./routes/auth";
 import { connectDB } from "./config/db";
 
 import { rankingCalculation } from "./tasks/rankingCalculation";
-import { SupabaseService } from "./utils/supabase";
+import { SupabaseService } from "./config/supabase";
 import { Logger, nodeloggerMiddleware } from "nodelogger";
 import { ExpressErrorHandler } from "./middleware/errorHandler";
 import { getCronjobConfig } from "./tasks/init";

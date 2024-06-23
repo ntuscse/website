@@ -22,25 +22,23 @@ export const rankingCalculation = async () => {
       await RankingService.UpsertRankingsBySeasonID(ranking);
     }
   } catch (err) {
-    let errorReason = "unknown error";
-    if (err instanceof Error) {
-      errorReason = err.message;
-    }
     Logger.error(
-      `rankingCalculation cronjob: calculateSeasonRankings then UpsertRankingsBySeasonID error: ${errorReason}`
+      `rankingCalculation cronjob: calculateSeasonRankings then UpsertRankingsBySeasonID error:`,
+      err,
+      err instanceof Error ? (err).stack : undefined
     );
+    return;
   }
 
   try {
-      await SubmissionService.SetSubmissionsToCalculated(submissionModels);
+    await SubmissionService.SetSubmissionsToCalculated(submissionModels);
   } catch (err) {
-    let errorReason = "unknown error";
-    if (err instanceof Error) {
-      errorReason = err.message;
-    }
     Logger.error(
-      `rankingCalculation cronjob: SetSubmissionsToCalculated error: ${errorReason}`
+      `rankingCalculation cronjob: SetSubmissionsToCalculated error:`,
+      err,
+      err instanceof Error ? err.stack : undefined
     );
+    return;
   }
 
   Logger.info(

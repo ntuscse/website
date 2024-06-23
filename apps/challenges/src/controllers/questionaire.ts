@@ -1,56 +1,72 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
 import Question, { QuestionReq } from "../model/question";
 import { isValidObjectId } from "../utils/db";
 import QuestionService from "../service/questionService";
 import { isValidQuestionRequest } from "../utils/validator";
-import { z } from "zod";
 import { Logger } from "nodelogger";
+import { ErrorHandling } from "../middleware/errorHandler";
 
 // @desc    Get questions
 // @route   GET /api/question
 // @access  Public
-const getQuestions = asyncHandler(
-  async (req: Request, res: Response, next: NextFunction) => {
-    // We pass in empty object, meaning that we GetQuestions without setting any filters.
-    // This means we will return all questions in our db.
-    try {
-      const questions = await QuestionService.GetQuestions({});
+const getQuestions = asyncHandler(async (req: Request, res: Response) => {
+  // We pass in empty object, meaning that we GetQuestions without setting any filters.
+  // This means we will return all questions in our db.
+  try {
+    const questions = await QuestionService.GetQuestions({});
 
-      res.status(200).json(questions);
-    } catch (err) {
-      Logger.error("QuestionnaireController.GetQuestions error", err);
-      next(err);
-    }
+    res.status(200).json(questions);
+  } catch (err) {
+    const error = err as Error;
+    Logger.error(
+      "QuestionnaireController.GetQuestions error",
+      error,
+      error.stack
+    );
+    ErrorHandling(err, res);
   }
-);
+});
 
 // @desc    Get active questions
 // @route   GET /api/activity/active
 // @access  Public
 const getActiveQuestions = asyncHandler(async (req: Request, res: Response) => {
-  const questions = await QuestionService.GetQuestions({ isActive: true });
+  try {
+    const questions = await QuestionService.GetQuestions({ isActive: true });
 
-  res.status(200).json(questions);
+    res.status(200).json(questions);
+  } catch (err) {
+    const error = err as Error;
+    Logger.error(
+      "QuestionnaireController.GetActiveQuestions error",
+      error,
+      error.stack
+    );
+    ErrorHandling(err, res);
+  }
 });
 
 // @desc    Get question
 // @route   GET /api/question/:id
 // @access  Public
-const getQuestion = asyncHandler(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const questionId = req.params.id;
+const getQuestion = asyncHandler(async (req: Request, res: Response) => {
+  const questionId = req.params.id;
 
-    try {
-      const question = await QuestionService.getQuestionByID(questionId);
+  try {
+    const question = await QuestionService.getQuestionByID(questionId);
 
-      res.status(200).json(question);
-    } catch (error) {
-      Logger.error("QuestionnaireController.GetQuestion error", error);
-      next(error);
-    }
+    res.status(200).json(question);
+  } catch (err) {
+    const error = err as Error;
+    Logger.error(
+      "QuestionnaireController.GetQuestion error",
+      error,
+      error.stack
+    );
+    ErrorHandling(err, res);
   }
-);
+});
 
 const getUserSpecificQuestion = asyncHandler(
   async (req: Request, res: Response) => {
@@ -69,12 +85,14 @@ const getUserSpecificQuestion = asyncHandler(
       }
 
       res.status(200).json(question);
-    } catch (error) {
+    } catch (err) {
+      const error = err as Error;
       Logger.error(
         "QuestionnaireController.GetUserSpecificQuestion error",
-        error
+        error,
+        error.stack
       );
-      res.status(500).json({ message: "Internal Server Error" });
+      ErrorHandling(err, res);
     }
   }
 );
@@ -96,14 +114,13 @@ const setQuestion = asyncHandler(async (req: Request, res: Response) => {
 
     res.status(resp.status).json(resp);
   } catch (err) {
-    if (err instanceof z.ZodError) {
-      const message = err.issues.map((issue) => issue.message).join(", ");
-      res.status(400).json({ message });
-      return;
-    }
-
-    Logger.error("QuestionnaireController.SetQuestion error", err);
-    res.status(500).json({ message: "Internal Server Error" });
+    const error = err as Error;
+    Logger.error(
+      "QuestionnaireController.SetQuestion error",
+      error,
+      error.stack
+    );
+    ErrorHandling(err, res);
   }
 });
 
@@ -139,9 +156,14 @@ const updateQuestion = asyncHandler(async (req: Request, res: Response) => {
     );
 
     res.status(200).json(updatedQuestion);
-  } catch (error) {
-    Logger.error("QuestionnaireController.UpdateQuestion error", error);
-    res.status(500).json({ message: "Internal Server Error" });
+  } catch (err) {
+    const error = err as Error;
+    Logger.error(
+      "QuestionnaireController.UpdateQuestion error",
+      error,
+      error.stack
+    );
+    ErrorHandling(err, res);
   }
 });
 
@@ -167,9 +189,14 @@ const deleteQuestion = asyncHandler(async (req: Request, res: Response) => {
     await question.remove();
 
     res.status(200).json({ message: "Question deleted" });
-  } catch (error) {
-    Logger.error("QuestionnaireController.DeleteQuestion error", error);
-    res.status(500).json({ message: "Internal Server Error" });
+  } catch (err) {
+    const error = err as Error;
+    Logger.error(
+      "QuestionnaireController.DeleteQuestion error",
+      error,
+      error.stack
+    );
+    ErrorHandling(err, res);
   }
 });
 

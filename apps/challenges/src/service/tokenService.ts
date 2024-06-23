@@ -23,9 +23,11 @@ const generateRefreshToken = (id: string, email: string) => {
   return token;
 };
 
-const extendRefreshToken = (userID: string): Promise<TokenModel | null> => {
+const extendRefreshToken = async (
+  userID: string
+): Promise<TokenModel | null> => {
   const mongoUserID = zodGetValidObjectId.parse(userID);
-  return TokenRepo.extendRefreshToken(mongoUserID);
+  return await TokenRepo.extendRefreshToken(mongoUserID);
 };
 const TokenService = {
   generateAccessToken,

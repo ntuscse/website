@@ -5,7 +5,7 @@ import {
   getEmailPrefix,
   zodIsValidObjectId,
 } from "../utils/validator";
-import supabase from "../utils/supabase";
+import supabase from "../config/supabase";
 import TokenService from "./tokenService";
 import TokenRepo from "../repo/tokenRepo";
 import { StatusCodeError } from "../types/types";
