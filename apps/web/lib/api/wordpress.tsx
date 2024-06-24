@@ -5,11 +5,11 @@ import {
 
 const API_URL = process.env.WORDPRESS_API_URL ?? "";
 
-export async function fetchAPI(
+export async function fetchAPI<T>(
   query = "",
   { variables }: Record<string, unknown> = {}
 ) {
-  const headers: Record<string, any> = { "Content-Type": "application/json" };
+  const headers: Record<string, string> = { "Content-Type": "application/json" };
 
   // if (process.env.WORDPRESS_AUTH_REFRESH_TOKEN) {
   //   headers[
@@ -26,16 +26,19 @@ export async function fetchAPI(
     }),
   });
 
-  const json = (await res.json()) as Record<string, any>;
+  const json = (await res.json()) as {
+    errors: string[],
+    data: T,
+  };
   if (json.errors) {
     console.error(json.errors);
     throw new Error(`Failed to fetch API\n${JSON.stringify(json.errors)}`);
   }
-  return json.data as Record<string, any>;
+  return json.data;
 }
 
 export async function getAllBlogPosts() {
-  const data = (await fetchAPI(`
+  const data = await fetchAPI<GetAllBlogPostsResponse>(`
     query AllBlogPosts {
       posts(first: 1000) {
         edges {
@@ -61,12 +64,12 @@ export async function getAllBlogPosts() {
         }
       }
     }
-  `)) as GetAllBlogPostsResponse;
+  `);
   return data?.posts;
 }
 
 export async function getAllBlogPostsSlugs() {
-  const data = (await fetchAPI(`
+  const data = await fetchAPI<GetAllBlogPostsResponse>(`
     query AllBlogPostsSlugs {
       posts(first: 1000) {
         edges {
@@ -77,12 +80,12 @@ export async function getAllBlogPostsSlugs() {
         }
       }
     }
-  `)) as GetAllBlogPostsResponse;
+  `);
   return data?.posts;
 }
 
 export async function getBlogPost(postSlug: string) {
-  const data = (await fetchAPI(
+  const data = await fetchAPI<GetBlogPostResponse>(
     `
     query BlogPost($postSlug: ID!)
       {
@@ -113,6 +116,6 @@ export async function getBlogPost(postSlug: string) {
         postSlug,
       },
     }
-  )) as GetBlogPostResponse;
+  );
   return data?.post;
 }

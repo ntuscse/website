@@ -24,9 +24,9 @@ export type CartAction =
   | { type: CartActionType.ADD_ITEM; payload: CartItem }
   | { type: CartActionType.UPDATE_QUANTITY; payload: CartItem }
   | {
-      type: CartActionType.REMOVE_ITEM;
-      payload: { id: string; size: string; color: string };
-    }
+    type: CartActionType.REMOVE_ITEM;
+    payload: { id: string; size: string; color: string };
+  }
   | { type: CartActionType.VALID_VOUCHER; payload: string }
   | { type: CartActionType.REMOVE_VOUCHER; payload: null }
   | { type: CartActionType.UPDATE_NAME; payload: string }
@@ -72,10 +72,10 @@ export const cartReducer = (
             idx === -1
               ? [...state.cart.items, action.payload]
               : [
-                  ...state.cart.items.slice(0, idx),
-                  { ...state.cart.items[idx], quantity: newQuantity },
-                  ...state.cart.items.slice(idx + 1),
-                ],
+                ...state.cart.items.slice(0, idx),
+                { ...state.cart.items[idx], quantity: newQuantity },
+                ...state.cart.items.slice(idx + 1),
+              ],
         },
       };
     }
@@ -93,10 +93,10 @@ export const cartReducer = (
             idx === -1
               ? [...state.cart.items]
               : [
-                  ...state.cart.items.slice(0, idx),
-                  { ...state.cart.items[idx], quantity },
-                  ...state.cart.items.slice(idx + 1),
-                ],
+                ...state.cart.items.slice(0, idx),
+                { ...state.cart.items[idx], quantity },
+                ...state.cart.items.slice(idx + 1),
+              ],
         },
       };
     }
@@ -149,7 +149,7 @@ interface CartProviderProps {
   children: React.ReactNode;
 }
 
-export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
+export const CartProvider = ({ children }: CartProviderProps) => {
   const [state, dispatch] = useReducer(cartReducer, initState);
   const value = useMemo(() => ({ state, dispatch }), [state]);
 

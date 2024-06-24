@@ -1,5 +1,4 @@
-import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { type Meta, type StoryFn } from "@storybook/react";
 
 import { VercelPowered } from "./VercelPowered";
 
@@ -7,9 +6,9 @@ export default {
   title: "Components/VercelPowered",
   component: VercelPowered,
   argTypes: {},
-} as ComponentMeta<typeof VercelPowered>;
+} as Meta<typeof VercelPowered>;
 
-const Template: ComponentStory<typeof VercelPowered> = (args) => (
+const Template: StoryFn<typeof VercelPowered> = (args) => (
   <VercelPowered {...args} />
 );
 
