@@ -14,6 +14,7 @@ const ItemSkeleton = () => (
     <SkeletonText noOfLines={2} spacing="4" w="100%" />
   </Flex>
 );
+
 const CheckoutSkeleton: React.FC = () => {
   return (
     <Grid
@@ -42,3 +43,4 @@ const CheckoutSkeleton: React.FC = () => {
 };
 
 export default CheckoutSkeleton;
+
