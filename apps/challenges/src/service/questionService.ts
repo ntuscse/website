@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 import QuestionRepo from "../repo/questionRepo";
-import { QuestionReq, GetUserSpecificQuestionResp } from "../model/question";
+import {
+  QuestionReq,
+  GetUserSpecificQuestionResp,
+  QuestionModel,
+} from "../model/question";
 import ValidationService from "./validationService";
 import {
   GeneralResp,
@@ -9,6 +13,7 @@ import {
 } from "../types/types";
 import { QuestionInputModel } from "../model/questionInput";
 import { Logger } from "nodelogger";
+import { isValidQuestionRequest } from "../utils/validator";
 
 const GetQuestions = async (filter: GetQuestionsFilter) => {
   return await QuestionRepo.GetQuestions(filter);
@@ -63,6 +68,25 @@ const createQuestion = async (req: QuestionReq): Promise<GeneralResp> => {
   };
 };
 
+const UpdateQuestion = async (questionID: string, req: QuestionReq) => {
+  const question = await getQuestionByID(questionID);
+  const toBeUpdateQuestion = isValidQuestionRequest.parse(req);
+  const dbQuestionModel: QuestionModel = {
+    ...toBeUpdateQuestion,
+    _id: question._id,
+    seasonID: new mongoose.Types.ObjectId(toBeUpdateQuestion.season_id),
+    question_date: new Date(question.question_date),
+    expiry: new Date(question.expiry),
+    submissions: question.submissions,
+    submissions_count: question.submissions_count,
+    correct_submissions_count: question.correct_submissions_count,
+  };
+  const updatedQuestion = await QuestionRepo.updateQuestionByID(
+    question._id,
+    dbQuestionModel
+  );
+  return updatedQuestion;
+};
 const updateQuestionSubmissions = async (
   questionID: string,
   submissionID: string,
@@ -152,6 +176,7 @@ const getUserSpecificQuestion = async (
 const QuestionService = {
   GetQuestions,
   getQuestionByID,
+  UpdateQuestion,
   updateQuestionSubmissions,
   createQuestion,
   getUserSpecificQuestion,

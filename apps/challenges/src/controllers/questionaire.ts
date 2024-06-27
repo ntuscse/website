@@ -128,31 +128,12 @@ const setQuestion = asyncHandler(async (req: Request, res: Response) => {
 // @route   PUT /api/question/:id
 // @access  Private
 const updateQuestion = asyncHandler(async (req: Request, res: Response) => {
-  const questionId = req.params.id;
-  if (!isValidObjectId(questionId)) {
-    res.status(400).json({ message: "Invalid question ID" });
-    return;
-  }
   try {
-    const question = await Question.findById(questionId);
+    const questionId = req.params.id;
 
-    if (!question) {
-      res.status(404).json({ message: "Question not found" });
-      return;
-    }
-
-    const toBeUpdateQuestion = isValidQuestionRequest.parse(req.body);
-
-    const updateQuestionReq: QuestionReq = {
-      ...toBeUpdateQuestion,
-      question_date: new Date(question.question_date),
-      expiry: new Date(question.expiry),
-    };
-
-    const updatedQuestion = await Question.findByIdAndUpdate(
+    const updatedQuestion = await QuestionService.UpdateQuestion(
       questionId,
-      updateQuestionReq,
-      { new: true }
+      req.body as QuestionReq
     );
 
     res.status(200).json(updatedQuestion);

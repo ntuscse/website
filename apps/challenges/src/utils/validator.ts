@@ -47,6 +47,7 @@ export const isValidQuestionRequest = z.object({
   points: z.number().int(),
   validation_function: z.string(),
   generate_input_function: z.string(),
+  active: z.boolean(),
 });
 
 export const isPositiveInteger = z.number().int().min(1);
