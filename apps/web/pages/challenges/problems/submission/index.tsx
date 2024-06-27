@@ -58,12 +58,7 @@ const Profile = () => {
       setIsInvalid(true);
       return;
     } 
-    
-    if (isNaN(Number(userInput))) {
-      setErrorMessage("numbers only");
-      setIsInvalid(true);
-      return;
-    } 
+
     
     let body = {
       answer: userInput,
