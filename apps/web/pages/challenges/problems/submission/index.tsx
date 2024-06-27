@@ -21,24 +21,24 @@ import {
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-
-type InputData = {
-  input: string;
-};
-
 interface Problem {
   uuid: string;
   title: string;
   desc: string;
-  answer: string
+  problemInput: string[];
 }
 
-const inputData: InputData = {
-  input: "2\n5\n30 40 20 20 100\n6\n1 2 3 4 5 6",
-};
+interface SubmissionResponse {
+  message: string,
+  data: {
+    correct: boolean,
+    points_awarded: number
+  }
+}
 
 const Profile = () => {
-  const [userInput, setUserInput] = useState("");
+  const [userInput, setUserInput] = useState("")
+  const [puzzleInput, setPuzzleInput] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isCorrect, setIsCorrect] = useState(false);
   const [isInvalid, setIsInvalid] = useState(false);
@@ -52,22 +52,41 @@ const Profile = () => {
     setUserInput(event.target.value);
   };
 
-  // validation placeholder
   function validateAnswer(userInput: string | number) {
     if (!userInput) {
       setErrorMessage("input is required");
       setIsInvalid(true);
-    } else if (isNaN(Number(userInput))) {
+      return;
+    } 
+    
+    if (isNaN(Number(userInput))) {
       setErrorMessage("numbers only");
       setIsInvalid(true);
-    } else if (userInput != problem?.answer) {
-      // just a dummy hardcoded answer here
+      return;
+    } 
+    
+    let body = {
+      answer: userInput,
+      question: problem?.uuid
+    }
+    let headers = {
+      "Authorization": retrieveCookie("access_token"),
+      "Content-Type": "application/json"
+    }
+    fetch("http://localhost:3000/api/submission", {method: "POST", body: JSON.stringify(body), headers: headers})
+    .then((res: Response) => {
+      return res.json()
+    })
+    .then((res: SubmissionResponse) => {
+      let correct = res.data.correct;
+      if (correct) {
+        setIsCorrect(true)
+        setErrorMessage("")
+      } else {
       setErrorMessage("wrong answer, please try again");
       setIsInvalid(true);
-    } else {
-      setErrorMessage("");
-      setIsCorrect(true);
-    }
+      }
+    })
 
     return;
   }
@@ -80,7 +99,7 @@ const Profile = () => {
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(inputData.input);
+    navigator.clipboard.writeText(puzzleInput);
     toast({
       title: "Input has been copied to clipboard!",
       status: "success",
@@ -89,19 +108,48 @@ const Profile = () => {
     });
   };
 
+  const retrieveCookie = (key: string) => {
+    // Split cookie string into an array of key-value pairs
+    const cookies = document.cookie.split(';');
+
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim(); // Remove leading/trailing whitespace
+  
+      // Check if cookie name matches the desired name
+      if (cookie.startsWith(key + '=')) {
+        // Return the value part of the cookie
+        return cookie.split('=')[1];
+      }
+    }
+  
+    // If no cookie found
+    return "nil";
+  }
+
+  const parsePuzzleInput = (input: string[]) => {
+    let parsedInput = ""
+    input.forEach((ele) => {
+      parsedInput += ele + "\n"
+    })
+    return parsedInput
+  }
+
   useEffect(() => {
-    fetch(`http://localhost:3000/api/question/${router.query.id}`)
+    const questionUrl = `http://localhost:3000/api/question/${router.query.id}` + (document.cookie.includes("access_token") ? "/user" : "")
+    const headers = {"Authorization": document.cookie.includes("access_token") ?  retrieveCookie("access_token") : ""}
+    fetch(questionUrl, {headers: headers})
     .then((res: Response) => {
       return res.json()
     })
     .then((res: any) => {
       const resProbem: Problem = {
-        uuid: res._uid,
+        uuid: res.id,
         title: res.question_title,
         desc: res.question_desc,
-        answer: res.answer
+        problemInput: res.question_input
       }
       setProblem(resProbem)
+      if (document.cookie.includes("access_token")) setPuzzleInput(parsePuzzleInput(resProbem.problemInput))
     })
   }, [])
 
@@ -125,7 +173,7 @@ const Profile = () => {
             <ModalHeader>Your Input</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              <Text whiteSpace="pre-wrap">{inputData.input}</Text>
+              <Text whiteSpace="pre-wrap">{puzzleInput}</Text>
             </ModalBody>
             <ModalFooter>
               <Button onClick={onClose} size="sm" mr={3}>
@@ -147,6 +195,7 @@ const Profile = () => {
         </Text>
       </Box>
       <Box w="40vw" px={4} my={40} mx={10} flexDirection="column">
+        {document.cookie.includes("access_token") ? 
         <FormControl isInvalid={isInvalid}>
           <FormLabel>Answer:</FormLabel>
           <Input
@@ -173,6 +222,8 @@ const Profile = () => {
             Submit
           </Button>
         </FormControl>
+        : <></>}
+        
       </Box>
     </Flex>
   );
