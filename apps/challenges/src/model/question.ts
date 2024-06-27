@@ -10,6 +10,7 @@ export interface QuestionReq {
   points: number;
   validation_function: string;
   generate_input_function: string;
+  active: boolean;
 }
 
 export interface GetUserSpecificQuestionResp {

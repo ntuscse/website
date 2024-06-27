@@ -1,5 +1,6 @@
 import { SupabaseClient, createClient } from "@supabase/supabase-js";
 import dotenv from "dotenv";
+import { Logger } from "nodelogger";
 dotenv.config({ path: "../.env" });
 
 let supabase: SupabaseClient;
@@ -17,7 +18,7 @@ const initClient = () => {
       },
     }
   );
-  console.log("Supabase client initialized");
+  Logger.info("[server]: Supabase client initialized");
 };
 
 const SupabaseService = {

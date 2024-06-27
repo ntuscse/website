@@ -11,7 +11,8 @@ const getUser = asyncHandler(async (req: Request, res: Response) => {
     const user = await UserService.getUserByID(userID);
     res.status(200).json(user);
   } catch (err) {
-    Logger.error("UserController.GetUser error", err);
+    const error = err as Error;
+    Logger.error("UserController.GetUser error", error, error.stack);
     ErrorHandling(err, res);
   }
 });

@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
 import { z } from "zod";
 
@@ -8,6 +8,7 @@ import { isValidDate, zodIsValidObjectId } from "../utils/validator";
 import { Logger } from "nodelogger";
 import RankingService from "../service/rankingService";
 import { StatusCodeError } from "../types/types";
+import { ErrorHandling } from "../middleware/errorHandler";
 interface CreateSeasonRequest {
   title: string;
   startDate: number;
@@ -16,22 +17,21 @@ interface CreateSeasonRequest {
 // @desc    Get season
 // @route   GET /api/seasons
 // @access  Public
-const getSeasons = asyncHandler(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const { start, end } = req.query;
+const getSeasons = asyncHandler(async (req: Request, res: Response) => {
+  const { start, end } = req.query;
 
-    try {
-      const seasons = await SeasonService.GetSeasons(start, end);
+  try {
+    const seasons = await SeasonService.GetSeasons(start, end);
 
-      res.status(200).json({
-        seasons: seasons,
-      });
-    } catch (error) {
-      Logger.error("SeasonController.GetSeasons error", error);
-      next(error);
-    }
+    res.status(200).json({
+      seasons: seasons,
+    });
+  } catch (err) {
+    const error = err as Error;
+    Logger.error("SeasonController.GetSeasons error", error, error.stack);
+    ErrorHandling(err, res);
   }
-);
+});
 
 // @desc    Getc active season
 // @route   GET /api/seasons/active
@@ -40,9 +40,10 @@ const getActiveSeasons = asyncHandler(async (req: Request, res: Response) => {
   try {
     const seasons = await SeasonService.getActiveSeasons();
     res.status(200).json(seasons);
-  } catch (error) {
-    Logger.error("SeasonController.GetActiveSeasons error", error);
-    res.status(500).json({ message: "Internal Server Error" });
+  } catch (err) {
+    const error = err as Error;
+    Logger.error("SeasonController.GetActiveSeasons error", error, error.stack);
+    ErrorHandling(err, res);
   }
 });
 
@@ -59,9 +60,10 @@ const getSeasonByID = asyncHandler(async (req: Request, res: Response) => {
   try {
     const season = await SeasonService.getSeasonByID(seasonID);
     res.status(200).json(season);
-  } catch (error) {
-    Logger.error("SeasonController.GetSeasonById error", error);
-    res.status(500).json({ message: "Internal Server Error" });
+  } catch (err) {
+    const error = err as Error;
+    Logger.error("SeasonController.GetSeasonByID error", error, error.stack);
+    ErrorHandling(err, res);
   }
 });
 
@@ -94,8 +96,10 @@ const createSeason = asyncHandler(async (req: Request, res: Response) => {
       _endDate
     );
     res.status(201).json(season);
-  } catch (error) {
-    res.status(500).json({ message: "Internal Server Error" });
+  } catch (err) {
+    const error = err as Error;
+    Logger.error("SeasonController.CreateSeason error", error, error.stack);
+    ErrorHandling(err, res);
   }
 });
 
@@ -133,10 +137,11 @@ const getSeasonRankings = asyncHandler(async (req: Request, res: Response) => {
 
     res.status(200).json(ranking);
   } catch (err) {
+    const error = err as Error;
     Logger.error(
-      `SeasonController.getSeasonRankings error: ${JSON.stringify(
-        err
-      )}, err stack: ${JSON.stringify((err as Error).stack)}`
+      `SeasonController.getSeasonRankings error`,
+      error,
+      error.stack
     );
     if (err instanceof z.ZodError) {
       res.status(400).json({ message: "Invalid request" });
@@ -162,6 +167,12 @@ const getSeasonQuestions = asyncHandler(async (req: Request, res: Response) => {
 
     res.status(200).json(questions);
   } catch (err) {
+    const error = err as Error;
+    Logger.error(
+      `SeasonController.GetSeasonQuestions error`,
+      error,
+      error.stack
+    );
     if (err instanceof z.ZodError) {
       res.status(400).json({ message: "Invalid request" });
     } else {

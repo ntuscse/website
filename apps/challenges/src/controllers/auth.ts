@@ -18,8 +18,9 @@ const oauthSignIn = asyncHandler(async (req: Request, res: Response) => {
       access_token: accessToken,
       refresh_token: refreshToken,
     });
-  } catch (error) {
-    Logger.error("AuthController.oauthSignIn error", error);
+  } catch (err) {
+    const error = err as Error;
+    Logger.error("AuthController.oauthSignIn error", error, error.stack);
     ErrorHandling(error, res);
   }
 });
@@ -30,7 +31,8 @@ const refreshToken = asyncHandler(async (req: Request, res: Response) => {
     const token = await AuthService.refreshToken(userID);
     res.status(200).json(token);
   } catch (err) {
-    Logger.error("AuthController.refreshToken error", err);
+    const error = err as Error;
+    Logger.error("AuthController.refreshToken error", error, error.stack);
     ErrorHandling(err, res);
   }
 });

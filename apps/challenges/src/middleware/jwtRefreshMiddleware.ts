@@ -8,6 +8,7 @@ import {
 import TokenService from "../service/tokenService";
 import { z } from "zod";
 import { TokenModel } from "../model/token";
+import { Logger } from "nodelogger";
 
 interface JWTRefreshTokenContent {
   id: string;
@@ -21,6 +22,7 @@ const jwtRefreshMiddleware = (
   const token = req.headers.authorization;
 
   if (token == null) {
+    Logger.error("jwtRefreshMiddleware receive null token");
     return res.sendStatus(401);
   }
 
@@ -29,6 +31,11 @@ const jwtRefreshMiddleware = (
     const decoded = jwt.verify(token, process.env.CHALLENGES_JWT_SECRET || "");
     jwtRefreshToken = decoded as JWTRefreshTokenContent;
   } catch (err) {
+    Logger.error(
+      `jwtRefreshMiddleware error when verifying this refresh token: ${token}`,
+      err,
+      err instanceof Error ? err.stack : undefined
+    );
     return res.sendStatus(401);
   }
 
@@ -51,8 +58,17 @@ const jwtRefreshMiddleware = (
       next();
     })
     .catch((err) => {
+      Logger.error(
+        `jwtRefreshMiddleware TokenService.extendRefreshToken error`,
+        err,
+        err instanceof Error ? err.stack : undefined
+      );
       if (err instanceof z.ZodError) {
         res.status(400).json({ message: "Invalid request" });
+      } else if (err instanceof Error) {
+        res.status(500).json({ message: err.message });
+      } else {
+        res.status(500).json({ message: "Internal Server Error" });
       }
       return;
     });

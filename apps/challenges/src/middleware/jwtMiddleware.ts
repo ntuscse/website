@@ -10,7 +10,7 @@ const jwtMiddleware = (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization;
 
   if (token == null) {
-    Logger.debug("jwtMiddleware receive null token");
+    Logger.error("jwtMiddleware receive null token");
     return res.sendStatus(401);
   }
 
@@ -19,10 +19,12 @@ const jwtMiddleware = (req: Request, res: Response, next: NextFunction) => {
     process.env.CHALLENGES_JWT_SECRET || "",
     (err, tokenContent) => {
       if (err) {
-        Logger.debug(
-          "jwtMiddleware error when receiving this tokenContent",
+        Logger.error(
+          `jwtMiddleware error when verifying this token: ${JSON.stringify(
+            token
+          )}`,
           err,
-          tokenContent
+          err.stack
         );
         return res.sendStatus(401);
       }

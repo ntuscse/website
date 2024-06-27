@@ -3,16 +3,30 @@ import asyncHandler from "express-async-handler";
 import Submission from "../model/submission";
 import { isValidObjectId } from "../utils/db";
 import SubmissionService from "../service/submissionService";
-import { isValidCreateSubmissionRequest } from "../utils/validator";
+import {
+  isValidCreateSubmissionRequestBody,
+  zodGetValidObjectId,
+} from "../utils/validator";
 import mongoose from "mongoose";
 import { Logger } from "nodelogger";
+import { ErrorHandling } from "../middleware/errorHandler";
 
 // @desc    Get submissions
 // @route   GET /api/submission
 // @access  Public
 const getSubmissions = asyncHandler(async (req: Request, res: Response) => {
-  const submissions = await Submission.find({});
-  res.status(200).json(submissions);
+  try {
+    const submissions = await Submission.find({});
+    res.status(200).json(submissions);
+  } catch (err) {
+    const error = err as Error;
+    Logger.error(
+      "SubmissionController.GetSubmissions error",
+      error,
+      error.stack
+    );
+    ErrorHandling(err, res);
+  }
 });
 
 // @desc    Get submission
@@ -22,6 +36,7 @@ const getSubmission = asyncHandler(async (req: Request, res: Response) => {
   const submissionId = req.params.id;
 
   if (!isValidObjectId(submissionId)) {
+    Logger.error(`received invalid submission id ${submissionId}`);
     res.status(400).json({ message: "Invalid submission ID" });
     return;
   }
@@ -35,30 +50,28 @@ const getSubmission = asyncHandler(async (req: Request, res: Response) => {
     }
 
     res.status(200).json(submission);
-  } catch (error) {
-    Logger.error("SubmissionController.GetSubmission error", error);
-    res.status(500).json({ message: "Internal Server Error" });
+  } catch (err) {
+    const error = err as Error;
+    Logger.error(
+      "SubmissionController.GetSubmission error",
+      error,
+      error.stack
+    );
+    ErrorHandling(err, res);
   }
 });
 
-interface SetSubmissionReq {
-  questionID: string;
-}
 // @desc    Set submission
 // @route   POST /api/submission/
 // @access  Private
 const setSubmission = asyncHandler(async (req: Request, res: Response) => {
-  const { questionID } = req.body as SetSubmissionReq;
-
-  if (!isValidObjectId(questionID)) {
-    res.status(400).json({ message: "Invalid question ID" });
-    return;
-  }
+  const { userID } = req.params;
 
   try {
-    const submission = isValidCreateSubmissionRequest.parse(req.body);
+    const submission = isValidCreateSubmissionRequestBody.parse(req.body);
+    const mongoUserID = zodGetValidObjectId.parse(userID);
     const createSubmissionReq = {
-      user: new mongoose.Types.ObjectId(submission.user),
+      user: new mongoose.Types.ObjectId(mongoUserID),
       question: new mongoose.Types.ObjectId(submission.question),
       answer: submission.answer,
     };
@@ -66,9 +79,14 @@ const setSubmission = asyncHandler(async (req: Request, res: Response) => {
     const resp = await SubmissionService.createSubmission(createSubmissionReq);
 
     res.status(resp.status).json(resp);
-  } catch (error) {
-    Logger.error("SubmissionController.SetSubmission error", error);
-    res.status(500).json({ message: "Internal Server Error" });
+  } catch (err) {
+    const error = err as Error;
+    Logger.error(
+      "SubmissionController.SetSubmission error",
+      error,
+      error.stack
+    );
+    ErrorHandling(err, res);
   }
 });
 

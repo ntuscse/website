@@ -1,9 +1,19 @@
 import mongoose from "mongoose";
 import QuestionRepo from "../repo/questionRepo";
-import { QuestionReq, GetUserSpecificQuestionResp } from "../model/question";
+import {
+  QuestionReq,
+  GetUserSpecificQuestionResp,
+  QuestionModel,
+} from "../model/question";
 import ValidationService from "./validationService";
-import { GeneralResp, GetQuestionsFilter, StatusCodeError } from "../types/types";
+import {
+  GeneralResp,
+  GetQuestionsFilter,
+  StatusCodeError,
+} from "../types/types";
 import { QuestionInputModel } from "../model/questionInput";
+import { Logger } from "nodelogger";
+import { isValidQuestionRequest } from "../utils/validator";
 
 const GetQuestions = async (filter: GetQuestionsFilter) => {
   return await QuestionRepo.GetQuestions(filter);
@@ -17,14 +27,17 @@ const getQuestionByID = async (questionID: string) => {
   const question = await QuestionRepo.getQuestionByID(_id);
 
   if (!question) {
-    throw new StatusCodeError(404, "Question not found")
+    throw new StatusCodeError(404, "Question not found");
   }
   return question;
 };
 
 const createQuestion = async (req: QuestionReq): Promise<GeneralResp> => {
   if (!ValidationService.getValidationFunction(req.validation_function)) {
-    console.log("Invalid validation function");
+    Logger.error(
+      "QuestionService.CreateQuestion received invalid validation function",
+      req.validation_function
+    );
     return {
       status: 400,
       message: "Invalid validation function",
@@ -35,7 +48,10 @@ const createQuestion = async (req: QuestionReq): Promise<GeneralResp> => {
   if (
     !ValidationService.getGenerateInputFunction(req.generate_input_function)
   ) {
-    console.log("Invalid generate input function");
+    Logger.error(
+      "QuestionService.CreateQuestion received invalid generate input function",
+      req.generate_input_function
+    );
     return {
       status: 400,
       message: "Invalid generate input function",
@@ -52,6 +68,25 @@ const createQuestion = async (req: QuestionReq): Promise<GeneralResp> => {
   };
 };
 
+const UpdateQuestion = async (questionID: string, req: QuestionReq) => {
+  const question = await getQuestionByID(questionID);
+  const toBeUpdateQuestion = isValidQuestionRequest.parse(req);
+  const dbQuestionModel: QuestionModel = {
+    ...toBeUpdateQuestion,
+    _id: question._id,
+    seasonID: new mongoose.Types.ObjectId(toBeUpdateQuestion.season_id),
+    question_date: new Date(question.question_date),
+    expiry: new Date(question.expiry),
+    submissions: question.submissions,
+    submissions_count: question.submissions_count,
+    correct_submissions_count: question.correct_submissions_count,
+  };
+  const updatedQuestion = await QuestionRepo.updateQuestionByID(
+    question._id,
+    dbQuestionModel
+  );
+  return updatedQuestion;
+};
 const updateQuestionSubmissions = async (
   questionID: string,
   submissionID: string,
@@ -141,6 +176,7 @@ const getUserSpecificQuestion = async (
 const QuestionService = {
   GetQuestions,
   getQuestionByID,
+  UpdateQuestion,
   updateQuestionSubmissions,
   createQuestion,
   getUserSpecificQuestion,
