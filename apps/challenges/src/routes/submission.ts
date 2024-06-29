@@ -5,8 +5,8 @@ import jwtMiddleware from "../middleware/jwtMiddleware";
 
 router
   .route("/")
-  .get(SubmissionController.getSubmissions)
-  .post(jwtMiddleware, SubmissionController.setSubmission);
-router.route("/:id").get(SubmissionController.getSubmission);
+  .get(SubmissionController.GetSubmissions)
+  .post(jwtMiddleware, SubmissionController.CreateSubmission);
+router.route("/:id").get(SubmissionController.GetSubmission);
 
 export { router as default };

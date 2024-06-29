@@ -4,7 +4,10 @@ import { z } from "zod";
 
 import { isValidObjectId } from "../utils/db";
 import SeasonService from "../service/seasonService";
-import { isValidDate, zodIsValidObjectId } from "../utils/validator";
+import {
+  isValidDate,
+  isValidPaginationRequest,
+} from "../utils/validator";
 import { Logger } from "nodelogger";
 import RankingService from "../service/rankingService";
 import { StatusCodeError } from "../types/types";
@@ -17,7 +20,7 @@ interface CreateSeasonRequest {
 // @desc    Get season
 // @route   GET /api/seasons
 // @access  Public
-const getSeasons = asyncHandler(async (req: Request, res: Response) => {
+const GetSeasons = asyncHandler(async (req: Request, res: Response) => {
   const { start, end } = req.query;
 
   try {
@@ -36,9 +39,9 @@ const getSeasons = asyncHandler(async (req: Request, res: Response) => {
 // @desc    Getc active season
 // @route   GET /api/seasons/active
 // @access  Public
-const getActiveSeasons = asyncHandler(async (req: Request, res: Response) => {
+const GetActiveSeasons = asyncHandler(async (req: Request, res: Response) => {
   try {
-    const seasons = await SeasonService.getActiveSeasons();
+    const seasons = await SeasonService.GetActiveSeasons();
     res.status(200).json(seasons);
   } catch (err) {
     const error = err as Error;
@@ -50,7 +53,7 @@ const getActiveSeasons = asyncHandler(async (req: Request, res: Response) => {
 // @desc    Get season
 // @route   GET /api/seasons/:seasonID
 // @access  Public
-const getSeasonByID = asyncHandler(async (req: Request, res: Response) => {
+const GetSeasonByID = asyncHandler(async (req: Request, res: Response) => {
   const { seasonID } = req.params;
 
   if (!isValidObjectId(seasonID)) {
@@ -58,7 +61,7 @@ const getSeasonByID = asyncHandler(async (req: Request, res: Response) => {
     return;
   }
   try {
-    const season = await SeasonService.getSeasonByID(seasonID);
+    const season = await SeasonService.GetSeasonByID(seasonID);
     res.status(200).json(season);
   } catch (err) {
     const error = err as Error;
@@ -70,7 +73,7 @@ const getSeasonByID = asyncHandler(async (req: Request, res: Response) => {
 // @desc    Set season
 // @route   POST /api/seasons
 // @access  Private
-const createSeason = asyncHandler(async (req: Request, res: Response) => {
+const CreateSeason = asyncHandler(async (req: Request, res: Response) => {
   const body: CreateSeasonRequest = req.body as CreateSeasonRequest;
   if (!body.title || !body.startDate || !body.endDate) {
     res.status(400).json({ message: "Invalid request" });
@@ -90,7 +93,7 @@ const createSeason = asyncHandler(async (req: Request, res: Response) => {
   }
 
   try {
-    const season = await SeasonService.createSeason(
+    const season = await SeasonService.CreateSeason(
       body.title,
       _startDate,
       _endDate
@@ -106,29 +109,17 @@ const createSeason = asyncHandler(async (req: Request, res: Response) => {
 // @desc    Get season rankings
 // @route   GET /api/seasons/:seasonID/rankings
 // @access  Public
-const getSeasonRankings = asyncHandler(async (req: Request, res: Response) => {
-  let seasonID = "";
-  let page: number | undefined, limit: number | undefined;
+const GetSeasonRankings = asyncHandler(async (req: Request, res: Response) => {
   try {
-    seasonID = zodIsValidObjectId.parse(req.params.seasonID);
-    const queryIsValid = z
-      .object({
-        page: z.coerce.number().int().min(0).optional(),
-        limit: z.coerce.number().int().min(1).optional(),
-      })
-      .refine(
-        // page and limit must either both exist or both not exist
-        (data) =>
-          ((data.page || data.page === 0) && data.limit) ||
-          (!data.page && data.page !== 0 && !data.limit),
-        { message: "Invalid request" }
-      );
-    page = queryIsValid.parse(req.query).page;
-    limit = queryIsValid.parse(req.query).limit;
+    const seasonID = req.params.seasonID;
+    const paginationQuery = isValidPaginationRequest.parse(req.query);
+    const parsedPage = paginationQuery.page;
+    const parsedLimit = paginationQuery.limit;
+
     const ranking = await RankingService.GetRankingBySeasonID(
       seasonID,
-      page,
-      limit
+      parsedPage,
+      parsedLimit
     );
     if (ranking._metaData) {
       res.setHeader("access-control-expose-headers", "pagination");
@@ -153,17 +144,11 @@ const getSeasonRankings = asyncHandler(async (req: Request, res: Response) => {
   }
 });
 
-const getSeasonQuestions = asyncHandler(async (req: Request, res: Response) => {
+const GetSeasonQuestions = asyncHandler(async (req: Request, res: Response) => {
   try {
-    const seasonID = zodIsValidObjectId.parse(req.params.seasonID);
+    const seasonID = req.params.seasonID;
 
-    const season = await SeasonService.getSeasonByID(seasonID);
-    if (!season) {
-      res.status(404).json({ message: "Season not found" });
-      return;
-    }
-
-    const questions = await SeasonService.getSeasonQuestions(seasonID);
+    const questions = await SeasonService.GetSeasonQuestions(seasonID);
 
     res.status(200).json(questions);
   } catch (err) {
@@ -182,12 +167,12 @@ const getSeasonQuestions = asyncHandler(async (req: Request, res: Response) => {
 });
 
 const SeasonController = {
-  getSeasons,
-  getActiveSeasons,
-  getSeasonByID,
-  createSeason,
-  getSeasonRankings,
-  getSeasonQuestions,
+  GetSeasons,
+  GetActiveSeasons,
+  GetSeasonByID,
+  CreateSeason,
+  GetSeasonRankings,
+  GetSeasonQuestions,
 };
 
 export { SeasonController as default };

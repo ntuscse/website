@@ -1,11 +1,11 @@
 import {
-  refreshCookieMaxAgeSeconds,
+  refreshTokenMaxAgeSeconds,
   secondInMilliseconds,
 } from "../model/constants";
 import Token, { TokenModel } from "../model/token";
 import mongoose from "mongoose";
 
-const getRefreshToken = async (
+const GetRefreshToken = async (
   userID: mongoose.Types.ObjectId
 ): Promise<TokenModel | null> => {
   const token = await Token.findOne({
@@ -15,7 +15,7 @@ const getRefreshToken = async (
   return token;
 };
 
-const saveRefreshToken = async (
+const SaveRefreshToken = async (
   token: TokenModel
 ): Promise<TokenModel | null> => {
   const dbToken = new Token(token);
@@ -23,12 +23,12 @@ const saveRefreshToken = async (
   return dbToken;
 };
 
-const extendRefreshToken = async (
+const ExtendRefreshToken = async (
   userID: mongoose.Types.ObjectId
 ): Promise<TokenModel | null> => {
   const now = new Date();
   const newExpiry = new Date(
-    now.getTime() + refreshCookieMaxAgeSeconds * secondInMilliseconds
+    now.getTime() + refreshTokenMaxAgeSeconds * secondInMilliseconds
   );
 
   const token = await Token.findOneAndUpdate(
@@ -45,9 +45,9 @@ const extendRefreshToken = async (
 };
 
 const TokenRepo = {
-  getRefreshToken,
-  saveRefreshToken,
-  extendRefreshToken,
+  GetRefreshToken,
+  SaveRefreshToken,
+  ExtendRefreshToken,
 };
 
 export { TokenRepo as default };

@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
-import Submission from "../model/submission";
-import { isValidObjectId } from "../utils/db";
 import SubmissionService from "../service/submissionService";
 import {
   isValidCreateSubmissionRequestBody,
@@ -14,9 +12,9 @@ import { ErrorHandling } from "../middleware/errorHandler";
 // @desc    Get submissions
 // @route   GET /api/submission
 // @access  Public
-const getSubmissions = asyncHandler(async (req: Request, res: Response) => {
+const GetSubmissions = asyncHandler(async (req: Request, res: Response) => {
   try {
-    const submissions = await Submission.find({});
+    const submissions = await SubmissionService.GetSubmissions();
     res.status(200).json(submissions);
   } catch (err) {
     const error = err as Error;
@@ -32,22 +30,11 @@ const getSubmissions = asyncHandler(async (req: Request, res: Response) => {
 // @desc    Get submission
 // @route   GET /api/submission/:id
 // @access  Public
-const getSubmission = asyncHandler(async (req: Request, res: Response) => {
+const GetSubmission = asyncHandler(async (req: Request, res: Response) => {
   const submissionId = req.params.id;
 
-  if (!isValidObjectId(submissionId)) {
-    Logger.error(`received invalid submission id ${submissionId}`);
-    res.status(400).json({ message: "Invalid submission ID" });
-    return;
-  }
-
   try {
-    const submission = await Submission.findById(submissionId);
-
-    if (!submission) {
-      res.status(404).json({ message: "Submission not found" });
-      return;
-    }
+    const submission = await SubmissionService.GetSubmission(submissionId);
 
     res.status(200).json(submission);
   } catch (err) {
@@ -64,19 +51,19 @@ const getSubmission = asyncHandler(async (req: Request, res: Response) => {
 // @desc    Set submission
 // @route   POST /api/submission/
 // @access  Private
-const setSubmission = asyncHandler(async (req: Request, res: Response) => {
+const CreateSubmission = asyncHandler(async (req: Request, res: Response) => {
   const { userID } = req.params;
 
   try {
     const submission = isValidCreateSubmissionRequestBody.parse(req.body);
-    const mongoUserID = zodGetValidObjectId.parse(userID);
+    const mongoUserID = zodGetValidObjectId("Invalid user id").parse(userID);
     const createSubmissionReq = {
       user: new mongoose.Types.ObjectId(mongoUserID),
       question: new mongoose.Types.ObjectId(submission.question),
       answer: submission.answer,
     };
 
-    const resp = await SubmissionService.createSubmission(createSubmissionReq);
+    const resp = await SubmissionService.CreateSubmission(createSubmissionReq);
 
     res.status(resp.status).json(resp);
   } catch (err) {
@@ -91,9 +78,9 @@ const setSubmission = asyncHandler(async (req: Request, res: Response) => {
 });
 
 const SubmissionController = {
-  getSubmissions,
-  getSubmission,
-  setSubmission,
+  GetSubmissions,
+  GetSubmission,
+  CreateSubmission,
 };
 
 export { SubmissionController as default };

@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
-import User from "../model/user";
+import User, { UserModel } from "../model/user";
 
-const getUserByID = async (id: mongoose.Types.ObjectId) => {
+const GetUserByID = async (
+  id: mongoose.Types.ObjectId
+): Promise<UserModel | null> => {
   // get user by id from mongo
   const user = await User.findOne({
     _id: id,
@@ -9,14 +11,14 @@ const getUserByID = async (id: mongoose.Types.ObjectId) => {
   return user;
 };
 
-const getUserByEmail = async (email: string) => {
+const GetUserByEmail = async (email: string): Promise<UserModel | null> => {
   const user = await User.findOne({
     email: email,
   });
   return user;
 };
 
-const createUser = async (name: string, email: string) => {
+const CreateUser = async (name: string, email: string): Promise<UserModel> => {
   const user = await User.create({
     name: name,
     email: email,
@@ -26,9 +28,9 @@ const createUser = async (name: string, email: string) => {
 };
 
 const UserRepo = {
-  getUserByID,
-  getUserByEmail,
-  createUser,
+  GetUserByID,
+  GetUserByEmail,
+  CreateUser,
 };
 
 export { UserRepo as default };

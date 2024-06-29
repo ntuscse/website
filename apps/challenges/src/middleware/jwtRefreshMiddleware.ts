@@ -1,10 +1,6 @@
 // jwt middleware for express
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
-import {
-  refreshCookieMaxAgeSeconds,
-  secondInMilliseconds,
-} from "../model/constants";
 import TokenService from "../service/tokenService";
 import { z } from "zod";
 import { TokenModel } from "../model/token";
@@ -39,18 +35,12 @@ const jwtRefreshMiddleware = (
     return res.sendStatus(401);
   }
 
-  TokenService.extendRefreshToken(jwtRefreshToken.id)
+  TokenService.ExtendRefreshToken(jwtRefreshToken.id)
     .then((tokenModel: TokenModel | null) => {
       if (tokenModel == null) {
         res.status(401).json({ message: "Invalid refresh token" });
         return;
       }
-
-      res.cookie("refresh_token", tokenModel, {
-        httpOnly: true,
-        maxAge: refreshCookieMaxAgeSeconds * secondInMilliseconds,
-        signed: true,
-      });
 
       req.params.userID = jwtRefreshToken.id;
       req.params.email = jwtRefreshToken.email;

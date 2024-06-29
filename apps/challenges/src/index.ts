@@ -2,7 +2,7 @@ import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import cron from "node-cron";
 import SeasonRouter from "./routes/seasons";
-import QuestionaireRouter from "./routes/questionaire";
+import QuestionaireRouter from "./routes/question";
 import SubmissionRouter from "./routes/submission";
 import UserRouter from "./routes/user";
 import AuthRouter from "./routes/auth";
@@ -37,9 +37,9 @@ app.get("/ping", (req: Request, res: Response) => {
   res.status(200).json({ message: "pong" });
 });
 app.use("/api/seasons", SeasonRouter);
-app.use("/api/question", QuestionaireRouter);
-app.use("/api/submission", SubmissionRouter);
-app.use("/api/user", UserRouter);
+app.use("/api/question", QuestionaireRouter); // TODO: to migrate to "questions" for REST best practices
+app.use("/api/submission", SubmissionRouter); // TODO: to migrate to "submissions" for REST best practices
+app.use("/api/me", UserRouter);
 app.use("/api/auth", AuthRouter);
 app.use(ExpressErrorHandler);
 

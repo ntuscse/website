@@ -1,17 +1,18 @@
 import { QuestionModel } from "../model/question";
 import { CreateSubmissionReq, SubmissionModel } from "../model/submission";
 import SubmissionRepo from "../repo/submissionRepo";
-import { GeneralResp } from "../types/types";
+import { GeneralResp, StatusCodeError } from "../types/types";
+import { zodGetValidObjectId } from "../utils/validator";
 import QuestionService from "./questionService";
 import ValidationService from "./validationService";
 import { Logger } from "nodelogger";
 
-const createSubmission = async (
+const CreateSubmission = async (
   submission: CreateSubmissionReq
 ): Promise<GeneralResp> => {
   let question: QuestionModel | null;
   try {
-    question = await QuestionService.getQuestionByID(
+    question = await QuestionService.GetQuestionByID(
       submission.question.toString()
     );
 
@@ -36,7 +37,8 @@ const createSubmission = async (
 
   let isCorrect = false;
   try {
-    isCorrect = await ValidationService.validateAnswer(
+    isCorrect = await ValidationService.ValidateAnswer(
+      submission.user.toString(),
       submission.question.toString(),
       submission.answer
     );
@@ -56,10 +58,10 @@ const createSubmission = async (
       correct: isCorrect,
       points_awarded: isCorrect ? question.points : 0,
     };
-    const result = await SubmissionRepo.createSubmission(dbSubmission);
+    const result = await SubmissionRepo.CreateSubmission(dbSubmission);
 
     // Update question submissions array using $push and $inc submission counts
-    question = await QuestionService.updateQuestionSubmissions(
+    question = await QuestionService.UpdateQuestionSubmissions(
       submission.question.toString(),
       result._id.toString(),
       isCorrect
@@ -88,6 +90,20 @@ const createSubmission = async (
   }
 };
 
+const GetSubmission = async (submissionId: string) => {
+  const mongoSubmissionID = zodGetValidObjectId("Invalid submission ID").parse(
+    submissionId
+  );
+  const submission = await SubmissionRepo.GetSubmission(mongoSubmissionID);
+  if (!submission) {
+    throw new StatusCodeError(404, "Submission not found");
+  }
+};
+
+const GetSubmissions = async () => {
+  return await SubmissionRepo.GetSubmissions();
+};
+
 const GetToBeCalculatedSubmissions = async () => {
   return await SubmissionRepo.GetToBeCalculatedSubmissions();
 };
@@ -95,8 +111,11 @@ const GetToBeCalculatedSubmissions = async () => {
 const SetSubmissionsToCalculated = async (submissions: SubmissionModel[]) => {
   return await SubmissionRepo.SetSubmissionsToCalculated(submissions);
 };
+
 const SubmissionService = {
-  createSubmission,
+  CreateSubmission,
+  GetSubmission,
+  GetSubmissions,
   GetToBeCalculatedSubmissions,
   SetSubmissionsToCalculated,
 };

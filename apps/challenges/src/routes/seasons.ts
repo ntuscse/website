@@ -3,15 +3,13 @@ import SeasonController from "../controllers/season";
 
 const router = Express.Router();
 
-router.get("/", SeasonController.getSeasons);
-router.post("/", SeasonController.createSeason);
+router.get("/", SeasonController.GetSeasons);
+router.post("/", SeasonController.CreateSeason);
 
-router.get("/active", SeasonController.getActiveSeasons);
-router.get("/:seasonID", SeasonController.getSeasonByID);
+router.get("/active", SeasonController.GetActiveSeasons);
+router.get("/:seasonID", SeasonController.GetSeasonByID);
 
-router.get("/:seasonID/rankings", SeasonController.getSeasonRankings);
-router.get("/:seasonID/questions", SeasonController.getSeasonQuestions);
-// router.get("/:seasonID/rankings/:userID", SeasonController.getUserSeasonRanking);
-// router.put("/:seasonID/rankings/:userID", SeasonController.updateSeasonRankings);
+router.get("/:seasonID/rankings", SeasonController.GetSeasonRankings);
+router.get("/:seasonID/questions", SeasonController.GetSeasonQuestions);
 
 export { router as default };

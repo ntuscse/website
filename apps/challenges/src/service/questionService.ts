@@ -19,12 +19,12 @@ const GetQuestions = async (filter: GetQuestionsFilter) => {
   return await QuestionRepo.GetQuestions(filter);
 };
 
-const getQuestionByID = async (questionID: string) => {
+const GetQuestionByID = async (questionID: string) => {
   if (!mongoose.isValidObjectId(questionID)) {
     throw new StatusCodeError(400, "Invalid question ID");
   }
   const _id = new mongoose.Types.ObjectId(questionID);
-  const question = await QuestionRepo.getQuestionByID(_id);
+  const question = await QuestionRepo.GetQuestionByID(_id);
 
   if (!question) {
     throw new StatusCodeError(404, "Question not found");
@@ -32,8 +32,8 @@ const getQuestionByID = async (questionID: string) => {
   return question;
 };
 
-const createQuestion = async (req: QuestionReq): Promise<GeneralResp> => {
-  if (!ValidationService.getValidationFunction(req.validation_function)) {
+const CreateQuestion = async (req: QuestionReq): Promise<GeneralResp> => {
+  if (!ValidationService.GetValidationFunction(req.validation_function)) {
     Logger.error(
       "QuestionService.CreateQuestion received invalid validation function",
       req.validation_function
@@ -46,7 +46,7 @@ const createQuestion = async (req: QuestionReq): Promise<GeneralResp> => {
   }
 
   if (
-    !ValidationService.getGenerateInputFunction(req.generate_input_function)
+    !ValidationService.GetGenerateInputFunction(req.generate_input_function)
   ) {
     Logger.error(
       "QuestionService.CreateQuestion received invalid generate input function",
@@ -59,7 +59,7 @@ const createQuestion = async (req: QuestionReq): Promise<GeneralResp> => {
     };
   }
 
-  const question = await QuestionRepo.createQuestionByReq(req);
+  const question = await QuestionRepo.CreateQuestionByReq(req);
 
   return {
     status: 201,
@@ -69,7 +69,7 @@ const createQuestion = async (req: QuestionReq): Promise<GeneralResp> => {
 };
 
 const UpdateQuestion = async (questionID: string, req: QuestionReq) => {
-  const question = await getQuestionByID(questionID);
+  const question = await GetQuestionByID(questionID);
   const toBeUpdateQuestion = isValidQuestionRequest.parse(req);
   const dbQuestionModel: QuestionModel = {
     ...toBeUpdateQuestion,
@@ -81,13 +81,14 @@ const UpdateQuestion = async (questionID: string, req: QuestionReq) => {
     submissions_count: question.submissions_count,
     correct_submissions_count: question.correct_submissions_count,
   };
-  const updatedQuestion = await QuestionRepo.updateQuestionByID(
+  const updatedQuestion = await QuestionRepo.UpdateQuestionByID(
     question._id,
     dbQuestionModel
   );
   return updatedQuestion;
 };
-const updateQuestionSubmissions = async (
+
+const UpdateQuestionSubmissions = async (
   questionID: string,
   submissionID: string,
   isCorrect: boolean
@@ -100,14 +101,14 @@ const updateQuestionSubmissions = async (
   }
   const _questionID = new mongoose.Types.ObjectId(questionID);
   const _submissionID = new mongoose.Types.ObjectId(submissionID);
-  return await QuestionRepo.updateQuestionSubmissions(
+  return await QuestionRepo.UpdateQuestionSubmissions(
     _questionID,
     _submissionID,
     isCorrect
   );
 };
 
-const saveQuestionInput = async (
+const SaveQuestionInput = async (
   userID: string,
   seasonID: string,
   questionID: string,
@@ -123,10 +124,10 @@ const saveQuestionInput = async (
     questionID: _questionID,
     input: input,
   } as QuestionInputModel;
-  return await QuestionRepo.saveQuestionInput(questionInput);
+  return await QuestionRepo.SaveQuestionInput(questionInput);
 };
 
-const getUserSpecificQuestion = async (
+const GetUserSpecificQuestion = async (
   userID: string,
   questionID: string
 ): Promise<GetUserSpecificQuestionResp | null> => {
@@ -137,49 +138,40 @@ const getUserSpecificQuestion = async (
     throw new Error("Invalid user, question or season ID");
   }
 
-  const question = await QuestionService.getQuestionByID(questionID);
-  if (!question) {
-    throw new StatusCodeError(404, "Question not found");
-  }
+  const question = await GetQuestionByID(questionID);
 
   const seasonID = question.seasonID.toString();
   const _userID = new mongoose.Types.ObjectId(userID);
   const _seasonID = new mongoose.Types.ObjectId(seasonID);
   const _questionID = new mongoose.Types.ObjectId(questionID);
   let input: string[] = [];
-  const questionInput = await QuestionRepo.getQuestionInput(
+  const questionInput = await QuestionRepo.GetQuestionInput(
     _userID,
     _seasonID,
     _questionID
   );
 
   if (!questionInput) {
-    input = await ValidationService.generateInput(questionID);
-    await saveQuestionInput(userID, seasonID, questionID, input);
+    input = await ValidationService.GenerateInput(questionID);
+    await SaveQuestionInput(userID, seasonID, questionID, input);
   } else {
     input = questionInput.input;
   }
-
   const resp: GetUserSpecificQuestionResp = {
-    id: question._id.toString(),
-    question_no: question.question_no,
-    question_title: question.question_title,
-    question_desc: question.question_desc,
-    question_date: question.question_date,
-    seasonID: seasonID,
+    ...question,
     question_input: input,
-    expiry: question.expiry,
-    points: question.points,
   };
   return resp;
 };
+
 const QuestionService = {
   GetQuestions,
-  getQuestionByID,
+  GetQuestionByID,
   UpdateQuestion,
-  updateQuestionSubmissions,
-  createQuestion,
-  getUserSpecificQuestion,
+  UpdateQuestionSubmissions,
+  CreateQuestion,
+  GetUserSpecificQuestion,
+  SaveQuestionInput,
 };
 
 export { QuestionService as default };

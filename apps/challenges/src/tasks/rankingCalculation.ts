@@ -18,7 +18,7 @@ export const rankingCalculation = async () => {
 
   try {
     for (const seasonID of activeSeasonIDs) {
-      const ranking = await SeasonService.calculateSeasonRankings(seasonID);
+      const ranking = await SeasonService.CalculateSeasonRankings(seasonID);
       await RankingService.UpsertRankingsBySeasonID(ranking);
     }
   } catch (err) {

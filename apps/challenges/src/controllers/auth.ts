@@ -8,12 +8,12 @@ interface OauthSignInReq {
   access_token: string;
 }
 
-const oauthSignIn = asyncHandler(async (req: Request, res: Response) => {
+const OauthSignIn = asyncHandler(async (req: Request, res: Response) => {
   const { access_token } = req.body as OauthSignInReq;
 
   try {
     const { accessToken, refreshToken, createNewUser } =
-      await AuthService.oauthSignIn(access_token);
+      await AuthService.OauthSignIn(access_token);
     res.status(createNewUser ? 200 : 201).json({
       access_token: accessToken,
       refresh_token: refreshToken,
@@ -25,11 +25,11 @@ const oauthSignIn = asyncHandler(async (req: Request, res: Response) => {
   }
 });
 
-const refreshToken = asyncHandler(async (req: Request, res: Response) => {
+const RefreshToken = asyncHandler(async (req: Request, res: Response) => {
   try {
     const userID = req.params.userID;
-    const token = await AuthService.refreshToken(userID);
-    res.status(200).json(token);
+    const token = await AuthService.RefreshToken(userID);
+    res.status(200).json({ access_token: token });
   } catch (err) {
     const error = err as Error;
     Logger.error("AuthController.refreshToken error", error, error.stack);
@@ -38,8 +38,8 @@ const refreshToken = asyncHandler(async (req: Request, res: Response) => {
 });
 
 const AuthController = {
-  oauthSignIn,
-  refreshToken,
+  OauthSignIn,
+  RefreshToken,
 };
 
 export { AuthController as default };

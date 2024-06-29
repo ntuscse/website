@@ -13,16 +13,8 @@ export interface QuestionReq {
   active: boolean;
 }
 
-export interface GetUserSpecificQuestionResp {
-  id: string;
-  question_no: string;
-  question_title: string;
-  question_desc: string;
-  question_date: Date;
-  seasonID: string;
+export interface GetUserSpecificQuestionResp extends QuestionModel {
   question_input: string[];
-  expiry: Date;
-  points: number;
 }
 
 export interface QuestionModel {

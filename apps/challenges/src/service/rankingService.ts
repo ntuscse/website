@@ -21,7 +21,7 @@ const GetRankingBySeasonID = async (
   rankings: UserRanking[];
   _metaData?: PaginateData;
 }> => {
-  const season = await SeasonService.getSeasonByID(seasonID);
+  const season = await SeasonService.GetSeasonByID(seasonID);
   if (!season) {
     throw new StatusCodeError(404, "Season not found");
   }

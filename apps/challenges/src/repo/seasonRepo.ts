@@ -5,7 +5,7 @@ import Submission from "../model/submission";
 import Question, { QuestionModel } from "../model/question";
 import { RankingModel } from "../model/ranking";
 
-const getSeasonsByDate = async (
+const GetSeasonsByDate = async (
   startDate: Date | null,
   endDate: Date | null
 ): Promise<SeasonModel[] | null> => {
@@ -18,7 +18,7 @@ const getSeasonsByDate = async (
   return seasons;
 };
 
-const getSeasonByID = async (
+const GetSeasonByID = async (
   id: mongoose.Types.ObjectId
 ): Promise<SeasonModel | null> => {
   const season = await Season.findOne({
@@ -27,7 +27,7 @@ const getSeasonByID = async (
   return season;
 };
 
-const createSeason = async (
+const CreateSeason = async (
   title: string,
   startDate: Date,
   endDate: Date
@@ -41,32 +41,7 @@ const createSeason = async (
   return season;
 };
 
-/*
-const chatgptCalculateSeasonRankings = async (
-    seasonID: mongoose.Types.ObjectId,
-) => {
-    const submissions = await Submission.find({
-        seasonID: seasonID
-    });
-    const rankings = submissions.reduce((acc, submission) => {
-        const user = submission.user;
-        if (!acc[user.toString()]) {
-            acc[user.toString()] = {
-                points: 0,
-                user: user.toString()
-            }
-        }
-        acc[user.toString()].points += submission.points_awarded;
-        return acc;
-    }, {} as { [key: string]: UserRanking });
-    const rankingsArray = Object.values(rankings);
-    rankingsArray.sort((a, b) => b.points - a.points);
-    rankingsMap[seasonID.toString()] = rankingsArray;
-    return rankingsArray;
-}
-*/
-
-const calculateSeasonRankings = async (
+const CalculateSeasonRankings = async (
   seasonID: mongoose.Types.ObjectId
 ): Promise<Omit<RankingModel, "_id">[]> => {
   const rankings: Omit<
@@ -135,7 +110,7 @@ const calculateSeasonRankings = async (
   });
 };
 
-const getSeasonQuestions = async (
+const GetSeasonQuestions = async (
   seasonID: mongoose.Types.ObjectId
 ): Promise<QuestionModel[] | null> => {
   const questions = await Question.aggregate([
@@ -149,11 +124,11 @@ const getSeasonQuestions = async (
 };
 
 const SeasonRepo = {
-  getSeasonsByDate,
-  getSeasonByID,
-  createSeason,
-  calculateSeasonRankings,
-  getSeasonQuestions,
+  GetSeasonsByDate,
+  GetSeasonByID,
+  CreateSeason,
+  CalculateSeasonRankings,
+  GetSeasonQuestions,
 };
 
 export { SeasonRepo as default };

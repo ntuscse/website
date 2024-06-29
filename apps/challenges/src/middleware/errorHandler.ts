@@ -83,7 +83,7 @@ export const ErrorHandling = (err: unknown, res: Response) => {
         const message = (err as z.ZodError).issues
           .map((issue) => issue.message)
           .join(", ");
-        res.status(400).json({ message: message });
+        res.status(400).json({ message });
       }
 
       break;

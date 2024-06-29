@@ -14,85 +14,62 @@ const GetSeasons = async (start: unknown, end: unknown) => {
   const _startDate = start != null ? new Date(parseInt(start)) : null;
   const _endDate = end != null ? new Date(parseInt(end)) : null;
 
-  return await getSeasonsByDate(_startDate, _endDate);
+  return await GetSeasonsByDate(_startDate, _endDate);
 };
 
-const getSeasonsByDate = async (
+const GetSeasonsByDate = async (
   startDate: Date | null,
   endDate: Date | null
 ) => {
-  const seasons = await SeasonRepo.getSeasonsByDate(startDate, endDate);
+  const seasons = await SeasonRepo.GetSeasonsByDate(startDate, endDate);
   return seasons;
 };
 
-const getActiveSeasons = async () => {
-  const seasons = await SeasonRepo.getSeasonsByDate(new Date(), null);
+const GetActiveSeasons = async () => {
+  const seasons = await SeasonRepo.GetSeasonsByDate(new Date(), null);
   return seasons;
 };
 
-const getSeasonByID = async (id: string) => {
-  const _id = zodGetValidObjectId.parse(id);
-  const season = await SeasonRepo.getSeasonByID(_id);
+const GetSeasonByID = async (id: string) => {
+  const _id = zodGetValidObjectId("Invalid season id").parse(id);
+  const season = await SeasonRepo.GetSeasonByID(_id);
   return season;
 };
 
-const createSeason = async (title: string, startDate: Date, endDate: Date) => {
-  const season = await SeasonRepo.createSeason(title, startDate, endDate);
+const CreateSeason = async (title: string, startDate: Date, endDate: Date) => {
+  const season = await SeasonRepo.CreateSeason(title, startDate, endDate);
   return season;
 };
 
-/*
-const getUserSeasonRanking = async(
-    seasonID: string,
-    userID: string
-) => {
-    if (!mongoose.isValidObjectId(seasonID) || !mongoose.isValidObjectId(userID)) {
-        throw new Error('Invalid season ID');
-    }
-    const _seasonID = new mongoose.Types.ObjectId(seasonID);
-    const _userID = new mongoose.Types.ObjectId(userID);
-    const ranking = await SeasonRepo.getUserSeasonRanking(_seasonID, _userID);
-    return ranking;
-}
-
-const getUserAllSeasonRankings = async(
-    userID: string
-) => {
-    if (!mongoose.isValidObjectId(userID)) {
-        throw new Error('Invalid user ID');
-    }
-    const _userID = new mongoose.Types.ObjectId(userID);
-    const rankings = await SeasonRepo.getUserAllSeasonRankings(_userID);
-    return rankings;
-}
-*/
-
-const calculateSeasonRankings = async (seasonID: string) => {
+const CalculateSeasonRankings = async (seasonID: string) => {
   if (!mongoose.isValidObjectId(seasonID)) {
     throw new Error("Invalid user ID");
   }
   const _seasonID = new mongoose.Types.ObjectId(seasonID);
-  return await SeasonRepo.calculateSeasonRankings(_seasonID);
+  return await SeasonRepo.CalculateSeasonRankings(_seasonID);
 };
 
-const getSeasonQuestions = async (seasonID: string) => {
+const GetSeasonQuestions = async (seasonID: string) => {
   if (!mongoose.isValidObjectId(seasonID)) {
     throw new Error("Invalid season ID");
   }
+  const season = await SeasonService.GetSeasonByID(seasonID);
+  if (!season) {
+    throw new StatusCodeError(404, "Season not found");
+  }
+
   const _seasonID = new mongoose.Types.ObjectId(seasonID);
-  return await SeasonRepo.getSeasonQuestions(_seasonID);
+  return await SeasonRepo.GetSeasonQuestions(_seasonID);
 };
 
 const SeasonService = {
   GetSeasons,
-  getSeasonsByDate,
-  getActiveSeasons,
-  getSeasonByID,
-  createSeason,
-  // getUserSeasonRanking,
-  // getUserAllSeasonRankings,
-  calculateSeasonRankings,
-  getSeasonQuestions,
+  GetSeasonsByDate,
+  GetActiveSeasons,
+  GetSeasonByID,
+  CreateSeason,
+  CalculateSeasonRankings,
+  GetSeasonQuestions,
 };
 
 export { SeasonService as default };

@@ -1,7 +1,18 @@
+import mongoose from "mongoose";
 import Submission, { SubmissionModel } from "../model/submission";
 
-const createSubmission = async (submission: Omit<SubmissionModel, "_id">) => {
+const CreateSubmission = async (submission: Omit<SubmissionModel, "_id">) => {
   return await Submission.create(submission);
+};
+
+const GetSubmission = async (
+  submissionId: mongoose.Types.ObjectId
+): Promise<SubmissionModel | null> => {
+  return await Submission.findById(submissionId);
+};
+
+const GetSubmissions = async (): Promise<SubmissionModel[]> => {
+  return await Submission.find({});
 };
 
 const GetToBeCalculatedSubmissions = async (): Promise<SubmissionModel[]> => {
@@ -33,7 +44,9 @@ const SetSubmissionsToCalculated = async (submissions: SubmissionModel[]) => {
   }
 };
 const SubmissionRepo = {
-  createSubmission,
+  CreateSubmission,
+  GetSubmission,
+  GetSubmissions,
   GetToBeCalculatedSubmissions,
   SetSubmissionsToCalculated,
 };

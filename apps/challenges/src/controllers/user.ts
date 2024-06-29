@@ -4,11 +4,11 @@ import { Request, Response } from "express";
 import { Logger } from "nodelogger";
 import { ErrorHandling } from "../middleware/errorHandler";
 
-const getUser = asyncHandler(async (req: Request, res: Response) => {
+const GetUser = asyncHandler(async (req: Request, res: Response) => {
   const { userID } = req.params;
 
   try {
-    const user = await UserService.getUserByID(userID);
+    const user = await UserService.GetUserByID(userID);
     res.status(200).json(user);
   } catch (err) {
     const error = err as Error;
@@ -18,7 +18,7 @@ const getUser = asyncHandler(async (req: Request, res: Response) => {
 });
 
 const UserController = {
-  getUser,
+  GetUser,
 };
 
 export { UserController as default };

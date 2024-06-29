@@ -1,22 +1,15 @@
-import mongoose from "mongoose";
 import UserRepo from "../repo/userRepo";
-import { isValidEmail, zodIsValidObjectId } from "../utils/validator";
+import { isValidEmail, zodGetValidObjectId } from "../utils/validator";
 import { StatusCodeError } from "../types/types";
 import { UserModel } from "../model/user";
 
-const getUserByID = async (id: string) => {
-  let _id: string;
+const GetUserByID = async (id: string): Promise<UserModel> => {
   let user: UserModel | null;
-  try {
-    _id = zodIsValidObjectId.parse(id);
-  } catch (err) {
-    throw new StatusCodeError(400, "Invalid id");
-  }
 
-  const mongoUserID = new mongoose.Types.ObjectId(_id);
+  const mongoUserID = zodGetValidObjectId("Invalid user id").parse(id);
 
   try {
-    user = await UserRepo.getUserByID(mongoUserID);
+    user = await UserRepo.GetUserByID(mongoUserID);
   } catch (err) {
     throw new StatusCodeError(500, "Internal Server Error");
   }
@@ -28,23 +21,25 @@ const getUserByID = async (id: string) => {
   return user;
 };
 
-const getUserByEmail = async (email: string) => {
+const GetUserByEmail = async (email: string): Promise<UserModel> => {
   const _email = isValidEmail.parse(email);
 
-  const user = await UserRepo.getUserByEmail(_email);
-
+  const user = await UserRepo.GetUserByEmail(_email);
+  if (!user) {
+    throw new StatusCodeError(404, "User not found");
+  }
   return user;
 };
 
-const createUser = async (name: string, email: string) => {
-  const user = await UserRepo.createUser(name, email);
+const CreateUser = async (name: string, email: string): Promise<UserModel> => {
+  const user = await UserRepo.CreateUser(name, email);
   return user;
 };
 
 const UserService = {
-  getUserByID,
-  getUserByEmail,
-  createUser,
+  GetUserByID,
+  GetUserByEmail,
+  CreateUser,
 };
 
 export { UserService as default };

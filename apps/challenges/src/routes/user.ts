@@ -4,6 +4,6 @@ import jwtMiddleware from "../middleware/jwtMiddleware";
 
 const router = Express.Router();
 
-router.get("/", jwtMiddleware, UserController.getUser);
+router.get("/", jwtMiddleware, UserController.GetUser);
 
 export { router as default };

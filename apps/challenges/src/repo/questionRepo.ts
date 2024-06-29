@@ -13,16 +13,20 @@ const GetQuestions = async (
   return await Question.find(queryFilter);
 };
 
-const getQuestionByID = async (
+const GetQuestionByID = async (
   questionID: mongoose.Types.ObjectId
 ): Promise<QuestionModel | null> => {
+  // We use .lean() to only return the javascript object instead of the documents.
+  // This is to allow spread operator in GetUserSpecificQuestion to be done properly
+  // refer to https://stackoverflow.com/questions/48014504/es6-spread-operator-mongoose-result-copy#comment121079929_48014589
+  // more reading on https://mongoosejs.com/docs/tutorials/lean.html
   const question = await Question.findOne({
     _id: questionID,
-  });
+  }).lean();
   return question;
 };
 
-const createQuestionByReq = async (
+const CreateQuestionByReq = async (
   req: QuestionReq
 ): Promise<QuestionModel | null> => {
   const questionModel = {
@@ -49,7 +53,7 @@ const createQuestionByReq = async (
   return question;
 };
 
-const updateQuestionByID = async (
+const UpdateQuestionByID = async (
   questionID: mongoose.Types.ObjectId,
   questionModel: QuestionModel
 ): Promise<QuestionModel | null> => {
@@ -63,7 +67,7 @@ const updateQuestionByID = async (
   return question;
 };
 
-const updateQuestionSubmissions = async (
+const UpdateQuestionSubmissions = async (
   questionID: mongoose.Types.ObjectId,
   submissionID: mongoose.Types.ObjectId,
   isCorrect: boolean
@@ -84,7 +88,7 @@ const updateQuestionSubmissions = async (
   return question;
 };
 
-const getQuestionInput = async (
+const GetQuestionInput = async (
   userID: mongoose.Types.ObjectId,
   seasonID: mongoose.Types.ObjectId,
   questionID: mongoose.Types.ObjectId
@@ -97,7 +101,7 @@ const getQuestionInput = async (
   return question;
 };
 
-const saveQuestionInput = async (
+const SaveQuestionInput = async (
   questionInput: QuestionInputModel
 ): Promise<QuestionInputModel | null> => {
   const dbQuestionInput = new QuestionInput(questionInput);
@@ -107,12 +111,12 @@ const saveQuestionInput = async (
 
 const QuestionRepo = {
   GetQuestions,
-  getQuestionByID,
-  createQuestionByReq,
-  updateQuestionByID,
-  updateQuestionSubmissions,
-  getQuestionInput,
-  saveQuestionInput,
+  GetQuestionByID,
+  CreateQuestionByReq,
+  UpdateQuestionByID,
+  UpdateQuestionSubmissions,
+  GetQuestionInput,
+  SaveQuestionInput,
 };
 
 export { QuestionRepo as default };
