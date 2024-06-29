@@ -24,6 +24,12 @@ const nextConfig = {
         protocol:"https",
         hostname: "api.qrserver.com",
         pathname: "/merch/order/**"
+      },
+      {
+        protocol:"http",
+        hostname: "localhost",
+        port: "3003",
+        pathname: "/**"
       }
     ],
   },

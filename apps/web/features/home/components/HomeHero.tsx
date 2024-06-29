@@ -4,6 +4,7 @@ import Image from "next/image";
 import { keyframes } from "@emotion/react";
 import Link from "next/link";
 
+
 export const HomeHero = () => {
   return (
     <Flex
@@ -31,7 +32,6 @@ export const HomeHero = () => {
             _hover={{ letterSpacing: 6 }}
             transitionDuration="0.3s"
           >
-            NTU SCSE Club
           </Text>
         </Link>
       </Box>
