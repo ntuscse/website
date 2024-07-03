@@ -13,7 +13,7 @@ import { LeaderboardEntry, PaginationButton } from "@/features/challenges/compon
 import { Box, Flex, Select } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 
-const numOfItemsPerPage = 1
+const numOfItemsPerPage = 2
 
 interface Season {
     _id: string,
@@ -23,21 +23,33 @@ interface Season {
 }
 
 interface RankingResponse {
-    _id: string,
+    rankings: LeaderboardData[],
     seasonID: string,
-    userID: string,
-    username: string,
-    __v: number,
-    createdAt: string,
-    points: number,
-    updatedAt: string
+    _metaData: Metadata
 }
 
+interface Metadata {
+    itemCount: number,
+    limit: number,
+    page: number,
+    pageCount: number,
+    links: {
+        first: string,
+        last: string,
+        next: string,
+        previous: string,
+        self: string
+
+    }
+}
 interface LeaderboardData {
-    uuid: string,
-    userId: string,
-    username: string,
-    points: number
+    points: number,
+    user: UserData
+}
+
+interface UserData {
+    userID: string,
+    name: string
 }
 
 function findSeason(seasonId: string, seasons: Season[]) {
@@ -58,13 +70,12 @@ const Leaderboard = () => {
             .then((res: Response) => {
                 return res.json()
             })
-            .then((res: any) => {
+            .then((res: RankingResponse) => {
+                console.log("res")
                 console.log(res)
-                const currentSeasonData: LeaderboardData[] = res.rankings.map((ele: RankingResponse) => {
-                    return { "uuid": ele._id, "userId": ele.userID, "username": ele.username, "points": ele.points }
-                })
+               
                 setNumOfPages(res._metaData.pageCount)
-                setCurrentDisplayedData(currentSeasonData)
+                setCurrentDisplayedData(res.rankings)
             })
     }  
     
@@ -111,7 +122,7 @@ const Leaderboard = () => {
 
         <Box bg="gray.300" w="80vw" px={8} py={4} minHeight="70vh" borderRadius="8">
             {currentDisplayedData && currentDisplayedData.sort().reverse().map((item, index) => {
-                return <LeaderboardEntry key={item.uuid} index={index + 1} name={item.username} points={item.points} />
+                return <LeaderboardEntry key={item.user.userID} index={index + 1} name={item.user.name} points={item.points} />
             })}
         </Box>
 
