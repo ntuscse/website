@@ -71,9 +71,6 @@ const Leaderboard = () => {
                 return res.json()
             })
             .then((res: RankingResponse) => {
-                console.log("res")
-                console.log(res)
-               
                 setNumOfPages(res._metaData.pageCount)
                 setCurrentDisplayedData(res.rankings)
             })
