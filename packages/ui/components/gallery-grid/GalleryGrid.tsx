@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Flex, Box, Image, Text, Grid, GridItem, keyframes } from '@chakra-ui/react';
 
 export interface GalleryGridProps {
@@ -19,12 +19,26 @@ const scroll = keyframes`
 `;
 
 export const GalleryGrid = ({ title, images }: GalleryGridProps) => {
+
+    const [hover, setIsHovered] = useState(false);
+
     return (
         <Flex align='center' justify='center' flexDir='column' gap={8} py={20}>
             <Text fontSize='5xl' textAlign={'center'}>{title}</Text>
             <Box overflow='hidden' width='100vw' position='relative' height='768px'>
-                <Flex position='absolute' gap={3}>
-                    <Grid h={768} width='100vw' templateRows='repeat(2,1fr)' templateColumns='repeat(5, 1fr)' gap={3} animation={`${scroll} 80s linear infinite backwards`}>
+                <Flex 
+                    position='absolute' 
+                    gap={3} 
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                    >
+                    <Grid 
+                        h={768} 
+                        width='100vw' 
+                        templateRows='repeat(2,1fr)' 
+                        templateColumns='repeat(5, 1fr)' 
+                        gap={3} 
+                        sx={{ animation: `${scroll} 80s linear infinite`, animationPlayState: hover ? 'paused' : 'running' }}>
                         {
                             images.map(({ src, alt, colSpan, rowSpan }) => (
                                 <GridItem key={src} colSpan={colSpan} rowSpan={rowSpan}>
@@ -33,7 +47,13 @@ export const GalleryGrid = ({ title, images }: GalleryGridProps) => {
                             ))
                         }
                     </Grid>
-                    <Grid width='100vw' h={768} templateRows='repeat(2,1fr)' templateColumns='repeat(5, 1fr)' gap={3} animation={`${scroll} 80s linear infinite backwards`}>
+                    <Grid 
+                        h={768} 
+                        width='100vw' 
+                        templateRows='repeat(2,1fr)' 
+                        templateColumns='repeat(5, 1fr)' 
+                        gap={3} 
+                        sx={{ animation: `${scroll} 80s linear infinite`, animationPlayState: hover ? 'paused' : 'running' }}>
                         {
                             images.map(({ src, alt, colSpan, rowSpan }) => (
                                 <GridItem key={src} colSpan={colSpan} rowSpan={rowSpan}>
