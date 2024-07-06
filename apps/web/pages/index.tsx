@@ -6,13 +6,15 @@ import {
 // import { HomeMemories } from "@/features/home";
 import { FooterSeparator } from "ui";
 import React from "react";
+import HomePhotoGallery from "@/features/home/components/HomePhotoGallery";
 
 const Home = () => {
   return (
     <>
       <HomeHero />
       <HomeWhoRWe />
-      {/*<HomeMemories />*/}
+      <HomePhotoGallery/>
+      {/* <HomeMemories /> */}
       <FooterSeparator />
       {/*<UpcomingEventRibbon href={"/events"} />*/}
     </>
