@@ -43,7 +43,7 @@ export const getStaticProps: () => Promise<{ revalidate: number; props: { heroDa
 }> = async () => {
   try {
     // Replace this URL with your actual API endpoint
-    const res = await fetch('http://localhost:3003/api/pages/66801dee2a7ac0d89ead1460');
+    const res = await fetch(`${process.env.NEXT_PUBLIC_WEB_PAYLOAD_API_URL}/pages/66801dee2a7ac0d89ead1460`);
     const heroData = await res.json() as HomePage;
     console.log("hero data", heroData);
     return {

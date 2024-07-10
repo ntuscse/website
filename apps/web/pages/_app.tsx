@@ -19,6 +19,8 @@ const queryClient = new QueryClient({
 });
 
 const App: AppType = ({ Component, pageProps }: AppProps) => {
+
+  // const { currentLayout } = useLayout();
   return (
     <QueryClientProvider client={queryClient}>
       <ChakraProvider theme={theme}>
