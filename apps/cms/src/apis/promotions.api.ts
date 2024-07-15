@@ -28,7 +28,7 @@ class PromotionsApi {
       },
     ];
 
-    return res;
+    return Promise.resolve(res);
   }
 }
 

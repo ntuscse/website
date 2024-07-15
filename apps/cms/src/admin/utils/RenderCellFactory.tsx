@@ -1,7 +1,6 @@
 import React from "react";
 import payload from "payload";
 import { Promotion } from "types";
-import { PromoType } from "types";
 
 export class RenderCellFactory {
   static get(element: unknown, key: string) {
