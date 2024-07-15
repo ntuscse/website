@@ -1,27 +1,35 @@
-import { PromoInfo } from "types";
+import { Promotion } from "types";
+import { PromoType } from "types";
 // todo turn into real api
-class OrdersApi {
-  // eslint-disable-next-line @typescript-eslint/require-await
-  async getPromotions(): Promise<PromoInfo[]> {
-    const res: PromoInfo[] = [];
-    const item1: PromoInfo = {
-      promotion_id: "1",
-      name: "March Sales",
-      discount_percentage: "10%",
-      category: "T-shirts",
-    };
-    res.push(item1);
-
-    const item2: PromoInfo = {
-      promotion_id: "2",
-      name: "Summer Sales",
-      discount_percentage: "10%",
-      category: "Tote bags",
-    };
-    res.push(item2);
+class PromotionsApi {
+  async getPromotions(): Promise<Promotion[]> {
+    const res: Promotion[] = [
+      {
+        promoCode: "MARCHSALES",
+        maxRedemptions: 10,
+        redemptionsRemaining: 10,
+        discounts: {
+          promoType: PromoType.FIXED_VALUE,
+          promoValue: 5,
+          appliesTo: ["1"],
+          minimumQty: 1,
+        },
+      },
+      {
+        promoCode: "TSHIRTPROMO",
+        maxRedemptions: 10,
+        redemptionsRemaining: 10,
+        discounts: {
+          promoType: PromoType.FIXED_VALUE,
+          promoValue: 5,
+          appliesTo: ["1"],
+          minimumQty: 1,
+        },
+      },
+    ];
 
     return res;
   }
 }
 
-export default new OrdersApi();
+export default new PromotionsApi();

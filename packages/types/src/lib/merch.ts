@@ -72,20 +72,12 @@ export interface Promotion {
   promoCode: string;
   maxRedemptions: number;
   redemptionsRemaining: number;
-  discounts: Array<{
+  discounts: {
     promoType: PromoType;
     promoValue: number; // percent off or fixed value off based on promoType property
-    appliesTo?: Array<string>; // array of product ids
+    appliesTo?: string[]; // array of product ids
     minimumQty?: number; // minimum quantity of items in the order to apply the discount
-  }>;
-}
-
-export interface PromoInfo {
-  
-  promotion_id: string;
-  name: string;
-  discount_percentage: string;
-  category: string;
+  };
 }
 
 export type PricedCart = {

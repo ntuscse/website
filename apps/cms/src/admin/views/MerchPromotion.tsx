@@ -3,18 +3,18 @@ import { Button } from "payload/components/elements";
 import { AdminView } from "payload/config";
 import ViewTemplate from "./ViewTemplate";
 import { Column } from "payload/dist/admin/components/elements/Table/types";
-import { PromoInfo } from "types";
-import PromotionsApi from "../../apis/promotions.api";
 import { RenderCellFactory } from "../utils/RenderCellFactory";
 import SortedColumn from "../utils/SortedColumn";
 import { Table } from "payload/dist/admin/components/elements/Table";
+import { Promotion } from "types";
+import PromotionsApi from "../../apis/promotions.api";
 
 const MerchPromotion: AdminView = ({ user, canAccessAdmin }) => {
   // Get data from API
-  const [data, setData] = useState<PromoInfo[]>(null);
+  const [data, setData] = useState<Promotion[]>(null);
   useEffect(() => {
     PromotionsApi.getPromotions()
-      .then((res: PromoInfo[]) => setData(res))
+      .then((res: Promotion[]) => setData(res))
       .catch((error) => console.log(error));
   }, []);
 
@@ -33,32 +33,30 @@ const MerchPromotion: AdminView = ({ user, canAccessAdmin }) => {
   }
 
   const tableCols = new Array<Column>();
-  const samplePromo = data[0];
-  const keys = Object.keys(samplePromo);
-  for (const key of keys) {
-    const renderCellComponent = RenderCellFactory.get(data[0], key);
-    const renderCell: React.FC<{ children?: React.ReactNode }> =
-      renderCellComponent instanceof Promise
-        ? renderCellComponent
-        : renderCellComponent;
-
-    const col: Column = {
-      accessor: key,
-      components: {
-        Heading: (
-          <SortedColumn
-            label={prettifyKey(key)}
-            name={key}
-            data={data as never[]}
-          />
-        ),
-        renderCell: renderCell,
-      },
-      label: "",
-      name: "",
-      active: true,
-    };
-    tableCols.push(col);
+  if (data && data.length > 0) {
+    const sampleProduct = data[0];
+    const keys = Object.keys(sampleProduct);
+    for (const key of keys) {
+      const renderCell: React.FC<{ children?: React.ReactNode }> =
+        RenderCellFactory.get(sampleProduct, key);
+      const col: Column = {
+        accessor: key,
+        components: {
+          Heading: (
+            <SortedColumn
+              label={prettifyKey(key)}
+              name={key}
+              data={data as never[]}
+            />
+          ),
+          renderCell: renderCell,
+        },
+        label: "",
+        name: "",
+        active: true,
+      };
+      tableCols.push(col);
+    }
   }
 
   const editColumn: Column = {
