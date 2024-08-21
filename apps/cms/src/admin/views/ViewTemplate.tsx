@@ -38,7 +38,7 @@ const ViewTemplate = ({
         label: title,
       },
     ]);
-  }, [setStepNav]);
+  }, [setStepNav, title]);
 
   // If an unauthorized user tries to navigate straight to this page,
   // Boot 'em out
