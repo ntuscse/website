@@ -111,22 +111,18 @@ const MerchPromotion: AdminView = ({ user, canAccessAdmin }) => {
       keywords=""
       title="Merchandise Promotion"
     >
-      <div style={{ position: "relative" }}>
+    
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <Button el="link" to={"/admin"} buttonStyle="primary">
           Go to Main Admin View
         </Button>
-        <div
-          style={{
-            position: "relative",
-          }}
-        >
-          <Button onClick={handleCreatePromotion} buttonStyle="primary">
-            Create Promotion
-          </Button>
-        </div>
+        <Button onClick={handleCreatePromotion} buttonStyle="primary">
+          Create Promotion
+        </Button>
       </div>
 
       <Table data={data} columns={tableCols} />
+        
     </ViewTemplate>
   );
 };
