@@ -8,6 +8,7 @@ import SortedColumn from "../utils/SortedColumn";
 import { Table } from "payload/dist/admin/components/elements/Table";
 import { Promotion } from "types";
 import PromotionsApi from "../../apis/promotions.api";
+import './MerchPromotion.scss';
 
 const MerchPromotion: AdminView = ({ user, canAccessAdmin }) => {
   // Get data from API
@@ -121,7 +122,9 @@ const MerchPromotion: AdminView = ({ user, canAccessAdmin }) => {
         </Button>
       </div>
 
-      <Table data={data} columns={tableCols} />
+      <div className="table-container">
+        <Table data={data} columns={tableCols}/>
+      </div>
         
     </ViewTemplate>
   );
