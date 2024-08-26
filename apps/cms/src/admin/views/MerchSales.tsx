@@ -3,20 +3,22 @@ import { Button } from "payload/components/elements";
 import { AdminView } from "payload/config";
 import ViewTemplate from "./ViewTemplate";
 import { Column } from "payload/dist/admin/components/elements/Table/types";
+import { Order } from "../../@types/Order";
+import OrdersApi from "../../apis/orders.api";
+import { IOrder } from "../../@types/IOrder";
 import { RenderCellFactory } from "../utils/RenderCellFactory";
 import SortedColumn from "../utils/SortedColumn";
 import { Table } from "payload/dist/admin/components/elements/Table";
-import { Promotion } from "types";
-import PromotionsApi from "../../apis/promotions.api";
 
-const MerchPromotion: AdminView = ({ user, canAccessAdmin }) => {
-  // Get data from API
-  const [data, setData] = useState<Promotion[]>(null);
-  useEffect(() => {
-    PromotionsApi.getPromotions()
-      .then((res: Promotion[]) => setData(res))
-      .catch((error) => console.log(error));
-  }, []);
+
+const MerchSales: AdminView = ({ user, canAccessAdmin }) => {
+    // Get data from API
+    const [data, setData] = useState<IOrder[]>(null);
+    useEffect(() => {
+      OrdersApi.getOrders()
+        .then((res: IOrder[]) => setData(res))
+        .catch((error) => console.log(error));
+    }, []);
 
   // Output human-readable table headers based on the attribute names from the API
   function prettifyKey(str: string): string {
@@ -33,30 +35,30 @@ const MerchPromotion: AdminView = ({ user, canAccessAdmin }) => {
   }
 
   const tableCols = new Array<Column>();
-  if (data && data.length > 0) {
-    const sampleProduct = data[0];
-    const keys = Object.keys(sampleProduct);
-    for (const key of keys) {
-      const renderCell: React.FC<{ children?: React.ReactNode }> =
-        RenderCellFactory.get(sampleProduct, key);
-      const col: Column = {
-        accessor: key,
-        components: {
-          Heading: (
-            <SortedColumn
-              label={prettifyKey(key)}
-              name={key}
-              data={data as never[]}
-            />
-          ),
-          renderCell: renderCell,
-        },
-        label: "",
-        name: "",
-        active: true,
-      };
-      tableCols.push(col);
-    }
+  for (const key of Object.keys(new Order())) {
+    const renderCellComponent = RenderCellFactory.get(data[0], key);
+    const renderCell: React.FC<{ children?: React.ReactNode }> =
+      renderCellComponent instanceof Promise
+        ? renderCellComponent
+        : renderCellComponent;
+
+    const col: Column = {
+      accessor: key,
+      components: {
+        Heading: (
+          <SortedColumn
+            label={prettifyKey(key)}
+            name={key}
+            data={data as never[]}
+          />
+        ),
+        renderCell: renderCell,
+      },
+      label: "",
+      name: "",
+      active: true,
+    };
+    tableCols.push(col);
   }
 
   const editColumn: Column = {
@@ -89,17 +91,15 @@ const MerchPromotion: AdminView = ({ user, canAccessAdmin }) => {
 
   tableCols.push(deleteColumn);
 
-  const handleEdit = (promotionID: string) => {
-    console.log(`Dummy. Promotion ID: ${promotionID}`);
+  const handleEdit = (orderId: string) => {
+    console.log(`Dummy. Order ID: ${orderId}`);
+  }
+
+  const handleDelete = (orderId: string) => {
+    console.log(`Dummy. Order ID: ${orderId}`);
   };
 
-  const handleDelete = (promotionID: string) => {
-    console.log(`Dummy. Promotion ID: ${promotionID}`);
-  };
-
-  const handleCreatePromotion = () => {
-    console.log("Creating a new promotion...");
-  };
+  console.log(tableCols);
 
   return (
     <ViewTemplate
@@ -107,25 +107,15 @@ const MerchPromotion: AdminView = ({ user, canAccessAdmin }) => {
       canAccessAdmin={canAccessAdmin}
       description=""
       keywords=""
-      title="Merchandise Promotion"
+      title="Merchandise Sales"
     >
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
-        <Button el="link" to={"/admin"} buttonStyle="primary">
-          Go to Main Admin View
-        </Button>
-        <Button onClick={handleCreatePromotion} buttonStyle="primary">
-          Create Promotion
-        </Button>
-      </div>
+      <Button el="link" to={"/admin"} buttonStyle="primary">
+        Go to Main Admin View
+      </Button>
 
-      {/* Wrapper div with flexbox */}
-      <div style={{ width: "100%" }}>
-        <div style={{ display: "flex", flexGrow: 1 }}>
-          <Table data={data} columns={tableCols} />
-        </div>
-      </div>
+      <Table data={data} columns={tableCols} />
     </ViewTemplate>
   );
 };
 
-export default MerchPromotion;
+export default MerchSales;
