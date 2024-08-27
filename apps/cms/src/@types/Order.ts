@@ -4,14 +4,13 @@
 
 export class Order {
   constructor(
-    public order_id = '',
-    public date = new Date(),
-    public order_person = '',
-    public image_url = '',
-    public item = '',
-    public qty = 0,
-    public size = '',
-    public colour = ''
-
+    public id = '',
+    public transaction_id = '',
+    public transaction_time = '',
+    public payment_method = '',
+    public customerEmail = '',
+    public status = '',
+    public updatedAt = '',
+    public createdAt = ''
   ) { }
 }

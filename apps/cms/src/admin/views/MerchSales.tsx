@@ -5,18 +5,26 @@ import ViewTemplate from "./ViewTemplate";
 import { Column } from "payload/dist/admin/components/elements/Table/types";
 import { Order } from "../../@types/Order";
 import OrdersApi from "../../apis/orders.api";
-import { IOrder } from "../../@types/IOrder";
 import { RenderCellFactory } from "../utils/RenderCellFactory";
 import SortedColumn from "../utils/SortedColumn";
 import { Table } from "payload/dist/admin/components/elements/Table";
+import { useHistory } from 'react-router-dom';
 
 const MerchSales: AdminView = ({ user, canAccessAdmin }) => {
   // Get data from API
-  const [data, setData] = useState<IOrder[]>(null);
+  const [data, setData] = useState<Order[]>(null);
+  const history = useHistory();
   useEffect(() => {
-    OrdersApi.getOrders()
-      .then((res: IOrder[]) => setData(res))
-      .catch((error) => console.log(error));
+    const fetchOrders = async () => { 
+      try {
+        const orders = await OrdersApi.getOrders();
+        setData(orders);
+      } catch (error) {
+        console.error(error);
+        setData([]);
+      }
+    };
+    fetchOrders();
   }, []);
 
   // Output human-readable table headers based on the attribute names from the API
@@ -64,8 +72,8 @@ const MerchSales: AdminView = ({ user, canAccessAdmin }) => {
     accessor: "edit",
     components: {
       Heading: <div>Edit</div>,
-      renderCell: ({ children }) => (
-        <Button onClick={() => handleEdit(children as string)}>Edit</Button>
+      renderCell: (data) => (
+        <Button onClick={() => handleEdit(data)}>Edit</Button>
       ),
     },
     label: "Edit",
@@ -75,30 +83,11 @@ const MerchSales: AdminView = ({ user, canAccessAdmin }) => {
 
   tableCols.push(editColumn);
 
-  const deleteColumn: Column = {
-    accessor: "delete",
-    components: {
-      Heading: <div>Delete</div>,
-      renderCell: ({ children }) => (
-        <Button onClick={() => handleDelete(children as string)}>Delete</Button>
-      ),
-    },
-    label: "Delete",
-    name: "delete",
-    active: true,
+  const handleEdit = (data: Order) => {
+    const orderId = data.id;
+    // Navigate to edit
+    history.push(`/admin/collections/orders/${orderId}`)
   };
-
-  tableCols.push(deleteColumn);
-
-  const handleEdit = (orderId: string) => {
-    console.log(`Dummy. Order ID: ${orderId}`);
-  };
-
-  const handleDelete = (orderId: string) => {
-    console.log(`Dummy. Order ID: ${orderId}`);
-  };
-
-  console.log(tableCols);
 
   return (
     <ViewTemplate
