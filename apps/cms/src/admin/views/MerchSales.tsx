@@ -17,7 +17,7 @@ const MerchSales: AdminView = ({ user, canAccessAdmin }) => {
   useEffect(() => {
     const fetchOrders = async () => { 
       try {
-        const orders = await OrdersApi.getOrders();
+        const orders: Order[] = await OrdersApi.getOrders();
         setData(orders);
       } catch (error) {
         console.error(error);
@@ -73,7 +73,7 @@ const MerchSales: AdminView = ({ user, canAccessAdmin }) => {
     components: {
       Heading: <div>Edit</div>,
       renderCell: (data) => (
-        <Button onClick={() => handleEdit(data)}>Edit</Button>
+        <Button onClick={() => handleEdit(data as Order)}>Edit</Button>
       ),
     },
     label: "Edit",
