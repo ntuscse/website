@@ -24,6 +24,7 @@ const MerchSales: AdminView = ({ user, canAccessAdmin }) => {
         setData([]);
       }
     };
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchOrders();
   }, []);
 
@@ -72,8 +73,8 @@ const MerchSales: AdminView = ({ user, canAccessAdmin }) => {
     accessor: "edit",
     components: {
       Heading: <div>Edit</div>,
-      renderCell: (data) => (
-        <Button onClick={() => handleEdit(data as Order)}>Edit</Button>
+      renderCell: (data: Order) => (
+        <Button onClick={() => handleEdit(data)}>Edit</Button>
       ),
     },
     label: "Edit",
