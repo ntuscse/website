@@ -10,14 +10,15 @@ import { RenderCellFactory } from "../utils/RenderCellFactory";
 import SortedColumn from "../utils/SortedColumn";
 import { Table } from "payload/dist/admin/components/elements/Table";
 
+
 const MerchSales: AdminView = ({ user, canAccessAdmin }) => {
-  // Get data from API
-  const [data, setData] = useState<IOrder[]>(null);
-  useEffect(() => {
-    OrdersApi.getOrders()
-      .then((res: IOrder[]) => setData(res))
-      .catch((error) => console.log(error));
-  }, []);
+    // Get data from API
+    const [data, setData] = useState<IOrder[]>(null);
+    useEffect(() => {
+      OrdersApi.getOrders()
+        .then((res: IOrder[]) => setData(res))
+        .catch((error) => console.log(error));
+    }, []);
 
   // Output human-readable table headers based on the attribute names from the API
   function prettifyKey(str: string): string {
@@ -30,7 +31,7 @@ const MerchSales: AdminView = ({ user, canAccessAdmin }) => {
 
   // Do not load table until we receive the data
   if (data == null) {
-    return <div> Loading... </div>;
+    return <div>Loading...</div>;
   }
 
   const tableCols = new Array<Column>();
@@ -92,7 +93,7 @@ const MerchSales: AdminView = ({ user, canAccessAdmin }) => {
 
   const handleEdit = (orderId: string) => {
     console.log(`Dummy. Order ID: ${orderId}`);
-  };
+  }
 
   const handleDelete = (orderId: string) => {
     console.log(`Dummy. Order ID: ${orderId}`);

@@ -1,5 +1,6 @@
 import React from "react";
 import payload from "payload";
+import { Promotion } from "types";
 
 export class RenderCellFactory {
   static get(element: unknown, key: string) {
@@ -101,6 +102,25 @@ export class RenderCellFactory {
       [color: string]: {
         [size: string]: number;
       };
+    }
+
+    if (key === "discounts" && typeof element[key] === "object") {
+      // Render discounts
+      const DiscountsComponent: React.FC<{ data: Promotion["discounts"] }> = ({ data }) => (
+        <div className="discount-container">
+          <div className="discount-item">
+            <div>
+              <div>
+                <strong>Promo Type:</strong> {data.promoType} <br />
+                <strong>Promo Value:</strong> {data.promoValue} <br />
+                <strong>Applies To:</strong> {data.appliesTo?.join(", ") || "All"} <br />
+                <strong>Minimum Quantity:</strong> {data.minimumQty ?? "None"}
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+      return (row: any, data: Promotion["discounts"]) => <DiscountsComponent data={data} />;
     }
 
     if (typeof element[key] == "object") {
