@@ -6,15 +6,21 @@
  * and re-run `payload generate:types` to regenerate this file.
  */
 
-export type OrderItem = {
-  name: string;
-  image?: string;
-  color: string;
-  size: string;
-  price: number;
-  quantity: number;
-  id?: string;
-}[];
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OrderItem".
+ */
+export type OrderItem =
+  | {
+      name: string;
+      image?: string | null;
+      color: string;
+      size: string;
+      price: number;
+      quantity: number;
+      id?: string | null;
+    }[]
+  | null;
 
 export interface Config {
   collections: {
@@ -24,81 +30,117 @@ export interface Config {
     users: User;
     media: Media;
     orders: Order;
+    'payload-preferences': PayloadPreference;
+    'payload-migrations': PayloadMigration;
   };
   globals: {};
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
 export interface Category {
   id: string;
-  name?: string;
+  name?: string | null;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts".
+ */
 export interface Post {
   id: string;
-  title?: string;
-  category?: string | Category;
-  tags?: string[] | Tag[];
-  layout?: (
-    | {
-        columns?: {
-          width: 'oneThird' | 'half' | 'twoThirds' | 'full';
-          alignment: 'left' | 'center' | 'right';
-          richText?: {
-            [k: string]: unknown;
-          }[];
-          id?: string;
-        }[];
-        id?: string;
-        blockName?: string;
-        blockType: 'content';
-      }
-    | {
-        media: string | Media;
-        size?: 'normal' | 'wide' | 'fullscreen';
-        caption?: {
-          [k: string]: unknown;
-        }[];
-        id?: string;
-        blockName?: string;
-        blockType: 'media';
-      }
-  )[];
-  slug?: string;
-  status?: 'draft' | 'published';
-  author?: string | User;
-  publishedDate?: string;
+  title?: string | null;
+  category?: (string | null) | Category;
+  tags?: (string | Tag)[] | null;
+  layout?:
+    | (
+        | {
+            columns?:
+              | {
+                  width: 'oneThird' | 'half' | 'twoThirds' | 'full';
+                  alignment: 'left' | 'center' | 'right';
+                  richText?:
+                    | {
+                        [k: string]: unknown;
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'content';
+          }
+        | {
+            media: string | Media;
+            size?: ('normal' | 'wide' | 'fullscreen') | null;
+            caption?:
+              | {
+                  [k: string]: unknown;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'media';
+          }
+      )[]
+    | null;
+  slug?: string | null;
+  status?: ('draft' | 'published') | null;
+  author?: (string | null) | User;
+  publishedDate?: string | null;
   updatedAt: string;
   createdAt: string;
-  _status?: 'draft' | 'published';
+  _status?: ('draft' | 'published') | null;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags".
+ */
 export interface Tag {
   id: string;
-  name?: string;
+  name?: string | null;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
 export interface Media {
   id: string;
-  alt?: string;
+  alt?: string | null;
   updatedAt: string;
   createdAt: string;
-  url?: string;
-  filename?: string;
-  mimeType?: string;
-  filesize?: number;
-  width?: number;
-  height?: number;
+  url?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
 export interface User {
   id: string;
-  name?: string;
+  name?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
-  resetPasswordToken?: string;
-  resetPasswordExpiration?: string;
-  salt?: string;
-  hash?: string;
-  loginAttempts?: number;
-  lockUntil?: string;
-  password?: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  password: string | null;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders".
+ */
 export interface Order {
   id: string;
   items?: OrderItem;
@@ -109,4 +151,43 @@ export interface Order {
   status: 'pending' | 'paid' | 'delivered';
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-preferences".
+ */
+export interface PayloadPreference {
+  id: string;
+  user: {
+    relationTo: 'users';
+    value: string | User;
+  };
+  key?: string | null;
+  value?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-migrations".
+ */
+export interface PayloadMigration {
+  id: string;
+  name?: string | null;
+  batch?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+
+
+declare module 'payload' {
+  export interface GeneratedTypes extends Config {}
 }
