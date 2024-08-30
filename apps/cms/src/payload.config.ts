@@ -47,24 +47,24 @@ export default buildConfig({
         Logo: SCSELogo,
         Icon: SCSEIcon,
       },
-      routes: [
-        {
-          path: "/merch/overview",
-          Component: MerchOverview,
-        },
-        {
-          path: "/merch/sales",
-          Component: MerchSales,
-        },
-        {
-          path: "/merch/products",
-          Component: MerchProducts,
-        },
-        {
-          path: "/merch/promotions",
-          Component: MerchPromotion,
-        },
-      ],
+      views: {
+        MerchOverview: {
+        path: "/merch/overview",
+        Component: MerchOverview,
+      },
+      MerchSales: {
+        path: "/merch/sales",
+        Component: MerchSales,
+      },
+      MerchProducts: {
+        path: "/merch/products",
+        Component: MerchProducts,
+      },
+      MerchPromotion: {
+        path: "/merch/promotions",
+        Component: MerchPromotion,
+      },
+      },
       beforeNavLinks: BeforeNavLinks,
       afterNavLinks: AfterNavLinks,
     },

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "payload/components/elements";
-import { AdminView } from "payload/config";
+import { AdminViewComponent } from "payload/config";
 import ViewTemplate from "./ViewTemplate";
 import { Column } from "payload/dist/admin/components/elements/Table/types";
 import { RenderCellFactory } from "../utils/RenderCellFactory";
@@ -9,7 +9,7 @@ import { Table } from "payload/dist/admin/components/elements/Table";
 import { Product } from "types";
 import ProductsApi from "../../apis/products.api";
 
-const MerchProducts: AdminView = ({ user, canAccessAdmin }) => {
+const MerchProducts: AdminViewComponent = ({ user, canAccessAdmin }) => {
   // Get data from API
   const [data, setData] = useState<Product[]>(null);
   useEffect(() => {
