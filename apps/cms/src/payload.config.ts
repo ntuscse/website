@@ -41,6 +41,8 @@ export default buildConfig({
     url: process.env.MONGODB_URI,
   }),
   admin: {
+    // eslint wrongly infers webpackBundler() as returning any
+    /* eslint-disable-next-line */
     bundler: webpackBundler(),
     components: {
       graphics: {
