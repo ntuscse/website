@@ -1,6 +1,8 @@
 import { buildConfig } from "payload/config";
 import { cloudStorage } from "@payloadcms/plugin-cloud-storage";
 import { s3Adapter as createS3Adapter } from "@payloadcms/plugin-cloud-storage/s3";
+import { slateEditor } from "@payloadcms/richtext-slate";
+import { webpackBundler } from "@payloadcms/bundler-webpack";
 import path from "path";
 
 import Categories from "./collections/Categories";
@@ -19,6 +21,7 @@ import { SCSEIcon, SCSELogo } from "./admin/graphics/Logos";
 import BeforeNavLinks from "./admin/components/BeforeNavLinks";
 import Order from "./collections/Orders";
 import { isUsingCloudStore } from "./utilities/cloud";
+import { mongooseAdapter } from "@payloadcms/db-mongodb";
 
 const adapter = createS3Adapter({
   config: {
@@ -33,7 +36,12 @@ const adapter = createS3Adapter({
 
 export default buildConfig({
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL,
+  editor: slateEditor({}),
+  db: mongooseAdapter({
+    url: process.env.MONGODB_URI,
+  }),
   admin: {
+    bundler: webpackBundler(),
     components: {
       graphics: {
         Logo: SCSELogo,
