@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "payload/components/elements";
-import { AdminView } from "payload/config";
+import { AdminViewComponent } from "payload/config";
 import ViewTemplate from "./ViewTemplate";
 import { Column } from "payload/dist/admin/components/elements/Table/types";
 import { RenderCellFactory } from "../utils/RenderCellFactory";
@@ -10,7 +10,7 @@ import { Promotion } from "types";
 import PromotionsApi from "../../apis/promotions.api";
 import './MerchPromotion.scss';
 
-const MerchPromotion: AdminView = ({ user, canAccessAdmin }) => {
+const MerchPromotion: AdminViewComponent = ({ user, canAccessAdmin }) => {
   // Get data from API
   const [data, setData] = useState<Promotion[]>(null);
   useEffect(() => {
@@ -112,7 +112,7 @@ const MerchPromotion: AdminView = ({ user, canAccessAdmin }) => {
       keywords=""
       title="Merchandise Promotion"
     >
-    
+
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <Button el="link" to={"/admin"} buttonStyle="primary">
           Go to Main Admin View
@@ -125,7 +125,7 @@ const MerchPromotion: AdminView = ({ user, canAccessAdmin }) => {
       <div className="table">
         <Table data={data} columns={tableCols}/>
       </div>
-        
+
     </ViewTemplate>
   );
 };

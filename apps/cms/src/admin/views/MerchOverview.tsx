@@ -1,10 +1,10 @@
 import React, { useEffect, useState, ChangeEvent } from "react";
 import { Button } from "payload/components/elements";
-import { AdminView } from "payload/config";
+import { AdminViewComponent } from "payload/config";
 import ViewTemplate from "./ViewTemplate";
 import StoreApi from "../../apis/store.api";
 
-const MerchOverview: AdminView = ({ user, canAccessAdmin }) => {
+const MerchOverview: AdminViewComponent = ({ user, canAccessAdmin }) => {
   const [displayText, setDisplayText] = useState<string>(
     "We are currently preparing for the next merch sale. Please look forward to our email!"
   );

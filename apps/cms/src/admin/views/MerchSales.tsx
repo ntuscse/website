@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "payload/components/elements";
-import { AdminView } from "payload/config";
+import { AdminViewComponent } from "payload/config";
 import ViewTemplate from "./ViewTemplate";
 import { Column } from "payload/dist/admin/components/elements/Table/types";
 import { Order } from "../../@types/Order";
@@ -11,7 +11,7 @@ import SortedColumn from "../utils/SortedColumn";
 import { Table } from "payload/dist/admin/components/elements/Table";
 
 
-const MerchSales: AdminView = ({ user, canAccessAdmin }) => {
+const MerchSales: AdminViewComponent = ({ user, canAccessAdmin }) => {
     // Get data from API
     const [data, setData] = useState<IOrder[]>(null);
     useEffect(() => {
