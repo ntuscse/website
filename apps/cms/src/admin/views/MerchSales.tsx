@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "payload/components/elements";
-import { AdminView } from "payload/config";
+import { AdminViewComponent } from "payload/config";
 import ViewTemplate from "./ViewTemplate";
 import { Column } from "payload/dist/admin/components/elements/Table/types";
 import { Order } from "../../@types/Order";
@@ -10,8 +10,9 @@ import SortedColumn from "../utils/SortedColumn";
 import { Table } from "payload/dist/admin/components/elements/Table";
 import { useHistory } from 'react-router-dom';
 
-const MerchSales: AdminView = ({ user, canAccessAdmin }) => {
-  // Get data from API
+
+const MerchSales: AdminViewComponent = ({ user, canAccessAdmin }) => {
+    // Get data from API
   const [data, setData] = useState<Order[]>(null);
   const history = useHistory();
   useEffect(() => {
@@ -26,7 +27,7 @@ const MerchSales: AdminView = ({ user, canAccessAdmin }) => {
     };
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchOrders();
-  }, []);
+    }, []);
 
   // Output human-readable table headers based on the attribute names from the API
   function prettifyKey(str: string): string {
@@ -39,7 +40,7 @@ const MerchSales: AdminView = ({ user, canAccessAdmin }) => {
 
   // Do not load table until we receive the data
   if (data == null) {
-    return <div> Loading... </div>;
+    return <div>Loading...</div>;
   }
 
   const tableCols = new Array<Column>();

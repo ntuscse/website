@@ -6,15 +6,16 @@ import { Column } from "payload/dist/admin/components/elements/Table/types";
 import { RenderCellFactory } from "../utils/RenderCellFactory";
 import SortedColumn from "../utils/SortedColumn";
 import { Table } from "payload/dist/admin/components/elements/Table";
-import { Product } from "types";
-import ProductsApi from "../../apis/products.api";
+import { Promotion } from "types";
+import PromotionsApi from "../../apis/promotions.api";
+import './MerchPromotion.scss';
 
-const MerchProducts: AdminViewComponent = ({ user, canAccessAdmin }) => {
+const MerchPromotion: AdminViewComponent = ({ user, canAccessAdmin }) => {
   // Get data from API
-  const [data, setData] = useState<Product[]>(null);
+  const [data, setData] = useState<Promotion[]>(null);
   useEffect(() => {
-    ProductsApi.getProducts()
-      .then((res: Product[]) => setData(res))
+    PromotionsApi.getPromotions()
+      .then((res: Promotion[]) => setData(res))
       .catch((error) => console.log(error));
   }, []);
 
@@ -89,12 +90,16 @@ const MerchProducts: AdminViewComponent = ({ user, canAccessAdmin }) => {
 
   tableCols.push(deleteColumn);
 
-  const handleEdit = (orderId: string) => {
-    console.log(`Dummy. Order ID: ${orderId}`);
+  const handleEdit = (promotionID: string) => {
+    console.log(`Dummy. Promotion ID: ${promotionID}`);
   };
 
-  const handleDelete = (orderId: string) => {
-    console.log(`Dummy. Order ID: ${orderId}`);
+  const handleDelete = (promotionID: string) => {
+    console.log(`Dummy. Promotion ID: ${promotionID}`);
+  };
+
+  const handleCreatePromotion = () => {
+    console.log("Creating a new promotion...");
   };
 
   console.log(tableCols);
@@ -105,15 +110,24 @@ const MerchProducts: AdminViewComponent = ({ user, canAccessAdmin }) => {
       canAccessAdmin={canAccessAdmin}
       description=""
       keywords=""
-      title="Merchandise Products"
+      title="Merchandise Promotion"
     >
-      <Button el="link" to={"/admin"} buttonStyle="primary">
-        Go to Main Admin View
-      </Button>
 
-      <Table data={data} columns={tableCols} />
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <Button el="link" to={"/admin"} buttonStyle="primary">
+          Go to Main Admin View
+        </Button>
+        <Button onClick={handleCreatePromotion} buttonStyle="primary">
+          Create Promotion
+        </Button>
+      </div>
+
+      <div className="table">
+        <Table data={data} columns={tableCols}/>
+      </div>
+
     </ViewTemplate>
   );
 };
 
-export default MerchProducts;
+export default MerchPromotion;

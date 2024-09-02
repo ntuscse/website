@@ -27,6 +27,7 @@ module.exports = {
     "@next/next/no-html-link-for-pages": "off",
     // react
     "react/jsx-key": "off",
+    "react/display-name": "off",
     // cypress
     "cypress/no-assigning-return-values": "error",
     "cypress/no-unnecessary-waiting": "error",

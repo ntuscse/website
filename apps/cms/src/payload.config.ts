@@ -1,6 +1,8 @@
 import { buildConfig } from "payload/config";
 import { cloudStorage } from "@payloadcms/plugin-cloud-storage";
 import { s3Adapter as createS3Adapter } from "@payloadcms/plugin-cloud-storage/s3";
+import { slateEditor } from "@payloadcms/richtext-slate";
+import { webpackBundler } from "@payloadcms/bundler-webpack";
 import path from "path";
 
 import Categories from "./collections/Categories";
@@ -14,10 +16,12 @@ import AfterNavLinks from "./admin/components/AfterNavLinks";
 import MerchSales from "./admin/views/MerchSales";
 import MerchOverview from "./admin/views/MerchOverview";
 import MerchProducts from "./admin/views/MerchProducts";
+import MerchPromotion from "./admin/views/MerchPromotion";
 import { SCSEIcon, SCSELogo } from "./admin/graphics/Logos";
 import BeforeNavLinks from "./admin/components/BeforeNavLinks";
 import Order from "./collections/Orders";
 import { isUsingCloudStore } from "./utilities/cloud";
+import { mongooseAdapter } from "@payloadcms/db-mongodb";
 
 const adapter = createS3Adapter({
   config: {
@@ -32,26 +36,37 @@ const adapter = createS3Adapter({
 
 export default buildConfig({
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL,
+  editor: slateEditor({}),
+  db: mongooseAdapter({
+    url: process.env.MONGODB_URI,
+  }),
   admin: {
+    // eslint wrongly infers webpackBundler() as returning any
+    /* eslint-disable-next-line */
+    bundler: webpackBundler(),
     components: {
       graphics: {
         Logo: SCSELogo,
         Icon: SCSEIcon,
       },
-      routes: [
-        {
-          path: "/merch/overview",
-          Component: MerchOverview,
-        },
-        {
-          path: "/merch/sales",
-          Component: MerchSales,
-        },
-        {
-          path: "/merch/products",
-          Component: MerchProducts,
-        },
-      ],
+      views: {
+        MerchOverview: {
+        path: "/merch/overview",
+        Component: MerchOverview,
+      },
+      MerchSales: {
+        path: "/merch/sales",
+        Component: MerchSales,
+      },
+      MerchProducts: {
+        path: "/merch/products",
+        Component: MerchProducts,
+      },
+      MerchPromotion: {
+        path: "/merch/promotions",
+        Component: MerchPromotion,
+      },
+      },
       beforeNavLinks: BeforeNavLinks,
       afterNavLinks: AfterNavLinks,
     },
@@ -90,13 +105,13 @@ export default buildConfig({
   },
   plugins: isUsingCloudStore()
     ? [
-      cloudStorage({
-        collections: {
-          media: {
-            adapter: adapter,
+        cloudStorage({
+          collections: {
+            media: {
+              adapter: adapter,
+            },
           },
-        },
-      }),
-    ]
+        }),
+      ]
     : [],
 });
