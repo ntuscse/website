@@ -5,9 +5,9 @@
 export class Order {
   constructor(
     public id = '',
-    public transaction_id = '',
-    public transaction_time = '',
-    public payment_method = '',
+    public transactionId = '',
+    public transactionTime = '',
+    public paymentMethod = '',
     public customerEmail = '',
     public status = '',
     public updatedAt = '',

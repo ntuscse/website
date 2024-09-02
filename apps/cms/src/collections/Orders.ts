@@ -57,7 +57,7 @@ const Orders: CollectionConfig = {
       minRows: 1,
     },
     {
-      name: "transaction_id",
+      name: "transactionId",
       label: "Transaction ID",
       admin: {
         description: "Transaction ID provided by Payment Gateway",
@@ -66,7 +66,7 @@ const Orders: CollectionConfig = {
       required: true,
     },
     {
-      name: "transaction_time",
+      name: "transactionTime",
       label: "Transaction Time",
       type: "date",
       admin: {
@@ -77,7 +77,7 @@ const Orders: CollectionConfig = {
       required: true,
     },
     {
-      name: "payment_method",
+      name: "paymentMethod",
       label: "Payment Method",
       type: "text",
       required: true,

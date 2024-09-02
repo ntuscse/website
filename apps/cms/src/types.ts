@@ -144,9 +144,9 @@ export interface User {
 export interface Order {
   id: string;
   items?: OrderItem;
-  transaction_id: string;
-  transaction_time: string;
-  payment_method: string;
+  transactionId: string;
+  transactionTime: string;
+  paymentMethod: string;
   customerEmail: string;
   status: 'pending' | 'paid' | 'delivered';
   updatedAt: string;

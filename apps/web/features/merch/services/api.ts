@@ -93,7 +93,7 @@ export class Api {
     return new Promise((res, rej) => {
       setTimeout(() => {
         res({
-          disabled: false,
+          disabled: true,
           displayText:
             "We are currently preparing for the next merch sale. Please look forward to our email!",
         });
