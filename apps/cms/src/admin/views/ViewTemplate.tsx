@@ -7,6 +7,7 @@ import { Eyebrow } from "payload/components/elements";
 import { AdminViewComponent } from "payload/config";
 import { useStepNav } from "payload/components/hooks";
 import { Meta } from "payload/components/utilities";
+import { Slide, ToastContainer } from "react-toastify";
 
 type ViewTemplateProps = React.ComponentProps<AdminViewComponent> & {
   description: string;
@@ -54,6 +55,7 @@ const ViewTemplate = ({
         <h1>{title}</h1>
         {children}
       </div>
+      <ToastContainer icon={false} position="bottom-center" transition={Slide} />
     </DefaultTemplate>
   );
 };

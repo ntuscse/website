@@ -5,29 +5,34 @@ import ViewTemplate from "./ViewTemplate";
 import { Column } from "payload/dist/admin/components/elements/Table/types";
 import { Order } from "../../@types/Order";
 import OrdersApi from "../../apis/orders.api";
-import { IOrder } from "../../@types/IOrder";
 import { RenderCellFactory } from "../utils/RenderCellFactory";
 import SortedColumn from "../utils/SortedColumn";
 import { Table } from "payload/dist/admin/components/elements/Table";
-
+import { useHistory } from 'react-router-dom';
+import { toast } from "react-toastify";
+import { prettifyKey } from "../../utilities/prettifyKey";
 
 const MerchSales: AdminViewComponent = ({ user, canAccessAdmin }) => {
-    // Get data from API
-    const [data, setData] = useState<IOrder[]>(null);
-    useEffect(() => {
-      OrdersApi.getOrders()
-        .then((res: IOrder[]) => setData(res))
-        .catch((error) => console.log(error));
+  // Get data from API
+  const [data, setData] = useState<Order[]>(null);
+  const history = useHistory();
+  useEffect(() => {
+    const fetchOrders = async () => { 
+      try {
+        const orders: Order[] = await OrdersApi.getOrders();
+        setData(orders);
+      } catch (error) {
+        setData([]);
+        if (error instanceof Error) {
+          toast.error(error.message);
+        } else {
+          toast.error("An unknown error occurred");
+        }
+      }
+    };
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    fetchOrders();
     }, []);
-
-  // Output human-readable table headers based on the attribute names from the API
-  function prettifyKey(str: string): string {
-    let res = "";
-    for (const i of str.split("_")) {
-      res += i.charAt(0).toUpperCase() + i.slice(1) + " ";
-    }
-    return res;
-  }
 
   // Do not load table until we receive the data
   if (data == null) {
@@ -35,71 +40,57 @@ const MerchSales: AdminViewComponent = ({ user, canAccessAdmin }) => {
   }
 
   const tableCols = new Array<Column>();
-  for (const key of Object.keys(new Order())) {
-    const renderCellComponent = RenderCellFactory.get(data[0], key);
-    const renderCell: React.FC<{ children?: React.ReactNode }> =
-      renderCellComponent instanceof Promise
-        ? renderCellComponent
-        : renderCellComponent;
+  if (data && data.length > 0) { 
+    for (const key of Object.keys(new Order())) {
+      const renderCellComponent = RenderCellFactory.get(data[0], key);
+      const renderCell: React.FC<{ children?: React.ReactNode }> =
+        renderCellComponent instanceof Promise
+          ? renderCellComponent
+          : renderCellComponent;
 
-    const col: Column = {
-      accessor: key,
+      const col: Column = {
+        accessor: key,
+        components: {
+          Heading: (
+            <SortedColumn
+              label={prettifyKey(key)}
+              name={key}
+              data={data as never[]}
+            />
+          ),
+          renderCell: renderCell,
+        },
+        label: prettifyKey(key), // Assigning the prettified key to the label
+        name: key,
+        active: true,
+      };
+
+      tableCols.push(col);
+    }
+
+    // Add the "Edit" column
+    const editColumn: Column = {
+      accessor: "edit",
       components: {
-        Heading: (
-          <SortedColumn
-            label={prettifyKey(key)}
-            name={key}
-            data={data as never[]}
-          />
+        Heading: <div>Edit</div>,
+        renderCell: (data: Order) => (
+          <Button onClick={() => handleEdit(data)}>Edit</Button>
         ),
-        renderCell: renderCell,
       },
-      label: "",
-      name: "",
+      label: "Edit",
+      name: "edit",
       active: true,
     };
-    tableCols.push(col);
+
+    tableCols.push(editColumn);
+
+    // Handle Edit functionality
+    const handleEdit = (data: Order) => {
+      const orderId = data.id;
+      // Navigate to the edit page
+      history.push(`/admin/collections/orders/${orderId}`);
+    };
   }
-
-  const editColumn: Column = {
-    accessor: "edit",
-    components: {
-      Heading: <div>Edit</div>,
-      renderCell: ({ children }) => (
-        <Button onClick={() => handleEdit(children as string)}>Edit</Button>
-      ),
-    },
-    label: "Edit",
-    name: "edit",
-    active: true,
-  };
-
-  tableCols.push(editColumn);
-
-  const deleteColumn: Column = {
-    accessor: "delete",
-    components: {
-      Heading: <div>Delete</div>,
-      renderCell: ({ children }) => (
-        <Button onClick={() => handleDelete(children as string)}>Delete</Button>
-      ),
-    },
-    label: "Delete",
-    name: "delete",
-    active: true,
-  };
-
-  tableCols.push(deleteColumn);
-
-  const handleEdit = (orderId: string) => {
-    console.log(`Dummy. Order ID: ${orderId}`);
-  }
-
-  const handleDelete = (orderId: string) => {
-    console.log(`Dummy. Order ID: ${orderId}`);
-  };
-
-  console.log(tableCols);
 
   return (
     <ViewTemplate
@@ -112,8 +103,7 @@ const MerchSales: AdminViewComponent = ({ user, canAccessAdmin }) => {
       <Button el="link" to={"/admin"} buttonStyle="primary">
         Go to Main Admin View
       </Button>
-
-      <Table data={data} columns={tableCols} />
+      {data && data.length > 0 && <Table data={data} columns={tableCols} />}
     </ViewTemplate>
   );
 };

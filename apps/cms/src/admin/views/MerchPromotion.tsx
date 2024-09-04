@@ -9,6 +9,7 @@ import { Table } from "payload/dist/admin/components/elements/Table";
 import { Promotion } from "types";
 import PromotionsApi from "../../apis/promotions.api";
 import './MerchPromotion.scss';
+import { prettifyKey } from "../../utilities/prettifyKey";
 
 const MerchPromotion: AdminViewComponent = ({ user, canAccessAdmin }) => {
   // Get data from API
@@ -18,15 +19,6 @@ const MerchPromotion: AdminViewComponent = ({ user, canAccessAdmin }) => {
       .then((res: Promotion[]) => setData(res))
       .catch((error) => console.log(error));
   }, []);
-
-  // Output human-readable table headers based on the attribute names from the API
-  function prettifyKey(str: string): string {
-    let res = "";
-    for (const i of str.split("_")) {
-      res += i.charAt(0).toUpperCase() + i.slice(1) + " ";
-    }
-    return res;
-  }
 
   // Do not load table until we receive the data
   if (data == null) {

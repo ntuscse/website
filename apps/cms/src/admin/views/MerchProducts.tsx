@@ -8,6 +8,7 @@ import SortedColumn from "../utils/SortedColumn";
 import { Table } from "payload/dist/admin/components/elements/Table";
 import { Product } from "types";
 import ProductsApi from "../../apis/products.api";
+import { prettifyKey } from "../../utilities/prettifyKey";
 
 const MerchProducts: AdminViewComponent = ({ user, canAccessAdmin }) => {
   // Get data from API
@@ -17,15 +18,6 @@ const MerchProducts: AdminViewComponent = ({ user, canAccessAdmin }) => {
       .then((res: Product[]) => setData(res))
       .catch((error) => console.log(error));
   }, []);
-
-  // Output human-readable table headers based on the attribute names from the API
-  function prettifyKey(str: string): string {
-    let res = "";
-    for (const i of str.split("_")) {
-      res += i.charAt(0).toUpperCase() + i.slice(1) + " ";
-    }
-    return res;
-  }
 
   // Do not load table until we receive the data
   if (data == null) {

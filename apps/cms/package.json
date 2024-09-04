@@ -30,6 +30,7 @@
     "payload": "^2.27.0",
     "querystring-es3": "^0.2.1",
     "react": "^18.0.0",
+    "react-toastify": "10.0.5",
     "tsconfig": "*"
   },
   "devDependencies": {
