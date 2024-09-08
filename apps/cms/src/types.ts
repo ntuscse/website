@@ -160,8 +160,8 @@ export interface Order {
 export interface Product {
   id: string;
   name: string;
-  colors?: ('black' | 'white' | 'blue')[] | null;
-  sizes?: ('s' | 'm' | 'l' | 'xl')[] | null;
+  colors: string[];
+  sizes?: string[] | null;
   images?:
     | {
         url: string;
@@ -170,11 +170,12 @@ export interface Product {
     | null;
   is_available?: boolean | null;
   price: number;
-  category: 'shirt' | 'hat';
+  category: string[];
   size_chart?: string | null;
   stock?:
     | {
-        color: 'black' | 'white' | 'blue';
+        color: string;
+        size: string;
         quantity: number;
         id?: string | null;
       }[]

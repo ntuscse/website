@@ -5,6 +5,7 @@ export const Products: CollectionConfig = {
   slug: "products",
   admin: {
     description: "Merchandise products offerings",
+    defaultColumns: ["name", "category", "price", "is_available"],
   },
   fields: [
     // by default, payload generates an 'id' field each order automatically
@@ -15,45 +16,14 @@ export const Products: CollectionConfig = {
     },
     {
       name: "colors",
-      type: "select",
+      type: "text",
+      required: true,
       hasMany: true,
-      options: [
-        {
-          label: "Black",
-          value: "black",
-        },
-        {
-          label: "White",
-          value: "white",
-        },
-        {
-          label: "Blue",
-          value: "blue",
-        },
-      ],
     },
     {
       name: "sizes",
-      type: "select",
+      type: "text",
       hasMany: true,
-      options: [
-        {
-          label: "Small",
-          value: "s",
-        },
-        {
-          label: "Medium",
-          value: "m",
-        },
-        {
-          label: "Large",
-          value: "l",
-        },
-        {
-          label: "Extra Large",
-          value: "xl",
-        },
-      ],
     },
     {
       name: "images",
@@ -82,21 +52,14 @@ export const Products: CollectionConfig = {
     },
     {
       name: "category",
-      type: "select",
+      type: "text",
       required: true,
-      options: [
-        {
-          label: "Shirt",
-          value: "shirt",
-        },
-        {
-          label: "Hat",
-          value: "hat",
-        },
-      ],
+      hasMany: true,
+      minRows: 1,
     },
     {
       name: "size_chart",
+      label: "Size Chart",
       type: "text",
     },
     {
@@ -105,8 +68,12 @@ export const Products: CollectionConfig = {
       fields: [
         {
           name: "color",
-          type: "select",
-          options: ["black", "white", "blue"],
+          type: "text",
+          required: true,
+        },
+        {
+          name: "size",
+          type: "text",
           required: true,
         },
         {
