@@ -24,6 +24,7 @@
     "dotenv": "^16.3.1",
     "express": "^4.19.2",
     "merch-helpers": "*",
+    "mongoose": "^8.6.1",
     "nodelogger": "*",
     "stripe": "^12.5.0",
     "trpc-panel": "^1.3.4",

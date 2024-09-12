@@ -51,7 +51,7 @@ export const checkout = (req: Request, res: Response<CheckoutResponse>) => {
     });
   }
 
-  const orderID = uuidv4();
+  const orderId = uuidv4();
   const orderTime = new Date();
   const expiryTimeMillis = orderTime.getTime() + ORDER_EXPIRY_TIME;
   const expiryTime = new Date(expiryTimeMillis);
@@ -74,14 +74,14 @@ export const checkout = (req: Request, res: Response<CheckoutResponse>) => {
           description: `SCSE Merch Purchase:\n${describeCart(
             products,
             cart,
-            orderID
+            orderId
           )}`,
         }),
       ])
     )
     .then(([cart, stripeIntent]) => {
       console.log("creating order");
-      const transactionID = stripeIntent.id;
+      const transactionId = stripeIntent.id;
       const orderItems = cart.items.map(
         (item): OrderItem => ({
           id: item.id,
@@ -99,12 +99,12 @@ export const checkout = (req: Request, res: Response<CheckoutResponse>) => {
       //   })
       // );
       const order: Order = {
-        id: orderID,
+        id: orderId,
         items: orderItems,
-        transaction_id: transactionID,
-        transaction_time: orderTime.toISOString(),
-        payment_method: "stripe",
-        customer_email: email,
+        transactionId: transactionId,
+        transactionTime: orderTime.toISOString(),
+        paymentMethod: "stripe",
+        customerEmail: email,
         status: OrderStatus.PENDING_PAYMENT,
       };
       // const orderHold: OrderHold = {
@@ -128,6 +128,9 @@ export const checkout = (req: Request, res: Response<CheckoutResponse>) => {
     })
     .then(([order, stripeIntent]) => {
       console.log("order created");
+      if (!order) {
+        return; // something went wrong
+      }
       res.json({
         ...order,
         expiry: expiryTime.toISOString(),
