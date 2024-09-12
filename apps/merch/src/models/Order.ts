@@ -6,7 +6,7 @@ import { MongoOrder } from "../db";
 export type OrderDocument = MongoOrder & Document;
 
 const OrderSchema: Schema = new Schema<OrderDocument>({
-  _id: { type: String }, 
+  _id: { type: String, required: true }, 
   items: [ OrderItemSchema ],
   transactionId: { type: String, default: "" },
   transactionTime: { type: String, default: null },

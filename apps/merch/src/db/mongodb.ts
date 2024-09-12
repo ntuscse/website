@@ -8,13 +8,6 @@ export class NotFoundError {
   }
 }
 
-export class ItemExistError {
-  message: string;
-  constructor(id = "") {
-    this.message = "Item with " + id + " already exists.";
-  }
-}
-
 // readTable scans the table for all entries
 export const readTable = async<T extends Document>(model: Model<T>): Promise<T[]> => {
   const response = await model.find().exec();
