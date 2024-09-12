@@ -101,8 +101,8 @@ const OrderSummary: React.FC = () => {
               </Flex>
               <Text fontSize="sm" color="grey">
                 Order date:{" "}
-                {orderState?.transaction_time
-                  ? new Date(`${orderState.transaction_time}`).toLocaleString(
+                {orderState?.transactionTime
+                  ? new Date(`${orderState.transactionTime}`).toLocaleString(
                       "en-sg"
                     )
                   : ""}
@@ -141,8 +141,8 @@ const OrderSummary: React.FC = () => {
             <Flex flexDir="column" fontSize="sm" color="grey">
               <Text>
                 Order date:{" "}
-                {orderState?.transaction_time
-                  ? new Date(`${orderState.transaction_time}`).toLocaleString(
+                {orderState?.transactionTime
+                  ? new Date(`${orderState.transactionTime}`).toLocaleString(
                       "en-sg"
                     )
                   : ""}

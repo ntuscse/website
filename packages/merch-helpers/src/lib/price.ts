@@ -10,8 +10,8 @@ export class PricingError {
   }
 }
 
-export const describeCart = (products: Product[], cart: PricedCart, orderID: string): string => {
-  const entries = [`${frontendURL}/orders/${orderID} | `];
+export const describeCart = (products: Product[], cart: PricedCart, orderId: string): string => {
+  const entries = [`${frontendURL}/orders/${orderId} | `];
 
   const productMap: Record<string, Product> = {};
   for (const product of products) {

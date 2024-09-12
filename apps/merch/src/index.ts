@@ -10,6 +10,7 @@ import { index, notFound } from "./routes/index";
 import { orderGet } from "./routes/orders";
 import { productGet, productsAll } from "./routes/products";
 import { appRouter, trpcMiddleware } from "./trpc/router";
+import { setupDb } from "./db/mongodb";
 
 const app = express();
 const CORS_ORIGIN = process.env.CORS_ORIGIN;
@@ -49,6 +50,13 @@ app.use("/trpc-panel", (_, res) => {
 app.use(notFound);
 
 const port = 3002;
-app.listen(port, () => Logger.info(`server started on port ${port}`));
-
+app.listen(port, () => {
+  (async () => {
+    await setupDb();
+    Logger.info(`Server started on port ${port}`);
+  })().catch((error) => {
+    const errorMessage = (error as Error).message
+    Logger.error(`Failed to start server: ${errorMessage}`);
+  });
+});
 export default app;

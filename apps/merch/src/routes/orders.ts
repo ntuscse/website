@@ -17,11 +17,11 @@ export const orderGet = (req: Request<"id">, res: Response<Order>) => {
 };
 
 const censorDetails = (order: Order): Order => {
-  const customerEmail = order.customer_email.split("@");
+  const customerEmail = order.customerEmail.split("@");
   return {
     ...order,
-    customer_email: starCensor(customerEmail[0]) + "@" + customerEmail.slice(1).join("@"),
-    transaction_id: starCensor(order.transaction_id),
+    customerEmail: starCensor(customerEmail[0]) + "@" + customerEmail.slice(1).join("@"),
+    transactionId: starCensor(order.transactionId),
   };
 };
 
