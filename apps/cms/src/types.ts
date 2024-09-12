@@ -30,6 +30,7 @@ export interface Config {
     users: User;
     media: Media;
     orders: Order;
+    products: Product;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -149,6 +150,36 @@ export interface Order {
   paymentMethod: string;
   customerEmail: string;
   status: 'pending' | 'paid' | 'delivered';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products".
+ */
+export interface Product {
+  id: string;
+  name: string;
+  colors: string[];
+  sizes?: string[] | null;
+  images?:
+    | {
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  is_available?: boolean | null;
+  price: number;
+  category: string[];
+  size_chart?: string | null;
+  stock?:
+    | {
+        color: string;
+        size: string;
+        quantity: number;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
