@@ -93,14 +93,9 @@ const MerchProducts: AdminViewComponent = ({ user, canAccessAdmin }) => {
       accessor: "delete",
       components: {
         Heading: <div>Delete</div>,
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         renderCell: (data: Product) => (
-          <Button onClick={() => {
-            // Wrap async function call in an inline function
-            (async () => {
-              await handleDelete(data);
-            })();
-          }}
-        >Delete</Button>
+          <Button onClick={() => handleDelete(data)}>Delete</Button>
         ),
       },
       label: "Delete",
