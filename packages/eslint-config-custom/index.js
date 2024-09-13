@@ -58,6 +58,14 @@ module.exports = {
             format: ["camelCase", "PascalCase"],
           },
         ],
+        "@typescript-eslint/no-misused-promises": [
+          "error",
+            {
+                "checksVoidReturn": {
+                  "arguments": false
+                }
+            },
+        ]
       },
       parserOptions: {
         tsconfigRootDir: __dirname,
