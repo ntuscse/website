@@ -43,7 +43,6 @@ const MerchProducts: AdminViewComponent = ({ user, canAccessAdmin }) => {
   if (data && data.length > 0) { 
     for (const key of Object.keys(new Product())) {
       const renderCellComponent = RenderCellFactory.get(data[0], key);
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       const renderCell: React.FC<{ children?: React.ReactNode }> =
         renderCellComponent instanceof Promise
           ? renderCellComponent
@@ -95,7 +94,13 @@ const MerchProducts: AdminViewComponent = ({ user, canAccessAdmin }) => {
       components: {
         Heading: <div>Delete</div>,
         renderCell: (data: Product) => (
-          <Button onClick={() => handleDelete(data)}>Delete</Button>
+          <Button onClick={() => {
+            // Wrap async function call in an inline function
+            (async () => {
+              await handleDelete(data);
+            })();
+          }}
+        >Delete</Button>
         ),
       },
       label: "Delete",
