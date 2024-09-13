@@ -43,6 +43,7 @@ const MerchProducts: AdminViewComponent = ({ user, canAccessAdmin }) => {
   if (data && data.length > 0) { 
     for (const key of Object.keys(new Product())) {
       const renderCellComponent = RenderCellFactory.get(data[0], key);
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       const renderCell: React.FC<{ children?: React.ReactNode }> =
         renderCellComponent instanceof Promise
           ? renderCellComponent
