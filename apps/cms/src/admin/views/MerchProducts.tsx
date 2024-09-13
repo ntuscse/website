@@ -19,7 +19,6 @@ const MerchProducts: AdminViewComponent = ({ user, canAccessAdmin }) => {
   useEffect(() => {
     const fetchProducts = async () => { 
       try {
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         const products: Product[] = await ProductsApi.getProducts();
         setData(products);
       } catch (error) {
@@ -94,8 +93,8 @@ const MerchProducts: AdminViewComponent = ({ user, canAccessAdmin }) => {
       accessor: "delete",
       components: {
         Heading: <div>Delete</div>,
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         renderCell: (data: Product) => (
+          // eslint-disable-next-line @typescript-eslint/no-floating-promises
           <Button onClick={() => handleDelete(data)}>Delete</Button>
         ),
       },
