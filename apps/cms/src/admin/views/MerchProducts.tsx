@@ -94,8 +94,14 @@ const MerchProducts: AdminViewComponent = ({ user, canAccessAdmin }) => {
       components: {
         Heading: <div>Delete</div>,
         renderCell: (data: Product) => (
-          // eslint-disable-next-line @typescript-eslint/no-floating-promises
-          <Button onClick={() => handleDelete(data)}>Delete</Button>
+          // <Button onClick={() => handleDelete(data)}>Delete</Button>
+          <Button onClick={() => {
+          // Wrap async function call in an inline function
+          (async () => {
+            await handleDelete(data);
+          })();
+        }}
+          >Delete</Button>
         ),
       },
       label: "Delete",
