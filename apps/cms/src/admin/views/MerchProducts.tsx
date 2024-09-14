@@ -94,10 +94,8 @@ const MerchProducts: AdminViewComponent = ({ user, canAccessAdmin }) => {
       components: {
         Heading: <div>Delete</div>,
         renderCell: (data: Product) => (
-          // <Button onClick={() => handleDelete(data)}>Delete</Button>
           <Button onClick={() => {
-          // Wrap async function call in an inline function
-          (async () => {
+          void (async () => {
             await handleDelete(data);
           })();
         }}
