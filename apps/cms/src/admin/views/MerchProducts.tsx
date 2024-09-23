@@ -109,13 +109,13 @@ const MerchProducts: AdminViewComponent = ({ user, canAccessAdmin }) => {
 
     tableCols.push(deleteColumn);
 
-      const handleDelete = async (data: Product) => {
+      const handleDelete = (data: Product) => {
         const productId = data.id;
         try {
           // Show a confirmation prompt (optional)
           if (window.confirm('Are you sure you want to delete this product?')) {
             // Call the delete API
-            // Implement delete function
+            // Implement delete API
       
             // After deletion, update the data state to reflect the removal
             setData((prevData) => prevData.filter((product) => product.id !== productId));
