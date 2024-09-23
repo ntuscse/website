@@ -96,7 +96,7 @@ const MerchProducts: AdminViewComponent = ({ user, canAccessAdmin }) => {
         renderCell: (data: Product) => (
           <Button onClick={() => {
           void (async () => {
-            await handleDelete(data);
+            handleDelete(data);
           })();
         }}
           >Delete</Button>
