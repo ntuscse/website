@@ -115,7 +115,7 @@ const MerchProducts: AdminViewComponent = ({ user, canAccessAdmin }) => {
           // Show a confirmation prompt (optional)
           if (window.confirm('Are you sure you want to delete this product?')) {
             // Call the delete API
-            await ProductsApi.deleteProduct(productId);
+            // Implement delete function
       
             // After deletion, update the data state to reflect the removal
             setData((prevData) => prevData.filter((product) => product.id !== productId));
