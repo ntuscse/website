@@ -32,7 +32,7 @@ export const PYPSection = () => {
         <GridItem>
           <ButtonLink
             label="PYP SOLUTIONS"
-            href="https://bit.ly/3CDVXlf"
+            href="https://entuedu-my.sharepoint.com/:f:/r/personal/scds-academics_e_ntu_edu_sg/Documents/SCSE%20Past%20Year%20Papers?csf=1&web=1&e=lzOSZ7"
             variant="primary-black"
             size="lg"
             width={{ base: "100%", md: "auto" }}
