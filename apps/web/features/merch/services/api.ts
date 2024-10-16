@@ -67,11 +67,11 @@ export class Api {
     return res;
   }
 
-  async getOrder(orderID: string): Promise<Product> {
-    if (!orderID) {
+  async getOrder(orderId: string): Promise<Product> {
+    if (!orderId) {
       throw new Error("No order ID");
     }
-    const res = await this.get<Product>(`/orders/${orderID}`);
+    const res = await this.get<Product>(`/orders/${orderId}`);
     return res;
   }
 

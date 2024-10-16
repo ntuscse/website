@@ -28,10 +28,10 @@ export enum OrderStatus {
 export interface Order {
   id: string;
   items: OrderItem[];
-  transaction_id: string;
-  transaction_time: string | null;
-  payment_method: string;
-  customer_email: string;
+  transactionId: string;
+  transactionTime: string | null;
+  paymentMethod: string;
+  customerEmail: string;
   status: OrderStatus;
 }
 

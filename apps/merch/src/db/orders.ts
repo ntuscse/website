@@ -1,108 +1,94 @@
-import { readItem, writeItem } from "./dynamodb";
-import { v4 as uuidv4 } from "uuid";
-import { Order, OrderItem, OrderStatus, OrderHoldEntry } from "types";
+import { readItem, readTable, writeItem } from "./mongodb";
+import { Order, OrderItem, OrderStatus } from "types";
+import { OrderDocument, OrderModel } from "../models/Order";
 
-const ORDER_TABLE_NAME = process.env.ORDER_TABLE_NAME;
-const ORDER_HOLD_TABLE_NAME = process.env.ORDER_HOLD_TABLE_NAME;
-
-if (!ORDER_TABLE_NAME) {
-  throw new Error("ORDER_TABLE_NAME is not defined");
+export interface MongoOrder {
+  _id: string;
+  items: MongoOrderItem[];
+  transactionId: string;
+  transactionTime: string | null;
+  paymentMethod: string;
+  customerEmail: string;
+  status: OrderStatus;
 }
-if (!ORDER_HOLD_TABLE_NAME) {
-  throw new Error("ORDER_HOLD_TABLE_NAME is not defined");
-}
 
-interface DynamoOrderItem {
+export interface MongoOrderItem {
   id: string;
-  image: string;
-  quantity: number;
+  name: string;
+  image?: string;
+  color: string;
   size: string;
   price: number;
-  name: string;
-  colorway: string;
-  // product_category: string;
+  quantity: number;
 }
 
-interface DynamoOrder {
-  orderID: string;
-  paymentGateway: string;
-  orderItems: DynamoOrderItem[];
-  status: OrderStatus;
-  customerEmail: string;
-  transactionID: string;
-  orderDateTime: string;
+export const getOrders = async (): Promise<OrderDocument[]> => {
+  const orders = await readTable(OrderModel);
+  // TODO: decode orders
+  return orders;
 }
 
-interface DynamoOrderHoldEntry {
-  // todo
-}
-
-export const getOrder = async (id: string) => {
-  const dynamoOrder = await readItem<DynamoOrder>(
-    ORDER_TABLE_NAME ?? "",
-    id,
-    "orderID"
-  );
-  return decodeOrder(dynamoOrder);
+export const getOrder = async (id: string): Promise<Order> => {
+  const order = await readItem<OrderDocument>(OrderModel, id, "_id");
+  return decodeOrder(order);
 };
 
-const decodeOrder = (order: DynamoOrder): Order => {
-  let date: string | null;
-  try {
-    date = new Date(order.orderDateTime).toISOString();
-  } catch (e) {
-    date = null;
+export const createOrder = async (order: Order): Promise<Order | null> => {
+  const mongoOrder = encodeOrder(order);
+  const newItem = await writeItem<OrderDocument>(OrderModel, mongoOrder as OrderDocument);
+  if (!newItem) {
+    return null;
   }
+  return decodeOrder(newItem);
+};
+
+const decodeOrder = (order: MongoOrder): Order => {
+  const date = order.transactionTime
+    ? new Date(order.transactionTime).toISOString()
+    : new Date().toISOString();
   return {
-    id: order.orderID || "",
-    payment_method: order.paymentGateway || "",
-    items: order.orderItems.map((item) => ({
+    id: order._id || "",
+    paymentMethod: order.paymentMethod || "",
+    items: order.items.map((item: MongoOrderItem) => ({
       id: item.id || "",
       name: item.name || "",
-      // category: item.product_category || "",
       image: item.image || undefined,
-      color: item.colorway || "",
+      color: item.color || "",
       size: item.size || "",
       price: item.price || 0,
       quantity: item.quantity || 1,
     })),
     status: order.status || OrderStatus.PENDING_PAYMENT,
-    customer_email: order.customerEmail || "",
-    transaction_id: order.transactionID || "",
-    transaction_time: date || null,
+    customerEmail: order.customerEmail || "",
+    transactionId: order.transactionId || "",
+    transactionTime: date || null,
   };
 };
 
-const encodeOrderItem = (item: OrderItem): DynamoOrderItem => ({
+const encodeOrderItem = (item: OrderItem): OrderItem => ({
   id: item.id,
   image: item.image ? item.image : "",
   quantity: item.quantity,
   size: item.size,
   price: item.price,
   name: item.name,
-  colorway: item.color,
-  // product_category: item.category,
+  color: item.color,
 });
 
-const encodeOrder = (order: Order): DynamoOrder => ({
-  transactionID: order.transaction_id || "",
-  orderID: order.id,
-  paymentGateway: order.payment_method || "",
-  orderItems: order.items.map(encodeOrderItem),
+const encodeOrder = (order: Order): MongoOrder => ({
+  transactionId: order.transactionId || "",
+  _id: order.id,
+  paymentMethod: order.paymentMethod || "",
+  items: order.items.map(encodeOrderItem),
   status: order.status || OrderStatus.PENDING_PAYMENT,
-  customerEmail: order.customer_email || "",
-  orderDateTime: order.transaction_time
-    ? new Date(order.transaction_time).toISOString()
+  customerEmail: order.customerEmail || "",
+  transactionTime: order.transactionTime 
+    ? new Date(order.transactionTime).toISOString()
     : new Date().toISOString(),
 });
 
-export const createOrder = async (order: Order): Promise<Order> => {
-  const dynamoOrder = encodeOrder(order);
-  dynamoOrder.orderID = uuidv4();
-  await writeItem<DynamoOrder>(ORDER_TABLE_NAME, dynamoOrder);
-  return decodeOrder(dynamoOrder);
-};
 
+/*
 const encodeOrderHoldEntry = (
   _orderHoldEntry: OrderHoldEntry
 ): DynamoOrderHoldEntry => {
@@ -117,3 +103,4 @@ export const createOrderHoldEntry = async (
   const dynamoOrderHoldEntry = encodeOrderHoldEntry(orderHoldEntry);
   await writeItem(ORDER_HOLD_TABLE_NAME, dynamoOrderHoldEntry);
 };
+*/
