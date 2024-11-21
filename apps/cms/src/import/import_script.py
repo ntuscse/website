@@ -27,27 +27,43 @@ for blog in blogs:
         "title": blogs[blog]["title"],
         "author": blog_author,
         "publishedDate": blogs[blog]["date"],
-        "tags": [],
-        "content": [{"children": [{
-            "text": content
-        }]},
-            {"children": [{
-                "text": ""
-            }]},
+        "layout": [
             {
-            "children": [{
-                "type": "link",
-                "linkType": "custom",
-                "url": blogs[blog]["link"],
-                "children": [
+                "columns": [
                     {
-                        "text": blogs[blog]["link"]
+                        "width": "full",
+                        "alignment": "center",
+                        "richText": [
+                            {
+                                "children": [
+                                    {
+                                        "text": content
+                                    },
+                                    {
+                                        "text": "\n"},
+                                    {
+                                        "type": "link",
+                                        "linkType": "custom",
+                                        "url": blogs[blog]["link"],
+                                        "children": [
+                                                {
+                                                    "text": "Link: " + blogs[blog]["link"]
+                                                }
+                                        ]
+                                    }
+
+                                ]
+                            }
+                        ]
+
                     }
-                ]
-            }]
-        }
+                ],
+                "blockType": "content"
+            }
         ],
+        "slug": blogs[blog]["title"],
         "status": "draft",
+        "_status": "published",
         "createdAt": blogs[blog]["date"],
         "updatedAt": blogs[blog]["date"]
     }, indent=4)
