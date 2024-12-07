@@ -19,13 +19,13 @@ export const WebLayout = ({ children }: WebLayoutProps) => {
     ],
     logoProps: {
       src: "/scse-logo/scse-logo-blue.png",
-      alt: "scse logo",
+      alt: "SCDS logo",
     },
   };
   const footerProps: FooterProps = {
     logoProps: {
       src: "/scse-logo/scse-logo-red.png",
-      alt: "scse logo",
+      alt: "SCDS logo",
     },
     socialLinks: [
       {

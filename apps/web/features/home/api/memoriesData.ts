@@ -24,11 +24,11 @@ export let memoriesData: HomeMemoriesCarouselProps["images"] = [
     {
       src:
         "https://plus.unsplash.com/premium_photo-1683887034179-c498b684dd57?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1738&q=80",
-      alt: "scse friends",
+      alt: "SCDS friends",
     },
     {
       src:
         "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
-      alt: "scse networking event",
+      alt: "SCDS networking event",
     },
   ];
