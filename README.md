@@ -23,7 +23,7 @@ This repo uses turborepo to manage the monorepo. You can find more information a
 ## Scripts
 
 - `yarn dev`: Run the development servers
-- `yarn build`: Build the production bundles
+- `yard build`: Build the production bundles
 - `yarn lint`: Lint the codebase with eslint
 - `yarn format`: Format the codebase with prettier
 - `yarn test`: Run unit tests

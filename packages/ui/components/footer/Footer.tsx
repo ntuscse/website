@@ -72,7 +72,7 @@ export const Footer = (props: FooterProps) => {
                   fontWeight="semibold"
                   _hover={{ color: "brand.red.medium" }}
                 >
-                  NTU School of Computer Science and Engineering Club
+                   Students' Computing and Data Science Club
                 </Text>
               </Stack>
             </Link>
@@ -81,8 +81,8 @@ export const Footer = (props: FooterProps) => {
           {/* Club Description */}
           <Box fontWeight="light">
             <Text>
-              NTU SCSE Club is an academic club in Nanyang Technological
-              University. It serves the the SCSE students and allow them to have
+              SCDS Club is an academic club in Nanyang Technological
+              University. It serves the the CCDS students and allow them to have
               a safe space to&nbsp;
               <Text as="span" color="brand.red.medium" fontWeight="semibold">
                 experience
@@ -122,12 +122,12 @@ export const Footer = (props: FooterProps) => {
               Email:&nbsp;
             </Text>
             <Link
-              href="mailto:scse-club@e.ntu.edu.sg"
+              href="mailto:scds-club@e.ntu.edu.sg"
               fontWeight="semibold"
               textDecor="underline"
               _hover={{ color: "brand.red.medium" }}
             >
-              scse-club@e.ntu.edu.sg
+              scds-club@e.ntu.edu.sg
             </Link>
           </Box>
         </Flex>
@@ -168,7 +168,7 @@ export const Footer = (props: FooterProps) => {
         <VercelPowered {...vercelPoweredProps} />
         {/* Copyright */}
         <Text color="white" fontSize="12px" fontWeight="light">
-          Copyright &#169; 2023 - NTU SCSE Club
+          Copyright &#169; 2024 - SCDS Club
         </Text>
       </Flex>
     </VStack>
