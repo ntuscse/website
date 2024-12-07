@@ -19,7 +19,7 @@ export const FaqSection = () => {
         question:
           "Who should I contact for vulnerabilities present on this website?",
         answer:
-          "Please send an email to scse-it@e.ntu.edu.sg with information of the vulnerability.",
+          "Please send an email to scds-club@e.ntu.edu.sg with information of the vulnerability.",
       },
       {
         question: "Who should I contact for other questions related to the SCDS Club?",
