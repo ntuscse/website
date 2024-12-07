@@ -13,7 +13,7 @@ export const FaqSection = () => {
       },
       {
         question: "Who should I contact for business opportunities?",
-        answer: "You may contact scse-business@e.ntu.edu.sg.",
+        answer: "You may contact scds-club@e.ntu.edu.sg.",
       },
       {
         question:
