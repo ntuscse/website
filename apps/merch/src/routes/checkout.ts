@@ -71,7 +71,7 @@ export const checkout = (req: Request, res: Response<CheckoutResponse>) => {
           amount: cart.total,
           currency: "sgd",
           receipt_email: email,
-          description: `SCSE Merch Purchase:\n${describeCart(
+          description: `SCDS Merch Purchase:\n${describeCart(
             products,
             cart,
             orderID

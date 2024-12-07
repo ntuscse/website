@@ -13,18 +13,18 @@ export const FaqSection = () => {
       },
       {
         question: "Who should I contact for business opportunities?",
-        answer: "You may contact scse-business@e.ntu.edu.sg.",
+        answer: "You may contact scds-club@e.ntu.edu.sg.",
       },
       {
         question:
           "Who should I contact for vulnerabilities present on this website?",
         answer:
-          "Please send an email to scse-it@e.ntu.edu.sg with information of the vulnerability.",
+          "Please send an email to scds-club@e.ntu.edu.sg with information of the vulnerability.",
       },
       {
         question: "Who should I contact for other questions related to the SCDS Club?",
         answer:
-          "Please send an email to scse-club@e.ntu.edu.sg. We will try our best to forward you to the relevant person.",
+          "Please send an email to scds-club@e.ntu.edu.sg. We will try our best to forward you to the relevant person.",
       },
     ],
   };
