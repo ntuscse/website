@@ -24,7 +24,7 @@ export const WebLayout = ({ children }: WebLayoutProps) => {
   };
   const footerProps: FooterProps = {
     logoProps: {
-      src: "/scse-logo/scds-logo-blue-bg.png",
+      src: "/scse-logo/scds-logo-white-outline.png",
       alt: "SCDS logo",
     },
     socialLinks: [
