@@ -1,5 +1,4 @@
-import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { type Meta, type StoryFn } from "@storybook/react";
 
 import { Map } from "./Map";
 
@@ -7,9 +6,9 @@ export default {
   title: "Components/Map",
   component: Map,
   argTypes: {},
-} as ComponentMeta<typeof Map>;
+} as Meta<typeof Map>;
 
-const Template: ComponentStory<typeof Map> = (args) => <Map {...args} />;
+const Template: StoryFn<typeof Map> = (args) => <Map {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {

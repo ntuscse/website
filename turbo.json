@@ -3,6 +3,7 @@
   "pipeline": {
     "dev": {
       "cache": false,
+      "dependsOn": ["^build"],
       "env": [
         "PAYLOAD_SECRET",
         "MONGODB_URI",

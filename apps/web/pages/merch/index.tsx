@@ -6,11 +6,12 @@ import { QueryKeys } from "features/merch/constants";
 import { api } from "features/merch/services/api";
 import { Product } from "types";
 import { isOutOfStock } from "features/merch/functions";
+import { MerchLayout } from "@/features/layout/components";
 
 const MerchandiseList = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
 
-  const { data: products, isLoading } = useQuery(
+  const { data: products, isLoading: isProductsLoading } = useQuery(
     [QueryKeys.PRODUCTS],
     () => api.getProducts(),
     {}
@@ -28,64 +29,69 @@ const MerchandiseList = () => {
   };
 
   return (
-    <Page>
-      <Flex justifyContent="space-between" alignItems="center">
-        <Heading fontSize={["md", "2xl"]} textColor={["primary.600", "black"]}>
-          New Drop
-        </Heading>
-        <Select
-          bgColor={["white", "gray.100"]}
-          w="fit-content"
-          textAlign="center"
-          alignSelf="center"
-          placeholder="All Product Type"
-          size="sm"
-          disabled={isLoading}
-          value={selectedCategory}
-          onChange={handleCategoryChange}
-        >
-          {uniqueCategories?.map((category, idx) => (
-            <option key={idx.toString()} value={category}>
-              {category}
-            </option>
-          ))}
-        </Select>
-      </Flex>
-      <Divider borderColor="blackAlpha.500" mt={[5, 10]} />
-      {isLoading ? (
-        <MerchListSkeleton />
-      ) : (
-        <Grid
-          templateColumns={{
-            base: "repeat(2, 1fr)",
-            md: "repeat(3, 1fr)",
-            lg: "repeat(4, 1fr)",
-          }}
-          columnGap={4}
-          rowGap={2}
-        >
-          {products
-            ?.filter((product: Product) => {
-              if (!product?.is_available) return false;
-              if (selectedCategory === "") return true;
-              return product?.category === selectedCategory;
-            })
-            ?.map((item: Product, idx: number) => (
-              <Card
-                _productId={item.id}
-                key={idx.toString()}
-                text={item?.name}
-                price={item?.price}
-                imgSrc={item?.images?.[0]}
-                sizeRange={`${item?.sizes?.[0]} - ${
-                  item.sizes?.[item.sizes.length - 1]
-                }`}
-                isOutOfStock={isOutOfStock(item)}
-              />
+    <MerchLayout>
+      <Page>
+        <Flex justifyContent="space-between" alignItems="center">
+          <Heading
+            fontSize={["md", "2xl"]}
+            textColor={["primary.600", "black"]}
+          >
+            New Drop
+          </Heading>
+          <Select
+            bgColor={["white", "gray.100"]}
+            w="fit-content"
+            textAlign="center"
+            alignSelf="center"
+            placeholder="All Product Type"
+            size="sm"
+            disabled={isProductsLoading}
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+          >
+            {uniqueCategories?.map((category, idx) => (
+              <option key={idx.toString()} value={category}>
+                {category}
+              </option>
             ))}
-        </Grid>
-      )}
-    </Page>
+          </Select>
+        </Flex>
+        <Divider borderColor="blackAlpha.500" mt={[5, 10]} />
+        {isProductsLoading ? (
+          <MerchListSkeleton />
+        ) : (
+          <Grid
+            templateColumns={{
+              base: "repeat(2, 1fr)",
+              md: "repeat(3, 1fr)",
+              lg: "repeat(4, 1fr)",
+            }}
+            columnGap={4}
+            rowGap={2}
+          >
+            {products
+              ?.filter((product: Product) => {
+                if (!product?.is_available) return false;
+                if (selectedCategory === "") return true;
+                return product?.category === selectedCategory;
+              })
+              ?.map((item: Product, idx: number) => (
+                <Card
+                  _productId={item.id}
+                  key={idx.toString()}
+                  text={item?.name}
+                  price={item?.price}
+                  imgSrc={item?.images?.[0]}
+                  sizeRange={`${item?.sizes?.[0]} - ${
+                    item.sizes?.[item.sizes.length - 1]
+                  }`}
+                  isOutOfStock={isOutOfStock(item)}
+                />
+              ))}
+          </Grid>
+        )}
+      </Page>
+    </MerchLayout>
   );
 };
 

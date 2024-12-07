@@ -13,7 +13,7 @@
     "allowSyntheticDefaultImports": true,
     "paths": {
       "payload/generated-types": [
-        "../../packages/types/lib/cms.ts" // Ensure this matches the path to your typescript outputFile
+        "./src/types.ts" // Ensure this matches the path to your typescript outputFile
       ]
     }
   },

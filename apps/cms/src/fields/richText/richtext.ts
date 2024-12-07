@@ -1,5 +1,10 @@
-import { RichTextElement, RichTextField, RichTextLeaf } from 'payload/dist/fields/config/types';
-import deepMerge from '../../utilities/deepMerge';
+import { RichTextField } from "payload/dist/fields/config/types";
+import {
+  slateEditor,
+  RichTextElement,
+  RichTextLeaf,
+} from "@payloadcms/richtext-slate";
+import deepMerge from "../../utilities/deepMerge";
 // import elements from './elements';
 // import leaves from './leaves';
 // import link from '../link';
@@ -7,10 +12,10 @@ import deepMerge from '../../utilities/deepMerge';
 type RichText = (
   overrides?: Partial<RichTextField>,
   additions?: {
-    elements?: RichTextElement[]
-    leaves?: RichTextLeaf[]
-  }
-) => RichTextField
+    elements?: RichTextElement[];
+    leaves?: RichTextLeaf[];
+  },
+) => RichTextField;
 
 const richText: RichText = (
   overrides,
@@ -18,76 +23,79 @@ const richText: RichText = (
     elements: [],
     leaves: [],
   },
-) => deepMerge<RichTextField, Partial<RichTextField>>(
-  {
-    name: 'richText',
-    type: 'richText',
-    admin: {
-      upload: {
-        collections: {
-          media: {
-            fields: [
-              {
-                type: 'richText',
-                name: 'caption',
-                label: 'Caption',
-                // admin: {
-                //   elements: [
-                //     ...elements,
-                //   ],
-                //   leaves: [
-                //     ...leaves,
-                //   ],
-                // },
-              },
-              {
-                type: 'radio',
-                name: 'alignment',
-                label: 'Alignment',
-                options: [
+) =>
+  deepMerge<RichTextField, Partial<RichTextField>>(
+    {
+      name: "richText",
+      type: "richText",
+      editor: slateEditor({
+        admin: {
+          upload: {
+            collections: {
+              media: {
+                fields: [
                   {
-                    label: 'Left',
-                    value: 'left',
+                    type: "richText",
+                    name: "caption",
+                    label: "Caption",
+                    // admin: {
+                    //   elements: [
+                    //     ...elements,
+                    //   ],
+                    //   leaves: [
+                    //     ...leaves,
+                    //   ],
+                    // },
                   },
                   {
-                    label: 'Center',
-                    value: 'center',
+                    type: "radio",
+                    name: "alignment",
+                    label: "Alignment",
+                    options: [
+                      {
+                        label: "Left",
+                        value: "left",
+                      },
+                      {
+                        label: "Center",
+                        value: "center",
+                      },
+                      {
+                        label: "Right",
+                        value: "right",
+                      },
+                    ],
                   },
                   {
-                    label: 'Right',
-                    value: 'right',
+                    name: "enableLink",
+                    type: "checkbox",
+                    label: "Enable Link",
                   },
+                  // link({
+                  //   appearances: false,
+                  //   disableLabel: true,
+                  //   overrides: {
+                  //     admin: {
+                  //       condition: (_, data) => Boolean(data?.enableLink),
+                  //     },
+                  //   },
+                  // }),
                 ],
               },
-              {
-                name: 'enableLink',
-                type: 'checkbox',
-                label: 'Enable Link',
-              },
-              // link({
-              //   appearances: false,
-              //   disableLabel: true,
-              //   overrides: {
-              //     admin: {
-              //       condition: (_, data) => Boolean(data?.enableLink),
-              //     },
-              //   },
-              // }),
-            ],
+            },
           },
+          // elements: [
+          //   ...elements,
+          //   ...additions.elements || [],
+          // ],
+          // leaves: [
+          //   ...leaves,
+          //   ...additions.leaves || [],
+          // ],
         },
-      },
-      // elements: [
-      //   ...elements,
-      //   ...additions.elements || [],
-      // ],
-      // leaves: [
-      //   ...leaves,
-      //   ...additions.leaves || [],
-      // ],
+      }),
     },
-  },
-  overrides,
-);
+    overrides,
+  );
 
 export default richText;

@@ -66,7 +66,8 @@ export const calculatePricing = (
         discountedPrice: itemPrice,
       };
     }
-    for (const discount of promotion.discounts) {
+    const discountsArray = promotion.discounts as unknown as Promotion["discounts"][];
+    for (const discount of discountsArray) {
       if (discount.appliesTo && !discount.appliesTo.includes(item.id)) {
         continue;
       }

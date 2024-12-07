@@ -4,11 +4,12 @@ import { useConfig } from "payload/dist/admin/components/utilities/Config";
 
 import { DefaultTemplate } from "payload/components/templates";
 import { Eyebrow } from "payload/components/elements";
-import { AdminView } from "payload/config";
+import { AdminViewComponent } from "payload/config";
 import { useStepNav } from "payload/components/hooks";
 import { Meta } from "payload/components/utilities";
+import { Slide, ToastContainer } from "react-toastify";
 
-type ViewTemplateProps = React.ComponentProps<AdminView> & {
+type ViewTemplateProps = React.ComponentProps<AdminViewComponent> & {
   description: string;
   keywords: string;
   /** Page Title */
@@ -38,7 +39,7 @@ const ViewTemplate = ({
         label: title,
       },
     ]);
-  }, [setStepNav]);
+  }, [setStepNav, title]);
 
   // If an unauthorized user tries to navigate straight to this page,
   // Boot 'em out
@@ -54,6 +55,7 @@ const ViewTemplate = ({
         <h1>{title}</h1>
         {children}
       </div>
+      <ToastContainer icon={false} position="bottom-center" transition={Slide} />
     </DefaultTemplate>
   );
 };

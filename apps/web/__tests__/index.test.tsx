@@ -11,7 +11,7 @@ describe("Home", () => {
     );
 
     const heading = screen.getByRole("heading", {
-      name: "NTU SCSE Club",
+      name: "NTU SCDS Club",
     });
 
     expect(heading).toBeInTheDocument();

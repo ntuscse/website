@@ -1,24 +1,23 @@
 # more info: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
 
-* @realdyllon
+* @chanbakjsd
 
-/.github/** @realdyllon @aryans1204
-/deployment/** @realdyllon @aryans1204
+/.github/** @chanbakjsd @aryans1204
+/deployment/** @chanbakjsd @aryans1204
 
-/apps/cms/** @jamiegoh
+/apps/cms/** @jack-thant
 /apps/merch/** @chanbakjsd
-/apps/web/** @xJQx
+/apps/web/** @jack-thant
+/apps/challenges/** @BoonHianLim
 /apps/web/features/merch/** @chanbakjsd
 /apps/web/pages/merch/** @chanbakjsd
 
-/packages/eslint-custom-config/** @realdyllon
-/packages/nodelogger/** @realdyllon
-/packages/schemas/** @realdyllon
-/packages/schemas/lib/cms.graphql @jamiegoh
-/packages/tsconfig/** @realdyllon
-/packages/types/** @realdyllon
-/packages/types/lib/cms.ts @jamiegoh
+/packages/eslint-custom-config/** @chanbakjsd
+/packages/nodelogger/** @chanbakjsd
+/packages/schemas/** @chanbakjsd
+/packages/schemas/lib/cms.graphql @jack-thant
+/packages/tsconfig/** @chanbakjsd
+/packages/types/** @chanbakjsd
 /packages/types/lib/merch.ts @chanbakjsd
-/packages/ui/** @xJQx
-/packages/ui/merch/** @chanbakjsd
+/packages/ui/** @chanbakjsd
 

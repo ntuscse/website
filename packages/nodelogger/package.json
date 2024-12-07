@@ -10,9 +10,9 @@
   ],
   "license": "Apache-2.0",
   "scripts": {
-    "build": "tsc",
+    "build": "tsup src/index.ts --format cjs --dts",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
-    "dev": "tsc -w",
+    "dev": "yarn build --watch",
     "lint": "TIMING=1 eslint \"**/*.ts*\"",
     "lint:fix": "TIMING=1 eslint --fix \"**/*.ts*\""
   },
@@ -21,11 +21,10 @@
     "winston": "^3.8.2"
   },
   "devDependencies": {
+    "@types/morgan": "^1.9.4",
     "eslint": "^7.32.0",
     "eslint-config-custom": "*",
     "tsconfig": "*",
-    "typescript": "^4.5.2",
-    "@types/morgan": "^1.9.4",
-    "@types/winston": "^2.4.4"
+    "typescript": "^4.5.2"
   }
 }

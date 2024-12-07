@@ -1,14 +1,13 @@
-import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { type Meta, type StoryFn } from "@storybook/react";
 import { Carousel } from "./Carousel";
 
 export default {
   title: "Components/Carousel",
   component: Carousel,
   argTypes: {},
-} as ComponentMeta<typeof Carousel>;
+} as Meta<typeof Carousel>;
 
-const Template: ComponentStory<typeof Carousel> = (args) => (
+const Template: StoryFn<typeof Carousel> = (args) => (
   <Carousel {...args} />
 );
 export const Primary = Template.bind({});

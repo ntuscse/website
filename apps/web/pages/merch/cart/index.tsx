@@ -1,7 +1,6 @@
 /* eslint-disable */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 
-
 import React, { useRef, useState, FC, useEffect } from "react";
 import Link from "next/link";
 import {
@@ -38,6 +37,7 @@ import { routes, QueryKeys } from "features/merch/constants";
 import { displayPrice } from "features/merch/functions";
 import { calculatePricing } from "merch-helpers";
 import { useRouter } from "next/router";
+import { MerchLayout } from "@/features/layout/components";
 
 type ValidationType = {
   error: boolean;
@@ -369,10 +369,12 @@ const Cart: FC = () => {
   }, [reroute]);
 
   return (
-    <Page>
-      {CartHeading}
-      {renderCartContent()}
-    </Page>
+    <MerchLayout>
+      <Page>
+        {CartHeading}
+        {renderCartContent()}
+      </Page>
+    </MerchLayout>
   );
 };
 

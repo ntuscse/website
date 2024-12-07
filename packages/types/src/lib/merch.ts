@@ -72,12 +72,12 @@ export interface Promotion {
   promoCode: string;
   maxRedemptions: number;
   redemptionsRemaining: number;
-  discounts: Array<{
+  discounts: {
     promoType: PromoType;
     promoValue: number; // percent off or fixed value off based on promoType property
-    appliesTo?: Array<string>; // array of product ids
+    appliesTo?: string[]; // array of product ids
     minimumQty?: number; // minimum quantity of items in the order to apply the discount
-  }>;
+  };
 }
 
 export type PricedCart = {
@@ -167,4 +167,9 @@ export type APIError = {
 
 export type OrderHoldEntry = {
   // todo: ???
+};
+
+export type MerchSaleStatus = {
+  disabled: boolean;
+  displayText?: string;
 };

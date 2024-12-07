@@ -8,14 +8,13 @@ import {
   Flex,
 } from "@chakra-ui/react";
 
-const ItemSkeleton: React.FC = () => {
-  return (
-    <Flex mt={4} alignItems="center" gap={2}>
-      <Skeleton h={10} w={10} />
-      <SkeletonText noOfLines={2} spacing="4" w="100%" />
-    </Flex>
-  );
-};
+const ItemSkeleton = () => (
+  <Flex mt={4} alignItems="center" gap={2}>
+    <Skeleton h={10} w={10} />
+    <SkeletonText noOfLines={2} spacing="4" w="100%" />
+  </Flex>
+);
+
 const CheckoutSkeleton: React.FC = () => {
   return (
     <Grid
@@ -44,3 +43,4 @@ const CheckoutSkeleton: React.FC = () => {
 };
 
 export default CheckoutSkeleton;
+
