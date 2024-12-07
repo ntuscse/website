@@ -31,7 +31,7 @@ export const HomeHero = () => {
             _hover={{ letterSpacing: 6 }}
             transitionDuration="0.3s"
           >
-            NTU SCSE Club
+            NTU SCDS Club
           </Text>
         </Link>
       </Box>
@@ -167,7 +167,7 @@ export const HomeHero = () => {
       >
         <Image
           src="/hero/students-1.png"
-          alt="image of scse students"
+          alt="image of SCDS students"
           fill={true}
           style={{ borderRadius: "400px" }}
         />
@@ -184,7 +184,7 @@ export const HomeHero = () => {
       >
         <Image
           src="/hero/students-2.png"
-          alt="image of scse students"
+          alt="image of SCDS students"
           fill={true}
           style={{ borderRadius: "400px" }}
         />

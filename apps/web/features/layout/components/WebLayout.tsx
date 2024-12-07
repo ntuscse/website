@@ -18,25 +18,25 @@ export const WebLayout = ({ children }: WebLayoutProps) => {
       // { label: "Merch", href: "/merch" },
     ],
     logoProps: {
-      src: "/scse-logo/scse-logo-blue.png",
-      alt: "scse logo",
+      src: "/scse-logo/scds-logo.png",
+      alt: "SCDS logo",
     },
   };
   const footerProps: FooterProps = {
     logoProps: {
-      src: "/scse-logo/scse-logo-red.png",
-      alt: "scse logo",
+      src: "/scse-logo/scds-logo-white-outline.png",
+      alt: "SCDS logo",
     },
     socialLinks: [
       {
         name: "Instagram",
         icon: FaInstagram,
-        href: "https://www.instagram.com/ntuscseclub/",
+        href: "https://www.instagram.com/ntuscdsclub/",
       },
       {
         name: "LinkedIn",
         icon: FaLinkedin,
-        href: "https://sg.linkedin.com/company/ntu-scseclub",
+        href: "https://www.linkedin.com/company/ntu-scdsc/mycompany/",
       },
       { name: "GitHub", icon: FaGithub, href: "https://github.com/ntuscse" },
     ],

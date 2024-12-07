@@ -58,7 +58,7 @@ export const HomeWhoRWe = () => {
                 boxSize={["260px", "350px", "350px", "400px"]}
               >
                 <Image
-                  src="/home/who_r_we_doodle.svg"
+                  src="/scse-logo/scds-logo.png"
                   alt="who r we image"
                   fill={true}
                 />

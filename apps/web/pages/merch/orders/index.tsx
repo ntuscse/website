@@ -206,7 +206,7 @@ const OrderSummary: React.FC = () => {
           sizes="(max-width: 768px)"
         />
         <Text fontWeight="bold">
-          Please screenshot this QR code and show it at SCSE Lounge to collect
+          Please screenshot this QR code and show it at SCDS Lounge to collect
           your order. Alternatively, show the email receipt you have received.
         </Text>
         <Text>
