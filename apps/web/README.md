@@ -15,7 +15,7 @@ NTU SCSE's main public facing website, built with Next.js.
 ## Requirements
 
 - Yarn v1
-- Completed development environment setup by following the [SCSE official docs](https://docs.ntuscse.com/docs).
+- Completed development environment setup by following the [SCDS official docs](https://docs.ntuscse.com/docs).
 
 <br />
 

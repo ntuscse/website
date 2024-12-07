@@ -24,7 +24,7 @@ export const FaqSection = () => {
       {
         question: "Who should I contact for other questions related to the SCDS Club?",
         answer:
-          "Please send an email to scse-club@e.ntu.edu.sg. We will try our best to forward you to the relevant person.",
+          "Please send an email to scds-club@e.ntu.edu.sg. We will try our best to forward you to the relevant person.",
       },
     ],
   };
