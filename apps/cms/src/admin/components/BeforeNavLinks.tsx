@@ -3,7 +3,7 @@ import React from "react";
 const Title = () => {
   return (
     <h4>
-      SCSE Club <br /> Admin Panel
+      SCDS Club <br /> Admin Panel
     </h4>
   );
 };
